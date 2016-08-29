@@ -1,0 +1,32 @@
+﻿body {
+}
+.ui-button {
+    bottom : 0;
+    position: relative;
+}
+.slider-cell {
+    width: 80%;
+}
+.legend-header {
+    font-weight: bold;
+}
+.menu-legend {
+    padding: 5px;
+}
+.score{
+   margin-left: 15px;
+}
+.menu-text {
+    font-size: 80%;
+}
+.marked {
+    color: black !important;
+}
+.fa{
+    color: dimgray;
+}
+.slider-value-cell {
+    padding: 15px;
+    min-width: 70px;
+}
+

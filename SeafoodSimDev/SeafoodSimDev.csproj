@@ -22,12 +22,12 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.css" />
-    <Content Include="index.html" />
+    <Content Include="css\body.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="js\pathfinding-browser.js" />
+    <Content Include="js\three.js" />
+    <Content Include="main.html" />
     <Content Include="web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="app.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="web.Debug.config">
@@ -36,6 +36,42 @@
     <None Include="web.Release.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controller\declarations\" />
+    <Folder Include="View\declarations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Controller\Controller.ts" />
+    <TypeScriptCompile Include="Controller\EventHandler.ts" />
+    <TypeScriptCompile Include="Main.ts" />
+    <TypeScriptCompile Include="Model\AI.ts" />
+    <TypeScriptCompile Include="Model\Cod.ts" />
+    <TypeScriptCompile Include="Model\declarations\qunit.d.ts" />
+    <TypeScriptCompile Include="Model\Fish.ts" />
+    <TypeScriptCompile Include="Model\FuelSite.ts" />
+    <TypeScriptCompile Include="Model\Government.ts" />
+    <TypeScriptCompile Include="Model\Land.ts" />
+    <TypeScriptCompile Include="Model\LandingSite.ts" />
+    <TypeScriptCompile Include="Model\Mackerel.ts" />
+    <TypeScriptCompile Include="Model\Map.ts" />
+    <TypeScriptCompile Include="Model\Model.ts" />
+    <TypeScriptCompile Include="Model\Ocean.ts" />
+    <TypeScriptCompile Include="Model\Point.ts" />
+    <TypeScriptCompile Include="Model\Restrictions.ts" />
+    <TypeScriptCompile Include="Model\School.ts" />
+    <TypeScriptCompile Include="Model\Score.ts" />
+    <TypeScriptCompile Include="Model\Ship.ts" />
+    <TypeScriptCompile Include="Model\ShipOwner.ts" />
+    <TypeScriptCompile Include="Model\Site.ts" />
+    <TypeScriptCompile Include="Model\Tile.ts" />
+    <TypeScriptCompile Include="ThirdParty\declarations\three.d.ts" />
+    <TypeScriptCompile Include="ThirdParty\Point.ts" />
+    <TypeScriptCompile Include="ThirdParty\Test1.ts" />
+    <TypeScriptCompile Include="ThirdParty\TKN_PathFinding.ts" />
+    <TypeScriptCompile Include="View\MainView.ts" />
+    <TypeScriptCompile Include="View\MapMenu.ts" />
+    <TypeScriptCompile Include="View\MapView.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
