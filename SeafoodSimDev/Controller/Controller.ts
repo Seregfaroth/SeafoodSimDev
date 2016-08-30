@@ -36,7 +36,7 @@ class Controller {
         return this.m_view;
     }
     simulationTick = () => {
-        console.log("Controller running simulationtick");
+        //console.log("Controller running simulationtick");
         
         this.m_model.run();
         this.m_view.updateMainView(this.m_model);

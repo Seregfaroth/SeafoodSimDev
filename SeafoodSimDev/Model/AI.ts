@@ -7,7 +7,7 @@ class AI {
         new Point2(3, 4), new Point2(3, 3), new Point2(3, 2), new Point2(3, 1), new Point2(3, 0), new Point2(2, 0)];
 
     public run(p_shipOwner: ShipOwner, p_map: Map): void {
-        console.log("runnig AI");
+        //console.log("runnig AI");
         this.buyOrSellShip(p_shipOwner, p_map);
         this.runShips(p_shipOwner, p_map);
     }

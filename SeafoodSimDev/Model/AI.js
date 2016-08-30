@@ -8,7 +8,7 @@ var AI = (function () {
             new Point2(3, 4), new Point2(3, 3), new Point2(3, 2), new Point2(3, 1), new Point2(3, 0), new Point2(2, 0)];
     }
     AI.prototype.run = function (p_shipOwner, p_map) {
-        console.log("runnig AI");
+        //console.log("runnig AI");
         this.buyOrSellShip(p_shipOwner, p_map);
         this.runShips(p_shipOwner, p_map);
     };

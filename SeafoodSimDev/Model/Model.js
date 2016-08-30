@@ -13,7 +13,7 @@ var Model = (function () {
         this.createShipOwner(new Point2(3, 3), 100000000000);
     }
     Model.prototype.run = function () {
-        console.log("running model");
+        //console.log("running model");
         this.m_map.run();
         for (var i = 0; i < this.m_shipOwners.length; i++) {
             this.m_ai.run(this.m_shipOwners[i], this.m_map);

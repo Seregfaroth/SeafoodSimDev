@@ -8,7 +8,7 @@ var MainView = (function () {
         return this.m_mapMenu;
     };
     MainView.prototype.updateMainView = function (p_model) {
-        console.log("updating mainView");
+        //console.log("updating mainView");
         this.m_mapMenu.updateScore(p_model.getGovernment());
         this.m_mapView.updateMapView(p_model.getMap());
     };

@@ -76,7 +76,7 @@ var MapView = (function () {
         //document.body.insertBefore(this.m_renderer.domElement, document.body.firstChild);
     }
     MapView.prototype.updateMapView = function (p_map) {
-        console.log("updating MapView");
+        //console.log("updating MapView");
         var i = 0;
         for (var _i = 0, _a = this.m_schools; _i < _a.length; _i++) {
             var sc = _a[_i];

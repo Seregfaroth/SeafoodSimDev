@@ -99,7 +99,7 @@ class MapView {
     }
 
     updateMapView(p_map: Map) {
-        console.log("updating MapView");
+        //console.log("updating MapView");
         var i = 0;
         for (var sc of this.m_schools) {
             sc.position = new Point2(p_map.m_schools[i].getPosition().row, p_map.m_schools[i++].getPosition().col);

@@ -13,7 +13,7 @@ class MainView {
         return this.m_mapMenu;
     }
     updateMainView(p_model: Model) {
-        console.log("updating mainView");
+        //console.log("updating mainView");
         this.m_mapMenu.updateScore(p_model.getGovernment());
         this.m_mapView.updateMapView(p_model.getMap());
     }

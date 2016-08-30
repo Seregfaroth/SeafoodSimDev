@@ -44,6 +44,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="Controller\Controller.ts" />
     <TypeScriptCompile Include="Controller\EventHandler.ts" />
+    <TypeScriptCompile Include="declarations\jquery.d.ts" />
+    <TypeScriptCompile Include="declarations\jqueryui.d.ts" />
     <TypeScriptCompile Include="Main.ts" />
     <TypeScriptCompile Include="Model\AI.ts" />
     <TypeScriptCompile Include="Model\Cod.ts" />

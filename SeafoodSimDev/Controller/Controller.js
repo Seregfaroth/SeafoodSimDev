@@ -10,7 +10,7 @@ var Controller = (function () {
     function Controller() {
         var _this = this;
         this.simulationTick = function () {
-            console.log("Controller running simulationtick");
+            //console.log("Controller running simulationtick");
             _this.m_model.run();
             _this.m_view.updateMainView(_this.m_model);
         };
