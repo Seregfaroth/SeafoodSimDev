@@ -2,28 +2,21 @@
 /// <reference path="Fish.ts"/>
 var School = (function () {
     function School(p_size, p_position) {
+        this.m_ages = [];
         this.m_position = p_position;
-        this.m_fish = [];
     }
     School.prototype.getSize = function () {
-        return this.m_fish.length;
+        var size = 0;
+        this.m_ages.forEach(function (n) {
+            size += n;
+        });
+        return size;
     };
     School.prototype.getPosition = function () {
         return this.m_position;
     };
-    School.prototype.getFish = function () {
-        return this.m_fish;
-    };
-    School.prototype.shuffleFish = function () {
-        var i;
-        var j;
-        var fishPlaceholder;
-        for (i = this.m_fish.length; i; i--) {
-            j = Math.floor(Math.random() * i);
-            fishPlaceholder = this.m_fish[i - 1];
-            this.m_fish[i - 1] = this.m_fish[j];
-            this.m_fish[j] = fishPlaceholder;
-        }
+    School.prototype.getAges = function () {
+        return this.m_ages;
     };
     School.prototype.live = function (p_map) {
         this.move(p_map);
@@ -32,15 +25,10 @@ var School = (function () {
     };
     School.prototype.age = function () {
         var school = this;
-        this.m_fish.forEach(function (f, index, array) {
-            var f = array[index];
-            if (f.getAge() === school.m_maxAge) {
-                array.splice(index, 1);
-            }
-            else {
-                f.age();
-            }
-        });
+        for (var i = this.m_maxAge - 1; i > 0; i--) {
+            this.m_ages[i] = this.m_ages[i - 1];
+        }
+        this.m_ages[0] = 0;
     };
     School.prototype.getMaxAge = function () {
         return this.m_maxAge;

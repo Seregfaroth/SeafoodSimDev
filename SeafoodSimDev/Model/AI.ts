@@ -27,16 +27,17 @@ class AI {
     private runShips(p_shipOwner: ShipOwner, p_map: Map): void {
         var ai: AI = this;
         p_shipOwner.getShips().forEach(function (ship) {
-            //console.log("state: " + ship.getState().toString());
-            //console.log("cargo: " + ship.getCargoSize());
-            //console.log("fuel: " + ship.getFuel());
+            console.log("state: " + ship.getState().toString());
+            console.log("cargo: " + ship.getCargoSize());
+            console.log("fuel: " + ship.getFuel());
             //console.log("position: " + ship.getPosition().row + ", " + ship.getPosition().col);
             if (ship.getFuel() === 0) {
                 debugger;
             }
             if (ship.getState() === shipState.fishing) {
-                //If ship is currently fishing, fish until cargo is full
-                if (ship.getCargo().length >= ship.getCargoCapacity()) {
+                //If ship is currently fishing, fish until cargo is at least 98% full
+                
+                if (ship.getCargoSize() >= ship.getCargoCapacity() * 0.98) {
                     ai.findNewPath(ship, p_map);
                 }
                 else {
@@ -177,7 +178,7 @@ class AI {
                 //Ship must refuel if fuel is too low
                 this.goRefuel(p_ship, p_map, fuelPath);
             }
-            else if (p_ship.getCargo().length >= p_ship.getCargoCapacity()) {
+            else if (p_ship.getCargoSize() >= p_ship.getCargoCapacity()* 0.98) {
                 //If ship is  full, ship must land
                 var landingPath: Point2[] = this.pathToNearestLandingSite(p_ship.getPosition(), p_map);
                 if (this.canReach(p_ship, p_map, landingPath)) {

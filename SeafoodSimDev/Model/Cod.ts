@@ -3,18 +3,22 @@
 class Cod extends School{
     private m_movingRadius: number = 3;
     private m_origin: Point2;
+    
 
     public constructor(p_size: number, p_position: Point2) {
         super(p_size, p_position);
         this.m_origin = p_position;
-        this.m_maxAge = 3;
-        this.m_typeNumber = 0;
+        this.m_maxAge = 8; // OBS Ship also uses this value. It is hardcoded there at the moment
+        for (var i = 0; i < this.m_maxAge; i++) {
+            this.m_ages.push(0);
+        }
         for (var i = 0; i < p_size; i++) {
-            this.m_fish.push(new Fish(this.m_typeNumber, Math.floor(Math.random() * this.m_maxAge)));
+            var age: number = Math.floor(Math.random() * this.m_maxAge);
+            this.m_ages[age] += 1;
         }
     }
    
-    //Move with a probability of 25% with a random direction
+    //Move with a probability of 25% in a random direction
     protected move(p_map: Map): void {
         //console.log("Original position: " + JSON.stringify(this.m_position));
         var move: boolean = Math.random() < 0.25;
@@ -71,11 +75,8 @@ class Cod extends School{
     protected recruit(p_map: Map): void {
         if ((<Ocean>p_map.getTile(this.m_position)).getFishCapacity() > this.getSize()) {
             //Only recruit if the tile is not full
-            var tmp = this.m_fish.length;
-            var noOfNewFish: number = Math.random() * this.m_fish.length*0.5;
-            for (var i = 0; i < noOfNewFish; i++) {
-                this.m_fish.push(new Fish(this.m_typeNumber));
-            }
+            var noOfNewFish: number = Math.floor(Math.random() * (this.getSize()));
+            this.m_ages[0] = noOfNewFish;
         }
     }
 
