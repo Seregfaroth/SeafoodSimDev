@@ -7,18 +7,29 @@ var shipState;
     shipState[shipState["goingToLand"] = 3] = "goingToLand";
     shipState[shipState["waiting"] = 4] = "waiting";
 })(shipState || (shipState = {}));
+var FishType;
+(function (FishType) {
+    FishType[FishType["Cod"] = 0] = "Cod";
+    FishType[FishType["Mackerel"] = 1] = "Mackerel";
+})(FishType || (FishType = {}));
 var Ship = (function () {
     function Ship(p_owner) {
         this.m_fuelCapacity = 150;
-        this.m_cargoCapacity = 10;
+        this.m_cargoCapacity = 800;
         this.m_path = [];
         this.m_fuelPerMove = 1;
         this.history = []; //For debugging  purpose
         this.m_position = p_owner.getShipStartPosition();
-        this.m_cargo = [];
+        this.m_cargo = [[], []];
         this.m_fuel = this.m_fuelCapacity;
         this.m_owner = p_owner;
         this.m_state = shipState.waiting;
+        for (var i = 0; i < 8; i++) {
+            this.m_cargo[FishType.Cod][i] = 0;
+        }
+        for (var i = 0; i < 18; i++) {
+            this.m_cargo[FishType.Mackerel][i] = 0;
+        }
     }
     Ship.prototype.getState = function () {
         return this.m_state;
@@ -61,7 +72,14 @@ var Ship = (function () {
         return this.m_owner;
     };
     Ship.prototype.getCargoSize = function () {
-        return this.m_cargo.length;
+        var size = 0;
+        for (var i = 0; i < this.m_cargo[FishType.Cod].length; i++) {
+            size += this.m_cargo[FishType.Cod][i];
+        }
+        for (var i = 0; i < this.m_cargo[FishType.Mackerel].length; i++) {
+            size += this.m_cargo[FishType.Mackerel][i];
+        }
+        return size;
     };
     //Throws an exception if path is empty, moves to last point in array otherwise
     Ship.prototype.followPath = function (p_map) {
@@ -96,11 +114,27 @@ var Ship = (function () {
         this.m_path = [];
     };
     Ship.prototype.fish = function (p_map) {
-        var fishToAdd = p_map.fish(this.m_position, this.m_cargoCapacity - this.m_cargo.length);
-        this.m_cargo = this.m_cargo.concat(fishToAdd);
+        var ship = this;
+        var percentage = p_map.getFishingPercentage();
+        var noOfFishInTile = p_map.getNoOfFishInTile(this.m_position);
+        var fish = [];
+        if (this.m_cargoCapacity - this.getCargoSize() < noOfFishInTile * percentage) {
+            //If the ship is not able to fish the full percentage
+            percentage = (this.m_cargoCapacity - this.getCargoSize()) / noOfFishInTile;
+        }
+        p_map.getSchoolsInTile(this.m_position).forEach(function (school) {
+            var type = school instanceof Cod ? FishType.Cod : FishType.Mackerel;
+            for (var i = 0; i < school.getMaxAge(); i++) {
+                //The number of fish the ship is fishing
+                var noOfFish = Math.floor(percentage * school.getAges()[i]);
+                //Add to cargo
+                ship.m_cargo[type][i] += noOfFish;
+                //Remove from school
+                school.getAges()[i] -= noOfFish;
+            }
+        });
     };
     Ship.prototype.land = function (p_landingSite) {
-        this.shuffleFish(); //Might not be necessary every time
         this.m_owner.financialTransaction(p_landingSite.receiveFish(this.m_cargo));
     };
     Ship.prototype.refuel = function (p_fuelSite) {
@@ -108,17 +142,17 @@ var Ship = (function () {
         this.m_owner.financialTransaction(-fuelAmount * p_fuelSite.getPrice());
         this.m_fuel += fuelAmount;
     };
-    Ship.prototype.shuffleFish = function () {
-        var i;
-        var j;
-        var fishPlaceholder;
+    /*private shuffleFish(): void {
+        var i: number;
+        var j: number;
+        var fishPlaceholder: Fish;
         for (i = this.m_cargo.length; i; i--) {
             j = Math.floor(Math.random() * i);
             fishPlaceholder = this.m_cargo[i - 1];
             this.m_cargo[i - 1] = this.m_cargo[j];
             this.m_cargo[j] = fishPlaceholder;
         }
-    };
+    }*/
     Ship.prototype.randomMove = function (p_map) {
         //console.log("Original position: " + JSON.stringify(this.m_position));
         var newPoint;

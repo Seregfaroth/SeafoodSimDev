@@ -9,18 +9,22 @@ var Mackerel = (function (_super) {
     __extends(Mackerel, _super);
     function Mackerel(p_size, p_position) {
         _super.call(this, p_size, p_position);
-        this.m_maxAge = 18;
-        this.m_typeNumber = 1;
+        this.m_maxAge = 18; // OBS Ship also uses this value. It is hardcoded there at the moment
+        for (var i = 0; i < this.m_maxAge; i++) {
+            this.m_ages.push(0);
+        }
         for (var i = 0; i < p_size; i++) {
-            this.m_fish.push(new Fish(this.m_typeNumber, Math.floor(Math.random() * this.m_maxAge)));
+            var age = Math.floor(Math.random() * this.m_maxAge);
+            this.m_ages[age] += 1;
         }
     }
     Mackerel.prototype.move = function () {
     };
-    Mackerel.prototype.recruit = function () {
-        var noOfNewFish = Math.random() * this.m_fish.length;
-        for (var i = 0; i < noOfNewFish; i++) {
-            this.m_fish.push(new Fish(this.m_typeNumber));
+    Mackerel.prototype.recruit = function (p_map) {
+        if (p_map.getTile(this.m_position).getFishCapacity() > this.getSize()) {
+            //Only recruit if the tile is not full
+            var noOfNewFish = Math.random() * this.getSize();
+            this.m_ages[0] = noOfNewFish;
         }
     };
     return Mackerel;

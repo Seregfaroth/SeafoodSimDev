@@ -1,10 +1,15 @@
 ﻿// <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 enum shipState { fishing, goingToFish, goingToRefuel, goingToLand, waiting }
+
+enum FishType {
+    Cod = 0,
+    Mackerel = 1
+}
 class Ship {
     private m_fuel: number;
-    private m_cargo: Fish[];
+    private m_cargo: number[][];
     private m_fuelCapacity: number = 150;
-    private m_cargoCapacity: number = 10;
+    private m_cargoCapacity: number = 800;
     private m_position: Point2;
     private m_path: Point2[] = [];
     private m_fuelPerMove: number = 1;
@@ -14,10 +19,16 @@ class Ship {
 
     public constructor(p_owner: ShipOwner) {
         this.m_position = p_owner.getShipStartPosition();
-        this.m_cargo = [];
+        this.m_cargo = [[], []];
         this.m_fuel = this.m_fuelCapacity;
         this.m_owner = p_owner;
         this.m_state = shipState.waiting;
+        for (var i = 0; i < 8; i++) {//8 is the max age of cod. TODO max age should be stored somewhere where it is accesible from ship
+            this.m_cargo[FishType.Cod][i] = 0;
+        }
+        for (var i = 0; i < 18; i++) {//18 is the max age of mackerel. TODO max age should be stored somewhere where it is accesible from ship
+            this.m_cargo[FishType.Mackerel][i] = 0;
+        }
     }
     public getState(): shipState {
         return this.m_state;
@@ -29,7 +40,7 @@ class Ship {
         return this.m_fuel;
     }
 
-    public getCargo(): Fish[] {
+    public getCargo(): number[][] {
         return this.m_cargo;
     }
 
@@ -66,7 +77,14 @@ class Ship {
         return this.m_owner;
     }
     public getCargoSize(): number {
-        return this.m_cargo.length;
+        var size: number = 0;
+        for (var i = 0; i < this.m_cargo[FishType.Cod].length; i++) {
+            size += this.m_cargo[FishType.Cod][i];
+        }
+        for (var i = 0; i < this.m_cargo[FishType.Mackerel].length; i++) {
+            size += this.m_cargo[FishType.Mackerel][i];
+        }
+        return size;
     }
     //Throws an exception if path is empty, moves to last point in array otherwise
     public followPath(p_map: Map): void {
@@ -103,13 +121,31 @@ class Ship {
         this.m_path = [];
     }
     public fish(p_map: Map): void {
-        var fishToAdd: Fish[] = p_map.fish(this.m_position, this.m_cargoCapacity - this.m_cargo.length);
-        this.m_cargo = this.m_cargo.concat(fishToAdd);
+        var ship: Ship = this;
+
+        var percentage: number = p_map.getFishingPercentage();
+        var noOfFishInTile: number = p_map.getNoOfFishInTile(this.m_position);
+        var fish: Fish[] = [];
+        if (this.m_cargoCapacity - this.getCargoSize() < noOfFishInTile * percentage) {
+            //If the ship is not able to fish the full percentage
+            percentage = (this.m_cargoCapacity - this.getCargoSize()) / noOfFishInTile;
+        }
+
+        p_map.getSchoolsInTile(this.m_position).forEach(function (school) {
+            var type: FishType = school instanceof Cod ? FishType.Cod : FishType.Mackerel;
+            for (var i = 0; i < school.getMaxAge(); i++) {
+                //The number of fish the ship is fishing
+                var noOfFish: number = Math.floor(percentage * school.getAges()[i]);
+                //Add to cargo
+                ship.m_cargo[type][i] += noOfFish;
+                //Remove from school
+                school.getAges()[i] -= noOfFish;
+            }
+        });
         
     }
 
     public land(p_landingSite: LandingSite): void {
-        this.shuffleFish();//Might not be necessary every time
         this.m_owner.financialTransaction(p_landingSite.receiveFish(this.m_cargo));
     }
 
@@ -119,7 +155,7 @@ class Ship {
         this.m_fuel += fuelAmount;
     }
 
-    private shuffleFish(): void {
+    /*private shuffleFish(): void {
         var i: number;
         var j: number;
         var fishPlaceholder: Fish;
@@ -129,7 +165,7 @@ class Ship {
             this.m_cargo[i - 1] = this.m_cargo[j];
             this.m_cargo[j] = fishPlaceholder;
         }
-    }
+    }*/
     public randomMove(p_map: Map): void {
         //console.log("Original position: " + JSON.stringify(this.m_position));
 

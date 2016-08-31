@@ -3,7 +3,7 @@ class Map {
     private m_grid: Tile[][] = [];
     public m_schools: School[] = [];
     private m_restrictions: Restrictions;
-    private m_fishingPercentage: number = 0.01;
+    private m_fishingPercentage: number = 0.1;
     private m_ships: Ship[] = [];
 
     public constructor(p_size: number, p_noOfSchools: number, p_restrictions: Restrictions) {
@@ -38,7 +38,7 @@ class Map {
             placedInSamePlace++;
             var tile: Tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(90, point));
+                this.addSchool(new Cod(2000, point));
                 schoolsPlaced++;
             }
 
@@ -56,7 +56,7 @@ class Map {
         for (var i = 0; i < p_size; i++) {
             var row: Tile[] = [];
             for (var j = 0; j < p_size; j++) {
-                row.push(new Ocean(100, 1));
+                row.push(new Ocean(10000, 1));
             }
             this.m_grid.push(row);
         }
@@ -111,7 +111,7 @@ class Map {
         return this.m_fishingPercentage;
     }
 
-    public fish(p_position: Point2, p_capacity: number): Fish[] {
+    /*public fish(p_position: Point2, p_capacity: number): Fish[] {
         var percentage: number = this.m_fishingPercentage;
         var noOfFishInTile: number = this.getNoOfFishInTile(p_position);
         var fish: Fish[] = [];
@@ -127,8 +127,8 @@ class Map {
             fish = fish.concat(fishToAdd);
         });
         return fish;
-    }
-    private getSchoolsInTile(p_position: Point2): School[] {
+    }*/
+    public getSchoolsInTile(p_position: Point2): School[] {
         var list: School[] = [];
         this.m_schools.forEach(function (s) {
            if (s.getPosition().compare( p_position) ){

@@ -3,7 +3,7 @@ var Map = (function () {
     function Map(p_size, p_noOfSchools, p_restrictions) {
         this.m_grid = [];
         this.m_schools = [];
-        this.m_fishingPercentage = 0.01;
+        this.m_fishingPercentage = 0.1;
         this.m_ships = [];
         this.m_restrictions = p_restrictions;
         this.generateMap(p_size);
@@ -34,7 +34,7 @@ var Map = (function () {
             placedInSamePlace++;
             var tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(90, point));
+                this.addSchool(new Cod(2000, point));
                 schoolsPlaced++;
             }
         }
@@ -49,7 +49,7 @@ var Map = (function () {
         for (var i = 0; i < p_size; i++) {
             var row = [];
             for (var j = 0; j < p_size; j++) {
-                row.push(new Ocean(100, 1));
+                row.push(new Ocean(10000, 1));
             }
             this.m_grid.push(row);
         }
@@ -93,23 +93,23 @@ var Map = (function () {
     Map.prototype.getFishingPercentage = function () {
         return this.m_fishingPercentage;
     };
-    Map.prototype.fish = function (p_position, p_capacity) {
-        var percentage = this.m_fishingPercentage;
-        var noOfFishInTile = this.getNoOfFishInTile(p_position);
-        var fish = [];
+    /*public fish(p_position: Point2, p_capacity: number): Fish[] {
+        var percentage: number = this.m_fishingPercentage;
+        var noOfFishInTile: number = this.getNoOfFishInTile(p_position);
+        var fish: Fish[] = [];
         if (p_capacity < noOfFishInTile * percentage) {
             //If the ship is not able to fish the full percentage
             percentage = p_capacity / noOfFishInTile;
         }
         this.getSchoolsInTile(p_position).forEach(function (s) {
             s.shuffleFish(); //May not be necessary to shuffle every time
-            var fishInSchool = s.getFish();
+            var fishInSchool: Fish[] = s.getFish();
             //Take a percentage of fish out of the school and add it to the fish list
-            var fishToAdd = fishInSchool.splice(0, fishInSchool.length * percentage);
+            var fishToAdd: Fish[] = fishInSchool.splice(0, fishInSchool.length * percentage);
             fish = fish.concat(fishToAdd);
         });
         return fish;
-    };
+    }*/
     Map.prototype.getSchoolsInTile = function (p_position) {
         var list = [];
         this.m_schools.forEach(function (s) {

@@ -11,13 +11,16 @@ var Cod = (function (_super) {
         _super.call(this, p_size, p_position);
         this.m_movingRadius = 3;
         this.m_origin = p_position;
-        this.m_maxAge = 3;
-        this.m_typeNumber = 0;
+        this.m_maxAge = 8; // OBS Ship also uses this value. It is hardcoded there at the moment
+        for (var i = 0; i < this.m_maxAge; i++) {
+            this.m_ages.push(0);
+        }
         for (var i = 0; i < p_size; i++) {
-            this.m_fish.push(new Fish(this.m_typeNumber, Math.floor(Math.random() * this.m_maxAge)));
+            var age = Math.floor(Math.random() * this.m_maxAge);
+            this.m_ages[age] += 1;
         }
     }
-    //Move with a probability of 25% with a random direction
+    //Move with a probability of 25% in a random direction
     Cod.prototype.move = function (p_map) {
         //console.log("Original position: " + JSON.stringify(this.m_position));
         var move = Math.random() < 0.25;
@@ -70,10 +73,8 @@ var Cod = (function (_super) {
     Cod.prototype.recruit = function (p_map) {
         if (p_map.getTile(this.m_position).getFishCapacity() > this.getSize()) {
             //Only recruit if the tile is not full
-            var noOfNewFish = Math.random() * this.m_fish.length;
-            for (var i = 0; i < noOfNewFish; i++) {
-                this.m_fish.push(new Fish(this.m_typeNumber));
-            }
+            var noOfNewFish = Math.floor(Math.random() * (this.getSize()));
+            this.m_ages[0] = noOfNewFish;
         }
     };
     return Cod;
