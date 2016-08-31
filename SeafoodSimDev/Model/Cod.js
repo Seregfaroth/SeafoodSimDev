@@ -70,7 +70,8 @@ var Cod = (function (_super) {
     Cod.prototype.recruit = function (p_map) {
         if (p_map.getTile(this.m_position).getFishCapacity() > this.getSize()) {
             //Only recruit if the tile is not full
-            var noOfNewFish = Math.random() * this.m_fish.length;
+            var tmp = this.m_fish.length;
+            var noOfNewFish = Math.random() * this.m_fish.length * 0.5;
             for (var i = 0; i < noOfNewFish; i++) {
                 this.m_fish.push(new Fish(this.m_typeNumber));
             }

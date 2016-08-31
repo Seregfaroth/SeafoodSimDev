@@ -3,7 +3,7 @@ var Map = (function () {
     function Map(p_size, p_noOfSchools, p_restrictions) {
         this.m_grid = [];
         this.m_schools = [];
-        this.m_fishingPercentage = 0.01;
+        this.m_fishingPercentage = 0.1;
         this.m_ships = [];
         this.m_restrictions = p_restrictions;
         this.generateMap(p_size);
@@ -101,6 +101,7 @@ var Map = (function () {
             //If the ship is not able to fish the full percentage
             percentage = p_capacity / noOfFishInTile;
         }
+        var tmp = this.getSchoolsInTile(p_position);
         this.getSchoolsInTile(p_position).forEach(function (s) {
             s.shuffleFish(); //May not be necessary to shuffle every time
             var fishInSchool = s.getFish();

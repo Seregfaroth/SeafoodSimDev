@@ -3,7 +3,7 @@ class Map {
     private m_grid: Tile[][] = [];
     public m_schools: School[] = [];
     private m_restrictions: Restrictions;
-    private m_fishingPercentage: number = 0.01;
+    private m_fishingPercentage: number = 0.1;
     private m_ships: Ship[] = [];
 
     public constructor(p_size: number, p_noOfSchools: number, p_restrictions: Restrictions) {
@@ -119,6 +119,7 @@ class Map {
             //If the ship is not able to fish the full percentage
             percentage = p_capacity / noOfFishInTile;
         }
+        var tmp = this.getSchoolsInTile(p_position);
         this.getSchoolsInTile(p_position).forEach(function (s) {
             s.shuffleFish(); //May not be necessary to shuffle every time
             var fishInSchool: Fish[] = s.getFish();

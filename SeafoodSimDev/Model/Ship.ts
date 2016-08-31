@@ -103,6 +103,7 @@ class Ship {
         this.m_path = [];
     }
     public fish(p_map: Map): void {
+        var tmp;
         var fishToAdd: Fish[] = p_map.fish(this.m_position, this.m_cargoCapacity - this.m_cargo.length);
         this.m_cargo = this.m_cargo.concat(fishToAdd);
         
