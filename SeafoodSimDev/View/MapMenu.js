@@ -55,6 +55,17 @@ var MapMenu = (function () {
         score.id = "socialScore";
         score.classList.add("score");
         scoreCell.appendChild(score);
+        var overallRow = scoreTable.insertRow();
+        var labelCell = overallRow.insertCell();
+        var overallScoreLabel = document.createElement("div");
+        overallScoreLabel.innerHTML = "Overall Score:";
+        labelCell.appendChild(overallScoreLabel);
+        var scoreCell = overallRow.insertCell();
+        var score = document.createElement("div");
+        score.innerHTML = "0";
+        score.id = "overallScore";
+        score.classList.add("score");
+        scoreCell.appendChild(score);
         //Create tax slider
         var legend = document.createElement("legend");
         legend.classList.add("menu-legend");
@@ -277,6 +288,7 @@ var MapMenu = (function () {
         $("#financialScore").text(Math.round(p_government.getScore().getFinancialScore()));
         $("#socialScore").text(Math.round(p_government.getScore().getSocialScore()));
         $("#environmentalScore").text(Math.round(p_government.getScore().getEnvironmentalScore()));
+        $("#overallScore").text(Math.round(p_government.getScore().getOverallScore()));
     };
     MapMenu.prototype.updateDate = function (p_model) {
         var year = 2016 + Math.floor(p_model.getTime() / 365);

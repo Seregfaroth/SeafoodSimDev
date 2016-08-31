@@ -2,6 +2,7 @@
     private m_financialScore: number;
     private m_socialScore: number;
     private m_environmentalScore: number;
+    private m_overallScore: number;
     private m_mininumSchool: number = 10;
     private m_minimumScore: number = -100000;
     private m_maximumScore: number = 9999999;
@@ -10,8 +11,11 @@
         this.m_financialScore = 0;
         this.m_environmentalScore = 0;
         this.m_socialScore = 0;
+        this.m_overallScore = 0;
     }
-
+    public getOverallScore(): number {
+        return this.m_overallScore;
+    }
     public getSocialScore(): number {
         return this.m_socialScore;
     }
@@ -58,6 +62,6 @@
         this.m_financialScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_financialScore));
         this.m_socialScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_socialScore));
 
-
+        this.m_overallScore = this.m_environmentalScore / 3 + this.m_financialScore / 3 + this.m_socialScore / 3;
     }
 }

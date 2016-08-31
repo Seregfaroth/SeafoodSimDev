@@ -6,7 +6,11 @@ var Score = (function () {
         this.m_financialScore = 0;
         this.m_environmentalScore = 0;
         this.m_socialScore = 0;
+        this.m_overallScore = 0;
     }
+    Score.prototype.getOverallScore = function () {
+        return this.m_overallScore;
+    };
     Score.prototype.getSocialScore = function () {
         return this.m_socialScore;
     };
@@ -46,6 +50,7 @@ var Score = (function () {
         this.m_environmentalScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_environmentalScore));
         this.m_financialScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_financialScore));
         this.m_socialScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_socialScore));
+        this.m_overallScore = this.m_environmentalScore / 3 + this.m_financialScore / 3 + this.m_socialScore / 3;
     };
     return Score;
 }());

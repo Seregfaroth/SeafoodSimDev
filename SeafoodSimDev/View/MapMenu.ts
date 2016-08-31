@@ -64,6 +64,18 @@
         score.classList.add("score");
         scoreCell.appendChild(score);
 
+        var overallRow: HTMLTableRowElement = scoreTable.insertRow();
+        var labelCell: HTMLTableCellElement = overallRow.insertCell();
+        var overallScoreLabel: HTMLDivElement = document.createElement("div");
+        overallScoreLabel.innerHTML = "Overall Score:";
+        labelCell.appendChild(overallScoreLabel);
+        var scoreCell: HTMLTableCellElement = overallRow.insertCell();
+        var score: HTMLDivElement = document.createElement("div");
+        score.innerHTML = "0";
+        score.id = "overallScore"; 
+        score.classList.add("score");
+        scoreCell.appendChild(score);
+
         //Create tax slider
 
 
@@ -314,6 +326,7 @@
         $("#financialScore").text(Math.round(p_government.getScore().getFinancialScore()));
         $("#socialScore").text(Math.round(p_government.getScore().getSocialScore()));
         $("#environmentalScore").text(Math.round(p_government.getScore().getEnvironmentalScore()));
+        $("#overallScore").text(Math.round(p_government.getScore().getOverallScore()));
     }
 
     public updateDate(p_model: Model): void {
