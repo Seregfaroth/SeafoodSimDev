@@ -1,4 +1,8 @@
 ﻿class MapMenu {
+    private m_monthNames: string[] = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
     constructor(p_ShipOwners: ShipOwner[], p_landingSites: LandingSite[], p_taxingRate: number) {
         console.log("construct MapMenu");
         var menuDiv: HTMLElement = document.createElement("div");
@@ -8,6 +12,8 @@
         menuDiv.style.height = "70%";
         menuDiv.classList.add("ui-widget-content");
         document.getElementById("mainDiv").appendChild(menuDiv);
+
+
 
         //Create score view
         var scoreLegend: HTMLLegendElement = document.createElement("legend");
@@ -25,7 +31,7 @@
         var labelCell: HTMLTableCellElement = financialRow.insertCell();
         var finacialScoreLabel: HTMLDivElement = document.createElement("div");
         finacialScoreLabel.innerHTML = "Financial Score:";
-        
+
         labelCell.appendChild(finacialScoreLabel);
         var scoreCell: HTMLTableCellElement = financialRow.insertCell();
         var score: HTMLDivElement = document.createElement("div");
@@ -59,7 +65,7 @@
         scoreCell.appendChild(score);
 
         //Create tax slider
-       
+
 
         var legend: HTMLElement = document.createElement("legend");
         legend.classList.add("menu-legend");
@@ -72,16 +78,16 @@
         var table: any = document.createElement("TABLE");
         table.classList.add("menu-text");
         legend.appendChild(table);
-        var row: HTMLTableRowElement = table.insertRow();
+        var dateRow: HTMLTableRowElement = table.insertRow();
 
-        var cell: HTMLTableCellElement = row.insertCell();
+        var cell: HTMLTableCellElement = dateRow.insertCell();
         var valueDiv: HTMLDivElement = document.createElement("div");
         cell.appendChild(valueDiv);
-        valueDiv.innerHTML = p_taxingRate*100+ "%";
+        valueDiv.innerHTML = p_taxingRate * 100 + "%";
         cell.className = "slider-value-cell";
         valueDiv.id = "taxValue";
 
-        var cell = row.insertCell();
+        var cell = dateRow.insertCell();
         var slider: HTMLElement = document.createElement("div");
         slider.id = "taxSlider";
         slider.style.width = "70%";
@@ -92,7 +98,7 @@
         $("#taxSlider").slider();
         $("#taxSlider").slider("option", "min", 0);
         $("#taxSlider").slider("option", "max", 100);
-        $("#taxSlider").slider("value",p_taxingRate*100);
+        $("#taxSlider").slider("value", p_taxingRate * 100);
 
         //Create quote sliders
         var quoteLegend: HTMLElement = document.createElement("legend");
@@ -107,20 +113,20 @@
         quoteLegend.appendChild(quoteTable);
 
         for (var i = 0; i < p_ShipOwners.length; i++) {
-            var row: HTMLTableRowElement = quoteTable.insertRow();
-            var cell: HTMLTableCellElement = row.insertCell();
+            var dateRow: HTMLTableRowElement = quoteTable.insertRow();
+            var cell: HTMLTableCellElement = dateRow.insertCell();
             var quoteLabel: HTMLElement = document.createElement("div");
             quoteLabel.innerHTML = p_ShipOwners[i].getID() + ":";
             quoteLabel.style.cssFloat = "left";
             cell.appendChild(quoteLabel);
 
-            cell = row.insertCell();
+            cell = dateRow.insertCell();
             cell.className = "slider-value-cell";
             var sliderValue: HTMLDivElement = document.createElement("div");
             sliderValue.id = "quoteValue" + p_ShipOwners[i].getID();
             cell.appendChild(sliderValue);
 
-            cell = row.insertCell();
+            cell = dateRow.insertCell();
             cell.className = "slider-cell";
             var quoteSlider: HTMLElement = document.createElement("div");
             quoteSlider.id = "quoteSlider" + p_ShipOwners[i].getID();
@@ -147,20 +153,20 @@
         effortLegend.appendChild(effortTable);
 
         for (var i = 0; i < p_ShipOwners.length; i++) {
-            var row: HTMLTableRowElement = effortTable.insertRow();
-            var cell: HTMLTableCellElement = row.insertCell();
+            var dateRow: HTMLTableRowElement = effortTable.insertRow();
+            var cell: HTMLTableCellElement = dateRow.insertCell();
             var effortLabel: HTMLElement = document.createElement("div");
             effortLabel.innerHTML = p_ShipOwners[i].getID() + ":";
             effortLabel.style.cssFloat = "left";
             cell.appendChild(effortLabel);
 
-            cell = row.insertCell();
+            cell = dateRow.insertCell();
             cell.className = "slider-value-cell";
             var sliderValue: HTMLDivElement = document.createElement("div");
             sliderValue.id = "effortValue" + p_ShipOwners[i].getID();
             cell.appendChild(sliderValue);
 
-            cell = row.insertCell();
+            cell = dateRow.insertCell();
             cell.className = "slider-cell";
             var slider: HTMLElement = document.createElement("div");
             slider.id = "effortSlider" + p_ShipOwners[i].getID();
@@ -186,20 +192,20 @@
         landingLegend.appendChild(landingTable);
 
         for (var i = 0; i < p_landingSites.length; i++) {
-            var row: HTMLTableRowElement = landingTable.insertRow();
-            var cell: HTMLTableCellElement = row.insertCell();
+            var dateRow: HTMLTableRowElement = landingTable.insertRow();
+            var cell: HTMLTableCellElement = dateRow.insertCell();
             var label: HTMLElement = document.createElement("div");
             label.innerHTML = p_landingSites[i].getID() + ":";
             label.style.cssFloat = "left";
             cell.appendChild(label);
 
-            cell = row.insertCell();
+            cell = dateRow.insertCell();
             cell.className = "slider-value-cell";
             var sliderValue: HTMLDivElement = document.createElement("div");
             sliderValue.id = "landingValue" + p_landingSites[i].getID();
             cell.appendChild(sliderValue);
 
-            cell = row.insertCell();
+            cell = dateRow.insertCell();
             cell.className = "slider-cell";
             var slider: HTMLElement = document.createElement("div");
             slider.id = "landingSlider" + p_landingSites[i].getID();
@@ -225,16 +231,16 @@
         var table: any = document.createElement("TABLE");
         table.classList.add("menu-text");
         legend.appendChild(table);
-        var row: HTMLTableRowElement = table.insertRow();
+        var dateRow: HTMLTableRowElement = table.insertRow();
 
-        var cell: HTMLTableCellElement = row.insertCell();
+        var cell: HTMLTableCellElement = dateRow.insertCell();
         var valueDiv: HTMLDivElement = document.createElement("div");
         cell.appendChild(valueDiv);
         valueDiv.innerHTML = "1";
         cell.className = "slider-value-cell";
         valueDiv.id = "maxNoShips";
 
-        var cell = row.insertCell();
+        var cell = dateRow.insertCell();
         var slider: HTMLElement = document.createElement("div");
         slider.id = "noOfShipsSlider";
         slider.style.width = "70%";
@@ -246,7 +252,7 @@
         $("#noOfShipsSlider").slider("option", "min", 0);
         $("#noOfShipsSlider").slider("option", "max", 50);
         $("#noOfShipsSlider").slider("value", 1);
-        
+
         //Create buttons
         var buttonsDiv: HTMLElement = document.createElement("legend");
         buttonsDiv.classList.add("menu-legend");
@@ -279,12 +285,46 @@
         fastForwardButton.classList.add("fa");
         fastForwardButton.classList.add("fa-fast-forward");
         fastForwardButton.classList.add("ui-button");
-        buttonsDiv.appendChild(fastForwardButton); 
+        buttonsDiv.appendChild(fastForwardButton);
+
+        // Create time view
+        var timeLegend: HTMLLegendElement = document.createElement("legend");
+        menuDiv.appendChild(timeLegend);
+        var timeTable: HTMLTableElement = document.createElement("table");
+        timeTable.classList.add("menu-text");
+        timeLegend.appendChild(timeTable);
+
+        var dateRow: HTMLTableRowElement = timeTable.insertRow();
+        var monthCell: HTMLTableCellElement = dateRow.insertCell();
+        var monthDiv: HTMLDivElement = document.createElement("div");
+        monthDiv.id = "month";
+        monthDiv.innerHTML = "January";
+        monthDiv.classList.add("date");
+        monthCell.appendChild(monthDiv);
+        var yearCell: HTMLTableCellElement = dateRow.insertCell();
+        var yearDiv: HTMLDivElement = document.createElement("div");
+        yearDiv.id = "year";
+        yearDiv.innerHTML = "2016";
+        yearCell.appendChild(yearDiv);
+        yearDiv.classList.add("date");
     }
+        
     
     public updateScore(p_government: Government): void {
         $("#financialScore").text(Math.round(p_government.getScore().getFinancialScore()));
         $("#socialScore").text(Math.round(p_government.getScore().getSocialScore()));
         $("#environmentalScore").text(Math.round(p_government.getScore().getEnvironmentalScore()));
+    }
+
+    public updateDate(p_model: Model): void {
+        var year: number = 2016 + Math.floor(p_model.getTime() / 365);
+        var month: number = Math.floor((p_model.getTime() % 365)/30);
+        var monthName: string = this.m_monthNames[month];
+
+        $("#year").text(year);
+        $("#month").text(monthName);
+        console.log("time: " + p_model.getTime());
+        console.log("year: " + year);
+        console.log("month: " + month);
     }
 }

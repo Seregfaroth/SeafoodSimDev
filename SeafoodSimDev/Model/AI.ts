@@ -27,9 +27,9 @@ class AI {
     private runShips(p_shipOwner: ShipOwner, p_map: Map): void {
         var ai: AI = this;
         p_shipOwner.getShips().forEach(function (ship) {
-            console.log("state: " + ship.getState().toString());
-            console.log("cargo: " + ship.getCargoSize());
-            console.log("fuel: " + ship.getFuel());
+            //console.log("state: " + ship.getState().toString());
+            //console.log("cargo: " + ship.getCargoSize());
+            //console.log("fuel: " + ship.getFuel());
             //console.log("position: " + ship.getPosition().row + ", " + ship.getPosition().col);
             if (ship.getFuel() === 0) {
                 debugger;

@@ -1,5 +1,8 @@
 var MapMenu = (function () {
     function MapMenu(p_ShipOwners, p_landingSites, p_taxingRate) {
+        this.m_monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
         console.log("construct MapMenu");
         var menuDiv = document.createElement("div");
         menuDiv.id = "menuDiv";
@@ -63,14 +66,14 @@ var MapMenu = (function () {
         var table = document.createElement("TABLE");
         table.classList.add("menu-text");
         legend.appendChild(table);
-        var row = table.insertRow();
-        var cell = row.insertCell();
+        var dateRow = table.insertRow();
+        var cell = dateRow.insertCell();
         var valueDiv = document.createElement("div");
         cell.appendChild(valueDiv);
         valueDiv.innerHTML = p_taxingRate * 100 + "%";
         cell.className = "slider-value-cell";
         valueDiv.id = "taxValue";
-        var cell = row.insertCell();
+        var cell = dateRow.insertCell();
         var slider = document.createElement("div");
         slider.id = "taxSlider";
         slider.style.width = "70%";
@@ -94,18 +97,18 @@ var MapMenu = (function () {
         quoteTable.classList.add("menu-text");
         quoteLegend.appendChild(quoteTable);
         for (var i = 0; i < p_ShipOwners.length; i++) {
-            var row = quoteTable.insertRow();
-            var cell = row.insertCell();
+            var dateRow = quoteTable.insertRow();
+            var cell = dateRow.insertCell();
             var quoteLabel = document.createElement("div");
             quoteLabel.innerHTML = p_ShipOwners[i].getID() + ":";
             quoteLabel.style.cssFloat = "left";
             cell.appendChild(quoteLabel);
-            cell = row.insertCell();
+            cell = dateRow.insertCell();
             cell.className = "slider-value-cell";
             var sliderValue = document.createElement("div");
             sliderValue.id = "quoteValue" + p_ShipOwners[i].getID();
             cell.appendChild(sliderValue);
-            cell = row.insertCell();
+            cell = dateRow.insertCell();
             cell.className = "slider-cell";
             var quoteSlider = document.createElement("div");
             quoteSlider.id = "quoteSlider" + p_ShipOwners[i].getID();
@@ -130,18 +133,18 @@ var MapMenu = (function () {
         effortTable.classList.add("menu-text");
         effortLegend.appendChild(effortTable);
         for (var i = 0; i < p_ShipOwners.length; i++) {
-            var row = effortTable.insertRow();
-            var cell = row.insertCell();
+            var dateRow = effortTable.insertRow();
+            var cell = dateRow.insertCell();
             var effortLabel = document.createElement("div");
             effortLabel.innerHTML = p_ShipOwners[i].getID() + ":";
             effortLabel.style.cssFloat = "left";
             cell.appendChild(effortLabel);
-            cell = row.insertCell();
+            cell = dateRow.insertCell();
             cell.className = "slider-value-cell";
             var sliderValue = document.createElement("div");
             sliderValue.id = "effortValue" + p_ShipOwners[i].getID();
             cell.appendChild(sliderValue);
-            cell = row.insertCell();
+            cell = dateRow.insertCell();
             cell.className = "slider-cell";
             var slider = document.createElement("div");
             slider.id = "effortSlider" + p_ShipOwners[i].getID();
@@ -166,18 +169,18 @@ var MapMenu = (function () {
         landingTable.classList.add("menu-text");
         landingLegend.appendChild(landingTable);
         for (var i = 0; i < p_landingSites.length; i++) {
-            var row = landingTable.insertRow();
-            var cell = row.insertCell();
+            var dateRow = landingTable.insertRow();
+            var cell = dateRow.insertCell();
             var label = document.createElement("div");
             label.innerHTML = p_landingSites[i].getID() + ":";
             label.style.cssFloat = "left";
             cell.appendChild(label);
-            cell = row.insertCell();
+            cell = dateRow.insertCell();
             cell.className = "slider-value-cell";
             var sliderValue = document.createElement("div");
             sliderValue.id = "landingValue" + p_landingSites[i].getID();
             cell.appendChild(sliderValue);
-            cell = row.insertCell();
+            cell = dateRow.insertCell();
             cell.className = "slider-cell";
             var slider = document.createElement("div");
             slider.id = "landingSlider" + p_landingSites[i].getID();
@@ -201,14 +204,14 @@ var MapMenu = (function () {
         var table = document.createElement("TABLE");
         table.classList.add("menu-text");
         legend.appendChild(table);
-        var row = table.insertRow();
-        var cell = row.insertCell();
+        var dateRow = table.insertRow();
+        var cell = dateRow.insertCell();
         var valueDiv = document.createElement("div");
         cell.appendChild(valueDiv);
         valueDiv.innerHTML = "1";
         cell.className = "slider-value-cell";
         valueDiv.id = "maxNoShips";
-        var cell = row.insertCell();
+        var cell = dateRow.insertCell();
         var slider = document.createElement("div");
         slider.id = "noOfShipsSlider";
         slider.style.width = "70%";
@@ -250,11 +253,40 @@ var MapMenu = (function () {
         fastForwardButton.classList.add("fa-fast-forward");
         fastForwardButton.classList.add("ui-button");
         buttonsDiv.appendChild(fastForwardButton);
+        // Create time view
+        var timeLegend = document.createElement("legend");
+        menuDiv.appendChild(timeLegend);
+        var timeTable = document.createElement("table");
+        timeTable.classList.add("menu-text");
+        timeLegend.appendChild(timeTable);
+        var dateRow = timeTable.insertRow();
+        var monthCell = dateRow.insertCell();
+        var monthDiv = document.createElement("div");
+        monthDiv.id = "month";
+        monthDiv.innerHTML = "January";
+        monthDiv.classList.add("date");
+        monthCell.appendChild(monthDiv);
+        var yearCell = dateRow.insertCell();
+        var yearDiv = document.createElement("div");
+        yearDiv.id = "year";
+        yearDiv.innerHTML = "2016";
+        yearCell.appendChild(yearDiv);
+        yearDiv.classList.add("date");
     }
     MapMenu.prototype.updateScore = function (p_government) {
         $("#financialScore").text(Math.round(p_government.getScore().getFinancialScore()));
         $("#socialScore").text(Math.round(p_government.getScore().getSocialScore()));
         $("#environmentalScore").text(Math.round(p_government.getScore().getEnvironmentalScore()));
+    };
+    MapMenu.prototype.updateDate = function (p_model) {
+        var year = 2016 + Math.floor(p_model.getTime() / 365);
+        var month = Math.floor((p_model.getTime() % 365) / 30);
+        var monthName = this.m_monthNames[month];
+        $("#year").text(year);
+        $("#month").text(monthName);
+        console.log("time: " + p_model.getTime());
+        console.log("year: " + year);
+        console.log("month: " + month);
     };
     return MapMenu;
 }());

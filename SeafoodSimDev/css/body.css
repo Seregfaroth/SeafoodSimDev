@@ -29,4 +29,10 @@
     padding: 15px;
     min-width: 70px;
 }
+.date {
+    padding-left: 14px;
+    padding-bottom: 14px;
+    font-weight: bold;
+    min-width: 100px;
+}
 

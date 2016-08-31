@@ -10,6 +10,7 @@ var MainView = (function () {
     MainView.prototype.updateMainView = function (p_model) {
         //console.log("updating mainView");
         this.m_mapMenu.updateScore(p_model.getGovernment());
+        this.m_mapMenu.updateDate(p_model);
         this.m_mapView.updateMapView(p_model.getMap());
     };
     return MainView;

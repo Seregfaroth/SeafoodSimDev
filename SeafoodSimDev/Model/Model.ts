@@ -8,6 +8,7 @@ class Model {
     private m_shipOwners: ShipOwner[] = [];
     private m_goverment: Government;
     private m_ai: AI;
+    private m_time: number = 0;
 
     constructor() {
         console.log("constructing model");
@@ -19,6 +20,7 @@ class Model {
     }
 
     public run() {
+        this.m_time++;
         //console.log("running model");
         this.m_map.run();
         for (var i = 0; i < this.m_shipOwners.length; i++) {
@@ -34,7 +36,9 @@ class Model {
     public getMap(): Map {
         return this.m_map;
     }
-
+    public getTime(): number {
+        return this.m_time;
+    }
     public getGovernment(): Government {
         return this.m_goverment;
     }

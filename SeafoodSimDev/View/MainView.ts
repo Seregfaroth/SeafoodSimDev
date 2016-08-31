@@ -15,6 +15,7 @@ class MainView {
     updateMainView(p_model: Model) {
         //console.log("updating mainView");
         this.m_mapMenu.updateScore(p_model.getGovernment());
+        this.m_mapMenu.updateDate(p_model);
         this.m_mapView.updateMapView(p_model.getMap());
     }
 

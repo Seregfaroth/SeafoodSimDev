@@ -5,6 +5,7 @@
 var Model = (function () {
     function Model() {
         this.m_shipOwners = [];
+        this.m_time = 0;
         console.log("constructing model");
         var restrictions = new Restrictions();
         this.m_map = new Map(10, 8, restrictions);
@@ -13,6 +14,7 @@ var Model = (function () {
         this.createShipOwner(new Point2(3, 3), 100000000000);
     }
     Model.prototype.run = function () {
+        this.m_time++;
         //console.log("running model");
         this.m_map.run();
         for (var i = 0; i < this.m_shipOwners.length; i++) {
@@ -25,6 +27,9 @@ var Model = (function () {
     };
     Model.prototype.getMap = function () {
         return this.m_map;
+    };
+    Model.prototype.getTime = function () {
+        return this.m_time;
     };
     Model.prototype.getGovernment = function () {
         return this.m_goverment;
