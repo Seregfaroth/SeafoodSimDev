@@ -48,7 +48,7 @@ class AI {
            else  if (ship.hasReachedGoal()) {
                 //If ship has reached a previous sat goal
                 ai.actOnGoal(ship, p_map);
-            }
+            } 
             else {
                 try {
                     ship.followPath(p_map)

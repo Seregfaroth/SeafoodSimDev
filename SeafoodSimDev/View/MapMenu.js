@@ -86,7 +86,7 @@ var MapMenu = (function () {
         var quoteLegend = document.createElement("legend");
         quoteLegend.classList.add("menu-legend");
         var quoteLabel = document.createElement("div");
-        quoteLabel.innerHTML = "Quotes";
+        quoteLabel.innerHTML = "Quotas";
         quoteLabel.className = "legend-header";
         quoteLegend.appendChild(quoteLabel);
         menuDiv.appendChild(quoteLegend);
@@ -154,11 +154,11 @@ var MapMenu = (function () {
             $("#effortSlider" + p_ShipOwners[i].getID()).slider("option", "max", 100);
             sliderValue.innerHTML = $("#effortSlider" + p_ShipOwners[i].getID()).slider("option", "value");
         }
-        //Create landing distrubution sliders
+        //Create landing distribution sliders
         var landingLegend = document.createElement("legend");
         landingLegend.classList.add("menu-legend");
         var landingLabel = document.createElement("div");
-        landingLabel.innerHTML = "Landing Distrubution";
+        landingLabel.innerHTML = "Landing Distribution";
         landingLabel.className = "legend-header";
         landingLegend.appendChild(landingLabel);
         menuDiv.appendChild(landingLegend);
@@ -253,7 +253,7 @@ var MapMenu = (function () {
     }
     MapMenu.prototype.updateScore = function (p_government) {
         $("#financialScore").text(Math.round(p_government.getScore().getFinancialScore()));
-        $("#socailScore").text(Math.round(p_government.getScore().getSocialScore()));
+        $("#socialScore").text(Math.round(p_government.getScore().getSocialScore()));
         $("#environmentalScore").text(Math.round(p_government.getScore().getEnvironmentalScore()));
     };
     return MapMenu;

@@ -21,12 +21,22 @@ var Score = (function () {
         //Financial score
         p_map.getLandingSites().forEach(function (ls) {
             score.m_financialScore -= ls.getRunningCost();
+            var tmp = ls.tax(p_gov.getTaxingRate());
+            var tmp2 = ls.getRunningCost();
             score.m_financialScore += ls.tax(p_gov.getTaxingRate());
         });
         p_map.getFuelSites().forEach(function (fs) {
             score.m_financialScore -= fs.getRunningCost();
         });
         //Social score
+        this.m_socialScore = 0;
+        p_map.getLandingSites().forEach(function (ls) {
+            score.m_socialScore += 10;
+        });
+        p_map.getFuelSites().forEach(function (fs) {
+            score.m_socialScore += 5;
+        });
+        score.m_socialScore += p_map.getNoOfShips() * 8;
         //Environmental score
         this.m_environmentalScore = 0;
         p_map.getSchools().forEach(function (s) {
