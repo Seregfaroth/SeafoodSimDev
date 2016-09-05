@@ -20,7 +20,7 @@ var Model = (function () {
         for (var i = 0; i < this.m_shipOwners.length; i++) {
             this.m_ai.run(this.m_shipOwners[i], this.m_map);
         }
-        this.m_goverment.getScore().updateScore(this.m_map, this.m_goverment);
+        this.m_goverment.getScore().updateScore(this.m_map, this.m_goverment, this.m_time);
     };
     Model.prototype.getShipOwners = function () {
         return this.m_shipOwners;

@@ -11,7 +11,7 @@ var Site = (function (_super) {
         this.m_shipCapacity = p_shipCapacity;
         this.m_resourceCapacity = p_resourceCapacity;
         this.m_processPerDay = p_processPerDay;
-        this.m_runningCost = p_processPerDay * 0.5;
+        this.m_runningCost = p_processPerDay * 0.005;
         this.m_id = p_id;
     }
     Site.prototype.getID = function () {

@@ -44,8 +44,8 @@ var Map = (function () {
     };
     Map.prototype.generateMap = function (p_size) {
         var prices = {};
-        prices[0] = 1000;
-        prices[1] = 500;
+        prices[FishType.Cod] = 10;
+        prices[FishType.Mackerel] = 5;
         for (var i = 0; i < p_size; i++) {
             var row = [];
             for (var j = 0; j < p_size; j++) {
@@ -63,13 +63,13 @@ var Map = (function () {
                 this.m_grid[r][c] = new Land();
             }
         }
-        this.m_grid[p_size - 1][Math.floor(p_size / 2 + p_size / 5) - 1] = new LandingSite(2, 100, 20, prices, "landingSite0");
+        this.m_grid[p_size - 1][Math.floor(p_size / 2 + p_size / 5) - 1] = new LandingSite(2, 10000, 2000, prices, "landingSite0");
         for (var r = Math.floor(p_size / 3); r < Math.floor(p_size / 2); r++) {
             for (var c = Math.floor(p_size / 3); c < Math.floor(p_size / 2); c++) {
                 this.m_grid[r][c] = new Land();
             }
         }
-        this.m_grid[Math.floor(p_size / 3)][Math.floor(p_size / 2)] = new LandingSite(2, 100, 20, prices, "landingSite1");
+        this.m_grid[Math.floor(p_size / 3)][Math.floor(p_size / 2)] = new LandingSite(2, 10000, 2000, prices, "landingSite1");
         this.m_grid[Math.floor(p_size / 2)][Math.floor(p_size / 3)] = new FuelSite(2, 60000, 50, 10, "fuelSite0");
         for (var r = Math.floor(p_size / 10) + 5; r < Math.floor(p_size / 6) + 5; r++) {
             this.m_grid[r][p_size - Math.floor(p_size / 8)] = new Land();

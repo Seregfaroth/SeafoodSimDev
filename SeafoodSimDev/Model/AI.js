@@ -25,11 +25,14 @@ var AI = (function () {
     };
     AI.prototype.runShips = function (p_shipOwner, p_map) {
         var ai = this;
+        var n = 0;
         p_shipOwner.getShips().forEach(function (ship) {
-            //console.log("state: " + ship.getState().toString());
+            console.log("ship " + n);
+            console.log("state: " + ship.getState().toString());
             //console.log("cargo: " + ship.getCargoSize());
             //console.log("fuel: " + ship.getFuel());
             //console.log("position: " + ship.getPosition().row + ", " + ship.getPosition().col);
+            n++;
             if (ship.getFuel() === 0) {
                 debugger;
             }
