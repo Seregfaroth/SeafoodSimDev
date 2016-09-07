@@ -2,13 +2,16 @@
 /// <reference path = "Government.ts"/>
 /// <reference path = "ShipOwner.ts"/>
 /// <reference path = "Restrictions.ts"/>
+/// <reference path = "EndScreenStats.ts"/>
 var Model = (function () {
     function Model() {
         this.m_shipOwners = [];
         this.m_time = 0;
+        this.m_statFreq = 30;
         console.log("constructing model");
         var restrictions = new Restrictions();
-        this.m_map = new Map(20, 20, restrictions);
+        this.m_map = new Map(15, 2, restrictions);
+        //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions);
         this.m_ai = new AI();
         this.createShipOwner(new Point2(3, 3), 100000000000);

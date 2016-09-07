@@ -44,10 +44,10 @@ class TKN_Camera {
 
 class TKN_Renderer {
     private m_renderer: THREE.WebGLRenderer;
-    constructor(p_div: string) {
+    constructor(p_div: string, p_width: number, p_height: number) {
         console.log("Construct TKN_Rendeerer");
         this.m_renderer = new THREE.WebGLRenderer();
-        this.m_renderer.setSize(1000, 1000);
+        this.m_renderer.setSize(p_width, p_height);
         //document.getElementById(p_div).appendChild(this.m_renderer.domElement);
         document.body.insertBefore(this.m_renderer.domElement, document.body.lastChild);
         

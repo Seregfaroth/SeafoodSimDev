@@ -5,6 +5,26 @@ var School = (function () {
         this.m_ages = [];
         this.m_position = p_position;
     }
+    School.prototype.getBiomass = function () {
+        var b = 0;
+        for (var _i = 0, _a = this.m_ages; _i < _a.length; _i++) {
+            var age = _a[_i];
+            b += age;
+        }
+        return b;
+    };
+    School.prototype.getMsy = function () {
+        return this.m_msy;
+    };
+    School.prototype.setMsy = function (p_msy) {
+        this.m_msy = p_msy;
+    };
+    School.prototype.getMey = function () {
+        return this.m_mey;
+    };
+    School.prototype.setMey = function (p_mey) {
+        this.m_mey = p_mey;
+    };
     School.prototype.getSize = function () {
         var size = 0;
         this.m_ages.forEach(function (n) {

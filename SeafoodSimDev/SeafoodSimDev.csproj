@@ -50,6 +50,7 @@
     <TypeScriptCompile Include="Model\AI.ts" />
     <TypeScriptCompile Include="Model\Cod.ts" />
     <TypeScriptCompile Include="Model\declarations\qunit.d.ts" />
+    <TypeScriptCompile Include="Model\EndScreenStats.ts" />
     <TypeScriptCompile Include="Model\Fish.ts" />
     <TypeScriptCompile Include="Model\FuelSite.ts" />
     <TypeScriptCompile Include="Model\Government.ts" />

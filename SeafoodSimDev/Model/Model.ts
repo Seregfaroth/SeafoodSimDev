@@ -2,6 +2,7 @@
 /// <reference path = "Government.ts"/>
 /// <reference path = "ShipOwner.ts"/>
 /// <reference path = "Restrictions.ts"/>
+/// <reference path = "EndScreenStats.ts"/>
 
 class Model {
     private m_map: Map;
@@ -9,11 +10,15 @@ class Model {
     private m_goverment: Government;
     private m_ai: AI;
     private m_time: number = 0;
+    private m_stats: EndScreenStats;
+    private m_statFreq = 30;
 
     constructor() {
         console.log("constructing model");
+        
         var restrictions: Restrictions = new Restrictions();
-        this.m_map = new Map(20, 20, restrictions);
+        this.m_map = new Map(15, 2, restrictions);
+        //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions);
         this.m_ai = new AI();
         this.createShipOwner(new Point2(3, 3), 100000000000);
@@ -22,13 +27,14 @@ class Model {
     public run() {
         this.m_time++;
         //console.log("running model");
+        
         this.m_map.run();
         for (var i = 0; i < this.m_shipOwners.length; i++) {
             this.m_ai.run(this.m_shipOwners[i], this.m_map);
         }
         this.m_goverment.getScore().updateScore(this.m_map, this.m_goverment);
     }
-
+    
     public getShipOwners(): ShipOwner[] {
         return this.m_shipOwners;
     }
