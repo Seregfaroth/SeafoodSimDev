@@ -15,7 +15,7 @@ var Model = (function () {
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions);
         this.m_ai = new AI();
-        this.createShipOwner(new Point2(3, 3), 100000000000);
+        this.createShipOwner(new Point2(3, 3), 30000);
         this.updateStats();
     }
     Model.prototype.updateStats = function () {
@@ -55,7 +55,7 @@ var Model = (function () {
         return this.m_goverment;
     };
     Model.prototype.createShipOwner = function (p_startingPoint, p_balance) {
-        this.m_shipOwners.push(new ShipOwner(p_startingPoint, "shipOwner" + this.m_shipOwners.length, p_balance));
+        this.m_shipOwners.push(new ShipOwner(this.m_goverment, p_startingPoint, "shipOwner" + this.m_shipOwners.length, p_balance));
     };
     return Model;
 }());

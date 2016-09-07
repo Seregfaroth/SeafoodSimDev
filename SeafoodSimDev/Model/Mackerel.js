@@ -7,8 +7,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var Mackerel = (function (_super) {
     __extends(Mackerel, _super);
-    function Mackerel(p_size, p_position) {
-        _super.call(this, p_size, p_position);
+    function Mackerel(p_size, p_msy, p_position) {
+        _super.call(this, p_size, p_msy, p_position);
         this.m_maxAge = 18; // OBS Ship also uses this value. It is hardcoded there at the moment
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);

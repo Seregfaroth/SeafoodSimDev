@@ -1,9 +1,10 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 /// <reference path="Fish.ts"/>
 var School = (function () {
-    function School(p_size, p_position) {
+    function School(p_size, p_msy, p_position) {
         this.m_ages = [];
         this.m_position = p_position;
+        this.m_msy = p_msy;
     }
     School.prototype.getBiomass = function () {
         var b = 0;

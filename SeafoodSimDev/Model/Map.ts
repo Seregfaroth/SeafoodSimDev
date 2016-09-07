@@ -46,15 +46,15 @@ class Map {
             placedInSamePlace++;
             var tile: Tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(2000, point));
+                this.addSchool(new Cod(2000, 1500, point));
                 schoolsPlaced++;
             }
-
         }
     }
     public addSchool(p_school: School): void {
         this.m_schools.push(p_school);
     }
+    
     private generateMap(p_size: number) {
 
         var prices: { [fishType: number]: number } = {}
@@ -100,8 +100,6 @@ class Map {
                 this.m_grid[r][c] = new Land();
             }
         }
-
-
     }
 
     public addShip(ship: Ship) {

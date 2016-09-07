@@ -1,7 +1,7 @@
 ﻿// <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class AI {
     private m_pathFinder: TKN_PathFinding = new TKN_PathFinding();
-     private m_balanceToBuyShip: number = 1000000;
+     private m_balanceToBuyShip: number = 20000;
      private m_balanceToSellShip: number = 0;
      private m_fishingPath: Point2[] = [new Point2(2, 0),new Point2(1, 0), new Point2(1, 1), new Point2(1, 2), new Point2(1, 3), new Point2(1, 4), new Point2(2, 4),
         new Point2(3, 4), new Point2(3, 3), new Point2(3, 2), new Point2(3, 1), new Point2(3, 0), new Point2(2, 0)];
@@ -147,7 +147,7 @@ class AI {
         //var path: Point2[] = this.pathToNearestFishingArea(p_ship.getPosition(), p_map);
         p_ship.setPath(p_path);
         p_ship.setState(shipState.goingToFish);
-        p_ship.history.push("going to fish");
+        p_ship.history[0].push("going to fish");
     }
     private goLand(p_ship: Ship, p_map: Map, p_path?: Point2[]): void {
         if (!p_path) {
@@ -155,7 +155,7 @@ class AI {
         }
         p_ship.setPath(p_path);
         p_ship.setState(shipState.goingToLand);
-        p_ship.history.push("going to land");
+        p_ship.history[0].push("going to land");
     }
     private goRefuel(p_ship: Ship, p_map: Map, p_path?: Point2[]): void {
         if (!p_path) {
@@ -163,13 +163,13 @@ class AI {
         }
         p_ship.setPath(p_path);
         p_ship.setState(shipState.goingToRefuel);
-        p_ship.history.push("going to refuel");
+        p_ship.history[0].push("going to refuel");
     }
 
     private canReach(p_ship: Ship, p_map: Map, p_previousPath: Point2[]): boolean {
         var fuelPath: Point2[] = this.pathToNearestFuelSite(p_previousPath[p_previousPath.length - 1], p_map);
         var sailingDist: number = p_previousPath.length - 1 + fuelPath.length;
-        p_ship.history.push("checking if ship can sail " + sailingDist + " with " + p_ship.getFuel() + " fuel :" + (p_ship.getFuel() > sailingDist * p_ship.getFuelPerMove()));
+        p_ship.history[0].push("checking if ship can sail " + sailingDist + " with " + p_ship.getFuel() + " fuel :" + (p_ship.getFuel() > sailingDist * p_ship.getFuelPerMove()));
         p_ship.history.push(fuelPath);
         return (p_ship.getFuel() > sailingDist * p_ship.getFuelPerMove());
     }

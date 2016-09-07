@@ -7,8 +7,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var Cod = (function (_super) {
     __extends(Cod, _super);
-    function Cod(p_size, p_position) {
-        _super.call(this, p_size, p_position);
+    function Cod(p_size, p_msy, p_position) {
+        _super.call(this, p_size, p_msy, p_position);
         this.m_movingRadius = 3;
         this.m_origin = p_position;
         this.m_maxAge = 8; // OBS Ship also uses this value. It is hardcoded there at the moment

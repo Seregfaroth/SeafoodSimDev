@@ -8,9 +8,9 @@ abstract class School {
     protected m_msy: number;
     protected m_mey: number;
 
-    public constructor(p_size: number, p_position: Point2) {
+    public constructor(p_size: number, p_msy: number, p_position: Point2) {
         this.m_position = p_position;
-        
+        this.m_msy = p_msy;        
     }
 
     public getBiomass(): number {

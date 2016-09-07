@@ -62,7 +62,13 @@
         //Environmental score
         this.m_environmentalScore = 0;
         p_map.getSchools().forEach(function (s) {
-            score.m_environmentalScore += s.getSize() - score.m_mininumSchool;
+            var t = s.getSize() - s.getMsy()
+            if (t > 100) {
+                score.m_environmentalScore += 100;
+            }
+            else {
+                score.m_environmentalScore += t;
+            }
         });
 
         //Make sure score stays inside a specific range

@@ -3,11 +3,13 @@ class ShipOwner {
     private m_ships: Ship[] = [];
     private m_balance: number = 1000;
     private m_license: boolean = true;
-    private m_shipPrice: number = 100; // Should maybe be stored in map?
+    private m_shipPrice: number = 10000; // Should maybe be stored in map?
     private m_shipStartPosition: Point2;
     private m_id: string;
+    private m_government: Government;
 
-    public constructor(p_shipStartPosition: Point2, p_id: string, p_balance?:number) {
+    public constructor(p_government: Government, p_shipStartPosition: Point2, p_id: string, p_balance?: number) {
+        this.m_government = p_government;
         this.m_shipStartPosition = p_shipStartPosition;
         this.m_id = p_id;
         if (p_balance) {
@@ -44,7 +46,7 @@ class ShipOwner {
         return this.m_shipPrice;
     }
     public financialTransaction(p_amount: number): void {
-        this.m_balance += p_amount;
+        this.m_balance += p_amount * (1-this.m_government.getTaxingRate());
     }
 
     public buyShip() : Ship{
