@@ -15,6 +15,7 @@
             buttons: {
                 Ok: handler.close
             }
+            close: handler.close
         });
     }
 

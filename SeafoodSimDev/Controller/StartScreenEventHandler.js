@@ -21,7 +21,8 @@ var StartScreenEventHandler = (function () {
         $("#startScreen").dialog({
             buttons: {
                 Ok: handler.close
-            }
+            },
+            close: handler.close
         });
     }
     return StartScreenEventHandler;
