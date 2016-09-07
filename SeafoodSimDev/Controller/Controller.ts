@@ -4,6 +4,7 @@ class Controller {
     private m_view: MainView;
     private m_model: Model;
     private m_eventHandler: EventHandler;
+    private m_startScreenEventHandler: StartScreenEventHandler;
     private m_timer: number;
     private m_fastTimer: number;
 
@@ -12,6 +13,9 @@ class Controller {
     private m_fastDelayPerTick: number;
     private m_stats: EndScreenStats;
     private m_statFreq: number;
+    private m_scenario: number;
+    private m_endTime: number;
+
     constructor() {
         console.log("Controller loading");
         this.m_simState = simState.paused;
@@ -21,10 +25,15 @@ class Controller {
         this.m_model = new Model();
         this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(),this.m_model.getGovernment().getTaxingRate()); 
         this.m_eventHandler = new EventHandler(this);
-        
+        this.m_startScreenEventHandler = new StartScreenEventHandler(this);
         this.m_view.updateMainView(this.m_model);
     }
-    
+    public getScenario(): number {
+        return this.m_scenario;
+    }
+    public setScenario(p_scenario: number): void {
+        this.m_scenario = p_scenario;
+    }
     public getModel(): Model {
         return this.m_model;
     }
@@ -39,12 +48,14 @@ class Controller {
     public getMainView(): MainView {
         return this.m_view;
     }
-    
+    public setEndTime(p_endTime: number): void {
+        this.m_endTime = p_endTime;
+    }
     simulationTick = () => {
         //console.log("Controller running simulationtick");
         var tmp = this.m_model.getTime() % this.m_statFreq;
         if (!(this.m_model.getTime() % this.m_statFreq)) this.m_model.updateStats();
-        if (this.m_model.getTime() >= 90 * 1) {
+        if (this.m_model.getTime() >= this.m_endTime) {
             this.m_simState = simState.ending;
             console.log("Simulation ended" + this.m_model.getStats());
             clearInterval(this.m_timer);

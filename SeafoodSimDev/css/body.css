@@ -38,7 +38,24 @@
     min-width: 130px;
 }
 
-.radio {
+.header {
     padding: 14px;
+    font-size: 70px;
+    font-weight: bold;
+}
+
+#chooseScenario {
+    padding-right: 45px;
+}
+
+#information {
+    width: 60%;
+    margin-top: 35px;
+    border:dotted;
+    padding: 15px;
+}
+
+#welcomeText {
+    padding: 20px;
 }
 

@@ -45,6 +45,7 @@
     <TypeScriptCompile Include="Controller\Configuration.ts" />
     <TypeScriptCompile Include="Controller\Controller.ts" />
     <TypeScriptCompile Include="Controller\EventHandler.ts" />
+    <TypeScriptCompile Include="Controller\StartScreenEventHandler.ts" />
     <TypeScriptCompile Include="declarations\jquery.d.ts" />
     <TypeScriptCompile Include="declarations\jqueryui.d.ts" />
     <TypeScriptCompile Include="Main.ts" />

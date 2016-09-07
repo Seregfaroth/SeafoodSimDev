@@ -9,7 +9,7 @@ class MainView {
         this.m_mapView = new MapView(p_map);
         this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate);
         new StartScreen();
-        $("#startScreen").dialog();
+        
     }
 
     public getMapMenu(): MapMenu {
