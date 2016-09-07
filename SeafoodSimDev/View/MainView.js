@@ -5,7 +5,6 @@ var MainView = (function () {
         this.m_mapView = new MapView(p_map);
         this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate);
         new StartScreen();
-        $("#startScreen").dialog();
     }
     MainView.prototype.getMapMenu = function () {
         return this.m_mapMenu;

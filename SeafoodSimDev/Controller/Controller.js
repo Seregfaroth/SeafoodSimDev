@@ -15,7 +15,7 @@ var Controller = (function () {
             var tmp = _this.m_model.getTime() % _this.m_statFreq;
             if (!(_this.m_model.getTime() % _this.m_statFreq))
                 _this.m_model.updateStats();
-            if (_this.m_model.getTime() >= 90 * 1) {
+            if (_this.m_model.getTime() >= _this.m_endTime) {
                 _this.m_simState = simState.ending;
                 console.log("Simulation ended" + _this.m_model.getStats());
                 clearInterval(_this.m_timer);
@@ -44,8 +44,15 @@ var Controller = (function () {
         this.m_model = new Model();
         this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
         this.m_eventHandler = new EventHandler(this);
+        this.m_startScreenEventHandler = new StartScreenEventHandler(this);
         this.m_view.updateMainView(this.m_model);
     }
+    Controller.prototype.getScenario = function () {
+        return this.m_scenario;
+    };
+    Controller.prototype.setScenario = function (p_scenario) {
+        this.m_scenario = p_scenario;
+    };
     Controller.prototype.getModel = function () {
         return this.m_model;
     };
@@ -57,6 +64,9 @@ var Controller = (function () {
     };
     Controller.prototype.getMainView = function () {
         return this.m_view;
+    };
+    Controller.prototype.setEndTime = function (p_endTime) {
+        this.m_endTime = p_endTime;
     };
     Controller.prototype.endSimulation = function () {
     };
