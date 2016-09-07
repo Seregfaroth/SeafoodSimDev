@@ -1,4 +1,5 @@
 ﻿// <reference path = "../../TSSeafoodSimDev/externals/model.d.ts"/>
+/// <reference path="StartScreen.ts"/>
 
 class MainView {
     private m_mapView: MapView;
@@ -6,7 +7,9 @@ class MainView {
 
     constructor(p_map: Map, p_ShipOwners: ShipOwner[],p_taxingRate: number) {
         this.m_mapView = new MapView(p_map);
-        this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(),p_taxingRate);
+        this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate);
+        new StartScreen();
+        $("#startScreen").dialog();
     }
 
     public getMapMenu(): MapMenu {
