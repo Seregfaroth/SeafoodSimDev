@@ -42,6 +42,7 @@
     <Folder Include="View\declarations\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Controller\Configuration.ts" />
     <TypeScriptCompile Include="Controller\Controller.ts" />
     <TypeScriptCompile Include="Controller\EventHandler.ts" />
     <TypeScriptCompile Include="declarations\jquery.d.ts" />
