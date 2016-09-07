@@ -3,7 +3,7 @@ class Map {
     private m_grid: Tile[][] = [];
     public m_schools: School[] = [];
     private m_restrictions: Restrictions;
-    private m_fishingPercentage: number = 0.1;
+    private m_fishingPercentage: number = 0.001;
     private m_ships: Ship[] = [];
     private m_yield: number; //in fish, will be tonnes
 
@@ -64,7 +64,7 @@ class Map {
         for (var i = 0; i < p_size; i++) {
             var row: Tile[] = [];
             for (var j = 0; j < p_size; j++) {
-                row.push(new Ocean(10000, 1));
+                row.push(new Ocean(100000, 1));
             }
             this.m_grid.push(row);
         }

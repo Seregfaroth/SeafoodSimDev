@@ -3,7 +3,7 @@ var Map = (function () {
     function Map(p_size, p_noOfSchools, p_restrictions) {
         this.m_grid = [];
         this.m_schools = [];
-        this.m_fishingPercentage = 0.1;
+        this.m_fishingPercentage = 0.001;
         this.m_ships = [];
         this.m_restrictions = p_restrictions;
         this.generateMap(p_size);
@@ -56,7 +56,7 @@ var Map = (function () {
         for (var i = 0; i < p_size; i++) {
             var row = [];
             for (var j = 0; j < p_size; j++) {
-                row.push(new Ocean(10000, 1));
+                row.push(new Ocean(100000, 1));
             }
             this.m_grid.push(row);
         }

@@ -28,14 +28,14 @@ class AI {
         var ai: AI = this;
         var n = 0;
         p_shipOwner.getShips().forEach(function (ship) {
-            console.log("ship " + n);
-            console.log("state: " + ship.getState().toString());
+            //console.log("ship " + n);
+            //console.log("state: " + ship.getState().toString());
             //console.log("cargo: " + ship.getCargoSize());
             //console.log("fuel: " + ship.getFuel());
             //console.log("position: " + ship.getPosition().row + ", " + ship.getPosition().col);
             n++;
             if (ship.getFuel() === 0) {
-                debugger;
+                //debugger;
             }
             if (ship.getState() === shipState.fishing) {
                 //If ship is currently fishing, fish until cargo is at least 98% full
