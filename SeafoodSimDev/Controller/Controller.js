@@ -12,10 +12,13 @@ var Controller = (function () {
         var _this = this;
         this.simulationTick = function () {
             //console.log("Controller running simulationtick");
-            if (_this.m_model.getTime() % _this.m_statFreq)
-                _this.updateStats();
-            if (_this.m_model.getTime() > 90 * 1) {
+            var tmp = _this.m_model.getTime() % _this.m_statFreq;
+            if (!(_this.m_model.getTime() % _this.m_statFreq))
+                _this.m_model.updateStats();
+            if (_this.m_model.getTime() >= 90 * 1) {
                 _this.m_simState = simState.ending;
+                console.log("Simulation ended" + _this.m_model.getStats());
+                clearInterval(_this.m_timer);
             }
             else {
                 _this.m_model.run();
@@ -36,12 +39,11 @@ var Controller = (function () {
         console.log("Controller loading");
         this.m_simState = simState.paused;
         this.m_delayPerTick = 1000;
-        this.m_fastDelayPerTick = 1;
+        this.m_fastDelayPerTick = 100;
         this.m_statFreq = 30;
         this.m_model = new Model();
         this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
         this.m_eventHandler = new EventHandler(this);
-        this.m_stats = new EndScreenStats(this.m_model);
         this.m_view.updateMainView(this.m_model);
     }
     Controller.prototype.getModel = function () {
@@ -56,19 +58,7 @@ var Controller = (function () {
     Controller.prototype.getMainView = function () {
         return this.m_view;
     };
-    Controller.prototype.updateStats = function () {
-        var biomass = 0;
-        for (var _i = 0, _a = this.m_model.getMap().getSchools(); _i < _a.length; _i++) {
-            var sc = _a[_i];
-            biomass += sc.getBiomass();
-        }
-        this.m_stats.setBiomassPrYearAt(this.m_model.getTime() / this.m_statFreq, biomass);
-    };
-    Controller.prototype.getStats = function () {
-        return this.m_stats;
-    };
     Controller.prototype.endSimulation = function () {
-        console.log("Simulation ended" + this.getStats());
     };
     Controller.prototype.pause = function () {
         if (this.m_simState == simState.running || this.m_simState == simState.fast) {

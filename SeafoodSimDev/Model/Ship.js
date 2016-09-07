@@ -18,9 +18,10 @@ var Ship = (function () {
         this.m_cargoCapacity = 800;
         this.m_path = [];
         this.m_fuelPerMove = 1;
-        this.history = []; //For debugging  purpose
+        this.history = [[], []]; //For debugging  purpose
         this.m_position = p_owner.getShipStartPosition();
         this.m_cargo = [[], []];
+        this.m_yield = [[], []];
         this.m_fuel = this.m_fuelCapacity;
         this.m_owner = p_owner;
         this.m_state = shipState.waiting;
@@ -57,10 +58,10 @@ var Ship = (function () {
             throw new Error("path is not starting at ship position");
         }
         this.m_path = p_path;
-        this.history.push("current + " + this.m_position.row + " , " + this.m_position.col);
-        this.history.push("path 0: " + p_path[0].row + ", " + p_path[0].col);
-        this.history.push(p_path.slice());
-        this.history.push("length:" + p_path.length);
+        this.history[0].push("current + " + this.m_position.row + " , " + this.m_position.col);
+        this.history[0].push("path 0: " + p_path[0].row + ", " + p_path[0].col);
+        this.history[0].push(p_path.slice());
+        this.history[0].push("length:" + p_path.length);
     };
     Ship.prototype.getPosition = function () {
         return this.m_position;
@@ -89,8 +90,8 @@ var Ship = (function () {
         else if (this.moveTo(this.m_path[1], p_map)) {
             //Only take point out of path if ship can move to point
             this.m_path.shift();
-            this.history.push(this.m_position);
-            this.history.push(this.m_fuel);
+            this.history[0].push(this.m_position);
+            this.history[0].push(this.m_fuel);
         }
     };
     Ship.prototype.hasReachedGoal = function () {
@@ -131,6 +132,8 @@ var Ship = (function () {
                 ship.m_cargo[type][i] += noOfFish;
                 //Remove from school
                 school.getAges()[i] -= noOfFish;
+                p_map.setYield(p_map.getYield() + noOfFish);
+                ship.history[1].push(noOfFish);
             }
         });
     };

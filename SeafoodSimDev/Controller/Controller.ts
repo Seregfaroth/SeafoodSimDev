@@ -16,12 +16,12 @@ class Controller {
         console.log("Controller loading");
         this.m_simState = simState.paused;
         this.m_delayPerTick = 1000;
-        this.m_fastDelayPerTick = 1;
+        this.m_fastDelayPerTick = 100;
         this.m_statFreq = 30;
         this.m_model = new Model();
         this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(),this.m_model.getGovernment().getTaxingRate()); 
         this.m_eventHandler = new EventHandler(this);
-        this.m_stats = new EndScreenStats(this.m_model);
+        
         this.m_view.updateMainView(this.m_model);
     }
     
@@ -39,21 +39,15 @@ class Controller {
     public getMainView(): MainView {
         return this.m_view;
     }
-    public updateStats() {
-        var biomass = 0;
-        for (var sc of this.m_model.getMap().getSchools()) {
-            biomass += sc.getBiomass();
-        }
-        this.m_stats.setBiomassPrYearAt(this.m_model.getTime() / this.m_statFreq, biomass);
-    }
-    public getStats(): EndScreenStats {
-        return this.m_stats;
-    }
+    
     simulationTick = () => {
         //console.log("Controller running simulationtick");
-        if (this.m_model.getTime() % this.m_statFreq) this.updateStats();
-        if (this.m_model.getTime() > 90 * 1) {
+        var tmp = this.m_model.getTime() % this.m_statFreq;
+        if (!(this.m_model.getTime() % this.m_statFreq)) this.m_model.updateStats();
+        if (this.m_model.getTime() >= 90 * 1) {
             this.m_simState = simState.ending;
+            console.log("Simulation ended" + this.m_model.getStats());
+            clearInterval(this.m_timer);
         }
         else {
             this.m_model.run();
@@ -72,9 +66,9 @@ class Controller {
             this.endSimulation();
         }
     }  
-    public endSimulation(): void {
+
+    public endSimulation(): void {      
         
-        console.log("Simulation ended" + this.getStats() );
     }
 
     public pause(): void {
@@ -88,8 +82,7 @@ class Controller {
         if (this.m_simState == simState.running || this.m_simState == simState.paused) {
             clearInterval(this.m_timer);
             this.m_simState = simState.fast;
-            this.m_timer = setInterval(this.simulationTick, this.m_fastDelayPerTick);
-            
+            this.m_timer = setInterval(this.simulationTick, this.m_fastDelayPerTick);           
         }
     }
 }

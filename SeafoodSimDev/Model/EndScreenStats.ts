@@ -8,11 +8,8 @@ class EndScreenStats {
     private m_yield: number;
     private m_mortality: number;
 
-    constructor(p_model: Model) {
-        this.m_biomass = 0;
-        for (var school of p_model.getMap().getSchools()) {
-            this.m_biomass += school.getBiomass();
-        }
+    constructor() {
+        
     }
 
     public getBiomassPrYearAt(p_index: number): number {
@@ -23,5 +20,12 @@ class EndScreenStats {
 
     public setBiomassPrYearAt(p_index: number, p_biomass) {
         this.m_biomassPrYear[p_index] = p_biomass;
+    }
+
+    public getYieldprYearAt(p_index): number {
+        return this.m_yield[p_index];
+    }
+    public setYieldPrYearAt(p_index, p_yield) {
+        this.m_yieldPrYear[p_index] = p_yield;
     }
 }

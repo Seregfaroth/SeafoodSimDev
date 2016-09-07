@@ -17,11 +17,29 @@ class Model {
         console.log("constructing model");
         
         var restrictions: Restrictions = new Restrictions();
-        this.m_map = new Map(15, 2, restrictions);
+        this.m_stats = new EndScreenStats();
+        
+        this.m_map = new Map(15, 30, restrictions);
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions);
         this.m_ai = new AI();
         this.createShipOwner(new Point2(3, 3), 100000000000);
+        this.updateStats();
+    }
+
+    public updateStats() {
+        var biomass = 0;
+        //updating biomass
+        for (var sc of this.getMap().getSchools()) {
+            biomass += sc.getBiomass();
+        }
+        this.m_stats.setBiomassPrYearAt(this.getTime() / this.m_statFreq, biomass);
+        //updating yield
+        this.m_stats.setYieldPrYearAt(this.getTime() / this.m_statFreq, this.m_map.getYield());
+        this.m_map.setYield(0);
+    }
+    public getStats(): EndScreenStats {
+        return this.m_stats;
     }
 
     public run() {

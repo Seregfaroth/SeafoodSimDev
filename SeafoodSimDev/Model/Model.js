@@ -10,12 +10,29 @@ var Model = (function () {
         this.m_statFreq = 30;
         console.log("constructing model");
         var restrictions = new Restrictions();
-        this.m_map = new Map(15, 2, restrictions);
+        this.m_stats = new EndScreenStats();
+        this.m_map = new Map(15, 30, restrictions);
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions);
         this.m_ai = new AI();
         this.createShipOwner(new Point2(3, 3), 100000000000);
+        this.updateStats();
     }
+    Model.prototype.updateStats = function () {
+        var biomass = 0;
+        //updating biomass
+        for (var _i = 0, _a = this.getMap().getSchools(); _i < _a.length; _i++) {
+            var sc = _a[_i];
+            biomass += sc.getBiomass();
+        }
+        this.m_stats.setBiomassPrYearAt(this.getTime() / this.m_statFreq, biomass);
+        //updating yield
+        this.m_stats.setYieldPrYearAt(this.getTime() / this.m_statFreq, this.m_map.getYield());
+        this.m_map.setYield(0);
+    };
+    Model.prototype.getStats = function () {
+        return this.m_stats;
+    };
     Model.prototype.run = function () {
         this.m_time++;
         //console.log("running model");
