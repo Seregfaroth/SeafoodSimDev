@@ -192,44 +192,44 @@
             sliderValue.innerHTML = $("#effortSlider" + p_ShipOwners[i].getID()).slider("option", "value");
         }
         //Create landing distribution sliders
-        var landingLegend: HTMLElement = document.createElement("legend");
-        landingLegend.classList.add("menu-legend");
-        var landingLabel: HTMLElement = document.createElement("div");
-        landingLabel.innerHTML = "Landing Distribution";
-        landingLabel.className = "legend-header";
-        landingLegend.appendChild(landingLabel);
-        menuDiv.appendChild(landingLegend);
-        var landingTable: any = document.createElement("TABLE");
-        landingTable.classList.add("menu-text");
-        landingLegend.appendChild(landingTable);
+        //var landingLegend: HTMLElement = document.createElement("legend");
+        //landingLegend.classList.add("menu-legend");
+        //var landingLabel: HTMLElement = document.createElement("div");
+        //landingLabel.innerHTML = "Landing Distribution";
+        //landingLabel.className = "legend-header";
+        //landingLegend.appendChild(landingLabel);
+        //menuDiv.appendChild(landingLegend);
+        //var landingTable: any = document.createElement("TABLE");
+        //landingTable.classList.add("menu-text");
+        //landingLegend.appendChild(landingTable);
 
-        for (var i = 0; i < p_landingSites.length; i++) {
-            var dateRow: HTMLTableRowElement = landingTable.insertRow();
-            var cell: HTMLTableCellElement = dateRow.insertCell();
-            var label: HTMLElement = document.createElement("div");
-            label.innerHTML = p_landingSites[i].getID() + ":";
-            label.style.cssFloat = "left";
-            cell.appendChild(label);
+        //for (var i = 0; i < p_landingSites.length; i++) {
+        //    var dateRow: HTMLTableRowElement = landingTable.insertRow();
+        //    var cell: HTMLTableCellElement = dateRow.insertCell();
+        //    var label: HTMLElement = document.createElement("div");
+        //    label.innerHTML = p_landingSites[i].getID() + ":";
+        //    label.style.cssFloat = "left";
+        //    cell.appendChild(label);
 
-            cell = dateRow.insertCell();
-            cell.className = "slider-value-cell";
-            var sliderValue: HTMLDivElement = document.createElement("div");
-            sliderValue.id = "landingValue" + p_landingSites[i].getID();
-            cell.appendChild(sliderValue);
+        //    cell = dateRow.insertCell();
+        //    cell.className = "slider-value-cell";
+        //    var sliderValue: HTMLDivElement = document.createElement("div");
+        //    sliderValue.id = "landingValue" + p_landingSites[i].getID();
+        //    cell.appendChild(sliderValue);
 
-            cell = dateRow.insertCell();
-            cell.className = "slider-cell";
-            var slider: HTMLElement = document.createElement("div");
-            slider.id = "landingSlider" + p_landingSites[i].getID();
-            slider.style.width = "70%";
-            slider.style.cssFloat = "right";
-            slider.style.margin = "10px";
-            cell.appendChild(slider);
-            $("#landingSlider" + p_landingSites[i].getID()).slider();
-            $("#landingSlider" + p_landingSites[i].getID()).slider("option", "min", 0);
-            $("#landingSlider" + p_landingSites[i].getID()).slider("option", "max", 100);
-            sliderValue.innerHTML = $("#landingSlider" + p_landingSites[i].getID()).slider("option", "value");
-        }
+        //    cell = dateRow.insertCell();
+        //    cell.className = "slider-cell";
+        //    var slider: HTMLElement = document.createElement("div");
+        //    slider.id = "landingSlider" + p_landingSites[i].getID();
+        //    slider.style.width = "70%";
+        //    slider.style.cssFloat = "right";
+        //    slider.style.margin = "10px";
+        //    cell.appendChild(slider);
+        //    $("#landingSlider" + p_landingSites[i].getID()).slider();
+        //    $("#landingSlider" + p_landingSites[i].getID()).slider("option", "min", 0);
+        //    $("#landingSlider" + p_landingSites[i].getID()).slider("option", "max", 100);
+        //    sliderValue.innerHTML = $("#landingSlider" + p_landingSites[i].getID()).slider("option", "value");
+        //}
 
         //Create maximum number of ships slider
         var legend: HTMLElement = document.createElement("legend");
@@ -319,6 +319,13 @@
         yearDiv.innerHTML = "2016";
         yearCell.appendChild(yearDiv);
         yearDiv.classList.add("date");
+
+        var dayCell: HTMLTableCellElement = dateRow.insertCell();
+        var dayDiv: HTMLDivElement = document.createElement("div");
+        dayDiv.id = "day";
+        dayDiv.innerHTML = '0';
+        dayCell.appendChild(dayDiv);
+        dayDiv.classList.add("date");
     }
         
     
@@ -336,6 +343,8 @@
 
         $("#year").text(year);
         $("#month").text(monthName);
+        $("#day").text(p_model.getTime());
+
         console.log("time: " + p_model.getTime());
         console.log("year: " + year);
         console.log("month: " + month);

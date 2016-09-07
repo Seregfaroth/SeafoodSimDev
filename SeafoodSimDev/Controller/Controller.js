@@ -1,3 +1,4 @@
+/// <reference path = "../Model/EndScreenStats.ts"/>
 var simState;
 (function (simState) {
     simState[simState["starting"] = 0] = "starting";
@@ -11,8 +12,18 @@ var Controller = (function () {
         var _this = this;
         this.simulationTick = function () {
             //console.log("Controller running simulationtick");
-            _this.m_model.run();
-            _this.m_view.updateMainView(_this.m_model);
+            var tmp = _this.m_model.getTime() % _this.m_statFreq;
+            if (!(_this.m_model.getTime() % _this.m_statFreq))
+                _this.m_model.updateStats();
+            if (_this.m_model.getTime() >= 90 * 1) {
+                _this.m_simState = simState.ending;
+                console.log("Simulation ended" + _this.m_model.getStats());
+                clearInterval(_this.m_timer);
+            }
+            else {
+                _this.m_model.run();
+                _this.m_view.updateMainView(_this.m_model);
+            }
         };
         this.runSimulation = function (p_ticks) {
             if (_this.m_simState == simState.paused || _this.m_simState == simState.fast) {
@@ -20,11 +31,16 @@ var Controller = (function () {
                 _this.m_timer = setInterval(_this.simulationTick, 1000);
                 _this.m_simState = simState.running;
             }
+            if (_this.m_simState = simState.ending) {
+                clearInterval(_this.m_timer);
+                _this.endSimulation();
+            }
         };
         console.log("Controller loading");
         this.m_simState = simState.paused;
         this.m_delayPerTick = 1000;
         this.m_fastDelayPerTick = 100;
+        this.m_statFreq = 30;
         this.m_model = new Model();
         this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
         this.m_eventHandler = new EventHandler(this);
@@ -41,6 +57,8 @@ var Controller = (function () {
     };
     Controller.prototype.getMainView = function () {
         return this.m_view;
+    };
+    Controller.prototype.endSimulation = function () {
     };
     Controller.prototype.pause = function () {
         if (this.m_simState == simState.running || this.m_simState == simState.fast) {

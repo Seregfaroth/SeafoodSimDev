@@ -8,7 +8,14 @@ var Map = (function () {
         this.m_restrictions = p_restrictions;
         this.generateMap(p_size);
         this.placeSchools(p_noOfSchools);
+        this.m_yield = 0;
     }
+    Map.prototype.getYield = function () {
+        return this.m_yield;
+    };
+    Map.prototype.setYield = function (p_yield) {
+        this.m_yield = p_yield;
+    };
     Map.prototype.getRestrictions = function () {
         return this.m_restrictions;
     };

@@ -5,11 +5,19 @@ class Map {
     private m_restrictions: Restrictions;
     private m_fishingPercentage: number = 0.1;
     private m_ships: Ship[] = [];
+    private m_yield: number; //in fish, will be tonnes
 
     public constructor(p_size: number, p_noOfSchools: number, p_restrictions: Restrictions) {
         this.m_restrictions = p_restrictions;
         this.generateMap(p_size);
         this.placeSchools(p_noOfSchools);
+        this.m_yield = 0;
+    }
+    public getYield(): number {
+        return this.m_yield;
+    }
+    public setYield(p_yield: number) {
+        this.m_yield = p_yield;
     }
 
     public getRestrictions(): Restrictions {

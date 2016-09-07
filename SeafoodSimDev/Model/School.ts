@@ -5,10 +5,36 @@ abstract class School {
     protected m_maxAge: number;
     protected m_type: FishType;
     protected m_ages: number[] = [];
+    protected m_msy: number;
+    protected m_mey: number;
 
     public constructor(p_size: number, p_position: Point2) {
         this.m_position = p_position;
         
+    }
+
+    public getBiomass(): number {
+        var b: number = 0;
+        for (var age of this.m_ages) {
+            b += age;
+        }
+        return b;
+    }
+
+    public getMsy(): number {
+        return this.m_msy;
+    }
+
+    public setMsy(p_msy: number) {
+        this.m_msy = p_msy;
+    }
+
+    public getMey(): number {
+        return this.m_mey;
+    }
+
+    public setMey(p_mey: number) {
+        this.m_mey = p_mey;
     }
 
     public getSize(): number {

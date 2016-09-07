@@ -50,10 +50,10 @@ var TKN_Camera = (function () {
     return TKN_Camera;
 }());
 var TKN_Renderer = (function () {
-    function TKN_Renderer(p_div) {
+    function TKN_Renderer(p_div, p_width, p_height) {
         console.log("Construct TKN_Rendeerer");
         this.m_renderer = new THREE.WebGLRenderer();
-        this.m_renderer.setSize(1000, 1000);
+        this.m_renderer.setSize(p_width, p_height);
         //document.getElementById(p_div).appendChild(this.m_renderer.domElement);
         document.body.insertBefore(this.m_renderer.domElement, document.body.lastChild);
     }

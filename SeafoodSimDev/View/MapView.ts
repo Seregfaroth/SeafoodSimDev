@@ -22,7 +22,7 @@ class MapView {
     
     constructor(p_map: Map) {
         console.log("The View construct");
-        this.m_renderer = new TKN_Renderer("mainDiv");
+        this.m_renderer = new TKN_Renderer("mainDiv", 800,800);
         this.m_camera = new TKN_Camera();
         //debugger;
         //this.m_camera.position = new Point3(p_map.getMapWidth() / 2.0, p_map.getMapHeight() / 2.0, 10);
