@@ -73,7 +73,7 @@ var Cod = (function (_super) {
     Cod.prototype.recruit = function (p_map) {
         if (p_map.getTile(this.m_position).getFishCapacity() > this.getSize()) {
             //Only recruit if the tile is not full
-            var noOfNewFish = Math.floor(Math.random() * (this.getSize()));
+            var noOfNewFish = Math.floor(Math.random() * (this.getSize()) * 0.1 + this.getSize() * 0.1);
             this.m_ages[0] = noOfNewFish;
         }
     };

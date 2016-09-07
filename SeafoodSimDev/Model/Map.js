@@ -41,7 +41,7 @@ var Map = (function () {
             placedInSamePlace++;
             var tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(2000, 1500, point));
+                this.addSchool(new Cod(20000, 15000, point));
                 schoolsPlaced++;
             }
         }

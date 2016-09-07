@@ -75,7 +75,7 @@ class Cod extends School{
     protected recruit(p_map: Map): void {
         if ((<Ocean>p_map.getTile(this.m_position)).getFishCapacity() > this.getSize()) {
             //Only recruit if the tile is not full
-            var noOfNewFish: number = Math.floor(Math.random() * (this.getSize()));
+            var noOfNewFish: number = Math.floor(Math.random() * (this.getSize())*0.1 + this.getSize()*0.1);
             this.m_ages[0] = noOfNewFish;
         }
     }

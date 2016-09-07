@@ -7,6 +7,8 @@
     private m_aiBuyShipBalance;
 
     private m_schoolsInOnePlace;
+    private m_schoolSize;
+    private m_schoolMsy;
 
     private financialMaxScore;
     private environmentalMaxScore;
