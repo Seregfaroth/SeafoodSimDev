@@ -327,10 +327,12 @@
         dayCell.appendChild(dayDiv);
         dayDiv.classList.add("date");
 
+        var buttonCell: HTMLTableCellElement = dateRow.insertCell();
         var restartButton: HTMLButtonElement = document.createElement("button");
-        menuDiv.appendChild(restartButton);
+        buttonCell.appendChild(restartButton);
         restartButton.id = "restart";
-        restartButton.innerHTML = "Restart Simulation";
+        restartButton.classList.add("ui-button");
+        restartButton.innerHTML = "Restart";
     }
         
     

@@ -58,6 +58,12 @@ class Controller {
         this.m_model = new Model();
         this.m_view.reset(this.m_model.getMap());
         this.m_view.updateMainView(this.m_model);
+        this.m_eventHandler.bindFunctions(true);
+        this.m_simState = simState.paused;
+        clearInterval(this.m_timer);
+        $("#startButton").removeClass("marked");
+        $("#fastForwardButton").removeClass("marked");
+        $("#pauseButton").addClass("marked");
     }
 
     simulationTick = () => {

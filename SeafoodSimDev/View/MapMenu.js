@@ -289,10 +289,13 @@ var MapMenu = (function () {
         dayDiv.innerHTML = '0';
         dayCell.appendChild(dayDiv);
         dayDiv.classList.add("date");
+        var buttonCell = dateRow.insertCell();
         var restartButton = document.createElement("button");
-        menuDiv.appendChild(restartButton);
+        buttonCell.appendChild(restartButton);
         restartButton.id = "restart";
-        restartButton.innerHTML = "Restart Simulation";
+        restartButton.classList.add("ui-button");
+        restartButton.classList.add("centered-button");
+        restartButton.innerHTML = "Restart";
     }
     MapMenu.prototype.updateScore = function (p_government) {
         $("#financialScore").text(Math.round(p_government.getScore().getFinancialScore()));

@@ -3,6 +3,7 @@
 .ui-button {
     bottom : 0;
     position: relative;
+
 }
 .slider-cell {
     width: 80%;
@@ -32,12 +33,14 @@
 .date {
     text-align: center;
     font-size: x-large;
-    padding-left: 14px;
+    padding-left: 5px;
     padding-bottom: 14px;
     font-weight: bold;
+    min-width: 100px;
+}
+#month {
     min-width: 130px;
 }
-
 .header {
     padding: 14px;
     font-size: 70px;
@@ -59,3 +62,8 @@
     padding: 20px;
 }
 
+#restart {
+    margin-bottom: 12px;
+    padding: 3px;
+    margin-left: 30px;
+}
