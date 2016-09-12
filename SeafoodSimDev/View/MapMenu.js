@@ -75,6 +75,7 @@ var MapMenu = (function () {
         legend.appendChild(label);
         menuDiv.appendChild(legend);
         var table = document.createElement("TABLE");
+        table.width = "100%";
         table.classList.add("menu-text");
         legend.appendChild(table);
         var dateRow = table.insertRow();
@@ -106,6 +107,7 @@ var MapMenu = (function () {
         menuDiv.appendChild(quoteLegend);
         var quoteTable = document.createElement("TABLE");
         quoteTable.classList.add("menu-text");
+        quoteTable.width = "100%";
         quoteLegend.appendChild(quoteTable);
         for (var i = 0; i < p_ShipOwners.length; i++) {
             var dateRow = quoteTable.insertRow();
@@ -142,6 +144,7 @@ var MapMenu = (function () {
         menuDiv.appendChild(effortLegend);
         var effortTable = document.createElement("TABLE");
         effortTable.classList.add("menu-text");
+        effortTable.width = "100%";
         effortLegend.appendChild(effortTable);
         for (var i = 0; i < p_ShipOwners.length; i++) {
             var dateRow = effortTable.insertRow();
@@ -182,6 +185,7 @@ var MapMenu = (function () {
         //for (var i = 0; i < p_landingSites.length; i++) {
         //    var dateRow: HTMLTableRowElement = landingTable.insertRow();
         //    var cell: HTMLTableCellElement = dateRow.insertCell();
+        //cell.width = "30%";
         //    var label: HTMLElement = document.createElement("div");
         //    label.innerHTML = p_landingSites[i].getID() + ":";
         //    label.style.cssFloat = "left";
@@ -213,6 +217,7 @@ var MapMenu = (function () {
         legend.appendChild(label);
         menuDiv.appendChild(legend);
         var table = document.createElement("TABLE");
+        table.width = "100%";
         table.classList.add("menu-text");
         legend.appendChild(table);
         var dateRow = table.insertRow();
@@ -294,9 +299,20 @@ var MapMenu = (function () {
         buttonCell.appendChild(restartButton);
         restartButton.id = "restart";
         restartButton.classList.add("ui-button");
-        restartButton.classList.add("centered-button");
         restartButton.innerHTML = "Restart";
     }
+    MapMenu.prototype.reset = function (p_ShipOwners, p_landingSites, p_taxingRate) {
+        $("#taxSlider").slider("value", p_taxingRate * 100);
+        $("#taxValue").text(p_taxingRate * 100 + "%");
+        $("#noOfShipsSlider").slider("value", 1);
+        $("#maxNoShips").text("1");
+        for (var i = 0; i < p_ShipOwners.length; i++) {
+            $("#effortValue" + p_ShipOwners[i].getID()).text(0);
+            $("#effortSlider" + p_ShipOwners[i].getID()).slider("value", 0);
+            $("#quoteValue" + p_ShipOwners[i].getID()).text(0);
+            $("#quoteSlider" + p_ShipOwners[i].getID()).slider("value", 0);
+        }
+    };
     MapMenu.prototype.updateScore = function (p_government) {
         $("#financialScore").text(Math.round(p_government.getScore().getFinancialScore()));
         $("#socialScore").text(Math.round(p_government.getScore().getSocialScore()));
