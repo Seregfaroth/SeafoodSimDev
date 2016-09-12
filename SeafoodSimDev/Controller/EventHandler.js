@@ -69,7 +69,7 @@ var EventHandler = (function () {
         $("#restart").on("click", this.m_controller.restart);
         this.bindFunctions();
     }
-    EventHandler.prototype.bindFunctions = function () {
+    EventHandler.prototype.bindFunctions = function (p_all) {
         var handler = this;
         $("#taxSlider").off("slide");
         $("#taxSlider").on("slide", function (event, ui) { handler.updateTaxValue(ui.value); });
@@ -102,8 +102,13 @@ var EventHandler = (function () {
         $("#noOfShipsSlider").off("slide");
         $("#noOfShipsSlider").on("slide", function (event, ui) { handler.updateMaxNoShipsValue(ui.value); });
         $("#noOfShipsSlider").on("slidechange", function (event, ui) { handler.setMaxNoShips(ui.value); });
+        if (p_all) {
+            $("#startButton").on("click", this.start);
+            $("#pauseButton").on("click", this.pause);
+            $("#fastForwardButton").on("click", this.fastForward);
+        }
     };
-    EventHandler.prototype.unBindFunctions = function () {
+    EventHandler.prototype.unBindFunctions = function (p_all) {
         var handler = this;
         $("#taxSlider").off("slide");
         $("#taxSlider").on("slide", function (event, ui) { return false; });
@@ -119,6 +124,11 @@ var EventHandler = (function () {
         });
         $("#noOfShipsSlider").off("slide");
         $("#noOfShipsSlider").on("slide", function (event, ui) { return false; });
+        if (p_all) {
+            $("#startButton").off("click");
+            $("#pauseButton").off("click");
+            $("#fastForwardButton").off("click");
+        }
     };
     EventHandler.prototype.updateMaxNoShipsValue = function (p_n) {
         $("#maxNoShips").text($("#noOfShipsSlider").slider("option", "value"));

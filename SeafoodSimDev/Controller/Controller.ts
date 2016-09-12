@@ -69,6 +69,7 @@ class Controller {
             console.log("Simulation ended" + this.m_model.getStats());
             clearInterval(this.m_timer);
             this.m_view.updateMainView(this.m_model);
+            this.m_eventHandler.unBindFunctions(true);
             new EndScreen(this.m_model.getStats());
         }
         else {

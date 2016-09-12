@@ -25,6 +25,7 @@ var Controller = (function () {
                 console.log("Simulation ended" + _this.m_model.getStats());
                 clearInterval(_this.m_timer);
                 _this.m_view.updateMainView(_this.m_model);
+                _this.m_eventHandler.unBindFunctions(true);
                 new EndScreen(_this.m_model.getStats());
             }
             else {
@@ -41,6 +42,7 @@ var Controller = (function () {
             }
             /*if (this.m_simState = simState.ending) {
                 clearInterval(this.m_timer);
+                this.m_view.updateMainView(this.m_model);
                 this.endSimulation();
             }*/
         };
