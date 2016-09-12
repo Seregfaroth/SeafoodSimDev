@@ -326,6 +326,11 @@
         dayDiv.innerHTML = '0';
         dayCell.appendChild(dayDiv);
         dayDiv.classList.add("date");
+
+        var restartButton: HTMLButtonElement = document.createElement("button");
+        menuDiv.appendChild(restartButton);
+        restartButton.id = "restart";
+        restartButton.innerHTML = "Restart Simulation";
     }
         
     

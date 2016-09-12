@@ -10,6 +10,11 @@ var simState;
 var Controller = (function () {
     function Controller() {
         var _this = this;
+        this.restart = function () {
+            _this.m_model = new Model();
+            _this.m_view.reset(_this.m_model.getMap());
+            _this.m_view.updateMainView(_this.m_model);
+        };
         this.simulationTick = function () {
             //console.log("Controller running simulationtick");
             var tmp = _this.m_model.getTime() % _this.m_statFreq;
@@ -28,13 +33,13 @@ var Controller = (function () {
         this.runSimulation = function (p_ticks) {
             if (_this.m_simState == simState.paused || _this.m_simState == simState.fast) {
                 clearInterval(_this.m_timer);
-                _this.m_timer = setInterval(_this.simulationTick, 1000);
+                _this.m_timer = setInterval(_this.simulationTick, _this.m_delayPerTick);
                 _this.m_simState = simState.running;
             }
-            if (_this.m_simState = simState.ending) {
-                clearInterval(_this.m_timer);
-                _this.endSimulation();
-            }
+            /*if (this.m_simState = simState.ending) {
+                clearInterval(this.m_timer);
+                this.endSimulation();
+            }*/
         };
         console.log("Controller loading");
         this.m_simState = simState.paused;

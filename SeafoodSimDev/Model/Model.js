@@ -8,10 +8,12 @@ var Model = (function () {
         this.m_shipOwners = [];
         this.m_time = 0;
         this.m_statFreq = 30;
+        this.m_size = 15;
+        this.m_noOfSchools = 30;
         console.log("constructing model");
         var restrictions = new Restrictions();
         this.m_stats = new EndScreenStats();
-        this.m_map = new Map(15, 30, restrictions);
+        this.m_map = new Map(this.m_size, this.m_noOfSchools, restrictions);
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions);
         this.m_ai = new AI();

@@ -11,7 +11,9 @@ class MainView {
         new StartScreen();
         
     }
-
+    public reset(p_map: Map): void {
+        this.m_mapView.reset(p_map);
+    }
     public getMapMenu(): MapMenu {
         return this.m_mapMenu;
     }

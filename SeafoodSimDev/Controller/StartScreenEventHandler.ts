@@ -23,7 +23,6 @@
         this.m_controller.setScenario(p_evt.data.scenario);
         $("#information").text("Here is some information about scenario " + p_evt.data.scenario +". What is "+
             "the purpose of this scenario and how to win in this scenario.");
-        $("#information").show();
     }
 
     private close = (): void => {

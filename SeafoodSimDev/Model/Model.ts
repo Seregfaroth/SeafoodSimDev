@@ -12,6 +12,8 @@ class Model {
     private m_time: number = 0;
     private m_stats: EndScreenStats;
     private m_statFreq = 30;
+    private m_size: number = 15;
+    private m_noOfSchools: number = 30;
 
     constructor() {
         console.log("constructing model");
@@ -19,13 +21,14 @@ class Model {
         var restrictions: Restrictions = new Restrictions();
         this.m_stats = new EndScreenStats();
         
-        this.m_map = new Map(15, 30, restrictions);
+        this.m_map = new Map(this.m_size, this.m_noOfSchools, restrictions);
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions);
         this.m_ai = new AI();
         this.createShipOwner(new Point2(3, 3), 30000);
         this.updateStats();
     }
+
 
     public updateStats() {
         var biomass = 0;

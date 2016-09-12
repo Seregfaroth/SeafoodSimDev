@@ -75,6 +75,9 @@ var MapView = (function () {
         //document.getElementById("mainDiv").appendChild(this.m_renderer.domElement);
         //document.body.insertBefore(this.m_renderer.domElement, document.body.firstChild);
     }
+    MapView.prototype.reset = function (p_map) {
+        var ships = p_map.getShips();
+    };
     MapView.prototype.updateMapView = function (p_map) {
         //console.log("updating MapView");
         var i = 0;

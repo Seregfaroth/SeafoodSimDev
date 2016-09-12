@@ -35,7 +35,7 @@ class StartScreen {
         button.type = "radio";
         button.id = "scenario1";
         button.name = "radio";
-        button.value = "true";
+        button.value = "false";
         var label: HTMLLabelElement = document.createElement("label");
         fieldSet.appendChild(label);
         label.htmlFor = "scenario1";
@@ -87,8 +87,8 @@ class StartScreen {
         var informationDiv: HTMLDivElement = document.createElement("div");
         mainDiv.appendChild(informationDiv);
         informationDiv.id = "information";
-        $("#information").hide();
-
+        informationDiv.innerHTML ="Here is some information about scenario 1. What is " +
+            "the purpose of this scenario and how to win in this scenario.";
         $("#startScreen").dialog({
             minWidth: 750,
             minHeight: 600

@@ -289,6 +289,10 @@ var MapMenu = (function () {
         dayDiv.innerHTML = '0';
         dayCell.appendChild(dayDiv);
         dayDiv.classList.add("date");
+        var restartButton = document.createElement("button");
+        menuDiv.appendChild(restartButton);
+        restartButton.id = "restart";
+        restartButton.innerHTML = "Restart Simulation";
     }
     MapMenu.prototype.updateScore = function (p_government) {
         $("#financialScore").text(Math.round(p_government.getScore().getFinancialScore()));

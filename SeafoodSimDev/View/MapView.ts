@@ -97,7 +97,9 @@ class MapView {
         //document.body.insertBefore(this.m_renderer.domElement, document.body.firstChild);
         
     }
-
+    reset(p_map: Map) {
+        var ships: Ship[] = p_map.getShips();
+    }
     updateMapView(p_map: Map) {
         //console.log("updating MapView");
         var i = 0;

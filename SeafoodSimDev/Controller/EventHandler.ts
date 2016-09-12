@@ -5,6 +5,7 @@
         $("#startButton").on("click", this.start);
         $("#pauseButton").on("click", this.pause);
         $("#fastForwardButton").on("click", this.fastForward);
+        $("#restart").on("click", this.m_controller.restart);
         this.bindFunctions();
     }
 
