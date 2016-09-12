@@ -14,7 +14,7 @@ class Model {
     public m_statFreq = 10;
     private m_recruitAndAgeFreq = 30;
     private m_shipMovesPrTick = 1;
-    private m_statFreq = 30;
+    //private m_statFreq = 30;
     private m_size: number = 15;
     private m_noOfSchools: number = 30;
 
@@ -63,17 +63,20 @@ class Model {
         return this.m_stats;
     }
 
-    public run() {
-        this.m_time++;
-        //console.log("running model");
-        
-        this.m_map.run();
-        if (!(this.m_time % this.m_recruitAndAgeFreq)) {
-            
-            this.m_map.ageAndRecruit();
-        }
-        for (var i = 0; i < this.m_shipOwners.length; i++) {
-            this.m_ai.run(this.m_shipOwners[i], this.m_map);
+    public run(p_noOfMoves?: number) {
+        if (p_noOfMoves == undefined) p_noOfMoves = 1;
+        for (var m = 0; m < p_noOfMoves; m++) {
+            this.m_time++;
+            //console.log("running model");
+
+            this.m_map.run();
+            if (!(this.m_time % this.m_recruitAndAgeFreq)) {
+
+                this.m_map.ageAndRecruit();
+            }
+            for (var i = 0; i < this.m_shipOwners.length; i++) {
+                this.m_ai.run(this.m_shipOwners[i], this.m_map);
+            }
         }
         this.m_goverment.getScore().updateScore(this.m_map, this.m_goverment, this.m_time);
     }
