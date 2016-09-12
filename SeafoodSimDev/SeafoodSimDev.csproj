@@ -22,6 +22,13 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\Aristo\Aristo.css" />
+    <Content Include="css\Aristo\images\bg_fallback.png" />
+    <Content Include="css\Aristo\images\icon_sprite.png" />
+    <Content Include="css\Aristo\images\progress_bar.gif" />
+    <Content Include="css\Aristo\images\slider_handles.png" />
+    <Content Include="css\Aristo\images\ui-icons_222222_256x240.png" />
+    <Content Include="css\Aristo\images\ui-icons_454545_256x240.png" />
     <Content Include="css\body.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="js\pathfinding-browser.js" />
@@ -39,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controller\declarations\" />
-    <Folder Include="View\declarations\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Controller\Configuration.ts" />
@@ -74,6 +80,8 @@
     <TypeScriptCompile Include="ThirdParty\Point.ts" />
     <TypeScriptCompile Include="ThirdParty\Test1.ts" />
     <TypeScriptCompile Include="ThirdParty\TKN_PathFinding.ts" />
+    <TypeScriptCompile Include="View\declarations\google.visualization.d.ts" />
+    <TypeScriptCompile Include="View\EndScreen.ts" />
     <TypeScriptCompile Include="View\MainView.ts" />
     <TypeScriptCompile Include="View\MapMenu.ts" />
     <TypeScriptCompile Include="View\MapView.ts" />

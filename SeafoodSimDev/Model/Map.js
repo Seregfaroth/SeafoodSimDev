@@ -3,13 +3,32 @@ var Map = (function () {
     function Map(p_size, p_noOfSchools, p_restrictions) {
         this.m_grid = [];
         this.m_schools = [];
-        this.m_fishingPercentage = 0.001;
+        this.m_fishingPercentage = 0.01;
         this.m_ships = [];
         this.m_restrictions = p_restrictions;
         this.generateMap(p_size);
         this.placeSchools(p_noOfSchools);
         this.m_yield = 0;
     }
+    Map.prototype.run = function () {
+        var map = this;
+        this.m_schools.forEach(function (s) {
+            //s.move(map);
+            //s.live(map);
+        });
+        this.getLandingSites().forEach(function (ls) {
+            ls.processFish();
+        });
+        this.getFuelSites().forEach(function (fs) {
+            fs.restock();
+        });
+    };
+    Map.prototype.ageAndRecruit = function () {
+        var map = this;
+        this.m_schools.forEach(function (s) {
+            s.live(map);
+        });
+    };
     Map.prototype.getYield = function () {
         return this.m_yield;
     };
@@ -41,7 +60,7 @@ var Map = (function () {
             placedInSamePlace++;
             var tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(20000, 15000, point));
+                this.addSchool(new Cod(5000, 4500, point));
                 schoolsPlaced++;
             }
         }
@@ -167,18 +186,6 @@ var Map = (function () {
     };
     Map.prototype.getMapHeight = function () {
         return this.m_grid.length;
-    };
-    Map.prototype.run = function () {
-        var map = this;
-        this.m_schools.forEach(function (s) {
-            s.live(map);
-        });
-        this.getLandingSites().forEach(function (ls) {
-            ls.processFish();
-        });
-        this.getFuelSites().forEach(function (fs) {
-            fs.restock();
-        });
     };
     Map.prototype.getLandingSites = function () {
         var sites = [];

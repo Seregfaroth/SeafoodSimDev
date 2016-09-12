@@ -127,7 +127,8 @@ var Ship = (function () {
             var type = school instanceof Cod ? FishType.Cod : FishType.Mackerel;
             for (var i = 0; i < school.getMaxAge(); i++) {
                 //The number of fish the ship is fishing
-                var noOfFish = Math.floor(percentage * school.getAges()[i]);
+                //var noOfFish: number = Math.floor(percentage * school.getAges()[i]);
+                var noOfFish = Math.ceil(percentage * school.getAges()[i]);
                 //Add to cargo
                 ship.m_cargo[type][i] += noOfFish;
                 //Remove from school

@@ -3,6 +3,7 @@
     private m_taxingRate;
     private m_map;
     private m_shipOwner;
+    private m_shipOwnerStartMoney;
     private m_shipPrice;
     private m_aiBuyShipBalance;
 

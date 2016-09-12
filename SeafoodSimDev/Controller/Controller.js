@@ -10,17 +10,17 @@ var simState;
 var Controller = (function () {
     function Controller() {
         var _this = this;
-        this.m_noGraphicSimulation = true;
+        this.m_noGraphicSimulation = false;
         this.simulationTick = function () {
             //console.log("Controller running simulationtick");
-            var tmp = _this.m_model.getTime() % _this.m_statFreq;
-            if (!(_this.m_model.getTime() % _this.m_statFreq))
+            if (!(_this.m_model.getTime() % _this.m_model.m_statFreq))
                 _this.m_model.updateStats();
             if (_this.m_model.getTime() >= _this.m_endTime) {
                 _this.m_simState = simState.ending;
                 console.log("Simulation ended" + _this.m_model.getStats());
                 clearInterval(_this.m_timer);
                 _this.m_view.updateMainView(_this.m_model);
+                new EndScreen(_this.m_model.getStats());
             }
             else {
                 _this.m_model.run();
@@ -34,7 +34,7 @@ var Controller = (function () {
                 _this.m_timer = setInterval(_this.simulationTick, 1000);
                 _this.m_simState = simState.running;
             }
-            if (_this.m_simState = simState.ending) {
+            if (_this.m_simState === simState.ending) {
                 clearInterval(_this.m_timer);
                 _this.m_view.updateMainView(_this.m_model);
                 _this.endSimulation();
@@ -44,7 +44,7 @@ var Controller = (function () {
         this.m_simState = simState.paused;
         this.m_delayPerTick = 1000;
         this.m_fastDelayPerTick = 1;
-        this.m_statFreq = 30;
+        //this.m_statFreq = 30;
         this.m_model = new Model();
         this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
         this.m_eventHandler = new EventHandler(this);
