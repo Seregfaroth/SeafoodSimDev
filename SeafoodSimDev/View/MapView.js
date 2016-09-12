@@ -77,6 +77,7 @@ var MapView = (function () {
     }
     MapView.prototype.reset = function (p_map) {
         for (var i = 0; i < this.m_ships.length; i++) {
+            this.m_scene.remove(this.m_ships[i]);
         }
         this.m_ships = [];
     };

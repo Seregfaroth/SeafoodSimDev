@@ -10,7 +10,7 @@ var Model = (function () {
         this.m_statFreq = 10;
         this.m_recruitAndAgeFreq = 30;
         this.m_shipMovesPrTick = 1;
-        this.m_statFreq = 30;
+        //private m_statFreq = 30;
         this.m_size = 15;
         this.m_noOfSchools = 30;
         console.log("constructing model");
@@ -52,17 +52,21 @@ var Model = (function () {
     Model.prototype.getStats = function () {
         return this.m_stats;
     };
-    Model.prototype.run = function () {
-        this.m_time++;
-        //console.log("running model");
-        this.m_map.run();
-        if (!(this.m_time % this.m_recruitAndAgeFreq)) {
-            this.m_map.ageAndRecruit();
+    Model.prototype.run = function (p_noOfMoves) {
+        if (p_noOfMoves == undefined)
+            p_noOfMoves = 1;
+        for (var m = 0; m < p_noOfMoves; m++) {
+            this.m_time++;
+            //console.log("running model");
+            this.m_map.run();
+            if (!(this.m_time % this.m_recruitAndAgeFreq)) {
+                this.m_map.ageAndRecruit();
+            }
+            for (var i = 0; i < this.m_shipOwners.length; i++) {
+                this.m_ai.run(this.m_shipOwners[i], this.m_map);
+            }
+            this.m_goverment.getScore().updateScore(this.m_map, this.m_goverment, this.m_time);
         }
-        for (var i = 0; i < this.m_shipOwners.length; i++) {
-            this.m_ai.run(this.m_shipOwners[i], this.m_map);
-        }
-        this.m_goverment.getScore().updateScore(this.m_map, this.m_goverment, this.m_time);
     };
     Model.prototype.getShipOwners = function () {
         return this.m_shipOwners;

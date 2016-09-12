@@ -99,7 +99,7 @@ class MapView {
     }
     reset(p_map: Map) {
         for (var i = 0; i < this.m_ships.length; i++) {
-         //   this.m_scene.remove(this.m_ships[i]);
+            this.m_scene.remove(this.m_ships[i]);
         }
         this.m_ships = [];
     }
