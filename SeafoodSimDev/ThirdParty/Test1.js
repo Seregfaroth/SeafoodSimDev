@@ -17,6 +17,9 @@ var TKN_Scene = (function () {
     TKN_Scene.prototype.add = function (p_mesh) {
         this.m_scene.add(p_mesh.mesh);
     };
+    TKN_Scene.prototype.remove = function (p_mesh) {
+        this.m_scene.remove(p_mesh.mesh);
+    };
     return TKN_Scene;
 }());
 var TKN_Camera = (function () {

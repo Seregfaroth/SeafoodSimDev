@@ -133,7 +133,9 @@ var Ship = (function () {
                 ship.m_cargo[type][i] += noOfFish;
                 //Remove from school
                 school.getAges()[i] -= noOfFish;
+                var t1 = p_map.getYield();
                 p_map.setYield(p_map.getYield() + noOfFish);
+                var t2 = p_map.getYield();
                 ship.history[1].push(noOfFish);
             }
         });

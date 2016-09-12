@@ -28,7 +28,7 @@ var Controller = (function () {
                 new EndScreen(_this.m_model.getStats());
             }
             else {
-                _this.m_model.run();
+                _this.m_model.run(10);
                 if (!_this.m_noGraphicSimulation)
                     _this.m_view.updateMainView(_this.m_model);
             }
@@ -41,6 +41,7 @@ var Controller = (function () {
             }
             /*if (this.m_simState = simState.ending) {
                 clearInterval(this.m_timer);
+                this.m_view.updateMainView(this.m_model);
                 this.endSimulation();
             }*/
         };

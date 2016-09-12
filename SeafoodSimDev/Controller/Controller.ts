@@ -72,7 +72,7 @@ class Controller {
             new EndScreen(this.m_model.getStats());
         }
         else {
-            this.m_model.run();
+            this.m_model.run(10);
             if(!this.m_noGraphicSimulation)
                 this.m_view.updateMainView(this.m_model);
         }

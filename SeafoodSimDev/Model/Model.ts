@@ -11,9 +11,9 @@ class Model {
     private m_ai: AI;
     private m_time: number = 0;
     private m_stats: EndScreenStats;
-    public m_statFreq = 10;
+    public m_statFreq = 20;
     private m_recruitAndAgeFreq = 30;
-    private m_shipMovesPrTick = 1;
+    //private m_movesPrTick = 1;
     //private m_statFreq = 30;
     private m_size: number = 15;
     private m_noOfSchools: number = 30;
@@ -52,7 +52,7 @@ class Model {
 
         //updating yield
         this.m_stats.setYieldPrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_map.getYield());
-        this.m_map.setYield(0);
+        //this.m_map.setYield(0);
         // updating scores
         this.m_stats.setFinancialScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getFinancialScore());
         this.m_stats.setEnvironmentalScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getEnvironmentalScore());
