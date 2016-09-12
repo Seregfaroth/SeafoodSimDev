@@ -3,7 +3,7 @@ class Map {
     private m_grid: Tile[][] = [];
     public m_schools: School[] = [];
     private m_restrictions: Restrictions;
-    private m_fishingPercentage: number = 0.1;
+    private m_fishingPercentage: number = 0.01;
     private m_ships: Ship[] = [];
     private m_yield: number; //in fish, will be tonnes
 
@@ -12,6 +12,25 @@ class Map {
         this.generateMap(p_size);
         this.placeSchools(p_noOfSchools);
         this.m_yield = 0;
+    }
+    public run(): void {
+        var map: Map = this;
+        this.m_schools.forEach(function (s) {
+            //s.move(map);
+            //s.live(map);
+        });
+        this.getLandingSites().forEach(function (ls) {
+            ls.processFish();
+        });
+        this.getFuelSites().forEach(function (fs) {
+            fs.restock();
+        });
+    }
+    public ageAndRecruit(): void {
+        var map: Map = this;
+        this.m_schools.forEach(function (s) {
+            s.live(map);
+        });
     }
     public getYield(): number {
         return this.m_yield;
@@ -46,7 +65,7 @@ class Map {
             placedInSamePlace++;
             var tile: Tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(20000, 15000, point));
+                this.addSchool(new Cod(5000, 4500, point));
                 schoolsPlaced++;
             }
         }
@@ -64,7 +83,7 @@ class Map {
         for (var i = 0; i < p_size; i++) {
             var row: Tile[] = [];
             for (var j = 0; j < p_size; j++) {
-                row.push(new Ocean(10000, 1));
+                row.push(new Ocean(100000, 1));
             }
             this.m_grid.push(row);
         }
@@ -188,18 +207,7 @@ class Map {
         return this.m_grid.length;
     }
 
-    public run(): void {
-        var map: Map = this;
-        this.m_schools.forEach(function (s) {
-            s.live(map);
-        });
-        this.getLandingSites().forEach(function (ls) {
-            ls.processFish();
-        });
-        this.getFuelSites().forEach(function (fs) {
-            fs.restock();
-        });
-    }
+    
 
     public getLandingSites(): LandingSite[] {
         var sites: LandingSite[] = [];

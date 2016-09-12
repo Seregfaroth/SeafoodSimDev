@@ -1,7 +1,7 @@
 ﻿/// <reference path="School.ts"/>
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class Cod extends School{
-    private m_movingRadius: number = 3;
+    private m_movingRadius: number = 1;
     private m_origin: Point2;
     
 
@@ -19,7 +19,7 @@ class Cod extends School{
     }
    
     //Move with a probability of 25% in a random direction
-    protected move(p_map: Map): void {
+    public move(p_map: Map): void {
         //console.log("Original position: " + JSON.stringify(this.m_position));
         var move: boolean = Math.random() < 0.25;
         
@@ -73,10 +73,13 @@ class Cod extends School{
 
 
     protected recruit(p_map: Map): void {
+        var tmp = (<Ocean>p_map.getTile(this.m_position)).getFishCapacity();
+        var tmp2 = this.getSize();
         if ((<Ocean>p_map.getTile(this.m_position)).getFishCapacity() > this.getSize()) {
             //Only recruit if the tile is not full
             var noOfNewFish: number = Math.floor(Math.random() * (this.getSize())*0.1 + this.getSize()*0.1);
             this.m_ages[0] = noOfNewFish;
+            this.m_recruitTotal += noOfNewFish;
         }
     }
 

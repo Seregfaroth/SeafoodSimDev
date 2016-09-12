@@ -15,13 +15,14 @@ class Controller {
     private m_statFreq: number;
     private m_scenario: number;
     private m_endTime: number;
+    private m_noGraphicSimulation = false;
 
     constructor() {
         console.log("Controller loading");
         this.m_simState = simState.paused;
         this.m_delayPerTick = 1000;
-        this.m_fastDelayPerTick = 100;
-        this.m_statFreq = 30;
+        this.m_fastDelayPerTick = 1;
+        //this.m_statFreq = 30;
         this.m_model = new Model();
         this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(),this.m_model.getGovernment().getTaxingRate()); 
         this.m_eventHandler = new EventHandler(this);
@@ -61,16 +62,19 @@ class Controller {
 
     simulationTick = () => {
         //console.log("Controller running simulationtick");
-        var tmp = this.m_model.getTime() % this.m_statFreq;
-        if (!(this.m_model.getTime() % this.m_statFreq)) this.m_model.updateStats();
+        
+        if (!(this.m_model.getTime() % this.m_model.m_statFreq)) this.m_model.updateStats();
         if (this.m_model.getTime() >= this.m_endTime) {
             this.m_simState = simState.ending;
             console.log("Simulation ended" + this.m_model.getStats());
             clearInterval(this.m_timer);
+            this.m_view.updateMainView(this.m_model);
+            new EndScreen(this.m_model.getStats());
         }
         else {
             this.m_model.run();
-            this.m_view.updateMainView(this.m_model);
+            if(!this.m_noGraphicSimulation)
+                this.m_view.updateMainView(this.m_model);
         }
     }
 
@@ -82,6 +86,7 @@ class Controller {
         }
         /*if (this.m_simState = simState.ending) {
             clearInterval(this.m_timer);
+            this.m_view.updateMainView(this.m_model);
             this.endSimulation();
         }*/
     }  

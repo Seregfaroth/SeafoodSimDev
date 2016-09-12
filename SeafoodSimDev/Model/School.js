@@ -3,9 +3,18 @@
 var School = (function () {
     function School(p_size, p_msy, p_position) {
         this.m_ages = [];
+        this.m_recruitTotal = 0;
+        this.m_natDeath = 0;
+        this.m_yield = 0;
         this.m_position = p_position;
         this.m_msy = p_msy;
     }
+    School.prototype.getRecruitTotal = function () {
+        return this.m_recruitTotal;
+    };
+    School.prototype.getNatDeathTotal = function () {
+        return this.m_natDeath;
+    };
     School.prototype.getBiomass = function () {
         var b = 0;
         for (var _i = 0, _a = this.m_ages; _i < _a.length; _i++) {
@@ -40,7 +49,9 @@ var School = (function () {
         return this.m_ages;
     };
     School.prototype.live = function (p_map) {
-        this.move(p_map);
+        //this.move(p_map);
+        var t = this.m_ages[this.m_ages.length - 1];
+        this.m_natDeath += this.m_ages[this.m_ages.length - 1];
         this.age();
         this.recruit(p_map);
     };

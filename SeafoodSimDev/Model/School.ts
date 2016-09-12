@@ -7,10 +7,19 @@ abstract class School {
     protected m_ages: number[] = [];
     protected m_msy: number;
     protected m_mey: number;
+    protected m_recruitTotal: number = 0;
+    protected m_natDeath: number = 0;
+    protected m_yield: number = 0;
 
     public constructor(p_size: number, p_msy: number, p_position: Point2) {
         this.m_position = p_position;
         this.m_msy = p_msy;        
+    }
+    public getRecruitTotal(): number {
+        return this.m_recruitTotal;
+    }
+    public getNatDeathTotal(): number {
+        return this.m_natDeath;
     }
 
     public getBiomass(): number {
@@ -55,7 +64,9 @@ abstract class School {
     
 
     public live(p_map: Map): void {
-        this.move(p_map);
+        //this.move(p_map);
+        var t = this.m_ages[this.m_ages.length - 1];
+        this.m_natDeath += this.m_ages[this.m_ages.length-1];
         this.age();
         this.recruit(p_map);
     }
@@ -71,5 +82,5 @@ abstract class School {
         return this.m_maxAge;
     }
     protected abstract recruit(p_map:Map): void
-    protected abstract move(p_map: Map): void;
+    public abstract move(p_map: Map): void;
 }

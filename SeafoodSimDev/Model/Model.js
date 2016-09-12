@@ -7,6 +7,9 @@ var Model = (function () {
     function Model() {
         this.m_shipOwners = [];
         this.m_time = 0;
+        this.m_statFreq = 10;
+        this.m_recruitAndAgeFreq = 30;
+        this.m_shipMovesPrTick = 1;
         this.m_statFreq = 30;
         this.m_size = 15;
         this.m_noOfSchools = 30;
@@ -17,20 +20,34 @@ var Model = (function () {
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions);
         this.m_ai = new AI();
-        this.createShipOwner(new Point2(3, 3), 30000);
+        this.createShipOwner(new Point2(3, 3), 300000);
+        this.createShipOwner(new Point2(10, 10), 300000);
         this.updateStats();
     }
     Model.prototype.updateStats = function () {
         var biomass = 0;
-        //updating biomass
+        var recruit = 0;
+        var natDeath = 0;
+        // updating time
+        this.m_stats.setTimeAt(this.getTime() / this.m_statFreq, this.getTime());
+        //updating biomass and recruitment
         for (var _i = 0, _a = this.getMap().getSchools(); _i < _a.length; _i++) {
             var sc = _a[_i];
             biomass += sc.getBiomass();
+            recruit += sc.getRecruitTotal();
+            natDeath += sc.getNatDeathTotal();
         }
-        this.m_stats.setBiomassPrYearAt(this.getTime() / this.m_statFreq, biomass);
+        this.m_stats.setBiomassPrTimeUnitAt(this.getTime() / this.m_statFreq, biomass);
+        this.m_stats.setRecruitmentPrTimeUnitAt(this.getTime() / this.m_statFreq, recruit);
+        this.m_stats.setNatDeathPrTimeUnitAt(this.getTime() / this.m_statFreq, natDeath);
         //updating yield
-        this.m_stats.setYieldPrYearAt(this.getTime() / this.m_statFreq, this.m_map.getYield());
+        this.m_stats.setYieldPrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_map.getYield());
         this.m_map.setYield(0);
+        // updating scores
+        this.m_stats.setFinancialScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getFinancialScore());
+        this.m_stats.setEnvironmentalScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getEnvironmentalScore());
+        this.m_stats.setSocialScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getSocialScore());
+        this.m_stats.setOverallScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getOverallScore());
     };
     Model.prototype.getStats = function () {
         return this.m_stats;
@@ -39,6 +56,9 @@ var Model = (function () {
         this.m_time++;
         //console.log("running model");
         this.m_map.run();
+        if (!(this.m_time % this.m_recruitAndAgeFreq)) {
+            this.m_map.ageAndRecruit();
+        }
         for (var i = 0; i < this.m_shipOwners.length; i++) {
             this.m_ai.run(this.m_shipOwners[i], this.m_map);
         }

@@ -11,6 +11,9 @@ class Model {
     private m_ai: AI;
     private m_time: number = 0;
     private m_stats: EndScreenStats;
+    public m_statFreq = 10;
+    private m_recruitAndAgeFreq = 30;
+    private m_shipMovesPrTick = 1;
     private m_statFreq = 30;
     private m_size: number = 15;
     private m_noOfSchools: number = 30;
@@ -25,21 +28,36 @@ class Model {
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions);
         this.m_ai = new AI();
-        this.createShipOwner(new Point2(3, 3), 30000);
+        this.createShipOwner(new Point2(3, 3), 300000);
+        this.createShipOwner(new Point2(10, 10), 300000);
         this.updateStats();
     }
 
 
     public updateStats() {
         var biomass = 0;
-        //updating biomass
+        var recruit = 0;
+        var natDeath = 0;
+        // updating time
+        this.m_stats.setTimeAt(this.getTime() / this.m_statFreq, this.getTime());
+        //updating biomass and recruitment
         for (var sc of this.getMap().getSchools()) {
             biomass += sc.getBiomass();
+            recruit += sc.getRecruitTotal();
+            natDeath += sc.getNatDeathTotal();
         }
-        this.m_stats.setBiomassPrYearAt(this.getTime() / this.m_statFreq, biomass);
+        this.m_stats.setBiomassPrTimeUnitAt(this.getTime() / this.m_statFreq, biomass);
+        this.m_stats.setRecruitmentPrTimeUnitAt(this.getTime() / this.m_statFreq, recruit);
+        this.m_stats.setNatDeathPrTimeUnitAt(this.getTime() / this.m_statFreq, natDeath);
+
         //updating yield
-        this.m_stats.setYieldPrYearAt(this.getTime() / this.m_statFreq, this.m_map.getYield());
+        this.m_stats.setYieldPrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_map.getYield());
         this.m_map.setYield(0);
+        // updating scores
+        this.m_stats.setFinancialScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getFinancialScore());
+        this.m_stats.setEnvironmentalScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getEnvironmentalScore());
+        this.m_stats.setSocialScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getSocialScore());
+        this.m_stats.setOverallScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getOverallScore());
     }
     public getStats(): EndScreenStats {
         return this.m_stats;
@@ -50,6 +68,10 @@ class Model {
         //console.log("running model");
         
         this.m_map.run();
+        if (!(this.m_time % this.m_recruitAndAgeFreq)) {
+            
+            this.m_map.ageAndRecruit();
+        }
         for (var i = 0; i < this.m_shipOwners.length; i++) {
             this.m_ai.run(this.m_shipOwners[i], this.m_map);
         }

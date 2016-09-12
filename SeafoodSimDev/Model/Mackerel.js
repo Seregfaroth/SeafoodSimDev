@@ -21,6 +21,8 @@ var Mackerel = (function (_super) {
     Mackerel.prototype.move = function () {
     };
     Mackerel.prototype.recruit = function (p_map) {
+        var tmp = p_map.getTile(this.m_position).getFishCapacity();
+        var tmp2 = this.getSize();
         if (p_map.getTile(this.m_position).getFishCapacity() > this.getSize()) {
             //Only recruit if the tile is not full
             var noOfNewFish = Math.random() * this.getSize();

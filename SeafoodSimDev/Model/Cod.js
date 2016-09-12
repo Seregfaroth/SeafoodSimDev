@@ -9,7 +9,7 @@ var Cod = (function (_super) {
     __extends(Cod, _super);
     function Cod(p_size, p_msy, p_position) {
         _super.call(this, p_size, p_msy, p_position);
-        this.m_movingRadius = 3;
+        this.m_movingRadius = 1;
         this.m_origin = p_position;
         this.m_maxAge = 8; // OBS Ship also uses this value. It is hardcoded there at the moment
         for (var i = 0; i < this.m_maxAge; i++) {
@@ -71,10 +71,13 @@ var Cod = (function (_super) {
         //console.log("new postion: " + JSON.stringify(this.m_position));
     };
     Cod.prototype.recruit = function (p_map) {
+        var tmp = p_map.getTile(this.m_position).getFishCapacity();
+        var tmp2 = this.getSize();
         if (p_map.getTile(this.m_position).getFishCapacity() > this.getSize()) {
             //Only recruit if the tile is not full
             var noOfNewFish = Math.floor(Math.random() * (this.getSize()) * 0.1 + this.getSize() * 0.1);
             this.m_ages[0] = noOfNewFish;
+            this.m_recruitTotal += noOfNewFish;
         }
     };
     return Cod;
