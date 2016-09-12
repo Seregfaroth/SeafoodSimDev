@@ -66,7 +66,7 @@ var StartScreen = (function () {
         endTime.max = "99999";
         endTime.min = "10";
         endTime.step = "10";
-        endTime.value = "100";
+        endTime.value = "1000";
         var span = document.createElement("span");
         cell.appendChild(span);
         span.innerHTML = "days";

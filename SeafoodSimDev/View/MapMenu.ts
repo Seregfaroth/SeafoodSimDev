@@ -9,6 +9,7 @@
         menuDiv.id = "menuDiv";
         menuDiv.style.cssFloat = "left";
         menuDiv.style.width = "25%";
+        menuDiv.style.minWidth = "300px";
         menuDiv.style.height = "70%";
         menuDiv.classList.add("ui-widget-content");
         document.getElementById("mainDiv").appendChild(menuDiv);
@@ -101,9 +102,8 @@
         var cell = dateRow.insertCell();
         var slider: HTMLElement = document.createElement("div");
         slider.id = "taxSlider";
-        slider.style.width = "70%";
-        slider.style.cssFloat = "right";
-        slider.style.margin = "10px";
+        
+        slider.classList.add("slider");
         cell.className = "slider-cell";
         cell.appendChild(slider);
         $("#taxSlider").slider();
@@ -142,9 +142,7 @@
             cell.className = "slider-cell";
             var quoteSlider: HTMLElement = document.createElement("div");
             quoteSlider.id = "quoteSlider" + p_ShipOwners[i].getID();
-            quoteSlider.style.width = "70%";
-            quoteSlider.style.cssFloat = "right";
-            quoteSlider.style.margin = "10px";
+            quoteSlider.classList.add("slider");
             cell.appendChild(quoteSlider);
             $("#quoteSlider" + p_ShipOwners[i].getID()).slider();
             $("#quoteSlider" + p_ShipOwners[i].getID()).slider("option", "min", 0);
@@ -183,9 +181,7 @@
             cell.className = "slider-cell";
             var slider: HTMLElement = document.createElement("div");
             slider.id = "effortSlider" + p_ShipOwners[i].getID();
-            slider.style.width = "70%";
-            slider.style.cssFloat = "right";
-            slider.style.margin = "10px";
+            slider.classList.add("slider");
             cell.appendChild(slider);
             $("#effortSlider" + p_ShipOwners[i].getID()).slider();
             $("#effortSlider" + p_ShipOwners[i].getID()).slider("option", "min", 0);
@@ -258,9 +254,7 @@
         var cell = dateRow.insertCell();
         var slider: HTMLElement = document.createElement("div");
         slider.id = "noOfShipsSlider";
-        slider.style.width = "70%";
-        slider.style.cssFloat = "right";
-        slider.style.margin = "10px";
+        slider.classList.add("slider");
         cell.className = "slider-cell";
         cell.appendChild(slider);
         $("#noOfShipsSlider").slider();
@@ -331,6 +325,7 @@
         dayDiv.classList.add("date");
 
         var buttonCell: HTMLTableCellElement = dateRow.insertCell();
+        buttonCell.style.cssFloat = "right";
         var restartButton: HTMLButtonElement = document.createElement("button");
         buttonCell.appendChild(restartButton);
         restartButton.id = "restart";

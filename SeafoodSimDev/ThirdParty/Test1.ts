@@ -51,8 +51,8 @@ class TKN_Renderer {
         console.log("Construct TKN_Rendeerer");
         this.m_renderer = new THREE.WebGLRenderer();
         this.m_renderer.setSize(p_width, p_height);
-        //document.getElementById(p_div).appendChild(this.m_renderer.domElement);
-        document.body.insertBefore(this.m_renderer.domElement, document.body.lastChild);
+        document.getElementById(p_div).appendChild(this.m_renderer.domElement);
+        //document.body.insertBefore(this.m_renderer.domElement, document.body.lastChild);
         
     }
 

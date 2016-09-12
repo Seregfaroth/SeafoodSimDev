@@ -6,12 +6,17 @@
 
 }
 .slider-cell {
-    width: 60%;
+    width: 50%;
+}
+.slider {
+    width: 100%;
+    float: right;
+    margin: 10px;
 }
 .legend-header {
     font-weight: bold;
 }
-.menu-legend {
+.menu-legend {day
     padding: 5px;
 }
 .score{
@@ -27,19 +32,25 @@
     color: dimgray;
 }
 .slider-value-cell {
-    padding: 15px;
-    min-width: 70px;
+    padding: 10px;
+    min-width: 60px;
 }
 .date {
     text-align: center;
-    font-size: x-large;
-    padding-left: 5px;
+    font-size: 1.3vw;
+    padding-left: 15px;
     padding-bottom: 14px;
     font-weight: bold;
-    min-width: 100px;
 }
 #month {
-    min-width: 130px;
+    min-width:8vw;
+}
+
+#day {
+    min-width: 4vw;
+}
+#mainDiv {
+    min-width: 1100px;
 }
 .header {
     padding: 14px;
