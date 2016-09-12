@@ -7,6 +7,7 @@ var MapMenu = (function () {
         var menuDiv = document.createElement("div");
         menuDiv.id = "menuDiv";
         menuDiv.style.cssFloat = "left";
+        menuDiv.style.paddingLeft = "3px";
         menuDiv.style.width = "25%";
         menuDiv.style.minWidth = "300px";
         menuDiv.style.height = "70%";

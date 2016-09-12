@@ -106,7 +106,8 @@ var StartScreen = (function () {
             "the purpose of this scenario and how to win in this scenario.";
         $("#startScreen").dialog({
             minWidth: 600,
-            minHeight: 600
+            minHeight: 600,
+            modal: true
         });
     }
     return StartScreen;

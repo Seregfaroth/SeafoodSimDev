@@ -87,6 +87,60 @@ class Map {
             }
             this.m_grid.push(row);
         }
+        this.placeLandAndSites2(p_size, prices);
+    }
+
+    private placeLandAndSites2(p_size: number, p_prices: { [fishType: number]: number }) {
+
+        for (var c = Math.floor(p_size/2); c < p_size; c++) {
+            for (var r = 0; r < p_size / 10 + Math.sin(c) * (p_size/20); r++) {
+                this.m_grid[r][c] = new Land();
+            }
+        }
+        if (p_size > 10) {
+            this.m_grid[0][Math.floor(p_size / 2) - 1] = new LandingSite(2, 10000, 2000, p_prices, "landingSite1");
+            this.m_grid[p_size - p_size/5][p_size-1] = new FuelSite(2, 10000, 20, 10, "fuelsite1");
+        }
+
+        for (var r = Math.floor(p_size / 5); r < p_size/ 2; r++) {
+            for (var c = 0; c < p_size / 20 +r % 3; c++) {
+                this.m_grid[r][c] = new Land();
+            }
+        }
+        for (var r = Math.floor(p_size / 5); r < p_size / 2 + 1; r++) {
+            for (var c = 0; c < p_size/20 + r % 2; c++) {
+                this.m_grid[r][c] = new Land();
+            }
+        }
+
+        for (var r = Math.floor(p_size / 3); r < p_size / 1.5; r++) {
+            for (var c = Math.floor(p_size / 2); c < r; c++) {
+                this.m_grid[r][c] = new Land();
+            }
+        }
+        for (var r = Math.floor(p_size / 2); r < p_size / 1.5; r++) {
+            for (var c = Math.floor(p_size/2); c > p_size/3; c--) {
+                this.m_grid[r][c] = new Land();
+            }
+        }
+        this.m_grid[Math.floor(p_size / 2)][Math.floor(p_size / 3)] = new FuelSite(2, 10000, 20, 10, "fuelsite0");
+
+        for (var c = 0; c < Math.floor(p_size / 6); c++) {
+            for (var r = Math.floor(p_size - p_size / 8); r < p_size-c; r++) {
+                this.m_grid[r][c] = new Land();
+            }
+        }
+        this.m_grid[r - 1][2] = new LandingSite(2, 10000, 2000, p_prices, "landingSite0");
+
+        for (var c = p_size / 2; c < p_size; c++) {
+            for (var r = p_size - 1; r > p_size - c/5; r--) {
+                this.m_grid[r][c] = new Land();
+            }
+        }
+
+    }
+    private placeLandAndSites(p_size: number, p_prices: { [fishType: number]: number }) {
+
         for (var c = 0; c < p_size / 2; c++) {
             for (var r = 0; r < p_size / (4 * (c + 1)); r++) {
                 this.m_grid[r][c] = new Land();
@@ -98,24 +152,24 @@ class Map {
                 this.m_grid[r][c] = new Land();
             }
         }
-        this.m_grid[p_size - 1][Math.floor(p_size / 2 + p_size / 5)-1] = new LandingSite(2, 10000, 2000, prices, "landingSite0");
+        this.m_grid[p_size - 1][Math.floor(p_size / 2 + p_size / 5) - 1] = new LandingSite(2, 10000, 2000, p_prices, "landingSite0");
         for (var r = Math.floor(p_size / 3); r < Math.floor(p_size / 2); r++) {
             for (var c = Math.floor(p_size / 3); c < Math.floor(p_size / 2); c++) {
-                    this.m_grid[r][c] = new Land();
+                this.m_grid[r][c] = new Land();
 
             }
         }
-        this.m_grid[Math.floor(p_size / 3)][Math.floor(p_size / 2)] = new LandingSite(2, 10000, 2000, prices, "landingSite1");
+        this.m_grid[Math.floor(p_size / 3)][Math.floor(p_size / 2)] = new LandingSite(2, 10000, 2000, p_prices, "landingSite1");
         this.m_grid[Math.floor(p_size / 2)][Math.floor(p_size / 3)] = new FuelSite(2, 60000, 50, 10, "fuelSite0");
 
         for (var r = Math.floor(p_size / 10) + 5; r < Math.floor(p_size / 6) + 5; r++) {
             this.m_grid[r][p_size - Math.floor(p_size / 8)] = new Land();
         }
-        this.m_grid[Math.floor(p_size / 6) + 4][p_size - Math.floor(p_size / 8) -1] = new FuelSite(2, 10000, 20,10, "fuelsite1");
+        this.m_grid[Math.floor(p_size / 6) + 4][p_size - Math.floor(p_size / 8) - 1] = new FuelSite(2, 10000, 20, 10, "fuelsite1");
 
 
         for (var c = 0; c < p_size / 2; c++) {
-            for (var r = p_size-1; r > p_size - (p_size / (4 * (c + 1))); r--) {
+            for (var r = p_size - 1; r > p_size - (p_size / (4 * (c + 1))); r--) {
                 this.m_grid[r][c] = new Land();
             }
         }

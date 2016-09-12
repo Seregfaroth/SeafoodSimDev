@@ -11,7 +11,7 @@ var Model = (function () {
         this.m_recruitAndAgeFreq = 30;
         this.m_shipMovesPrTick = 1;
         //private m_statFreq = 30;
-        this.m_size = 15;
+        this.m_size = 30;
         this.m_noOfSchools = 30;
         console.log("constructing model");
         var restrictions = new Restrictions();

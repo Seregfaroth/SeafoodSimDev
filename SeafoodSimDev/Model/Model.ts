@@ -15,7 +15,7 @@ class Model {
     private m_recruitAndAgeFreq = 30;
     private m_shipMovesPrTick = 1;
     //private m_statFreq = 30;
-    private m_size: number = 15;
+    private m_size: number = 30
     private m_noOfSchools: number = 30;
 
     constructor() {
