@@ -9,6 +9,7 @@ var StartScreenEventHandler = (function () {
         this.close = function () {
             $("#startScreen").dialog("close");
             _this.m_controller.setEndTime($("#endTime").val());
+            _this.m_controller.setTickPerMove($("#movesPerTick").val());
         };
         this.m_controller = p_controller;
         $("#scenario1").on("change", { scenario: 1 }, this.radioChange);

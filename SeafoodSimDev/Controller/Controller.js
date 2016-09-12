@@ -35,7 +35,7 @@ var Controller = (function () {
                 new EndScreen(_this.m_model.getStats());
             }
             else {
-                _this.m_model.run();
+                _this.m_model.run(_this.m_ticksPerMove);
                 if (!_this.m_noGraphicSimulation)
                     _this.m_view.updateMainView(_this.m_model);
             }
@@ -71,6 +71,9 @@ var Controller = (function () {
     };
     Controller.prototype.getModel = function () {
         return this.m_model;
+    };
+    Controller.prototype.setTickPerMove = function (p_n) {
+        this.m_ticksPerMove = p_n;
     };
     Controller.prototype.getEventHandler = function () {
         return this.m_eventHandler;

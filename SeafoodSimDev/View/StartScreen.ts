@@ -28,6 +28,7 @@ class StartScreen {
 
         var fieldSet: HTMLFieldSetElement = document.createElement("fieldset");
         fieldSet.id = "chooseScenario";
+        fieldSet.style.width = "200px";
         cell.appendChild(fieldSet);
 
         var button: HTMLButtonElement = document.createElement("input");
@@ -69,6 +70,7 @@ class StartScreen {
         cell.appendChild(label);
         label.htmlFor = "endTime";
         label.innerHTML = "Select the duraion of the simulation: ";
+        label.classList.add("selector-label");
         cell.appendChild(document.createElement("br"));
         var endTime: HTMLInputElement = document.createElement("input");
         cell.appendChild(endTime);
@@ -83,6 +85,32 @@ class StartScreen {
         span.innerHTML = "days";
         span.style.marginLeft = "5px";
 
+        var cell: HTMLTableCellElement = row.insertCell();
+        var label: HTMLLabelElement = document.createElement("label");
+        cell.appendChild(label);
+        label.htmlFor = "movesPerTick";
+        label.classList.add("selector-label");
+        label.innerHTML = "Select number of moves pr tick: ";
+        cell.appendChild(document.createElement("br"));
+        var movesPrTick: HTMLSelectElement = document.createElement("select");
+        cell.appendChild(movesPrTick);
+        movesPrTick.id = "movesPerTick";
+        var option: HTMLOptionElement = document.createElement("option");
+        movesPrTick.appendChild(option);
+        option.innerHTML = "One day";
+        option.value = "1";
+        var option: HTMLOptionElement = document.createElement("option");
+        movesPrTick.appendChild(option);
+        option.innerHTML = "One week";
+        option.value = "7";
+        var option: HTMLOptionElement = document.createElement("option");
+        movesPrTick.appendChild(option);
+        option.innerHTML = "One month";
+        option.value = "30";
+        var option: HTMLOptionElement = document.createElement("option");
+        movesPrTick.appendChild(option);
+        option.innerHTML = "One year";
+        option.value = "365";
 
         var informationDiv: HTMLDivElement = document.createElement("div");
         mainDiv.appendChild(informationDiv);
@@ -90,7 +118,7 @@ class StartScreen {
         informationDiv.innerHTML ="Here is some information about scenario 1. What is " +
             "the purpose of this scenario and how to win in this scenario.";
         $("#startScreen").dialog({
-            minWidth: 750,
+            minWidth: 600,
             minHeight: 600
         });
 

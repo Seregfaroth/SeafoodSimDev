@@ -16,6 +16,7 @@ class Controller {
     private m_scenario: number;
     private m_endTime: number;
     private m_noGraphicSimulation = false;
+    private m_ticksPerMove: number;
 
     constructor() {
         console.log("Controller loading");
@@ -37,6 +38,9 @@ class Controller {
     }
     public getModel(): Model {
         return this.m_model;
+    }
+    public setTickPerMove(p_n: number): void {
+        this.m_ticksPerMove = p_n;
     }
 
     public getEventHandler(): EventHandler {
@@ -79,7 +83,7 @@ class Controller {
             new EndScreen(this.m_model.getStats());
         }
         else {
-            this.m_model.run();
+            this.m_model.run(this.m_ticksPerMove);
             if(!this.m_noGraphicSimulation)
                 this.m_view.updateMainView(this.m_model);
         }

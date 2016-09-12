@@ -28,5 +28,7 @@
     private close = (): void => {
         $("#startScreen").dialog("close");
         this.m_controller.setEndTime($("#endTime").val());
+        this.m_controller.setTickPerMove($("#movesPerTick").val());
+
     }
 }
