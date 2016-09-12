@@ -5,7 +5,7 @@
         $("#startButton").on("click", this.start);
         $("#pauseButton").on("click", this.pause);
         $("#fastForwardButton").on("click", this.fastForward);
-        $("#restart").on("click", this.m_controller.restart);
+        $("#restart").on("click", this.restart);
         this.bindFunctions();
     }
 
@@ -73,7 +73,11 @@
             $("#fastForwardButton").off("click");
         }
     }
-
+    public restart = (): void => {
+        if (confirm("Are you sure you want to restart the simulation?")) {
+            this.m_controller.restart();
+        }
+    }
     public setTax = (p_n: number): void => {
         this.updateTaxValue(p_n);
         this.m_controller.getModel().getGovernment().setTaxingRate(p_n / 100);

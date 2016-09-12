@@ -1,6 +1,11 @@
 var EventHandler = (function () {
     function EventHandler(p_controller) {
         var _this = this;
+        this.restart = function () {
+            if (confirm("Are you sure you want to restart the simulation?")) {
+                _this.m_controller.restart();
+            }
+        };
         this.setTax = function (p_n) {
             _this.updateTaxValue(p_n);
             _this.m_controller.getModel().getGovernment().setTaxingRate(p_n / 100);
@@ -66,7 +71,7 @@ var EventHandler = (function () {
         $("#startButton").on("click", this.start);
         $("#pauseButton").on("click", this.pause);
         $("#fastForwardButton").on("click", this.fastForward);
-        $("#restart").on("click", this.m_controller.restart);
+        $("#restart").on("click", this.restart);
         this.bindFunctions();
     }
     EventHandler.prototype.bindFunctions = function (p_all) {
