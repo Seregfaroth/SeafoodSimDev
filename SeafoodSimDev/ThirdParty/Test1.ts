@@ -15,6 +15,9 @@ class TKN_Scene {
     add(p_mesh: TKN_Mesh) {
         this.m_scene.add(p_mesh.mesh);
     }
+    remove(p_mesh: TKN_Mesh): void {
+        this.m_scene.remove(p_mesh.mesh);
+    }
 }
 
 
