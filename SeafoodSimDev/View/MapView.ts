@@ -98,7 +98,10 @@ class MapView {
         
     }
     reset(p_map: Map) {
-        var ships: Ship[] = p_map.getShips();
+        for (var i = 0; i < this.m_ships.length; i++) {
+            this.m_scene.remove(this.m_ships[i]);
+        }
+        this.m_ships = [];
     }
     updateMapView(p_map: Map) {
         //console.log("updating MapView");

@@ -6,8 +6,9 @@ var MainView = (function () {
         this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate);
         new StartScreen();
     }
-    MainView.prototype.reset = function (p_map) {
-        this.m_mapView.reset(p_map);
+    MainView.prototype.reset = function (p_model) {
+        this.m_mapView.reset(p_model.getMap());
+        this.m_mapMenu.reset(p_model.getShipOwners(), p_model.getMap().getLandingSites(), p_model.getGovernment().getStartingTaxingRate());
     };
     MainView.prototype.getMapMenu = function () {
         return this.m_mapMenu;

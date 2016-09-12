@@ -1,11 +1,15 @@
 var Government = (function () {
     function Government(p_restrictions) {
+        this.m_startingTaxingRate = 0.2;
         this.m_restrictions = p_restrictions;
-        this.m_taxingRate = 0.2;
+        this.m_taxingRate = this.m_startingTaxingRate;
         this.m_score = new Score();
     }
     Government.prototype.getScore = function () {
         return this.m_score;
+    };
+    Government.prototype.getStartingTaxingRate = function () {
+        return this.m_startingTaxingRate;
     };
     Government.prototype.getTaxingRate = function () {
         return this.m_taxingRate;

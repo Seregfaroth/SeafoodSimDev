@@ -9,7 +9,7 @@
         this.bindFunctions();
     }
 
-    public bindFunctions(): void {
+    public bindFunctions(p_all?: boolean): void {
         var handler: EventHandler = this;
         $("#taxSlider").off("slide");
         $("#taxSlider").on("slide", function (event, ui) { handler.updateTaxValue(ui.value); });
@@ -43,10 +43,14 @@
         $("#noOfShipsSlider").off("slide");
         $("#noOfShipsSlider").on("slide", function (event, ui) { handler.updateMaxNoShipsValue(ui.value); });
         $("#noOfShipsSlider").on("slidechange", function (event, ui) { handler.setMaxNoShips(ui.value); });
-        
+        if (p_all) {
+            $("#startButton").on("click", this.start);
+            $("#pauseButton").on("click", this.pause);
+            $("#fastForwardButton").on("click", this.fastForward);
+        }
     }
 
-    public unBindFunctions(): void {
+    public unBindFunctions(p_all?:boolean): void {
         var handler: EventHandler = this;
         $("#taxSlider").off("slide");
         $("#taxSlider").on("slide", function (event, ui) { return false; });
@@ -63,6 +67,11 @@
         });
         $("#noOfShipsSlider").off("slide");
         $("#noOfShipsSlider").on("slide", function (event, ui) { return false; });
+        if (p_all) {
+            $("#startButton").off("click");
+            $("#pauseButton").off("click");
+            $("#fastForwardButton").off("click");
+        }
     }
 
     public setTax = (p_n: number): void => {

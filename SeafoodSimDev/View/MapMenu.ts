@@ -77,8 +77,6 @@
         scoreCell.appendChild(score);
 
         //Create tax slider
-
-
         var legend: HTMLElement = document.createElement("legend");
         legend.classList.add("menu-legend");
         var label: HTMLElement = document.createElement("div");
@@ -88,6 +86,7 @@
         menuDiv.appendChild(legend);
 
         var table: any = document.createElement("TABLE");
+        table.width = "100%";
         table.classList.add("menu-text");
         legend.appendChild(table);
         var dateRow: HTMLTableRowElement = table.insertRow();
@@ -122,6 +121,7 @@
         menuDiv.appendChild(quoteLegend);
         var quoteTable: any = document.createElement("TABLE");
         quoteTable.classList.add("menu-text");
+        quoteTable.width = "100%";
         quoteLegend.appendChild(quoteTable);
 
         for (var i = 0; i < p_ShipOwners.length; i++) {
@@ -162,6 +162,7 @@
         menuDiv.appendChild(effortLegend);
         var effortTable: any = document.createElement("TABLE");
         effortTable.classList.add("menu-text");
+        effortTable.width = "100%";
         effortLegend.appendChild(effortTable);
 
         for (var i = 0; i < p_ShipOwners.length; i++) {
@@ -206,6 +207,7 @@
         //for (var i = 0; i < p_landingSites.length; i++) {
         //    var dateRow: HTMLTableRowElement = landingTable.insertRow();
         //    var cell: HTMLTableCellElement = dateRow.insertCell();
+        //cell.width = "30%";
         //    var label: HTMLElement = document.createElement("div");
         //    label.innerHTML = p_landingSites[i].getID() + ":";
         //    label.style.cssFloat = "left";
@@ -241,6 +243,7 @@
         menuDiv.appendChild(legend);
 
         var table: any = document.createElement("TABLE");
+        table.width = "100%";
         table.classList.add("menu-text");
         legend.appendChild(table);
         var dateRow: HTMLTableRowElement = table.insertRow();
@@ -327,12 +330,31 @@
         dayCell.appendChild(dayDiv);
         dayDiv.classList.add("date");
 
+        var buttonCell: HTMLTableCellElement = dateRow.insertCell();
         var restartButton: HTMLButtonElement = document.createElement("button");
-        menuDiv.appendChild(restartButton);
+        buttonCell.appendChild(restartButton);
         restartButton.id = "restart";
-        restartButton.innerHTML = "Restart Simulation";
+        restartButton.classList.add("ui-button");
+        restartButton.innerHTML = "Restart";
     }
-        
+
+    public reset(p_ShipOwners: ShipOwner[], p_landingSites: LandingSite[], p_taxingRate: number) {
+        $("#taxSlider").slider("value", p_taxingRate * 100);
+        $("#taxValue").text(p_taxingRate * 100 + "%");
+
+        $("#noOfShipsSlider").slider("value", 1);
+        $("#maxNoShips").text("1");
+
+        for (var i = 0; i < p_ShipOwners.length; i++) {
+            $("#effortValue" + p_ShipOwners[i].getID()).text(0);
+            $("#effortSlider" + p_ShipOwners[i].getID()).slider("value", 0);
+
+            $("#quoteValue" + p_ShipOwners[i].getID()).text(0);
+            $("#quoteSlider" + p_ShipOwners[i].getID()).slider("value", 0);
+            
+        }
+
+    }
     
     public updateScore(p_government: Government): void {
         $("#financialScore").text(Math.round(p_government.getScore().getFinancialScore()));

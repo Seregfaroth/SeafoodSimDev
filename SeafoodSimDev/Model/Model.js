@@ -7,9 +7,9 @@ var Model = (function () {
     function Model() {
         this.m_shipOwners = [];
         this.m_time = 0;
-        this.m_statFreq = 20;
+        this.m_statFreq = 10;
         this.m_recruitAndAgeFreq = 30;
-        //private m_movesPrTick = 1;
+        this.m_shipMovesPrTick = 1;
         //private m_statFreq = 30;
         this.m_size = 15;
         this.m_noOfSchools = 30;
@@ -42,7 +42,7 @@ var Model = (function () {
         this.m_stats.setNatDeathPrTimeUnitAt(this.getTime() / this.m_statFreq, natDeath);
         //updating yield
         this.m_stats.setYieldPrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_map.getYield());
-        //this.m_map.setYield(0);
+        this.m_map.setYield(0);
         // updating scores
         this.m_stats.setFinancialScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getFinancialScore());
         this.m_stats.setEnvironmentalScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getEnvironmentalScore());

@@ -11,8 +11,9 @@ class MainView {
         new StartScreen();
         
     }
-    public reset(p_map: Map): void {
-        this.m_mapView.reset(p_map);
+    public reset(p_model: Model): void {
+        this.m_mapView.reset(p_model.getMap());
+        this.m_mapMenu.reset(p_model.getShipOwners(), p_model.getMap().getLandingSites(), p_model.getGovernment().getStartingTaxingRate());
     }
     public getMapMenu(): MapMenu {
         return this.m_mapMenu;

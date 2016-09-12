@@ -13,8 +13,14 @@ var Controller = (function () {
         this.m_noGraphicSimulation = false;
         this.restart = function () {
             _this.m_model = new Model();
-            _this.m_view.reset(_this.m_model.getMap());
+            _this.m_view.reset(_this.m_model);
             _this.m_view.updateMainView(_this.m_model);
+            _this.m_eventHandler.bindFunctions(true);
+            _this.m_simState = simState.paused;
+            clearInterval(_this.m_timer);
+            $("#startButton").removeClass("marked");
+            $("#fastForwardButton").removeClass("marked");
+            $("#pauseButton").addClass("marked");
         };
         this.simulationTick = function () {
             //console.log("Controller running simulationtick");
@@ -25,6 +31,7 @@ var Controller = (function () {
                 console.log("Simulation ended" + _this.m_model.getStats());
                 clearInterval(_this.m_timer);
                 _this.m_view.updateMainView(_this.m_model);
+                _this.m_eventHandler.unBindFunctions(true);
                 new EndScreen(_this.m_model.getStats());
             }
             else {
