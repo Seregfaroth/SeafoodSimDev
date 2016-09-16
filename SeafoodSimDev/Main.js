@@ -5,7 +5,7 @@ var Main = (function () {
     function Main(p_test) {
         var _this = this;
         this.loadController = function () {
-            _this.m_controller = new Controller();
+            _this.m_controller = new Controller(_this.m_config);
         };
         console.log("loading Game");
         //var p = new TKN_PathFinding();
