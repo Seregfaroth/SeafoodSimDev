@@ -6,6 +6,7 @@ enum FishType {
     Mackerel = 1
 }
 class Ship {
+    private m_config: Configuration;
     private m_fuel: number;
     private m_cargo: number[][];
     private m_fuelCapacity: number = 150;
@@ -18,7 +19,8 @@ class Ship {
     private m_state: shipState;
     public history: any[][] = [[],[]];//For debugging  purpose
 
-    public constructor(p_owner: ShipOwner) {
+    public constructor(p_owner: ShipOwner, p_config: Configuration) {
+        this.m_config = p_config;
         this.m_position = p_owner.getShipStartPosition();
         this.m_cargo = [[], []];
         this.m_yield = [[], []];

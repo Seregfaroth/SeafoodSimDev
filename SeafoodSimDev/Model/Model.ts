@@ -5,29 +5,30 @@
 /// <reference path = "EndScreenStats.ts"/>
 
 class Model {
+    private m_config: Configuration;
     private m_map: Map;
     private m_shipOwners: ShipOwner[] = [];
     private m_goverment: Government;
     private m_ai: AI;
     private m_time: number = 0;
     private m_stats: EndScreenStats;
-    public m_statFreq = 20;
-    private m_recruitAndAgeFreq = 30;
+    public m_statFreq = 10;
+    private m_recruitAndAgeFreq = 10;
     //private m_movesPrTick = 1;
     //private m_statFreq = 30;
     private m_size: number = 15;
     private m_noOfSchools: number = 30;
 
-    constructor() {
+    constructor(p_config: Configuration) {
         console.log("constructing model");
-        
-        var restrictions: Restrictions = new Restrictions();
+        this.m_config = p_config;
+        var restrictions: Restrictions = new Restrictions(this.m_config);
         this.m_stats = new EndScreenStats();
         
-        this.m_map = new Map(this.m_size, this.m_noOfSchools, restrictions);
+        this.m_map = new Map(this.m_size, this.m_noOfSchools, restrictions, this.m_config);
         //this.m_stats = new EndScreenStats(this.m_map);
-        this.m_goverment = new Government(restrictions);
-        this.m_ai = new AI();
+        this.m_goverment = new Government(restrictions, this.m_config);
+        this.m_ai = new AI(this.m_config);
         this.createShipOwner(new Point2(3, 3), 300000);
         this.createShipOwner(new Point2(10, 10), 300000);
         this.updateStats();
@@ -39,25 +40,34 @@ class Model {
         var recruit = 0;
         var natDeath = 0;
         // updating time
-        this.m_stats.setTimeAt(this.getTime() / this.m_statFreq, this.getTime());
+        var statTime = this.getTime() / this.m_statFreq;
+        this.m_stats.setTimeAt(statTime, this.getTime());
         //updating biomass and recruitment
         for (var sc of this.getMap().getSchools()) {
             biomass += sc.getBiomass();
             recruit += sc.getRecruitTotal();
             natDeath += sc.getNatDeathTotal();
         }
-        this.m_stats.setBiomassPrTimeUnitAt(this.getTime() / this.m_statFreq, biomass);
-        this.m_stats.setRecruitmentPrTimeUnitAt(this.getTime() / this.m_statFreq, recruit);
-        this.m_stats.setNatDeathPrTimeUnitAt(this.getTime() / this.m_statFreq, natDeath);
+        this.m_stats.setBiomassPrTimeUnitAt(statTime, biomass);
+        this.m_stats.setRecruitmentPrTimeUnitAt(statTime, recruit);
+        this.m_stats.setNatDeathPrTimeUnitAt(statTime, natDeath);
 
         //updating yield
-        this.m_stats.setYieldPrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_map.getYield());
+        this.m_stats.setYieldPrTimeUnitAt(statTime, this.m_map.getYield());
+        //updating invest
+        this.m_stats.setInvestPrTimeUnitAt(statTime, 1000);
         //this.m_map.setYield(0);
         // updating scores
-        this.m_stats.setFinancialScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getFinancialScore());
-        this.m_stats.setEnvironmentalScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getEnvironmentalScore());
-        this.m_stats.setSocialScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getSocialScore());
-        this.m_stats.setOverallScorePrTimeUnitAt(this.getTime() / this.m_statFreq, this.m_goverment.getScore().getOverallScore());
+        this.m_stats.setFinancialScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getFinancialScore());
+        this.m_stats.setEnvironmentalScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getEnvironmentalScore());
+        this.m_stats.setSocialScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getSocialScore());
+        this.m_stats.setOverallScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getOverallScore());
+
+        //updating social
+        this.m_stats.setEmploymentLandBasedPrTimeUnitAt(statTime, 10);
+        this.m_stats.setEmploymentSeaBasedPrTimeUnitAt(statTime, 10);
+
+
     }
     public getStats(): EndScreenStats {
         return this.m_stats;
@@ -65,7 +75,9 @@ class Model {
 
     public run(p_noOfMoves?: number) {
         if (p_noOfMoves == undefined) p_noOfMoves = 1;
+        
         for (var m = 0; m < p_noOfMoves; m++) {
+            if (!(this.m_time % this.m_statFreq)) this.updateStats();
             this.m_time++;
             //console.log("running model");
 
@@ -96,7 +108,7 @@ class Model {
         return this.m_goverment;
     }
     public createShipOwner(p_startingPoint: Point2, p_balance?: number) {
-        this.m_shipOwners.push(new ShipOwner(this.m_goverment, p_startingPoint, "shipOwner" + this.m_shipOwners.length, p_balance));
+        this.m_shipOwners.push(new ShipOwner(this.m_goverment, p_startingPoint, "shipOwner" + this.m_shipOwners.length, this.m_config, p_balance));
     }
     
     

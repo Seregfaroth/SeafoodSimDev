@@ -3,6 +3,10 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var Main = (function () {
     function Main(p_test) {
+        var _this = this;
+        this.loadController = function () {
+            _this.m_controller = new Controller();
+        };
         console.log("loading Game");
         //var p = new TKN_PathFinding();
         //var navMatrix = [
@@ -16,7 +20,8 @@ var Main = (function () {
         //debugger;
         //var f = p.findPath(new Point2(0, 0), new Point2(4,6));
         //debugger;
-        this.m_controller = new Controller();
+        this.m_config = new Configuration();
+        this.m_config.loadConfig('Controller/configuration1.json', this.loadController);
         //if (p_test) 
         //    new Test();
     }

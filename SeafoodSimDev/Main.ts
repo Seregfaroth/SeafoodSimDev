@@ -3,6 +3,7 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class Main {
     private m_controller: Controller;
+    private m_config: Configuration;
 
     constructor(p_test: boolean) {
         console.log("loading Game");
@@ -18,10 +19,17 @@ class Main {
         //debugger;
         //var f = p.findPath(new Point2(0, 0), new Point2(4,6));
         //debugger;
-        this.m_controller = new Controller();
+        this.m_config = new Configuration();
+        this.m_config.loadConfig('Controller/configuration1.json', this.loadController);
+
+        
         
         //if (p_test) 
         //    new Test();
+    }
+
+    public loadController = () => {
+        this.m_controller = new Controller();
     }
 
 }

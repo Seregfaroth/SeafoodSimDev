@@ -57,7 +57,7 @@ var StartScreen = (function () {
         var label = document.createElement("label");
         cell.appendChild(label);
         label.htmlFor = "endTime";
-        label.innerHTML = "Select the duraion of the simulation: ";
+        label.innerHTML = "Select the duration of the simulation: ";
         cell.appendChild(document.createElement("br"));
         var endTime = document.createElement("input");
         cell.appendChild(endTime);
@@ -74,8 +74,18 @@ var StartScreen = (function () {
         var informationDiv = document.createElement("div");
         mainDiv.appendChild(informationDiv);
         informationDiv.id = "information";
-        informationDiv.innerHTML = "Here is some information about scenario 1. What is " +
-            "the purpose of this scenario and how to win in this scenario.";
+        var nameP = document.createElement("p");
+        informationDiv.appendChild(nameP);
+        nameP.id = "name";
+        nameP.innerHTML = "Name: ";
+        var desP = document.createElement("p");
+        informationDiv.appendChild(desP);
+        desP.id = "des";
+        desP.innerHTML = "Description: ";
+        var goalP = document.createElement("p");
+        informationDiv.appendChild(goalP);
+        goalP.id = "goal";
+        goalP.innerHTML = "Goal: ";
         $("#startScreen").dialog({
             minWidth: 750,
             minHeight: 600

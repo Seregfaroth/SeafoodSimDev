@@ -1,10 +1,11 @@
 var Restrictions = (function () {
-    function Restrictions() {
+    function Restrictions(p_config) {
         this.m_quotes = {};
         this.m_effortLimits = {};
         this.m_restrictedAreas = [];
         this.m_landingDistrubutions = {};
         this.m_maxShips = 1;
+        this.m_config = p_config;
     }
     Restrictions.prototype.restrictArea = function (p_tile) {
         this.m_restrictedAreas.push(p_tile);

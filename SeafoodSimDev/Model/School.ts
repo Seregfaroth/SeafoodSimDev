@@ -1,6 +1,7 @@
 ﻿// <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 /// <reference path="Fish.ts"/>
 abstract class School {
+    protected m_config: Configuration;
     protected m_position: Point2;
     protected m_maxAge: number;
     protected m_type: FishType;
@@ -11,7 +12,8 @@ abstract class School {
     protected m_natDeath: number = 0;
     protected m_yield: number = 0;
 
-    public constructor(p_size: number, p_msy: number, p_position: Point2) {
+    public constructor(p_size: number, p_msy: number, p_position: Point2, p_config: Configuration) {
+        this.m_config = p_config;
         this.m_position = p_position;
         this.m_msy = p_msy;        
     }

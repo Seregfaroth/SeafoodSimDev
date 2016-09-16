@@ -1,10 +1,11 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var Map = (function () {
-    function Map(p_size, p_noOfSchools, p_restrictions) {
+    function Map(p_size, p_noOfSchools, p_restrictions, p_config) {
         this.m_grid = [];
         this.m_schools = [];
         this.m_fishingPercentage = 0.01;
         this.m_ships = [];
+        this.m_config = p_config;
         this.m_restrictions = p_restrictions;
         this.generateMap(p_size);
         this.placeSchools(p_noOfSchools);
@@ -60,7 +61,7 @@ var Map = (function () {
             placedInSamePlace++;
             var tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(5000, 4500, point));
+                this.addSchool(new Cod(5000, 4500, point, this.m_config));
                 schoolsPlaced++;
             }
         }

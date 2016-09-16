@@ -1,0 +1,18 @@
+{
+  "prices": 5,
+  "taxingRate": 18,
+  "map": "map1",
+  "shipOwner": "skipper1",
+  "shipOwnerStartMoney": 1000000,
+  "shipPrice": 100000,
+  "aiShipBuyBalance": 200000,
+  "aiShipSellBalance": 0,
+
+  "schoolsInOnePlace": 5,
+  "schoolSize": 2000,
+  "schoolMsy": 1800,
+
+  "financialMaxScore": 1000,
+  "environmentalMaxScore": 1000,
+  "socialMaxScore":  1000
+}

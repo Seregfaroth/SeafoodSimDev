@@ -1,6 +1,7 @@
 ﻿/// <reference path = "../Model/EndScreenStats.ts"/>
 enum simState { starting, running, paused, ending, fast }
 class Controller {
+    private m_config;
     private m_view: MainView;
     private m_model: Model;
     private m_eventHandler: EventHandler;
@@ -13,26 +14,37 @@ class Controller {
     private m_fastDelayPerTick: number;
     private m_stats: EndScreenStats;
     private m_statFreq: number;
-    private m_scenario: number;
+    //private m_scenario: number;
+    private m_scenario: Scenario;
     private m_endTime: number;
     private m_noGraphicSimulation = false;
-
-    constructor() {
+    //private m_sce: Scenario;
+    constructor(p_config: Configuration) {
+        this.m_config = p_config;
         console.log("Controller loading");
+        this.m_scenario=new Scenario();
+        //this.m_sce.loadScenario('Controller/scn1.json');
         this.m_simState = simState.paused;
         this.m_delayPerTick = 1000;
         this.m_fastDelayPerTick = 1;
         //this.m_statFreq = 30;
-        this.m_model = new Model();
+        this.m_model = new Model(p_config);
         this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(),this.m_model.getGovernment().getTaxingRate()); 
         this.m_eventHandler = new EventHandler(this);
         this.m_startScreenEventHandler = new StartScreenEventHandler(this);
         this.m_view.updateMainView(this.m_model);
+        
     }
-    public getScenario(): number {
+    //public getScenario(): number {
+    //    return this.m_scenario;
+    //}
+    //public setScenario(p_scenario: number): void {
+    //    this.m_scenario = p_scenario;
+    //}
+    public getScenario(): Scenario {
         return this.m_scenario;
     }
-    public setScenario(p_scenario: number): void {
+    public setScenario(p_scenario: Scenario): void {
         this.m_scenario = p_scenario;
     }
     public getModel(): Model {
@@ -69,7 +81,7 @@ class Controller {
     simulationTick = () => {
         //console.log("Controller running simulationtick");
         
-        if (!(this.m_model.getTime() % this.m_model.m_statFreq)) this.m_model.updateStats();
+        //if (!(this.m_model.getTime() % this.m_model.m_statFreq)) this.m_model.updateStats();
         if (this.m_model.getTime() >= this.m_endTime) {
             this.m_simState = simState.ending;
             console.log("Simulation ended" + this.m_model.getStats());
@@ -79,7 +91,7 @@ class Controller {
             new EndScreen(this.m_model.getStats());
         }
         else {
-            this.m_model.run(10);
+            this.m_model.run(100);
             if(!this.m_noGraphicSimulation)
                 this.m_view.updateMainView(this.m_model);
         }

@@ -1,4 +1,5 @@
 ﻿class Score {
+    private m_config: Configuration;
     private m_financialScore: number;
     private m_socialScore: number;
     private m_environmentalScore: number;
@@ -8,7 +9,8 @@
     private m_maximumScore: number = 9999999;
     private financial: number[] = []; //List of the financial ownings every day the last year
 
-    public constructor() {
+    public constructor(p_config: Configuration) {
+        this.m_config = p_config;
         this.m_financialScore = 0;
         this.m_environmentalScore = 0;
         this.m_socialScore = 0;

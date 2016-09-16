@@ -1,10 +1,11 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var ShipOwner = (function () {
-    function ShipOwner(p_government, p_shipStartPosition, p_id, p_balance) {
+    function ShipOwner(p_government, p_shipStartPosition, p_id, p_config, p_balance) {
         this.m_ships = [];
         this.m_balance = 1000;
         this.m_license = true;
         this.m_shipPrice = 10000; // Should maybe be stored in map?
+        this.m_config = p_config;
         this.m_government = p_government;
         this.m_shipStartPosition = p_shipStartPosition;
         this.m_id = p_id;
@@ -40,7 +41,7 @@ var ShipOwner = (function () {
         this.m_balance += p_amount * (1 - this.m_government.getTaxingRate());
     };
     ShipOwner.prototype.buyShip = function () {
-        var ship = new Ship(this);
+        var ship = new Ship(this, this.m_config);
         this.m_ships.push(ship);
         this.financialTransaction(-this.m_shipPrice);
         return ship;

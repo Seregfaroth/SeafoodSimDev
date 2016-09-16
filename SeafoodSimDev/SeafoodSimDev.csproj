@@ -37,6 +37,7 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Controller\configuration1.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -46,11 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controller\declarations\" />
+    <Folder Include="Controller\scenarios\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Controller\Configuration.ts" />
     <TypeScriptCompile Include="Controller\Controller.ts" />
     <TypeScriptCompile Include="Controller\EventHandler.ts" />
+    <TypeScriptCompile Include="Controller\Scenario.ts" />
     <TypeScriptCompile Include="Controller\StartScreenEventHandler.ts" />
     <TypeScriptCompile Include="declarations\jquery.d.ts" />
     <TypeScriptCompile Include="declarations\jqueryui.d.ts" />

@@ -1,9 +1,10 @@
 var Government = (function () {
-    function Government(p_restrictions) {
+    function Government(p_restrictions, p_config) {
         this.m_startingTaxingRate = 0.2;
+        this.m_config = p_config;
         this.m_restrictions = p_restrictions;
         this.m_taxingRate = this.m_startingTaxingRate;
-        this.m_score = new Score();
+        this.m_score = new Score(p_config);
     }
     Government.prototype.getScore = function () {
         return this.m_score;

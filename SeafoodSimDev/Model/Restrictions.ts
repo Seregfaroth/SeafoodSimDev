@@ -1,11 +1,14 @@
 ﻿class Restrictions{
+    private m_config: Configuration;
     private m_quotes: { [shipOwner: string]: number } = {};
     private m_effortLimits: { [shipOwner: string]: number } = {};
    private m_restrictedAreas: Tile[] = [];
    private m_landingDistrubutions: { [Site: string]: number } = {};
    private m_maxShips: number = 1;
 
-
+   constructor(p_config: Configuration) {
+       this.m_config = p_config;
+   }
     public restrictArea(p_tile: Tile): void {
         this.m_restrictedAreas.push(p_tile);
     }

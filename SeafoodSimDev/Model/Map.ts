@@ -1,5 +1,6 @@
 ﻿// <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class Map {
+    private m_config: Configuration;
     private m_grid: Tile[][] = [];
     public m_schools: School[] = [];
     private m_restrictions: Restrictions;
@@ -7,7 +8,8 @@ class Map {
     private m_ships: Ship[] = [];
     private m_yield: number; //in fish, will be tonnes
 
-    public constructor(p_size: number, p_noOfSchools: number, p_restrictions: Restrictions) {
+    public constructor(p_size: number, p_noOfSchools: number, p_restrictions: Restrictions, p_config: Configuration) {
+        this.m_config = p_config;
         this.m_restrictions = p_restrictions;
         this.generateMap(p_size);
         this.placeSchools(p_noOfSchools);
@@ -65,7 +67,7 @@ class Map {
             placedInSamePlace++;
             var tile: Tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(5000, 4500, point));
+                this.addSchool(new Cod(5000, 4500, point, this.m_config));
                 schoolsPlaced++;
             }
         }

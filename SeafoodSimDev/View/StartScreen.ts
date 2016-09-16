@@ -68,7 +68,7 @@ class StartScreen {
         var label: HTMLLabelElement = document.createElement("label");
         cell.appendChild(label);
         label.htmlFor = "endTime";
-        label.innerHTML = "Select the duraion of the simulation: ";
+        label.innerHTML = "Select the duration of the simulation: ";
         cell.appendChild(document.createElement("br"));
         var endTime: HTMLInputElement = document.createElement("input");
         cell.appendChild(endTime);
@@ -87,8 +87,23 @@ class StartScreen {
         var informationDiv: HTMLDivElement = document.createElement("div");
         mainDiv.appendChild(informationDiv);
         informationDiv.id = "information";
-        informationDiv.innerHTML ="Here is some information about scenario 1. What is " +
-            "the purpose of this scenario and how to win in this scenario.";
+    
+        var nameP: HTMLParagraphElement = document.createElement("p");
+        informationDiv.appendChild(nameP);       
+        nameP.id = "name";
+        nameP.innerHTML = "Name: ";
+
+        var desP: HTMLParagraphElement = document.createElement("p");
+        informationDiv.appendChild(desP);
+        desP.id = "des";
+        desP.innerHTML = "Description: ";
+
+        var goalP: HTMLParagraphElement = document.createElement("p");
+        informationDiv.appendChild(goalP);
+        goalP.id = "goal";
+        goalP.innerHTML = "Goal: ";
+        
+
         $("#startScreen").dialog({
             minWidth: 750,
             minHeight: 600

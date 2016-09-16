@@ -1,9 +1,10 @@
 var Score = (function () {
-    function Score() {
+    function Score(p_config) {
         this.m_mininumSchool = 10;
         this.m_minimumScore = -100000;
         this.m_maximumScore = 9999999;
         this.financial = []; //List of the financial ownings every day the last year
+        this.m_config = p_config;
         this.m_financialScore = 0;
         this.m_environmentalScore = 0;
         this.m_socialScore = 0;

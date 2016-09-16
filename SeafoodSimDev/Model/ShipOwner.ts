@@ -1,5 +1,6 @@
 ﻿// <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class ShipOwner {
+    private m_config: Configuration;
     private m_ships: Ship[] = [];
     private m_balance: number = 1000;
     private m_license: boolean = true;
@@ -8,7 +9,8 @@ class ShipOwner {
     private m_id: string;
     private m_government: Government;
 
-    public constructor(p_government: Government, p_shipStartPosition: Point2, p_id: string, p_balance?: number) {
+    public constructor(p_government: Government, p_shipStartPosition: Point2, p_id: string, p_config: Configuration, p_balance?: number) {
+        this.m_config = p_config;
         this.m_government = p_government;
         this.m_shipStartPosition = p_shipStartPosition;
         this.m_id = p_id;
@@ -49,8 +51,8 @@ class ShipOwner {
         this.m_balance += p_amount * (1-this.m_government.getTaxingRate());
     }
 
-    public buyShip() : Ship{
-        var ship: Ship = new Ship(this);
+    public buyShip(): Ship{
+        var ship: Ship = new Ship(this, this.m_config);
         this.m_ships.push(ship);
         this.financialTransaction(-this.m_shipPrice);
         return ship;
