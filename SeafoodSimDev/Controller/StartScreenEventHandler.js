@@ -17,6 +17,7 @@ var StartScreenEventHandler = (function () {
         this.close = function () {
             $("#startScreen").dialog("close");
             _this.m_controller.setEndTime($("#endTime").val());
+            _this.m_controller.setTickPerMove($("#movesPerTick").val());
         };
         this.updateInfo = function () {
             var scenario = _this.m_controller.getScenario();

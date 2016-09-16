@@ -57,8 +57,8 @@ var TKN_Renderer = (function () {
         console.log("Construct TKN_Rendeerer");
         this.m_renderer = new THREE.WebGLRenderer();
         this.m_renderer.setSize(p_width, p_height);
-        //document.getElementById(p_div).appendChild(this.m_renderer.domElement);
-        document.body.insertBefore(this.m_renderer.domElement, document.body.lastChild);
+        document.getElementById(p_div).appendChild(this.m_renderer.domElement);
+        //document.body.insertBefore(this.m_renderer.domElement, document.body.lastChild);
     }
     TKN_Renderer.prototype.render = function (p_cam, p_scene) {
         this.m_renderer.render(p_scene.scene, p_cam.camera);

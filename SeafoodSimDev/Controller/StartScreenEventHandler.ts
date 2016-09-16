@@ -33,6 +33,8 @@
     private close = (): void => {
         $("#startScreen").dialog("close");
         this.m_controller.setEndTime($("#endTime").val());
+        this.m_controller.setTickPerMove($("#movesPerTick").val());
+
     }
     private updateInfo = () => {
         var scenario = this.m_controller.getScenario();

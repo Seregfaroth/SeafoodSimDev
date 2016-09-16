@@ -11,7 +11,7 @@ var Model = (function () {
         this.m_recruitAndAgeFreq = 10;
         //private m_movesPrTick = 1;
         //private m_statFreq = 30;
-        this.m_size = 15;
+        this.m_size = 30;
         this.m_noOfSchools = 30;
         console.log("constructing model");
         this.m_config = p_config;
