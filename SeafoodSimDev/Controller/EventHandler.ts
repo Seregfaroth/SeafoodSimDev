@@ -83,14 +83,14 @@
         this.m_controller.getModel().getGovernment().setTaxingRate(p_n / 100);
     }
     public updateTaxValue = (p_n: number): void => {
-        $("#taxValue").text($("#taxSlider").slider("option", "value")+ "%");
+        $("#taxValue").text(p_n + "%");
     }
     public setQuote = (owner: string, p_n: number): void => {
         this.m_controller.getModel().getGovernment().getRestrictions().setQuote(owner, p_n);
         this.updateQuoteValue(owner, p_n);
     }
     public updateQuoteValue = (owner: string, p_n: number): void => {
-        $("#quoteValue" + owner).text($("#quoteSlider" + owner).slider("option", "value"));
+        $("#quoteValue" + owner).text(p_n);
     }
 
     public setEffortLimit = (owner: string, p_n: number): void =>{
@@ -98,21 +98,21 @@
         this.updateEffortLimitValue(owner, p_n);
     }
     public updateEffortLimitValue = (owner: string, p_n: number): void => {
-        $("#effortValue" + owner).text($("#effortSlider" + owner).slider("option", "value"));
+        $("#effortValue" + owner).text(p_n);
     }
     public setLandingDistrubution = (p_site: string, p_n: number): void =>{
         this.m_controller.getModel().getGovernment().getRestrictions().setLandingDistrubution(p_site, p_n);
         this.updateLandingValue(p_site, p_n);
     }
     public updateLandingValue = (site: string, p_n: number): void => {
-        $("#landingValue" + site).text($("#landingSlider" + site).slider("option", "value"));
+        $("#landingValue" + site).text(p_n);
     }
     public setMaxNoShips = (p_n: number): void => {
         this.m_controller.getModel().getGovernment().getRestrictions().setMaxShips(p_n);
         this.updateMaxNoShipsValue(p_n);
     } 
     public updateMaxNoShipsValue(p_n: number): void {
-        $("#maxNoShips").text($("#noOfShipsSlider").slider("option", "value"));
+        $("#maxNoShips").text(p_n);
     } 
     public start = (): void => {
         $("#fastForwardButton").removeClass("marked");

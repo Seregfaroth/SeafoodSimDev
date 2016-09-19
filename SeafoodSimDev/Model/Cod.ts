@@ -1,21 +1,31 @@
 ﻿/// <reference path="School.ts"/>
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class Cod extends School{
-    private m_movingRadius: number = 1;
+    private m_movingRadius: number = 2;
+    private m_recrutingPercentage: number = 0.25;
     private m_origin: Point2;
-    
 
-    public constructor(p_size: number, p_msy: number, p_position: Point2, p_config: Configuration) {
+    public constructor(p_size: number, p_msy: number, p_position: Point2, p_config: Configuration, p_ages?: number[]) {
         super(p_size, p_msy, p_position, p_config);
         this.m_origin = p_position;
         this.m_maxAge = 8; // OBS Ship also uses this value. It is hardcoded there at the moment
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }
-        for (var i = 0; i < p_size; i++) {
-            var age: number = Math.floor(Math.random() * this.m_maxAge);
-            this.m_ages[age] += 1;
+        if (!p_ages) {
+            for (var i = 0; i < p_size; i++) {
+                var age: number = Math.floor(Math.random() * this.m_maxAge);
+                this.m_ages[age] += 1;
+            }
         }
+        else {
+            this.m_ages = p_ages;
+        }
+        this.m_size = p_size;
+    }
+
+    public getOrigin(): Point2 {
+        return this.m_origin;
     }
    
     //Move with a probability of 25% in a random direction
@@ -77,8 +87,9 @@ class Cod extends School{
         var tmp2 = this.getSize();
         if ((<Ocean>p_map.getTile(this.m_position)).getFishCapacity() > this.getSize()) {
             //Only recruit if the tile is not full
-            var noOfNewFish: number = Math.floor(Math.random() * (this.getSize())*0.1 + this.getSize()*0.1);
+            var noOfNewFish: number = Math.floor(Math.random() * this.m_recrutingPercentage*this.getSize());
             this.m_ages[0] = noOfNewFish;
+            this.m_size += noOfNewFish;
             this.m_recruitTotal += noOfNewFish;
         }
     }

@@ -13,7 +13,6 @@ var Configuration = (function () {
         return ret;
     };
     Configuration.prototype.fromJSON = function (p_object) {
-        this.m_prices = p_object.prices;
         this.m_taxingRate = p_object.taxingRate;
         this.m_map = p_object.map;
         this.m_shipOwner = p_object.shipOwner;
@@ -21,17 +20,10 @@ var Configuration = (function () {
         this.m_shipPrice = p_object.shipPrice;
         this.m_aiBuyShipBalance = p_object.aiShipBuyBalance;
         this.m_aiSellShipBalance = p_object.aiShipSellBalance;
-        this.m_schoolsInOnePlace = p_object.schoolsInOnePlace;
-        this.m_schoolSize = p_object.schoolSize;
-        this.m_schoolMsy = p_object.schoolMsy;
         this.m_fishingPercentage = p_object.fishingPercentage;
-        this.m_oceanFishCapacity = p_object.oceanFishCapacity;
         this.m_financialMaxScore = p_object.financialMaxScore;
         this.m_environmentalMaxScore = p_object.environmentalMaxScore;
         this.m_socialMaxScore = p_object.socialMaxScore;
-    };
-    Configuration.prototype.getPrices = function () {
-        return this.m_prices;
     };
     Configuration.prototype.getTaxingRate = function () {
         return this.m_taxingRate;
@@ -54,15 +46,6 @@ var Configuration = (function () {
     Configuration.prototype.getAiSellShipBalance = function () {
         return this.m_aiSellShipBalance;
     };
-    Configuration.prototype.getSchoolsInOnePlace = function () {
-        return this.m_schoolsInOnePlace;
-    };
-    Configuration.prototype.getSchoolSize = function () {
-        return this.m_schoolSize;
-    };
-    Configuration.prototype.getSchoolMsy = function () {
-        return this.m_schoolMsy;
-    };
     Configuration.prototype.getFinancialMaxScore = function () {
         return this.m_financialMaxScore;
     };
@@ -74,9 +57,6 @@ var Configuration = (function () {
     };
     Configuration.prototype.getFishingPercentage = function () {
         return this.m_fishingPercentage;
-    };
-    Configuration.prototype.getOceanFishCapacity = function () {
-        return this.m_oceanFishCapacity;
     };
     return Configuration;
 }());

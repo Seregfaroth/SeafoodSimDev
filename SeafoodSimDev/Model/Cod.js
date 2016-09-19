@@ -7,19 +7,29 @@ var __extends = (this && this.__extends) || function (d, b) {
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var Cod = (function (_super) {
     __extends(Cod, _super);
-    function Cod(p_size, p_msy, p_position, p_config) {
+    function Cod(p_size, p_msy, p_position, p_config, p_ages) {
         _super.call(this, p_size, p_msy, p_position, p_config);
-        this.m_movingRadius = 1;
+        this.m_movingRadius = 2;
+        this.m_recrutingPercentage = 0.25;
         this.m_origin = p_position;
         this.m_maxAge = 8; // OBS Ship also uses this value. It is hardcoded there at the moment
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }
-        for (var i = 0; i < p_size; i++) {
-            var age = Math.floor(Math.random() * this.m_maxAge);
-            this.m_ages[age] += 1;
+        if (!p_ages) {
+            for (var i = 0; i < p_size; i++) {
+                var age = Math.floor(Math.random() * this.m_maxAge);
+                this.m_ages[age] += 1;
+            }
         }
+        else {
+            this.m_ages = p_ages;
+        }
+        this.m_size = p_size;
     }
+    Cod.prototype.getOrigin = function () {
+        return this.m_origin;
+    };
     //Move with a probability of 25% in a random direction
     Cod.prototype.move = function (p_map) {
         //console.log("Original position: " + JSON.stringify(this.m_position));
@@ -75,8 +85,9 @@ var Cod = (function (_super) {
         var tmp2 = this.getSize();
         if (p_map.getTile(this.m_position).getFishCapacity() > this.getSize()) {
             //Only recruit if the tile is not full
-            var noOfNewFish = Math.floor(Math.random() * (this.getSize()) * 0.1 + this.getSize() * 0.1);
+            var noOfNewFish = Math.floor(Math.random() * this.m_recrutingPercentage * this.getSize());
             this.m_ages[0] = noOfNewFish;
+            this.m_size += noOfNewFish;
             this.m_recruitTotal += noOfNewFish;
         }
     };

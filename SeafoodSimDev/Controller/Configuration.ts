@@ -1,5 +1,5 @@
 ﻿class Configuration {
-    private m_prices: { [fishType: number]: number };
+    
     private m_taxingRate: number;
     private m_map: Map;
     private m_shipOwner;
@@ -8,15 +8,13 @@
     private m_aiBuyShipBalance: number;
     private m_aiSellShipBalance: number;
 
-    private m_schoolsInOnePlace: number;
-    private m_schoolSize: number;
-    private m_schoolMsy;
+
     private m_fishingPercentage: number;
-    private m_oceanFishCapacity: number
 
     private m_financialMaxScore: number;
     private m_environmentalMaxScore: number;
     private m_socialMaxScore: number;
+
 
     constructor() {
     }
@@ -26,7 +24,7 @@
         return ret;
     }
     fromJSON(p_object: any) {
-        this.m_prices = p_object.prices;
+       
         this.m_taxingRate = p_object.taxingRate;
         this.m_map = p_object.map;
         this.m_shipOwner = p_object.shipOwner;
@@ -35,16 +33,12 @@
         this.m_aiBuyShipBalance = p_object.aiShipBuyBalance;
         this.m_aiSellShipBalance = p_object.aiShipSellBalance;
 
-        this.m_schoolsInOnePlace = p_object.schoolsInOnePlace;
-        this.m_schoolSize = p_object.schoolSize;
-        this.m_schoolMsy = p_object.schoolMsy;
+
         this.m_fishingPercentage = p_object.fishingPercentage;
-        this.m_oceanFishCapacity = p_object.oceanFishCapacity;
 
         this.m_financialMaxScore = p_object.financialMaxScore;
         this.m_environmentalMaxScore = p_object.environmentalMaxScore;
         this.m_socialMaxScore = p_object.socialMaxScore;
-
 
     }
     public loadConfig = (p_path: string, p_callBack: Function) => {
@@ -54,9 +48,7 @@
         });
     }
 
-    public getPrices(): { [fishType: number]: number } {
-        return this.m_prices;
-    }
+    
     public getTaxingRate(): number {
         return this.m_taxingRate;
     }
@@ -78,15 +70,6 @@
     public getAiSellShipBalance(): number {
         return this.m_aiSellShipBalance;
     }
-    public getSchoolsInOnePlace(): number {
-        return this.m_schoolsInOnePlace;
-    }
-    public getSchoolSize(): number {
-        return this.m_schoolSize;
-    }
-    public getSchoolMsy() {
-        return this.m_schoolMsy;
-    }
     public getFinancialMaxScore(): number {
         return this.m_financialMaxScore;
     }
@@ -99,8 +82,6 @@
     public getFishingPercentage(): number {
         return this.m_fishingPercentage;
     }
-    public getOceanFishCapacity(): number {
-        return this.m_oceanFishCapacity;
-    }
+
 }
 

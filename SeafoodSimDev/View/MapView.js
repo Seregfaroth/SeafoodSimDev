@@ -28,7 +28,7 @@ var MapView = (function () {
         this.m_fishMat = new TKN_material(8);
         this.m_noM = new TKN_material(1);
         //this.m_camera.position = new Point
-        //create fishses
+        //create fish
         var i = 0;
         for (var _i = 0, _a = p_map.m_schools; _i < _a.length; _i++) {
             var school = _a[_i];
@@ -86,9 +86,22 @@ var MapView = (function () {
         var i = 0;
         var t = this.m_schools.length;
         var tm = this.m_schools;
+        while (this.m_schools.length > p_map.getSchools().length) {
+            //If there are more schools in scene than in the map
+            this.m_scene.remove(this.m_schools[0]);
+            this.m_schools.splice(0, 1);
+        }
         for (var _i = 0, _a = this.m_schools; _i < _a.length; _i++) {
             var sc = _a[_i];
             sc.position = new Point2(p_map.m_schools[i].getPosition().row, p_map.m_schools[i++].getPosition().col);
+        }
+        i = this.m_schools.length;
+        while (this.m_schools.length < p_map.getSchools().length) {
+            //If there are more schools in map than in the scene
+            this.m_schools[i] = new TKN_Mesh(new TKN_Geometry(0.1), this.m_whiteMaterial);
+            this.m_schools[i].position = p_map.getSchools()[i].getPosition();
+            this.m_scene.add(this.m_schools[i]);
+            i++;
         }
         for (var i = 0; i < this.m_ships.length; i++) {
             this.m_ships[i].position = new Point2(p_map.getShips()[i].getPosition().row, p_map.getShips()[i].getPosition().col);

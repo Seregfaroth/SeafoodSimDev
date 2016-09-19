@@ -11,6 +11,7 @@ abstract class School {
     protected m_recruitTotal: number = 0;
     protected m_natDeath: number = 0;
     protected m_yield: number = 0;
+    protected m_size: number;
 
     public constructor(p_size: number, p_msy: number, p_position: Point2, p_config: Configuration) {
         this.m_config = p_config;
@@ -75,6 +76,7 @@ abstract class School {
 
     private age(): void {
         var school: School = this;
+        this.m_size -= this.m_ages[this.m_maxAge - 1];
         for (var i = this.m_maxAge-1; i >0; i--) {
             this.m_ages[i] = this.m_ages[i - 1];
         }

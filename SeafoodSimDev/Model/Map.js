@@ -6,16 +6,25 @@ var Map = (function () {
         this.m_ships = [];
         this.m_config = p_config;
         this.m_restrictions = p_restrictions;
-        this.generateMap(p_mapType, p_size, this.m_config.getPrices(), this.m_config.getOceanFishCapacity());
-        this.placeSchools(p_noOfSchools, this.m_config.getSchoolSize(), this.m_config.getSchoolMsy(), this.m_config.getSchoolsInOnePlace());
         this.m_yield = 0;
         this.m_fishingPercentage = this.m_config.getFishingPercentage();
+        this.generateExampleMap();
     }
+    Map.prototype.setScenario = function (p_scenario) {
+        this.m_scenario = p_scenario;
+        this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), this.m_scenario.getOceanFishCapacity(), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace());
+    };
     Map.prototype.run = function () {
         var map = this;
         this.m_schools.forEach(function (s) {
-            //s.move(map);
-            //s.live(map);
+            s.move(map);
+            s.live(map);
+            if (s.getSize() < map.m_scenario.getSchoolMinimum()) {
+                map.removeSchool(s);
+            }
+            else if (s.getSize() > map.m_scenario.getSchoolMaximum()) {
+                map.splitCodSchool(s);
+            }
         });
         this.getLandingSites().forEach(function (ls) {
             ls.processFish();
@@ -23,6 +32,44 @@ var Map = (function () {
         this.getFuelSites().forEach(function (fs) {
             fs.restock();
         });
+    };
+    Map.prototype.removeSchool = function (p_school) {
+        this.m_schools.splice(this.m_schools.indexOf(p_school), 1);
+    };
+    Map.prototype.splitCodSchool = function (p_school) {
+        var newSchoolAges = [];
+        var noOfFishInNewSchool = 0;
+        for (var i = 0; i < p_school.getMaxAge(); i++) {
+            //The number of fish that are splitting to a new school
+            var noOfFish = Math.ceil(0.3 * p_school.getAges()[i]);
+            newSchoolAges.push(noOfFish);
+            noOfFishInNewSchool += noOfFish;
+            //Remove from school
+            p_school.getAges()[i] -= noOfFish;
+        }
+        this.m_schools.push(new Cod(noOfFishInNewSchool, this.m_scenario.getSchoolMsy(), p_school.getOrigin(), this.m_config, newSchoolAges));
+    };
+    Map.prototype.generateExampleMap = function () {
+        for (var i = 0; i < 10; i++) {
+            var row = [];
+            for (var j = 0; j < 10; j++) {
+                row.push(new Ocean(0, 1));
+            }
+            this.m_grid.push(row);
+        }
+        for (var c = 5; c < 10; c++) {
+            for (var r = 0; r < c - 5; r++) {
+                this.m_grid[r][c] = new Land();
+            }
+        }
+        for (var r = 3; r < 6; r++) {
+            for (var c = 3; c < 6; c++) {
+                this.m_grid[r][c] = new Land();
+            }
+        }
+        for (var c = 0; c < 8; c++) {
+            this.m_grid[9][c] = new Land();
+        }
     };
     Map.prototype.ageAndRecruit = function () {
         var map = this;
@@ -68,7 +115,8 @@ var Map = (function () {
     Map.prototype.addSchool = function (p_school) {
         this.m_schools.push(p_school);
     };
-    Map.prototype.generateMap = function (p_mapType, p_size, p_prices, p_oceanFishCapacity) {
+    Map.prototype.generateMap = function (p_mapType, p_size, p_prices, p_oceanFishCapacity, p_noOfSchools, p_schoolsInOnePlace) {
+        this.m_grid = [];
         for (var i = 0; i < p_size; i++) {
             var row = [];
             for (var j = 0; j < p_size; j++) {
@@ -84,6 +132,7 @@ var Map = (function () {
                 this.placeLandAndSites2(p_size, p_prices);
                 break;
         }
+        this.placeSchools(p_noOfSchools, this.m_scenario.getSchoolSize(), this.m_scenario.getSchoolMsy(), p_schoolsInOnePlace);
     };
     Map.prototype.placeLandAndSites2 = function (p_size, p_prices) {
         for (var c = Math.floor(p_size / 2); c < p_size; c++) {

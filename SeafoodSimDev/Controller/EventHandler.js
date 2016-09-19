@@ -11,28 +11,28 @@ var EventHandler = (function () {
             _this.m_controller.getModel().getGovernment().setTaxingRate(p_n / 100);
         };
         this.updateTaxValue = function (p_n) {
-            $("#taxValue").text($("#taxSlider").slider("option", "value") + "%");
+            $("#taxValue").text(p_n + "%");
         };
         this.setQuote = function (owner, p_n) {
             _this.m_controller.getModel().getGovernment().getRestrictions().setQuote(owner, p_n);
             _this.updateQuoteValue(owner, p_n);
         };
         this.updateQuoteValue = function (owner, p_n) {
-            $("#quoteValue" + owner).text($("#quoteSlider" + owner).slider("option", "value"));
+            $("#quoteValue" + owner).text(p_n);
         };
         this.setEffortLimit = function (owner, p_n) {
             _this.m_controller.getModel().getGovernment().getRestrictions().setEffortLimit(owner, p_n);
             _this.updateEffortLimitValue(owner, p_n);
         };
         this.updateEffortLimitValue = function (owner, p_n) {
-            $("#effortValue" + owner).text($("#effortSlider" + owner).slider("option", "value"));
+            $("#effortValue" + owner).text(p_n);
         };
         this.setLandingDistrubution = function (p_site, p_n) {
             _this.m_controller.getModel().getGovernment().getRestrictions().setLandingDistrubution(p_site, p_n);
             _this.updateLandingValue(p_site, p_n);
         };
         this.updateLandingValue = function (site, p_n) {
-            $("#landingValue" + site).text($("#landingSlider" + site).slider("option", "value"));
+            $("#landingValue" + site).text(p_n);
         };
         this.setMaxNoShips = function (p_n) {
             _this.m_controller.getModel().getGovernment().getRestrictions().setMaxShips(p_n);
@@ -136,7 +136,7 @@ var EventHandler = (function () {
         }
     };
     EventHandler.prototype.updateMaxNoShipsValue = function (p_n) {
-        $("#maxNoShips").text($("#noOfShipsSlider").slider("option", "value"));
+        $("#maxNoShips").text(p_n);
     };
     return EventHandler;
 }());

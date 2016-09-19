@@ -61,9 +61,13 @@ var Score = (function () {
             }
         });
         //Make sure score stays inside a specific range
+        this.m_environmentalScore = this.normalize(this.m_environmentalScore, 0, this.m_config.getEnvironmentalMaxScore());
+        this.m_socialScore = this.normalize(this.m_socialScore, 0, this.m_config.getSocialMaxScore());
+        this.m_financialScore = this.normalize(this.m_financialScore, 0, this.m_config.getFinancialMaxScore());
+        /*
         this.m_environmentalScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_environmentalScore));
         this.m_financialScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_financialScore));
-        this.m_socialScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_socialScore));
+        this.m_socialScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_socialScore));*/
         this.m_overallScore = this.m_environmentalScore / 3 + this.m_financialScore / 3 + this.m_socialScore / 3;
     };
     Score.prototype.normalize = function (p_value, p_min, p_max) {

@@ -7,7 +7,13 @@
   "description": "Use the MCA as an aid to fullfill the goals",
   "linkToMCA": "http://mareframe.mapix.com/dev/MCA/DST.html",
   "mapType": 2,
-  "mapSize": 8,
-  "numberOfSchools":  10
-
+  "mapSize": 15,
+  "numberOfSchools":  20,
+  "prices": [{"Cod": 10, "Mackerel": 10}],
+  "oceanFishCapacity": 7000,
+  "schoolsInOnePlace": 4,  
+  "schoolSize": 2000,
+  "schoolMsy": 1800,
+  "schoolMinimum": 10,
+  "schoolMaximum": 5000
 }

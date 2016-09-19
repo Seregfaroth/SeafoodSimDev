@@ -6,7 +6,7 @@ class MainView {
     private m_mapMenu: MapMenu;
 
     constructor(p_map: Map, p_ShipOwners: ShipOwner[],p_taxingRate: number) {
-        this.m_mapView = new MapView(p_map);
+        //this.m_mapView = new MapView(p_map);
         this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate);
         new StartScreen();
         
