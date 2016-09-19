@@ -4,16 +4,17 @@ class Map {
     private m_grid: Tile[][] = [];
     public m_schools: School[] = [];
     private m_restrictions: Restrictions;
-    private m_fishingPercentage: number = 0.01;
+    private m_fishingPercentage: number;//The percentage of total fish a ship gets when fishing
     private m_ships: Ship[] = [];
     private m_yield: number; //in fish, will be tonnes
 
     public constructor(p_mapType: number,p_size: number, p_noOfSchools: number, p_restrictions: Restrictions, p_config: Configuration) {
         this.m_config = p_config;
         this.m_restrictions = p_restrictions;
-        this.generateMap(p_mapType, p_size);
-        this.placeSchools(p_noOfSchools);
+        this.generateMap(p_mapType, p_size, this.m_config.getPrices(), this.m_config.getOceanFishCapacity());
+        this.placeSchools(p_noOfSchools, this.m_config.getSchoolSize(), this.m_config.getSchoolMsy(), this.m_config.getSchoolsInOnePlace());
         this.m_yield = 0;
+        this.m_fishingPercentage = this.m_config.getFishingPercentage();
     }
     public run(): void {
         var map: Map = this;
@@ -54,20 +55,19 @@ class Map {
     public getSchools(): School[] {
         return this.m_schools;
     }
-    private placeSchools(p_n) {
+    private placeSchools(p_n: number, p_schoolSize: number, p_schoolMsy: number, p_schoolsInOnePlace: number) {
         var schoolsPlaced: number = 0;
         var placedInSamePlace: number = 0;
-        var schoolsInOnePlace: number = Math.ceil(p_n / 5);
         var point: Point2 = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
         while (schoolsPlaced < p_n) {
-            if (placedInSamePlace === schoolsInOnePlace) {
+            if (placedInSamePlace === p_schoolsInOnePlace) {
                 placedInSamePlace = 0;
                 point = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
             }
             placedInSamePlace++;
             var tile: Tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(5000, 4500, point, this.m_config));
+                this.addSchool(new Cod(p_schoolSize, p_schoolMsy, point, this.m_config));
                 schoolsPlaced++;
             }
         }
@@ -76,22 +76,18 @@ class Map {
         this.m_schools.push(p_school);
     }
     
-    private generateMap(p_mapType: number, p_size: number) {
-
-        var prices: { [fishType: number]: number } = {}
-        prices[FishType.Cod] = 10;
-        prices[FishType.Mackerel] = 5;
+    private generateMap(p_mapType: number, p_size: number, p_prices: { [fishType: number]: number }, p_oceanFishCapacity: number ) {
 
         for (var i = 0; i < p_size; i++) {
             var row: Tile[] = [];
             for (var j = 0; j < p_size; j++) {
-                row.push(new Ocean(100000, 1));
+                row.push(new Ocean(p_oceanFishCapacity, 1));
             }
             this.m_grid.push(row);
         }
         switch (p_mapType) {
-            case 1: this.placeLandAndSites(p_size, prices); break;
-            case 2: this.placeLandAndSites2(p_size, prices); break;
+            case 1: this.placeLandAndSites(p_size, p_prices); break;
+            case 2: this.placeLandAndSites2(p_size, p_prices); break;
         }
     }
 
@@ -195,24 +191,6 @@ class Map {
         return this.m_fishingPercentage;
     }
 
-    /*public fish(p_position: Point2, p_capacity: number): Fish[] {
-        var percentage: number = this.m_fishingPercentage;
-        var noOfFishInTile: number = this.getNoOfFishInTile(p_position);
-        var fish: Fish[] = [];
-        if (p_capacity < noOfFishInTile * percentage) {
-            //If the ship is not able to fish the full percentage
-            percentage = p_capacity / noOfFishInTile;
-        }
-        var tmp = this.getSchoolsInTile(p_position);
-        this.getSchoolsInTile(p_position).forEach(function (s) {
-            s.shuffleFish(); //May not be necessary to shuffle every time
-            var fishInSchool: Fish[] = s.getFish();
-            //Take a percentage of fish out of the school and add it to the fish list
-            var fishToAdd: Fish[] = fishInSchool.splice(0, fishInSchool.length * percentage);
-            fish = fish.concat(fishToAdd);
-        });
-        return fish;
-    }*/
     public getSchoolsInTile(p_position: Point2): School[] {
         var list: School[] = [];
         this.m_schools.forEach(function (s) {

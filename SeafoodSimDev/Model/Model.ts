@@ -30,8 +30,7 @@ class Model {
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions, this.m_config);
         this.m_ai = new AI(this.m_config);
-        this.createShipOwner(new Point2(3, 3), 300000);
-        this.createShipOwner(new Point2(10, 10), 300000);
+        this.createShipOwner(new Point2(3, 3), this.m_config.getShipOwnerStartMoney());
         this.updateStats();
     }
 

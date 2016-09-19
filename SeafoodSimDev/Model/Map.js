@@ -3,13 +3,13 @@ var Map = (function () {
     function Map(p_mapType, p_size, p_noOfSchools, p_restrictions, p_config) {
         this.m_grid = [];
         this.m_schools = [];
-        this.m_fishingPercentage = 0.01;
         this.m_ships = [];
         this.m_config = p_config;
         this.m_restrictions = p_restrictions;
-        this.generateMap(p_mapType, p_size);
-        this.placeSchools(p_noOfSchools);
+        this.generateMap(p_mapType, p_size, this.m_config.getPrices(), this.m_config.getOceanFishCapacity());
+        this.placeSchools(p_noOfSchools, this.m_config.getSchoolSize(), this.m_config.getSchoolMsy(), this.m_config.getSchoolsInOnePlace());
         this.m_yield = 0;
+        this.m_fishingPercentage = this.m_config.getFishingPercentage();
     }
     Map.prototype.run = function () {
         var map = this;
@@ -48,20 +48,19 @@ var Map = (function () {
     Map.prototype.getSchools = function () {
         return this.m_schools;
     };
-    Map.prototype.placeSchools = function (p_n) {
+    Map.prototype.placeSchools = function (p_n, p_schoolSize, p_schoolMsy, p_schoolsInOnePlace) {
         var schoolsPlaced = 0;
         var placedInSamePlace = 0;
-        var schoolsInOnePlace = Math.ceil(p_n / 5);
         var point = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
         while (schoolsPlaced < p_n) {
-            if (placedInSamePlace === schoolsInOnePlace) {
+            if (placedInSamePlace === p_schoolsInOnePlace) {
                 placedInSamePlace = 0;
                 point = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
             }
             placedInSamePlace++;
             var tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(5000, 4500, point, this.m_config));
+                this.addSchool(new Cod(p_schoolSize, p_schoolMsy, point, this.m_config));
                 schoolsPlaced++;
             }
         }
@@ -69,23 +68,20 @@ var Map = (function () {
     Map.prototype.addSchool = function (p_school) {
         this.m_schools.push(p_school);
     };
-    Map.prototype.generateMap = function (p_mapType, p_size) {
-        var prices = {};
-        prices[FishType.Cod] = 10;
-        prices[FishType.Mackerel] = 5;
+    Map.prototype.generateMap = function (p_mapType, p_size, p_prices, p_oceanFishCapacity) {
         for (var i = 0; i < p_size; i++) {
             var row = [];
             for (var j = 0; j < p_size; j++) {
-                row.push(new Ocean(100000, 1));
+                row.push(new Ocean(p_oceanFishCapacity, 1));
             }
             this.m_grid.push(row);
         }
         switch (p_mapType) {
             case 1:
-                this.placeLandAndSites(p_size, prices);
+                this.placeLandAndSites(p_size, p_prices);
                 break;
             case 2:
-                this.placeLandAndSites2(p_size, prices);
+                this.placeLandAndSites2(p_size, p_prices);
                 break;
         }
     };
@@ -173,24 +169,6 @@ var Map = (function () {
     Map.prototype.getFishingPercentage = function () {
         return this.m_fishingPercentage;
     };
-    /*public fish(p_position: Point2, p_capacity: number): Fish[] {
-        var percentage: number = this.m_fishingPercentage;
-        var noOfFishInTile: number = this.getNoOfFishInTile(p_position);
-        var fish: Fish[] = [];
-        if (p_capacity < noOfFishInTile * percentage) {
-            //If the ship is not able to fish the full percentage
-            percentage = p_capacity / noOfFishInTile;
-        }
-        var tmp = this.getSchoolsInTile(p_position);
-        this.getSchoolsInTile(p_position).forEach(function (s) {
-            s.shuffleFish(); //May not be necessary to shuffle every time
-            var fishInSchool: Fish[] = s.getFish();
-            //Take a percentage of fish out of the school and add it to the fish list
-            var fishToAdd: Fish[] = fishInSchool.splice(0, fishInSchool.length * percentage);
-            fish = fish.concat(fishToAdd);
-        });
-        return fish;
-    }*/
     Map.prototype.getSchoolsInTile = function (p_position) {
         var list = [];
         this.m_schools.forEach(function (s) {
