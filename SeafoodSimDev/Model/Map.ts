@@ -8,10 +8,10 @@ class Map {
     private m_ships: Ship[] = [];
     private m_yield: number; //in fish, will be tonnes
 
-    public constructor(p_size: number, p_noOfSchools: number, p_restrictions: Restrictions, p_config: Configuration) {
+    public constructor(p_mapType: number,p_size: number, p_noOfSchools: number, p_restrictions: Restrictions, p_config: Configuration) {
         this.m_config = p_config;
         this.m_restrictions = p_restrictions;
-        this.generateMap(p_size);
+        this.generateMap(p_mapType, p_size);
         this.placeSchools(p_noOfSchools);
         this.m_yield = 0;
     }
@@ -76,7 +76,7 @@ class Map {
         this.m_schools.push(p_school);
     }
     
-    private generateMap(p_size: number) {
+    private generateMap(p_mapType: number, p_size: number) {
 
         var prices: { [fishType: number]: number } = {}
         prices[FishType.Cod] = 10;
@@ -89,7 +89,10 @@ class Map {
             }
             this.m_grid.push(row);
         }
-        this.placeLandAndSites2(p_size, prices);
+        switch (p_mapType) {
+            case 1: this.placeLandAndSites(p_size, prices); break;
+            case 2: this.placeLandAndSites2(p_size, prices); break;
+        }
     }
 
     private placeLandAndSites2(p_size: number, p_prices: { [fishType: number]: number }) {

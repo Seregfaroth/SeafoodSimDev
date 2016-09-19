@@ -113,43 +113,43 @@
         $("#taxSlider").slider("value", p_taxingRate * 100);
 
         //Create quote sliders
-        var quoteLegend: HTMLElement = document.createElement("legend");
-        quoteLegend.classList.add("menu-legend");
-        var quoteLabel: HTMLElement = document.createElement("div");
-        quoteLabel.innerHTML = "Quotas";
-        quoteLabel.className = "legend-header";
-        quoteLegend.appendChild(quoteLabel);
-        menuDiv.appendChild(quoteLegend);
-        var quoteTable: any = document.createElement("TABLE");
-        quoteTable.classList.add("menu-text");
-        quoteTable.width = "100%";
-        quoteLegend.appendChild(quoteTable);
+        //var quoteLegend: HTMLElement = document.createElement("legend");
+        //quoteLegend.classList.add("menu-legend");
+        //var quoteLabel: HTMLElement = document.createElement("div");
+        //quoteLabel.innerHTML = "Quotas";
+        //quoteLabel.className = "legend-header";
+        ////quoteLegend.appendChild(quoteLabel);
+        ////menuDiv.appendChild(quoteLegend);
+        //var quoteTable: any = document.createElement("TABLE");
+        //quoteTable.classList.add("menu-text");
+        //quoteTable.width = "100%";
+        ////quoteLegend.appendChild(quoteTable);
 
-        for (var i = 0; i < p_ShipOwners.length; i++) {
-            var dateRow: HTMLTableRowElement = quoteTable.insertRow();
-            var cell: HTMLTableCellElement = dateRow.insertCell();
-            var quoteLabel: HTMLElement = document.createElement("div");
-            quoteLabel.innerHTML = p_ShipOwners[i].getID() + ":";
-            quoteLabel.style.cssFloat = "left";
-            cell.appendChild(quoteLabel);
+        //for (var i = 0; i < p_ShipOwners.length; i++) {
+        //    var dateRow: HTMLTableRowElement = quoteTable.insertRow();
+        //    var cell: HTMLTableCellElement = dateRow.insertCell();
+        //    var quoteLabel: HTMLElement = document.createElement("div");
+        //    quoteLabel.innerHTML = p_ShipOwners[i].getID() + ":";
+        //    quoteLabel.style.cssFloat = "left";
+        //    //cell.appendChild(quoteLabel);
 
-            cell = dateRow.insertCell();
-            cell.className = "slider-value-cell";
-            var sliderValue: HTMLDivElement = document.createElement("div");
-            sliderValue.id = "quoteValue" + p_ShipOwners[i].getID();
-            cell.appendChild(sliderValue);
+        //    cell = dateRow.insertCell();
+        //    cell.className = "slider-value-cell";
+        //    var sliderValue: HTMLDivElement = document.createElement("div");
+        //    sliderValue.id = "quoteValue" + p_ShipOwners[i].getID();
+        //    cell.appendChild(sliderValue);
 
-            cell = dateRow.insertCell();
-            cell.className = "slider-cell";
-            var quoteSlider: HTMLElement = document.createElement("div");
-            quoteSlider.id = "quoteSlider" + p_ShipOwners[i].getID();
-            quoteSlider.classList.add("slider");
-            cell.appendChild(quoteSlider);
-            $("#quoteSlider" + p_ShipOwners[i].getID()).slider();
-            $("#quoteSlider" + p_ShipOwners[i].getID()).slider("option", "min", 0);
-            $("#quoteSlider" + p_ShipOwners[i].getID()).slider("option", "max", 100);
-            sliderValue.innerHTML = $("#quoteSlider" + p_ShipOwners[i].getID()).slider("option", "value");
-        }
+        //    cell = dateRow.insertCell();
+        //    cell.className = "slider-cell";
+        //    var quoteSlider: HTMLElement = document.createElement("div");
+        //    quoteSlider.id = "quoteSlider" + p_ShipOwners[i].getID();
+        //    quoteSlider.classList.add("slider");
+        //    //cell.appendChild(quoteSlider);
+        //    $("#quoteSlider" + p_ShipOwners[i].getID()).slider();
+        //    $("#quoteSlider" + p_ShipOwners[i].getID()).slider("option", "min", 0);
+        //    $("#quoteSlider" + p_ShipOwners[i].getID()).slider("option", "max", 100);
+        //    sliderValue.innerHTML = $("#quoteSlider" + p_ShipOwners[i].getID()).slider("option", "value");
+        //}
 
         //Create effort limit sliders
         var effortLegend: HTMLElement = document.createElement("legend");
@@ -157,12 +157,12 @@
         var effortLabel: HTMLElement = document.createElement("div");
         effortLabel.innerHTML = "Effort Limits";
         effortLabel.className = "legend-header";
-        effortLegend.appendChild(effortLabel);
+        //effortLegend.appendChild(effortLabel);
         menuDiv.appendChild(effortLegend);
         var effortTable: any = document.createElement("TABLE");
         effortTable.classList.add("menu-text");
         effortTable.width = "100%";
-        effortLegend.appendChild(effortTable);
+        //effortLegend.appendChild(effortTable);
 
         for (var i = 0; i < p_ShipOwners.length; i++) {
             var dateRow: HTMLTableRowElement = effortTable.insertRow();

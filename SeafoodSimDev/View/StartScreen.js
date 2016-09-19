@@ -68,7 +68,7 @@ var StartScreen = (function () {
         endTime.max = "99999";
         endTime.min = "10";
         endTime.step = "10";
-        endTime.value = "1000";
+        endTime.value = "100";
         var span = document.createElement("span");
         cell.appendChild(span);
         span.innerHTML = "days";
@@ -110,13 +110,17 @@ var StartScreen = (function () {
         informationDiv.appendChild(desP);
         desP.id = "des";
         desP.innerHTML = "Description: ";
+        var linkP = document.createElement("p");
+        informationDiv.appendChild(linkP);
+        linkP.id = "link";
+        linkP.innerHTML = "Link: ";
         var goalP = document.createElement("p");
         informationDiv.appendChild(goalP);
         goalP.id = "goal";
         goalP.innerHTML = "Goal: ";
         $("#startScreen").dialog({
-            minWidth: 600,
-            minHeight: 600,
+            minWidth: 700,
+            minHeight: 700,
             modal: true
         });
     }

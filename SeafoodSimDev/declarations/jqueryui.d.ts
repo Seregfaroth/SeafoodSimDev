@@ -359,6 +359,7 @@ declare module JQueryUI {
         zIndex?: number;
 
         close?: DialogEvent;
+        beforeClose?: DialogEvent;
     }
 
     interface DialogUIParams {

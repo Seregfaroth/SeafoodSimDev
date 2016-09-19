@@ -16,7 +16,8 @@ class Model {
     private m_recruitAndAgeFreq = 10;
     //private m_movesPrTick = 1;
     //private m_statFreq = 30;
-    private m_size: number = 30
+    private m_mapType: number = 2;
+    private m_size: number = 10;
     private m_noOfSchools: number = 30;
 
     constructor(p_config: Configuration) {
@@ -25,7 +26,7 @@ class Model {
         var restrictions: Restrictions = new Restrictions(this.m_config);
         this.m_stats = new EndScreenStats();
         
-        this.m_map = new Map(this.m_size, this.m_noOfSchools, restrictions, this.m_config);
+        this.m_map = new Map(this.m_mapType, this.m_size, this.m_noOfSchools, restrictions, this.m_config);
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions, this.m_config);
         this.m_ai = new AI(this.m_config);
@@ -100,6 +101,9 @@ class Model {
 
     public getMap(): Map {
         return this.m_map;
+    }
+    public setMap(p_map: Map) {
+        this.m_map = p_map;
     }
     public getTime(): number {
         return this.m_time;

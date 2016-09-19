@@ -1,6 +1,6 @@
 var Scenario = (function () {
     function Scenario() {
-        this.m_name = "no";
+        //this.m_name = "no";
     }
     Scenario.prototype.loadScenario = function (p_path, p_callBack) {
         var path = 'scn1.json';
@@ -24,6 +24,9 @@ var Scenario = (function () {
         this.m_allGoal = p_json.overallscoreGoal;
         this.m_description = p_json.description;
         this.m_linkToMCA = p_json.linkToMCA;
+        this.m_mapType = p_json.mapType;
+        this.m_mapSize = p_json.mapSize;
+        this.m_numberOfSchools = p_json.numberOfSchools;
     };
     Scenario.prototype.getName = function () {
         return this.m_name;
@@ -42,6 +45,18 @@ var Scenario = (function () {
     };
     Scenario.prototype.getAllScore = function () {
         return this.m_allGoal;
+    };
+    Scenario.prototype.getLink = function () {
+        return this.m_linkToMCA;
+    };
+    Scenario.prototype.getMapType = function () {
+        return this.m_mapType;
+    };
+    Scenario.prototype.getMapSize = function () {
+        return this.m_mapSize;
+    };
+    Scenario.prototype.getNumberOfSchools = function () {
+        return this.m_numberOfSchools;
     };
     return Scenario;
 }());

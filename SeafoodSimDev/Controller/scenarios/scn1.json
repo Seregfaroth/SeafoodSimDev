@@ -5,5 +5,9 @@
   "socialScoreGoal": 500,
   "overallscoreGoal": 1000,
   "description": "Use the MCA as an aid to fullfill the goals",
-  "linkToMCA": "http://mareframe.mapix.com/dev/MCA/DST.html"
+  "linkToMCA": "http://mareframe.mapix.com/dev/MCA/DST.html",
+  "mapType": 2,
+  "mapSize": 8,
+  "numberOfSchools":  10
+
 }

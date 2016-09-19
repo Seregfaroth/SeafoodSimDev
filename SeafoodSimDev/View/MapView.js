@@ -84,6 +84,8 @@ var MapView = (function () {
     MapView.prototype.updateMapView = function (p_map) {
         //console.log("updating MapView");
         var i = 0;
+        var t = this.m_schools.length;
+        var tm = this.m_schools;
         for (var _i = 0, _a = this.m_schools; _i < _a.length; _i++) {
             var sc = _a[_i];
             sc.position = new Point2(p_map.m_schools[i].getPosition().row, p_map.m_schools[i++].getPosition().col);

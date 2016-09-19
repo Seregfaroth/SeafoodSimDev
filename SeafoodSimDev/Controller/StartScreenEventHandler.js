@@ -1,5 +1,5 @@
 var StartScreenEventHandler = (function () {
-    function StartScreenEventHandler(p_controller) {
+    function StartScreenEventHandler(p_controller, p_config) {
         var _this = this;
         this.radioChange = function (p_evt) {
             var t = _this;
@@ -16,16 +16,34 @@ var StartScreenEventHandler = (function () {
         };
         this.close = function () {
             $("#startScreen").dialog("close");
+        };
+        this.beforeClose = function (e) {
+            var tm3 = e;
+            //$("#startScreen").dialog("close");
+            var scenario = _this.m_controller.getScenario();
             _this.m_controller.setEndTime($("#endTime").val());
-            _this.m_controller.setTickPerMove($("#movesPerTick").val());
+            _this.m_controller.setTicksPerMove($("#movesPerTick").val());
+            var tm = _this.m_controller.getModel().getMap();
+            _this.m_controller.getModel().setMap(new Map(scenario.getMapType(), scenario.getMapSize(), scenario.getNumberOfSchools(), _this.m_controller.getModel().getGovernment().getRestrictions(), _this.m_config));
+            var tm2 = _this.m_controller.getModel().getMap();
+            //new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
+            //this.m_controller.setMainView(new MainView(this.m_controller.getModel().getMap(), this.m_controller.getModel().getShipOwners(), this.m_controller.getModel().getGovernment().getTaxingRate()));
+            //this.m_controller.getMainView().updateMainView(this.m_controller.getModel());
+            _this.m_controller.getMainView().changeMap(_this.m_controller.getModel().getMap());
         };
         this.updateInfo = function () {
             var scenario = _this.m_controller.getScenario();
-            $("#information").text("hello");
-            $("#name").text(scenario.getName());
+            var t = scenario.getName();
+            var t2 = scenario.getDescription();
+            $("#name").html(scenario.getName());
             $("#des").text(scenario.getDescription());
+            $("#link").html("<a target='_blank' href='" + scenario.getLink() + "'>" + scenario.getLink() + "</a>");
+            $("#goal").html("<p>Financial score goal: <span style='float:right'>" + scenario.getfinGoal()
+                + "</span><br/>Environmental score goal: <span style='float:right'>" + scenario.getEcoGoal()
+                + "</span><br/>Social score goal: <span style='float:right'>" + scenario.getSocGoal() + "</span></p>");
         };
         this.m_controller = p_controller;
+        this.m_config = p_config;
         $("#scenario1").on("change", { scenario: 1 }, this.radioChange);
         $("#scenario2").on("change", { scenario: 2 }, this.radioChange);
         $("#scenario3").on("change", { scenario: 3 }, this.radioChange);
@@ -36,7 +54,8 @@ var StartScreenEventHandler = (function () {
             buttons: {
                 Ok: handler.close
             },
-            close: handler.close
+            close: handler.close,
+            beforeClose: handler.beforeClose
         });
     }
     return StartScreenEventHandler;

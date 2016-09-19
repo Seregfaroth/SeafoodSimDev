@@ -14,6 +14,7 @@ class MainView {
     public reset(p_model: Model): void {
         this.m_mapView.reset(p_model.getMap());
         this.m_mapMenu.reset(p_model.getShipOwners(), p_model.getMap().getLandingSites(), p_model.getGovernment().getStartingTaxingRate());
+        //this.updateMainView(p_mo
     }
     public getMapMenu(): MapMenu {
         return this.m_mapMenu;
@@ -23,6 +24,10 @@ class MainView {
         this.m_mapMenu.updateScore(p_model.getGovernment());
         this.m_mapMenu.updateDate(p_model);
         this.m_mapView.updateMapView(p_model.getMap());
+    }
+    public changeMap(p_map: Map) {
+        $("#mainDiv canvas").remove();
+        this.m_mapView = new MapView(p_map);
     }
 
 }

@@ -18,12 +18,13 @@ class Controller {
     private m_scenario: Scenario;
     private m_endTime: number;
     private m_noGraphicSimulation = false;
+    private m_ticksPerMove: number;
     //private m_sce: Scenario;
     constructor(p_config: Configuration) {
         this.m_config = p_config;
         console.log("Controller loading");
         this.m_scenario = new Scenario();
-        //this.m_sce.loadScenario('Controller/scn1.json');
+        
         this.m_simState = simState.paused;
         this.m_delayPerTick = 1000;
         this.m_fastDelayPerTick = 1;
@@ -31,7 +32,8 @@ class Controller {
         this.m_model = new Model(p_config);
         this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
         this.m_eventHandler = new EventHandler(this);
-        this.m_startScreenEventHandler = new StartScreenEventHandler(this);
+        this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_config);
+        this.m_scenario.loadScenario('Controller/scenarios/scn1.json', this.m_startScreenEventHandler.updateInfo);
         this.m_view.updateMainView(this.m_model);
 
     }
@@ -41,6 +43,12 @@ class Controller {
     //public setScenario(p_scenario: number): void {
     //    this.m_scenario = p_scenario;
     //}
+    public getTicksPerMove(): number {
+        return this.m_ticksPerMove;
+    }
+    public setTicksPerMove(p_tpm: number) {
+        this.m_ticksPerMove = p_tpm;
+    }
     public getScenario(): Scenario {
         return this.m_scenario;
     }
@@ -49,6 +57,9 @@ class Controller {
     }
     public getModel(): Model {
         return this.m_model;
+    }
+    public setModel(p_model: Model) {
+        this.m_model = p_model;
     }
 
     public getEventHandler(): EventHandler {
@@ -60,6 +71,9 @@ class Controller {
 
     public getMainView(): MainView {
         return this.m_view;
+    }
+    public setMainView(p_view: MainView) {
+        this.m_view = p_view;
     }
     public setEndTime(p_endTime: number): void {
         this.m_endTime = p_endTime;
@@ -84,6 +98,7 @@ class Controller {
         //if (!(this.m_model.getTime() % this.m_model.m_statFreq)) this.m_model.updateStats();
         if (this.m_model.getTime() >= this.m_endTime) {
             this.m_simState = simState.ending;
+            this.m_model.updateStats();
             console.log("Simulation ended" + this.m_model.getStats());
             clearInterval(this.m_timer);
             this.m_view.updateMainView(this.m_model);
@@ -91,7 +106,7 @@ class Controller {
             new EndScreen(this.m_model.getStats());
         }
         else {
-            this.m_model.run(100);
+            this.m_model.run(this.m_ticksPerMove);
             if (!this.m_noGraphicSimulation)
                 this.m_view.updateMainView(this.m_model);
         }

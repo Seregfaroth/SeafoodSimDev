@@ -11,13 +11,14 @@ var Model = (function () {
         this.m_recruitAndAgeFreq = 10;
         //private m_movesPrTick = 1;
         //private m_statFreq = 30;
-        this.m_size = 30;
+        this.m_mapType = 2;
+        this.m_size = 10;
         this.m_noOfSchools = 30;
         console.log("constructing model");
         this.m_config = p_config;
         var restrictions = new Restrictions(this.m_config);
         this.m_stats = new EndScreenStats();
-        this.m_map = new Map(this.m_size, this.m_noOfSchools, restrictions, this.m_config);
+        this.m_map = new Map(this.m_mapType, this.m_size, this.m_noOfSchools, restrictions, this.m_config);
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions, this.m_config);
         this.m_ai = new AI(this.m_config);
@@ -82,6 +83,9 @@ var Model = (function () {
     };
     Model.prototype.getMap = function () {
         return this.m_map;
+    };
+    Model.prototype.setMap = function (p_map) {
+        this.m_map = p_map;
     };
     Model.prototype.getTime = function () {
         return this.m_time;

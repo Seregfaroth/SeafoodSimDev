@@ -11,8 +11,12 @@
 
     private m_linkToMCA: string;
 
+    private m_mapType: number;
+    private m_mapSize: number;
+    private m_numberOfSchools: number;
+
     constructor() {       
-        this.m_name = "no";        
+        //this.m_name = "no";
     }
     public loadScenario(p_path: string, p_callBack: Function) {
         var path: string = 'scn1.json';
@@ -37,7 +41,9 @@
 
         this.m_description = p_json.description;
         this.m_linkToMCA = p_json.linkToMCA;
-        
+        this.m_mapType = p_json.mapType;
+        this.m_mapSize = p_json.mapSize;
+        this.m_numberOfSchools = p_json.numberOfSchools;
     }
     public getName(): string {
         return this.m_name;
@@ -57,4 +63,17 @@
     public getAllScore(): number {
         return this.m_allGoal;
     }
+    public getLink(): string {
+        return this.m_linkToMCA;
+    }
+    public getMapType(): number {
+        return this.m_mapType;
+    }
+    public getMapSize(): number {
+        return this.m_mapSize;
+    }
+    public getNumberOfSchools(): number {
+        return this.m_numberOfSchools;
+    }
+
 }

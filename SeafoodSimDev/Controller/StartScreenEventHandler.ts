@@ -1,8 +1,10 @@
 ﻿class StartScreenEventHandler {
     private m_controller: Controller;
+    private m_config: Configuration;
 
-    constructor(p_controller: Controller) {
+    constructor(p_controller: Controller, p_config: Configuration) {
         this.m_controller = p_controller;
+        this.m_config = p_config;
 
         $("#scenario1").on("change", { scenario: 1 }, this.radioChange);
         $("#scenario2").on("change", { scenario: 2 }, this.radioChange);
@@ -15,7 +17,8 @@
             buttons: {
                 Ok: handler.close
             },
-            close: handler.close
+            close: handler.close,
+            beforeClose: handler.beforeClose
         });
     }
 
@@ -29,17 +32,33 @@
         //$("#information").text("Here is some information about scenario " + p_evt.data.scenario +". What is "+
         //    "the purpose of this scenario and how to win in this scenario.");
     }
-
-    private close = (): void => {
+    private close = () => {
         $("#startScreen").dialog("close");
-        this.m_controller.setEndTime($("#endTime").val());
-        this.m_controller.setTickPerMove($("#movesPerTick").val());
-
     }
-    private updateInfo = () => {
+
+    private beforeClose = (e: JQueryEventObject): void => {
+        var tm3 = e;
+        //$("#startScreen").dialog("close");
         var scenario = this.m_controller.getScenario();
-        $("#information").text("hello");
-        $("#name").text(scenario.getName());
+        this.m_controller.setEndTime($("#endTime").val());
+        this.m_controller.setTicksPerMove($("#movesPerTick").val());
+        var tm = this.m_controller.getModel().getMap();
+        this.m_controller.getModel().setMap(new Map(scenario.getMapType(), scenario.getMapSize(), scenario.getNumberOfSchools(), this.m_controller.getModel().getGovernment().getRestrictions(), this.m_config));
+        var tm2 = this.m_controller.getModel().getMap();
+        //new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
+        //this.m_controller.setMainView(new MainView(this.m_controller.getModel().getMap(), this.m_controller.getModel().getShipOwners(), this.m_controller.getModel().getGovernment().getTaxingRate()));
+        //this.m_controller.getMainView().updateMainView(this.m_controller.getModel());
+        this.m_controller.getMainView().changeMap(this.m_controller.getModel().getMap());
+    }
+    public updateInfo = () => {
+        var scenario = this.m_controller.getScenario();
+        var t = scenario.getName();
+        var t2 = scenario.getDescription();
+        $("#name").html(scenario.getName());
         $("#des").text(scenario.getDescription());
+        $("#link").html("<a target='_blank' href='" + scenario.getLink() + "'>" + scenario.getLink() + "</a>");
+        $("#goal").html("<p>Financial score goal: <span style='float:right'>" + scenario.getfinGoal()
+            + "</span><br/>Environmental score goal: <span style='float:right'>" + scenario.getEcoGoal()
+            + "</span><br/>Social score goal: <span style='float:right'>" + scenario.getSocGoal() + "</span></p>");
     }
 }

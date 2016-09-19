@@ -1,13 +1,13 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var Map = (function () {
-    function Map(p_size, p_noOfSchools, p_restrictions, p_config) {
+    function Map(p_mapType, p_size, p_noOfSchools, p_restrictions, p_config) {
         this.m_grid = [];
         this.m_schools = [];
         this.m_fishingPercentage = 0.01;
         this.m_ships = [];
         this.m_config = p_config;
         this.m_restrictions = p_restrictions;
-        this.generateMap(p_size);
+        this.generateMap(p_mapType, p_size);
         this.placeSchools(p_noOfSchools);
         this.m_yield = 0;
     }
@@ -69,7 +69,7 @@ var Map = (function () {
     Map.prototype.addSchool = function (p_school) {
         this.m_schools.push(p_school);
     };
-    Map.prototype.generateMap = function (p_size) {
+    Map.prototype.generateMap = function (p_mapType, p_size) {
         var prices = {};
         prices[FishType.Cod] = 10;
         prices[FishType.Mackerel] = 5;
@@ -80,7 +80,14 @@ var Map = (function () {
             }
             this.m_grid.push(row);
         }
-        this.placeLandAndSites2(p_size, prices);
+        switch (p_mapType) {
+            case 1:
+                this.placeLandAndSites(p_size, prices);
+                break;
+            case 2:
+                this.placeLandAndSites2(p_size, prices);
+                break;
+        }
     };
     Map.prototype.placeLandAndSites2 = function (p_size, p_prices) {
         for (var c = Math.floor(p_size / 2); c < p_size; c++) {

@@ -9,6 +9,7 @@ var MainView = (function () {
     MainView.prototype.reset = function (p_model) {
         this.m_mapView.reset(p_model.getMap());
         this.m_mapMenu.reset(p_model.getShipOwners(), p_model.getMap().getLandingSites(), p_model.getGovernment().getStartingTaxingRate());
+        //this.updateMainView(p_mo
     };
     MainView.prototype.getMapMenu = function () {
         return this.m_mapMenu;
@@ -18,6 +19,10 @@ var MainView = (function () {
         this.m_mapMenu.updateScore(p_model.getGovernment());
         this.m_mapMenu.updateDate(p_model);
         this.m_mapView.updateMapView(p_model.getMap());
+    };
+    MainView.prototype.changeMap = function (p_map) {
+        $("#mainDiv canvas").remove();
+        this.m_mapView = new MapView(p_map);
     };
     return MainView;
 }());

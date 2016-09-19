@@ -79,7 +79,7 @@ class StartScreen {
         endTime.max = "99999";
         endTime.min = "10";
         endTime.step = "10";
-        endTime.value = "1000";
+        endTime.value = "100";
         var span: HTMLSpanElement = document.createElement("span");
         cell.appendChild(span);
         span.innerHTML = "days";
@@ -126,6 +126,11 @@ class StartScreen {
         desP.id = "des";
         desP.innerHTML = "Description: ";
 
+        var linkP: HTMLParagraphElement = document.createElement("p");
+        informationDiv.appendChild(linkP);
+        linkP.id = "link";
+        linkP.innerHTML = "Link: ";
+
         var goalP: HTMLParagraphElement = document.createElement("p");
         informationDiv.appendChild(goalP);
         goalP.id = "goal";
@@ -133,8 +138,8 @@ class StartScreen {
         
 
         $("#startScreen").dialog({
-            minWidth: 600,
-            minHeight: 600,
+            minWidth: 700,
+            minHeight: 700,
             modal: true
         });
 
