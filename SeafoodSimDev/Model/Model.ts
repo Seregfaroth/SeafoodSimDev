@@ -31,7 +31,7 @@ class Model {
         this.m_goverment = new Government(restrictions, this.m_config);
         this.m_ai = new AI(this.m_config);
         this.createShipOwner(new Point2(3, 3), 300000);
-        this.createShipOwner(new Point2(10, 10), 300000);
+        this.createShipOwner(new Point2(6, 6), 300000);
         this.updateStats();
     }
 
