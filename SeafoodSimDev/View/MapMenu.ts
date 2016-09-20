@@ -110,6 +110,7 @@
         $("#taxSlider").slider();
         $("#taxSlider").slider("option", "min", 0);
         $("#taxSlider").slider("option", "max", 100);
+        $("#taxSlider").slider("option", "step", 1);
         $("#taxSlider").slider("value", p_taxingRate * 100);
 
         //Create quote sliders

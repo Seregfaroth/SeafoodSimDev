@@ -58,6 +58,7 @@ var School = (function () {
     };
     School.prototype.age = function () {
         var school = this;
+        this.m_size -= this.m_ages[this.m_maxAge - 1];
         for (var i = this.m_maxAge - 1; i > 0; i--) {
             this.m_ages[i] = this.m_ages[i - 1];
         }

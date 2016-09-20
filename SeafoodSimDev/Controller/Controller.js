@@ -65,7 +65,7 @@ var Controller = (function () {
         this.m_eventHandler = new EventHandler(this);
         this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_config);
         this.m_scenario.loadScenario('Controller/scenarios/scn1.json', this.m_startScreenEventHandler.updateInfo);
-        this.m_view.updateMainView(this.m_model);
+        //this.m_view.updateMainView(this.m_model);
     }
     //public getScenario(): number {
     //    return this.m_scenario;

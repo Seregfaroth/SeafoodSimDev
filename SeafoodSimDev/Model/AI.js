@@ -2,11 +2,11 @@
 var AI = (function () {
     function AI(p_config) {
         this.m_pathFinder = new TKN_PathFinding();
-        this.m_balanceToBuyShip = 20000;
-        this.m_balanceToSellShip = 0;
         this.m_fishingPath = [new Point2(2, 0), new Point2(1, 0), new Point2(1, 1), new Point2(1, 2), new Point2(1, 3), new Point2(1, 4), new Point2(2, 4),
             new Point2(3, 4), new Point2(3, 3), new Point2(3, 2), new Point2(3, 1), new Point2(3, 0), new Point2(2, 0)];
         this.m_config = p_config;
+        this.m_balanceToBuyShip = p_config.getAiBuyShipBalance();
+        this.m_balanceToSellShip = p_config.getAiSellShipBalance();
     }
     AI.prototype.run = function (p_shipOwner, p_map) {
         //console.log("runnig AI");

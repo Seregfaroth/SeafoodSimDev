@@ -24,12 +24,14 @@ var StartScreenEventHandler = (function () {
             _this.m_controller.setEndTime($("#endTime").val());
             _this.m_controller.setTicksPerMove($("#movesPerTick").val());
             var tm = _this.m_controller.getModel().getMap();
-            _this.m_controller.getModel().setMap(new Map(scenario.getMapType(), scenario.getMapSize(), scenario.getNumberOfSchools(), _this.m_controller.getModel().getGovernment().getRestrictions(), _this.m_config));
+            //this.m_controller.getModel().setMap(new Map(scenario.getMapType(), scenario.getMapSize(), scenario.getNumberOfSchools(), this.m_controller.getModel().getGovernment().getRestrictions(), this.m_config));
+            _this.m_controller.getModel().getMap().setScenario(scenario);
             var tm2 = _this.m_controller.getModel().getMap();
             //new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
             //this.m_controller.setMainView(new MainView(this.m_controller.getModel().getMap(), this.m_controller.getModel().getShipOwners(), this.m_controller.getModel().getGovernment().getTaxingRate()));
             //this.m_controller.getMainView().updateMainView(this.m_controller.getModel());
             _this.m_controller.getMainView().changeMap(_this.m_controller.getModel().getMap());
+            _this.m_controller.getMainView().updateMainView(_this.m_controller.getModel());
         };
         this.updateInfo = function () {
             var scenario = _this.m_controller.getScenario();

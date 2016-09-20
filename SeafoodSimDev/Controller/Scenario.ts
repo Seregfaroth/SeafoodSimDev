@@ -14,7 +14,13 @@
     private m_mapType: number;
     private m_mapSize: number;
     private m_numberOfSchools: number;
-
+    private m_prices: { [fishType: number]: number };
+    private m_oceanFishCapacity: number;
+    private m_schoolsInOnePlace: number;
+    private m_schoolSize: number;
+    private m_schoolMsy;
+    private m_schoolMinimum: number;
+    private m_schoolMaximum: number;
     constructor() {       
         //this.m_name = "no";
     }
@@ -34,6 +40,11 @@
     }
     public fromJson(p_json: any): void {
         this.m_name = p_json.name;
+        this.m_prices = p_json.prices;
+        this.m_prices = {};
+        this.m_prices[FishType.Cod] = p_json.prices[0].Cod;
+        this.m_prices[FishType.Mackerel] = p_json.prices[0].Mackerel;
+
         this.m_finGoal = p_json.financialScoreGoal;
         this.m_ecoGoal = p_json.environmentalScoreGoal;
         this.m_socGoal = p_json.socialScoreGoal;
@@ -44,6 +55,12 @@
         this.m_mapType = p_json.mapType;
         this.m_mapSize = p_json.mapSize;
         this.m_numberOfSchools = p_json.numberOfSchools;
+        this.m_oceanFishCapacity = p_json.oceanFishCapacity;
+        this.m_schoolsInOnePlace = p_json.schoolsInOnePlace;
+        this.m_schoolSize = p_json.schoolSize;
+        this.m_schoolMsy = p_json.schoolMsy;
+        this.m_schoolMinimum = p_json.schoolMinimum;
+        this.m_schoolMaximum = p_json.schoolMaximum;
     }
     public getName(): string {
         return this.m_name;
@@ -75,5 +92,25 @@
     public getNumberOfSchools(): number {
         return this.m_numberOfSchools;
     }
-
+    public getPrices(): { [fishType: number]: number } {
+        return this.m_prices;
+    }
+    public getOceanFishCapacity(): number {
+        return this.m_oceanFishCapacity;
+    }
+    public getSchoolsInOnePlace(): number {
+        return this.m_schoolsInOnePlace;
+    }
+    public getSchoolSize(): number {
+        return this.m_schoolSize;
+    }
+    public getSchoolMsy() {
+        return this.m_schoolMsy;
+    }
+    public getSchoolMinimum(): number {
+        return this.m_schoolMinimum;
+    }
+    public getSchoolMaximum(): number {
+        return this.m_schoolMaximum;
+    }
 }

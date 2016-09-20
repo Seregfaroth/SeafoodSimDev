@@ -18,6 +18,10 @@ var Scenario = (function () {
     };
     Scenario.prototype.fromJson = function (p_json) {
         this.m_name = p_json.name;
+        this.m_prices = p_json.prices;
+        this.m_prices = {};
+        this.m_prices[FishType.Cod] = p_json.prices[0].Cod;
+        this.m_prices[FishType.Mackerel] = p_json.prices[0].Mackerel;
         this.m_finGoal = p_json.financialScoreGoal;
         this.m_ecoGoal = p_json.environmentalScoreGoal;
         this.m_socGoal = p_json.socialScoreGoal;
@@ -27,6 +31,12 @@ var Scenario = (function () {
         this.m_mapType = p_json.mapType;
         this.m_mapSize = p_json.mapSize;
         this.m_numberOfSchools = p_json.numberOfSchools;
+        this.m_oceanFishCapacity = p_json.oceanFishCapacity;
+        this.m_schoolsInOnePlace = p_json.schoolsInOnePlace;
+        this.m_schoolSize = p_json.schoolSize;
+        this.m_schoolMsy = p_json.schoolMsy;
+        this.m_schoolMinimum = p_json.schoolMinimum;
+        this.m_schoolMaximum = p_json.schoolMaximum;
     };
     Scenario.prototype.getName = function () {
         return this.m_name;
@@ -57,6 +67,27 @@ var Scenario = (function () {
     };
     Scenario.prototype.getNumberOfSchools = function () {
         return this.m_numberOfSchools;
+    };
+    Scenario.prototype.getPrices = function () {
+        return this.m_prices;
+    };
+    Scenario.prototype.getOceanFishCapacity = function () {
+        return this.m_oceanFishCapacity;
+    };
+    Scenario.prototype.getSchoolsInOnePlace = function () {
+        return this.m_schoolsInOnePlace;
+    };
+    Scenario.prototype.getSchoolSize = function () {
+        return this.m_schoolSize;
+    };
+    Scenario.prototype.getSchoolMsy = function () {
+        return this.m_schoolMsy;
+    };
+    Scenario.prototype.getSchoolMinimum = function () {
+        return this.m_schoolMinimum;
+    };
+    Scenario.prototype.getSchoolMaximum = function () {
+        return this.m_schoolMaximum;
     };
     return Scenario;
 }());
