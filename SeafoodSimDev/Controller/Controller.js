@@ -13,8 +13,10 @@ var Controller = (function () {
         var _this = this;
         this.m_noGraphicSimulation = false;
         this.restart = function () {
-            _this.m_model = new Model(_this.m_config);
-            _this.m_view.reset(_this.m_model);
+            _this.m_model = new Model(_this.m_config, _this.m_scenario);
+            _this.m_model.getMap().setScenario(_this.m_scenario);
+            _this.m_view.changeMap(_this.m_model.getMap());
+            //this.m_view.reset(this.m_model);
             _this.m_view.updateMainView(_this.m_model);
             _this.m_eventHandler.bindFunctions(true);
             _this.m_simState = simState.paused;
@@ -60,7 +62,7 @@ var Controller = (function () {
         this.m_delayPerTick = 1000;
         this.m_fastDelayPerTick = 1;
         //this.m_statFreq = 30;
-        this.m_model = new Model(p_config);
+        this.m_model = new Model(this.m_config, this.m_scenario);
         this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
         this.m_eventHandler = new EventHandler(this);
         this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_config);

@@ -1,8 +1,10 @@
+/// <reference path="../Controller/Configuration.ts"/>
 var Government = (function () {
     function Government(p_restrictions, p_config) {
         this.m_config = p_config;
         this.m_restrictions = p_restrictions;
         this.m_taxingRate = p_config.getTaxingRate();
+        p_config.getTaxingRate();
         this.m_score = new Score(p_config);
     }
     Government.prototype.getScore = function () {

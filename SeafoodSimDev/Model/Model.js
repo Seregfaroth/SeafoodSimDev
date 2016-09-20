@@ -4,7 +4,7 @@
 /// <reference path = "Restrictions.ts"/>
 /// <reference path = "EndScreenStats.ts"/>
 var Model = (function () {
-    function Model(p_config) {
+    function Model(p_config, p_scenario) {
         this.m_shipOwners = [];
         this.m_time = 0;
         this.m_statFreq = 10;
@@ -14,15 +14,18 @@ var Model = (function () {
         this.m_mapType = 2;
         this.m_size = 10;
         this.m_noOfSchools = 30;
+        this.m_noOfMenPerShip = 8;
         console.log("constructing model");
         this.m_config = p_config;
-        var restrictions = new Restrictions(this.m_config);
+        this.m_scenario = p_scenario;
+        var restrictions = new Restrictions(this.m_config, this.m_scenario);
         this.m_stats = new EndScreenStats();
-        this.m_map = new Map(this.m_mapType, this.m_size, this.m_noOfSchools, restrictions, this.m_config);
+        this.m_map = new Map(this.m_mapType, this.m_size, this.m_noOfSchools, restrictions, this.m_config, this.m_scenario);
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions, this.m_config);
         this.m_ai = new AI(this.m_config);
-        this.createShipOwner(new Point2(3, 3), this.m_config.getShipOwnerStartMoney());
+        this.createShipOwner(new Point2(3, 3), 300000);
+        this.createShipOwner(new Point2(6, 6), 300000);
         this.updateStats();
     }
     Model.prototype.updateStats = function () {
@@ -42,10 +45,16 @@ var Model = (function () {
         this.m_stats.setBiomassPrTimeUnitAt(statTime, biomass);
         this.m_stats.setRecruitmentPrTimeUnitAt(statTime, recruit);
         this.m_stats.setNatDeathPrTimeUnitAt(statTime, natDeath);
-        //updating yield
-        this.m_stats.setYieldPrTimeUnitAt(statTime, this.m_map.getYield());
+        //updating income
+        var income = 0;
+        for (var _b = 0, _c = this.m_shipOwners; _b < _c.length; _b++) {
+            var so = _c[_b];
+            income += so.getTaxPayed();
+        }
+        this.m_stats.setYieldPrTimeUnitAt(statTime, income);
         //updating invest
-        this.m_stats.setInvestPrTimeUnitAt(statTime, 1000);
+        var invest = this.getMap().getNoOfShips() * this.m_config.getShipPrice();
+        this.m_stats.setInvestPrTimeUnitAt(statTime, invest);
         //this.m_map.setYield(0);
         // updating scores
         this.m_stats.setFinancialScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getFinancialScore());
@@ -53,8 +62,10 @@ var Model = (function () {
         this.m_stats.setSocialScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getSocialScore());
         this.m_stats.setOverallScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getOverallScore());
         //updating social
-        this.m_stats.setEmploymentLandBasedPrTimeUnitAt(statTime, 10);
-        this.m_stats.setEmploymentSeaBasedPrTimeUnitAt(statTime, 10);
+        var offshore = this.getMap().getNoOfShips() * this.m_noOfMenPerShip;
+        var onshore = this.getMap().getFuelSites().length * 5 + this.getMap().getLandingSites().length * 10;
+        this.m_stats.setEmploymentLandBasedPrTimeUnitAt(statTime, onshore);
+        this.m_stats.setEmploymentSeaBasedPrTimeUnitAt(statTime, offshore);
     };
     Model.prototype.getStats = function () {
         return this.m_stats;

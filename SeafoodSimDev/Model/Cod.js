@@ -9,8 +9,8 @@ var Cod = (function (_super) {
     __extends(Cod, _super);
     function Cod(p_size, p_msy, p_position, p_config, p_ages) {
         _super.call(this, p_size, p_msy, p_position, p_config);
-        this.m_movingRadius = 2;
-        this.m_recrutingPercentage = 0.25;
+        this.m_movingRadius = 1;
+        this.m_recrutingPercentage = 0.32;
         this.m_origin = p_position;
         this.m_maxAge = 8; // OBS Ship also uses this value. It is hardcoded there at the moment
         for (var i = 0; i < this.m_maxAge; i++) {

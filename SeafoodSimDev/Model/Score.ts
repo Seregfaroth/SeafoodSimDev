@@ -1,4 +1,6 @@
-﻿class Score {
+﻿/// <reference path="../Controller/Configuration.ts"/>
+
+class Score {
     private m_config: Configuration;
     private m_financialScore: number;
     private m_socialScore: number;

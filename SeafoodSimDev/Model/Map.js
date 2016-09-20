@@ -1,10 +1,11 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var Map = (function () {
-    function Map(p_mapType, p_size, p_noOfSchools, p_restrictions, p_config) {
+    function Map(p_mapType, p_size, p_noOfSchools, p_restrictions, p_config, p_scenario) {
         this.m_grid = [];
         this.m_schools = [];
         this.m_ships = [];
         this.m_config = p_config;
+        this.m_scenario = p_scenario;
         this.m_restrictions = p_restrictions;
         this.m_yield = 0;
         this.m_fishingPercentage = this.m_config.getFishingPercentage();
@@ -18,7 +19,7 @@ var Map = (function () {
         var map = this;
         this.m_schools.forEach(function (s) {
             s.move(map);
-            s.live(map);
+            //s.live(map);
             if (s.getSize() < map.m_scenario.getSchoolMinimum()) {
                 map.removeSchool(s);
             }

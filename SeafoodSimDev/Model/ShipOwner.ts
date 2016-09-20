@@ -8,6 +8,7 @@ class ShipOwner {
     private m_shipStartPosition: Point2;
     private m_id: string;
     private m_government: Government;
+    private m_taxPayed: number;
 
     public constructor(p_government: Government, p_shipStartPosition: Point2, p_id: string, p_config: Configuration, p_balance?: number) {
         this.m_config = p_config;
@@ -17,6 +18,7 @@ class ShipOwner {
         if (p_balance) {
             this.m_balance = p_balance;
         }
+        this.m_taxPayed = 0;
     }
     public getID(): string {
         return this.m_id;
@@ -48,7 +50,8 @@ class ShipOwner {
         return this.m_shipPrice;
     }
     public financialTransaction(p_amount: number): void {
-        this.m_balance += p_amount * (1-this.m_government.getTaxingRate());
+        this.m_balance += p_amount * (1 - this.m_government.getTaxingRate());
+        this.m_taxPayed += p_amount * this.m_government.getTaxingRate();
     }
 
     public buyShip(): Ship{
@@ -67,4 +70,7 @@ class ShipOwner {
             this.financialTransaction(this.m_shipPrice);
         }
     }
+    public getTaxPayed() {
+        return this.m_taxPayed;
+    }    
 }

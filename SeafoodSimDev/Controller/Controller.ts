@@ -29,7 +29,7 @@ class Controller {
         this.m_delayPerTick = 1000;
         this.m_fastDelayPerTick = 1;
         //this.m_statFreq = 30;
-        this.m_model = new Model(p_config);
+        this.m_model = new Model(this.m_config, this.m_scenario);
         this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
         this.m_eventHandler = new EventHandler(this);
         this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_config);
@@ -81,8 +81,10 @@ class Controller {
 
 
     public restart = (): void => {
-        this.m_model = new Model(this.m_config);
-        this.m_view.reset(this.m_model);
+        this.m_model = new Model(this.m_config, this.m_scenario);
+        this.m_model.getMap().setScenario(this.m_scenario);
+        this.m_view.changeMap(this.m_model.getMap());
+        //this.m_view.reset(this.m_model);
         this.m_view.updateMainView(this.m_model);
         this.m_eventHandler.bindFunctions(true);
         this.m_simState = simState.paused;

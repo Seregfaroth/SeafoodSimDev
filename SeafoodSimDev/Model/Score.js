@@ -1,3 +1,4 @@
+/// <reference path="../Controller/Configuration.ts"/>
 var Score = (function () {
     function Score(p_config) {
         this.m_mininumSchool = 10;

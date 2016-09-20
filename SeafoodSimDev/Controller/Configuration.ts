@@ -18,12 +18,12 @@
 
     constructor() {
     }
-    toJSON(): Configuration {
+    public toJSON(): Configuration {
         var ret: Configuration;
 
         return ret;
     }
-    fromJSON(p_object: any) {
+    public fromJSON(p_object: any) {
        
         this.m_taxingRate = p_object.taxingRate;
         this.m_map = p_object.map;

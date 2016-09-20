@@ -12,6 +12,7 @@ class Ship {
     private m_fuelCapacity: number = 150;
     private m_cargoCapacity: number = 800;
     private m_yield: number[][];
+    private m_taxPayed: number;
     private m_position: Point2;
     private m_path: Point2[] = [];
     private m_fuelPerMove: number = 1;
@@ -155,6 +156,7 @@ class Ship {
     }
 
     public land(p_landingSite: LandingSite): void {
+        
         this.m_owner.financialTransaction(p_landingSite.receiveFish(this.m_cargo));
     }
 

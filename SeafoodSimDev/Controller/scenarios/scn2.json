@@ -1,4 +1,26 @@
 {
-  "name": "Scenario 2",
-  "finGoal" : 1000
+  "name":  "Scenario 2",
+  "financialScoreGoal": 1500,
+  "environmentalScoreGoal": 2000,
+  "socialScoreGoal": 0,
+  "overallscoreGoal": 1000,
+  "description": "Can you save the environment, and still be financial succesful",
+  "linkToMCA": "Coming Soon",
+  "mapType": 2,
+  "mapSize": 10,
+  "numberOfSchools": 10,
+  "prices": [
+    {
+      "Cod": 10,
+      "Mackerel": 10
+    }
+  ],
+  "oceanFishCapacity": 7000,
+  "schoolsInOnePlace": 4,
+  "schoolSize": 2000,
+  "schoolMsy": 1800,
+  "schoolMinimum": 10,
+  "schoolMaximum": 5000,
+  "DefaultNoDays": 100,
+  "DefaultTickSize": "days" 
 }

@@ -6,6 +6,7 @@
 
 class Model {
     private m_config: Configuration;
+    private m_scenario: Scenario;
     private m_map: Map;
     private m_shipOwners: ShipOwner[] = [];
     private m_goverment: Government;
@@ -19,14 +20,16 @@ class Model {
     private m_mapType: number = 2;
     private m_size: number = 10;
     private m_noOfSchools: number = 30;
+    private m_noOfMenPerShip = 8;
 
-    constructor(p_config: Configuration) {
+    constructor(p_config: Configuration, p_scenario: Scenario) {
         console.log("constructing model");
         this.m_config = p_config;
-        var restrictions: Restrictions = new Restrictions(this.m_config);
+        this.m_scenario = p_scenario;
+        var restrictions: Restrictions = new Restrictions(this.m_config, this.m_scenario);
         this.m_stats = new EndScreenStats();
-        
-        this.m_map = new Map(this.m_mapType, this.m_size, this.m_noOfSchools, restrictions, this.m_config);
+
+        this.m_map = new Map(this.m_mapType, this.m_size, this.m_noOfSchools, restrictions, this.m_config, this.m_scenario);
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions, this.m_config);
         this.m_ai = new AI(this.m_config);
@@ -53,10 +56,15 @@ class Model {
         this.m_stats.setRecruitmentPrTimeUnitAt(statTime, recruit);
         this.m_stats.setNatDeathPrTimeUnitAt(statTime, natDeath);
 
-        //updating yield
-        this.m_stats.setYieldPrTimeUnitAt(statTime, this.m_map.getYield());
+        //updating income
+        var income = 0;
+        for (var so of this.m_shipOwners) {
+            income += so.getTaxPayed();
+        }
+        this.m_stats.setYieldPrTimeUnitAt(statTime, income);
         //updating invest
-        this.m_stats.setInvestPrTimeUnitAt(statTime, 1000);
+        var invest = this.getMap().getNoOfShips() * this.m_config.getShipPrice();
+        this.m_stats.setInvestPrTimeUnitAt(statTime, invest);
         //this.m_map.setYield(0);
         // updating scores
         this.m_stats.setFinancialScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getFinancialScore());
@@ -65,8 +73,10 @@ class Model {
         this.m_stats.setOverallScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getOverallScore());
 
         //updating social
-        this.m_stats.setEmploymentLandBasedPrTimeUnitAt(statTime, 10);
-        this.m_stats.setEmploymentSeaBasedPrTimeUnitAt(statTime, 10);
+        var offshore = this.getMap().getNoOfShips() * this.m_noOfMenPerShip;
+        var onshore = this.getMap().getFuelSites().length * 5 + this.getMap().getLandingSites().length * 10;
+        this.m_stats.setEmploymentLandBasedPrTimeUnitAt(statTime, onshore);
+        this.m_stats.setEmploymentSeaBasedPrTimeUnitAt(statTime, offshore);
 
 
     }

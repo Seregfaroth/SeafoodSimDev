@@ -1,16 +1,19 @@
 ﻿// <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class Map {
     private m_config: Configuration;
+    private m_scenario: Scenario;
     private m_grid: Tile[][] = [];
     public m_schools: School[] = [];
     private m_restrictions: Restrictions;
     private m_fishingPercentage: number;//The percentage of total fish a ship gets when fishing
     private m_ships: Ship[] = [];
     private m_yield: number; //in fish, will be tonnes
-    private m_scenario: Scenario;
 
-    public constructor(p_mapType: number,p_size: number, p_noOfSchools: number, p_restrictions: Restrictions, p_config: Configuration) {
+
+
+    public constructor(p_mapType: number,p_size: number, p_noOfSchools: number, p_restrictions: Restrictions, p_config: Configuration, p_scenario: Scenario) {
         this.m_config = p_config;
+        this.m_scenario = p_scenario;
         this.m_restrictions = p_restrictions;
         this.m_yield = 0;
         this.m_fishingPercentage = this.m_config.getFishingPercentage();
@@ -24,12 +27,12 @@ class Map {
         var map: Map = this;
         this.m_schools.forEach(function (s) {
            s.move(map);
-           s.live(map);
+           //s.live(map);
            if (s.getSize() < map.m_scenario.getSchoolMinimum()) {
                map.removeSchool(s);
            }
            else if (s.getSize() > map.m_scenario.getSchoolMaximum()) {
-               map.splitCodSchool(s);
+               map.splitCodSchool(s as Cod );
            }
         });
         this.getLandingSites().forEach(function (ls) {

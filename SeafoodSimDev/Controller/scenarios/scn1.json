@@ -1,11 +1,11 @@
 {
   "name": "Scenario 1",
-  "financialScoreGoal": 1000,
-  "environmentalScoreGoal": 2000,
-  "socialScoreGoal": 500,
+  "financialScoreGoal": 2000,
+  "environmentalScoreGoal": 0,
+  "socialScoreGoal": 0,
   "overallscoreGoal": 1000,
-  "description": "Use the MCA as an aid to fullfill the goals",
-  "linkToMCA": "http://mareframe.mapix.com/dev/MCA/DST.html",
+  "description": "Money makes the world go around, go get some",
+  "linkToMCA": "Coming Soon",
   "mapType": 2,
   "mapSize": 15,
   "numberOfSchools":  20,
@@ -15,5 +15,7 @@
   "schoolSize": 2000,
   "schoolMsy": 1800,
   "schoolMinimum": 10,
-  "schoolMaximum": 5000
+  "schoolMaximum": 5000,
+  "DefaultNoDays": 100,
+  "DefaultTickSize": "days" 
 }

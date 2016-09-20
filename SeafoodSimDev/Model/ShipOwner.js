@@ -12,6 +12,7 @@ var ShipOwner = (function () {
         if (p_balance) {
             this.m_balance = p_balance;
         }
+        this.m_taxPayed = 0;
     }
     ShipOwner.prototype.getID = function () {
         return this.m_id;
@@ -39,6 +40,7 @@ var ShipOwner = (function () {
     };
     ShipOwner.prototype.financialTransaction = function (p_amount) {
         this.m_balance += p_amount * (1 - this.m_government.getTaxingRate());
+        this.m_taxPayed += p_amount * this.m_government.getTaxingRate();
     };
     ShipOwner.prototype.buyShip = function () {
         var ship = new Ship(this, this.m_config);
@@ -54,6 +56,9 @@ var ShipOwner = (function () {
             this.m_ships.splice(this.m_ships.indexOf(ship), 1);
             this.financialTransaction(this.m_shipPrice);
         }
+    };
+    ShipOwner.prototype.getTaxPayed = function () {
+        return this.m_taxPayed;
     };
     return ShipOwner;
 }());

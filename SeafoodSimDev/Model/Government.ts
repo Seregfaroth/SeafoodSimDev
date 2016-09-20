@@ -1,4 +1,5 @@
-﻿class Government {
+﻿/// <reference path="../Controller/Configuration.ts"/>
+class Government {
     private m_config: Configuration;
     private m_restrictions: Restrictions;
     private m_taxingRate: number;
@@ -8,6 +9,7 @@
         this.m_config = p_config;
         this.m_restrictions = p_restrictions;
         this.m_taxingRate = p_config.getTaxingRate();
+        p_config.getTaxingRate();
         this.m_score = new Score(p_config);
     }
 

@@ -1,8 +1,8 @@
 ﻿/// <reference path="School.ts"/>
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class Cod extends School{
-    private m_movingRadius: number = 2;
-    private m_recrutingPercentage: number = 0.25;
+    private m_movingRadius: number = 1;
+    private m_recrutingPercentage: number = 0.32;
     private m_origin: Point2;
 
     public constructor(p_size: number, p_msy: number, p_position: Point2, p_config: Configuration, p_ages?: number[]) {
