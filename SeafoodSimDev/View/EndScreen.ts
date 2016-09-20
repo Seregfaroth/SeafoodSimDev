@@ -112,7 +112,9 @@ class EndScreen {
 
         $("#endScreen").dialog({
             minWidth: 1050,
-            minHeight: 500, 
+            minHeight: 300, 
+            maxWidth: 1250,
+            maxHeight: 600
             //overflow: scroll
         });
     }

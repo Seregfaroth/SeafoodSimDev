@@ -67,8 +67,8 @@ class Score {
         this.m_environmentalScore = 0;
         p_map.getSchools().forEach(function (s) {
             var t = s.getSize() - s.getMsy()
-            if (t > 100) {
-                score.m_environmentalScore += 100;
+            if (t > 1000) {
+                score.m_environmentalScore += 1000;
             }
             else {
                 score.m_environmentalScore += t;
@@ -76,9 +76,9 @@ class Score {
         });
 
         //Make sure score stays inside a specific range
-        this.m_environmentalScore = this.normalize(this.m_environmentalScore, 0, this.m_config.getEnvironmentalMaxScore());
-        this.m_socialScore = this.normalize(this.m_socialScore, 0, this.m_config.getSocialMaxScore());
-        this.m_financialScore = this.normalize(this.m_financialScore, 0, this.m_config.getFinancialMaxScore());
+        this.m_environmentalScore = this.normalize(this.m_environmentalScore, 0, this.m_config.getEnvironmentalMaxScore(), 1000);
+        this.m_socialScore = this.normalize(this.m_socialScore, 0, this.m_config.getSocialMaxScore(), 1000);
+        this.m_financialScore = this.normalize(this.m_financialScore, 0, this.m_config.getFinancialMaxScore(), 1000);
         /*
         this.m_environmentalScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_environmentalScore));
         this.m_financialScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_financialScore));
@@ -86,7 +86,7 @@ class Score {
 
         this.m_overallScore = this.m_environmentalScore / 3 + this.m_financialScore / 3 + this.m_socialScore / 3;
     }
-    private normalize(p_value: number, p_min: number, p_max: number) {
-        return ((p_value - p_min) / (p_max - p_min)) * 100;
+    private normalize(p_value: number, p_min: number, p_max: number, p_score: number) {
+        return ((p_value - p_min) / (p_max - p_min)) * p_score;
     }
 }
