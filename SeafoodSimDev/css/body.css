@@ -26,10 +26,11 @@
     font-size: 80%;
 }
 .marked {
-    color: black !important;
+    color: dimgray !important;
+    background-color: #b4b4b4;
 }
 .fa{
-    color: dimgray;
+    color: black;
 }
 .slider-value-cell {
     padding: 10px;
