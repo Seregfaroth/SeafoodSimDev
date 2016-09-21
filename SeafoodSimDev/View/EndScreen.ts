@@ -1,6 +1,9 @@
 ﻿// <reference path = "declarations/gooogle.visualization.d.ts"/>
 class EndScreen {
-    constructor(p_endStats: EndScreenStats) {
+    private m_model: Model;
+
+    constructor(p_endStats: EndScreenStats, p_model: Model) {
+        this.m_model = p_model;
         var endDiv: HTMLDivElement = document.createElement("div");
         $('body').append(endDiv);
         endDiv.id = "endScreen";
@@ -8,7 +11,31 @@ class EndScreen {
         var headerDiv: HTMLDivElement = document.createElement("div");
         endDiv.appendChild(headerDiv);
         headerDiv.innerHTML = "EndScreen";
-        headerDiv.classList.add("header");
+        //headerDiv.classList.add("header");
+
+        var endGameStatusDiv: HTMLDivElement = document.createElement("div");
+        endDiv.appendChild(endGameStatusDiv);
+        endGameStatusDiv.id = 'endGameStatusDiv';
+        endGameStatusDiv.style.border = '1px solid black';
+        endGameStatusDiv.style.cssFloat = 'right';
+        //endGameStatusDiv.style.margin = '30px';
+
+        var endGameStatusGoalDiv: HTMLDivElement = document.createElement("div");
+        endDiv.appendChild(endGameStatusGoalDiv);
+        endGameStatusGoalDiv.id = 'endGameStatusGoalDiv';
+        endGameStatusGoalDiv.style.border = '1px solid black';
+        //endGameStatusGoalDiv.style.margin = '10px';
+        endGameStatusGoalDiv.innerHTML = "";
+        if (this.m_model.getScenario().getfinGoal().toString() != "no")
+            endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + this.getFinancialScoreSucces() + "<br>";
+        if (this.m_model.getScenario().getEcoGoal().toString() != "no")
+            endGameStatusGoalDiv.innerHTML += "Enviromental Score Goal: " + this.getEnvironmentalScoreSucces() + "<br>";
+        if (this.m_model.getScenario().getSocGoal().toString() != "no")
+            endGameStatusGoalDiv.innerHTML += "Social Score Goal: " + this.getSocialScoreSucces() + "<br>";
+        if (this.m_model.getScenario().getAllScore().toString() != "no")
+            endGameStatusGoalDiv.innerHTML += "Overall Score Goal: " + this.getOverAllScoreSucces() + "<br>";
+
+
 
         var scoreChartDiv: HTMLDivElement = document.createElement("div");
         endDiv.appendChild(scoreChartDiv);
@@ -28,6 +55,13 @@ class EndScreen {
 
         var t = p_endStats.getBiomassPrTimeUnit();
 
+        var scoreColumnChartOptions = {
+            title: "Current and Goal scores",
+            width: 600,
+            height: 400,
+            bar: { groupWidth: "90%" },
+            legend: { position: "none" }
+        }
         var scoreChartOptions = {
             hAxis: {
                 //title: 'Slidervalue', minValue: this.m_pwlDataArray[1][0], maxValue: this.m_pwlDataArray[this.m_pwlDataArray.length - 1][0]
@@ -95,16 +129,19 @@ class EndScreen {
             width: 500
         }
 
+        var scoreColumnChart: google.visualization.ColumnChart = new google.visualization.ColumnChart(document.getElementById(endGameStatusDiv.id));
         var environChart: google.visualization.ScatterChart = new google.visualization.ScatterChart(document.getElementById(environChartDiv.id));
         var scoreChart: google.visualization.ScatterChart = new google.visualization.ScatterChart(document.getElementById(scoreChartDiv.id));
         var socialChart: google.visualization.ScatterChart = new google.visualization.ScatterChart(document.getElementById(socialChartDiv.id));
         var financialChart: google.visualization.ScatterChart = new google.visualization.ScatterChart(document.getElementById(financialChartDiv.id));
-        
+
+        var scoreColumnChartData = google.visualization.arrayToDataTable(p_model.getGovernment().getScore().getScoreColumnChartArray());
         var scoreChartData = google.visualization.arrayToDataTable(p_endStats.getScoreVizArray());
         var environChartData = google.visualization.arrayToDataTable(p_endStats.getEnvironmentalVizArray());
         var socialChartData = google.visualization.arrayToDataTable(p_endStats.getSocialVizArray());
         var financialChartData = google.visualization.arrayToDataTable(p_endStats.getFinancialVizArray());
 
+        scoreColumnChart.draw(scoreColumnChartData, scoreColumnChartOptions);
         scoreChart.draw(scoreChartData, scoreChartOptions);
         environChart.draw(environChartData, environChartOptions);
         socialChart.draw(socialChartData, socialChartOptions);
@@ -117,5 +154,28 @@ class EndScreen {
             maxHeight: 600
             //overflow: scroll
         });
+    }
+    public getFinancialScoreSucces(): string {
+        if (this.m_model.getGovernment().getScore().getFinancialScore() < this.m_model.getScenario().getfinGoal())
+            return "Failed";
+        else
+            return "Succes";
+    }
+    public getEnvironmentalScoreSucces(): string {
+        if (this.m_model.getGovernment().getScore().getEnvironmentalScore() < this.m_model.getScenario().getEcoGoal())
+            return "Failed";
+        else
+            return "Succes";
+    }
+    public getSocialScoreSucces(): string {
+        if (this.m_model.getGovernment().getScore().getSocialScore() < this.m_model.getScenario().getSocGoal())
+            return "Failed";
+        else
+            return "Succes";
+    } public getOverAllScoreSucces(): string {
+        if (this.m_model.getGovernment().getScore().getOverallScore() < this.m_model.getScenario().getAllScore())
+            return "Failed";
+        else
+            return "Succes";
     }
 }

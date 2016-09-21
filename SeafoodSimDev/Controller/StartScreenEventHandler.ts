@@ -1,10 +1,12 @@
 ﻿class StartScreenEventHandler {
     private m_controller: Controller;
     private m_config: Configuration;
+    private m_scenario: Scenario;
 
-    constructor(p_controller: Controller, p_config: Configuration) {
+    constructor(p_controller: Controller, p_config: Configuration, p_scenario: Scenario) {
         this.m_controller = p_controller;
         this.m_config = p_config;
+        this.m_scenario = p_scenario;
 
         $("#scenario1").on("change", { scenario: 1 }, this.radioChange);
         $("#scenario2").on("change", { scenario: 2 }, this.radioChange);
@@ -55,13 +57,30 @@
     }
     public updateInfo = () => {
         var scenario = this.m_controller.getScenario();
-        var t = scenario.getName();
-        var t2 = scenario.getDescription();
+        var t = $("#endTime");
+        (document.getElementById("endTime") as HTMLInputElement).value = scenario.getDefaultNoDays().toString();
+        //$("#endTime").val(scenario.getDefaultNoDays().toString());
+        var t3 = $("#endTime").val();
+        (document.getElementById("movesPerTick") as HTMLInputElement).value = scenario.getDefaultTicksize().toString();
+        var t4 = scenario.getName();
+        var t32 = scenario.getDescription();
         $("#name").html(scenario.getName());
         $("#des").text(scenario.getDescription());
         $("#link").html("<a target='_blank' href='" + scenario.getLink() + "'>" + scenario.getLink() + "</a>");
-        $("#goal").html("<p>Financial score goal: <span style='float:right'>" + scenario.getfinGoal()
-            + "</span><br/>Environmental score goal: <span style='float:right'>" + scenario.getEcoGoal()
-            + "</span><br/>Social score goal: <span style='float:right'>" + scenario.getSocGoal() + "</span></p>");
+        var goal = $("#goal");
+        goal.html("");
+        goal.append("<p>");
+        if (this.m_scenario.getfinGoal().toString() != "no")
+            goal.append("Financial score goal: <span style='float:right' > " + scenario.getfinGoal() + "</span><br/>");
+        if (this.m_scenario.getEcoGoal().toString() != "no")
+            goal.append("Environmental score goal: <span style='float:right' > " + scenario.getEcoGoal() + "</span><br/>");
+        if (this.m_scenario.getSocGoal().toString() != "no")
+            goal.append("Social score goal: <span style='float:right' > " + scenario.getSocGoal() + "</span><br/>");
+        if (this.m_scenario.getAllScore().toString() != "no")
+            goal.append("Overall score goal: <span style='float:right' > " + scenario.getAllScore() + "</span><br/>");
+        //$("#goal").html("<p>Financial score goal: <span style='float:right'>" + scenario.getfinGoal()
+        //    + "</span><br/>Environmental score goal: <span style='float:right'>" + scenario.getEcoGoal()
+        //    + "</span><br/>Social score goal: <span style='float:right'>" + scenario.getSocGoal() + "</span></p>");
+        goal.append("</p>");
     }
 }

@@ -21,6 +21,9 @@
     private m_schoolMsy;
     private m_schoolMinimum: number;
     private m_schoolMaximum: number;
+
+    private m_defaultNoDays: number;
+    private m_defaultTickSize: number;
     constructor() {       
         //this.m_name = "no";
     }
@@ -61,6 +64,9 @@
         this.m_schoolMsy = p_json.schoolMsy;
         this.m_schoolMinimum = p_json.schoolMinimum;
         this.m_schoolMaximum = p_json.schoolMaximum;
+
+        this.m_defaultNoDays = p_json.defaultNoDays;
+        this.m_defaultTickSize = p_json.defaultTickSize;
     }
     public getName(): string {
         return this.m_name;
@@ -112,5 +118,11 @@
     }
     public getSchoolMaximum(): number {
         return this.m_schoolMaximum;
+    }
+    public getDefaultNoDays(): number {
+        return this.m_defaultNoDays;
+    }
+    public getDefaultTicksize(): number {
+        return this.m_defaultTickSize;
     }
 }

@@ -17,7 +17,7 @@ class Controller {
     //private m_scenario: number;
     private m_scenario: Scenario;
     private m_endTime: number;
-    private m_noGraphicSimulation = false;
+    private m_noGraphicSimulation = true;
     private m_ticksPerMove: number;
     //private m_sce: Scenario;
     constructor(p_config: Configuration) {
@@ -32,7 +32,7 @@ class Controller {
         this.m_model = new Model(this.m_config, this.m_scenario);
         this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
         this.m_eventHandler = new EventHandler(this);
-        this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_config);
+        this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_config, this.m_scenario);
         this.m_scenario.loadScenario('Controller/scenarios/scn1.json', this.m_startScreenEventHandler.updateInfo);
         //this.m_view.updateMainView(this.m_model);
 
@@ -105,7 +105,7 @@ class Controller {
             clearInterval(this.m_timer);
             this.m_view.updateMainView(this.m_model);
             this.m_eventHandler.unBindFunctions(true);
-            new EndScreen(this.m_model.getStats());
+            new EndScreen(this.m_model.getStats(), this.m_model);
         }
         else {
             this.m_model.run(this.m_ticksPerMove);

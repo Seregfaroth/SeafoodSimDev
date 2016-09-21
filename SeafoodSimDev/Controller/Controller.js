@@ -11,7 +11,7 @@ var Controller = (function () {
     //private m_sce: Scenario;
     function Controller(p_config) {
         var _this = this;
-        this.m_noGraphicSimulation = false;
+        this.m_noGraphicSimulation = true;
         this.restart = function () {
             _this.m_model = new Model(_this.m_config, _this.m_scenario);
             _this.m_model.getMap().setScenario(_this.m_scenario);
@@ -35,7 +35,7 @@ var Controller = (function () {
                 clearInterval(_this.m_timer);
                 _this.m_view.updateMainView(_this.m_model);
                 _this.m_eventHandler.unBindFunctions(true);
-                new EndScreen(_this.m_model.getStats());
+                new EndScreen(_this.m_model.getStats(), _this.m_model);
             }
             else {
                 _this.m_model.run(_this.m_ticksPerMove);
@@ -65,7 +65,7 @@ var Controller = (function () {
         this.m_model = new Model(this.m_config, this.m_scenario);
         this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
         this.m_eventHandler = new EventHandler(this);
-        this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_config);
+        this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_config, this.m_scenario);
         this.m_scenario.loadScenario('Controller/scenarios/scn1.json', this.m_startScreenEventHandler.updateInfo);
         //this.m_view.updateMainView(this.m_model);
     }

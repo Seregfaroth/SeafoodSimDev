@@ -1,6 +1,7 @@
 ﻿
 class EndScreenStats {
     private m_time: number[] = [];
+    private m_scenario: Scenario;
 
     private m_biomassPrTimeUnit: number[] = [];
     private m_yieldPrTimeUnit: number[] = [];
@@ -25,8 +26,8 @@ class EndScreenStats {
     private m_socialScorePrTimeUnit: number[] = [];
     private m_overallScorePrTimeUnit: number[] = [];
 
-    constructor() {
-        
+    constructor(p_scenario: Scenario) {
+        this.m_scenario = p_scenario;
     }
     public setTimeAt(p_index: number, p_timeValue: number) {
         this.m_time[p_index] = p_timeValue;
@@ -158,8 +159,7 @@ class EndScreenStats {
     public getOverallScorePrTimeUnit(): number[] {
         return this.m_overallScorePrTimeUnit;
     }
-    
-    
+
     public getEnvironmentalVizArray(): any[] {
         var ret: any[] = [[]];
         //add header
@@ -226,5 +226,6 @@ class EndScreenStats {
         }
         return ret;
     }
+    
 
 }

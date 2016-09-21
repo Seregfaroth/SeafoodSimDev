@@ -27,17 +27,19 @@ class Model {
         this.m_config = p_config;
         this.m_scenario = p_scenario;
         var restrictions: Restrictions = new Restrictions(this.m_config, this.m_scenario);
-        this.m_stats = new EndScreenStats();
+        this.m_stats = new EndScreenStats(this.m_scenario);
 
         this.m_map = new Map(this.m_mapType, this.m_size, this.m_noOfSchools, restrictions, this.m_config, this.m_scenario);
         //this.m_stats = new EndScreenStats(this.m_map);
-        this.m_goverment = new Government(restrictions, this.m_config);
+        this.m_goverment = new Government(restrictions, this.m_config, this.m_scenario);
         this.m_ai = new AI(this.m_config);
         this.createShipOwner(new Point2(3, 3), 300000);
         this.createShipOwner(new Point2(6, 6), 300000);
         this.updateStats();
     }
-
+    public getScenario(): Scenario {
+        return this.m_scenario;
+    }
 
     public updateStats() {
         var biomass = 0;

@@ -37,6 +37,8 @@ var Scenario = (function () {
         this.m_schoolMsy = p_json.schoolMsy;
         this.m_schoolMinimum = p_json.schoolMinimum;
         this.m_schoolMaximum = p_json.schoolMaximum;
+        this.m_defaultNoDays = p_json.defaultNoDays;
+        this.m_defaultTickSize = p_json.defaultTickSize;
     };
     Scenario.prototype.getName = function () {
         return this.m_name;
@@ -88,6 +90,12 @@ var Scenario = (function () {
     };
     Scenario.prototype.getSchoolMaximum = function () {
         return this.m_schoolMaximum;
+    };
+    Scenario.prototype.getDefaultNoDays = function () {
+        return this.m_defaultNoDays;
+    };
+    Scenario.prototype.getDefaultTicksize = function () {
+        return this.m_defaultTickSize;
     };
     return Scenario;
 }());

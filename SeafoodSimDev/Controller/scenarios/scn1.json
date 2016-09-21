@@ -1,8 +1,8 @@
 {
   "name": "Scenario 1",
-  "financialScoreGoal": 2000,
-  "environmentalScoreGoal": 0,
-  "socialScoreGoal": 0,
+  "financialScoreGoal": "no",
+  "environmentalScoreGoal": "no",
+  "socialScoreGoal": "no",
   "overallscoreGoal": 1000,
   "description": "Money makes the world go around, go get some",
   "linkToMCA": "Link to MCA is coming soon",
@@ -16,6 +16,6 @@
   "schoolMsy": 1800,
   "schoolMinimum": 10,
   "schoolMaximum": 5000,
-  "DefaultNoDays": 100,
-  "DefaultTickSize": "days" 
+  "defaultNoDays": 365,
+  "defaultTickSize": 365
 }

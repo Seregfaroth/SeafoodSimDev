@@ -1,7 +1,7 @@
 {
   "name": "Scenario 3",
   "financialScoreGoal": 1000,
-  "environmentalScoreGoal": 1000,
+  "environmentalScoreGoal": "no",
   "socialScoreGoal": "no",
   "overallscoreGoal": 1000,
   "description": "Use the DST to get the best Overall Score",
@@ -16,6 +16,6 @@
   "schoolMsy": 1800,
   "schoolMinimum": 10,
   "schoolMaximum": 5000,
-  "DefaultNoDays": 100,
-  "DefaultTickSize": "days" 
+  "defaultNoDays": 60,
+  "defaultTickSize": 30 
 }

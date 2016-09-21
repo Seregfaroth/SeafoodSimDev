@@ -2,6 +2,7 @@
 
 class Score {
     private m_config: Configuration;
+    private m_scenario: Scenario;
     private m_financialScore: number;
     private m_socialScore: number;
     private m_environmentalScore: number;
@@ -11,8 +12,9 @@ class Score {
     private m_maximumScore: number = 9999999;
     private financial: number[] = []; //List of the financial ownings every day the last year
 
-    public constructor(p_config: Configuration) {
+    public constructor(p_config: Configuration, p_scenario: Scenario) {
         this.m_config = p_config;
+        this.m_scenario = p_scenario;
         this.m_financialScore = 0;
         this.m_environmentalScore = 0;
         this.m_socialScore = 0;
@@ -88,5 +90,28 @@ class Score {
     }
     private normalize(p_value: number, p_min: number, p_max: number, p_score: number) {
         return ((p_value - p_min) / (p_max - p_min)) * p_score;
+    }
+
+    public getScoreColumnChartArray(): any[] {
+        var ret: any[] = [[]];
+        //ret = [
+        //    ['ScoreType', 'CurrentScore', { role: 'style' }, { role: 'annotation' }, 'GoalScore', { role: 'style' }, { role: 'annotation' }],
+        //    ['Financial', this.m_financialScore, 'color: #0057e7', 'Current', this.m_scenario.getfinGoal(), 'color: #0045b8', 'goal'],
+        //    ['Environmental', this.m_environmentalScore, 'color: #008744', 'Current', this.m_scenario.getEcoGoal(), 'color: #006c36', 'goal'],
+        //    ['Social', this.m_socialScore, 'color: #d62d20', 'Current', this.m_scenario.getSocGoal(), 'color: #ab2419', 'goal'],
+        //    ['Overall', this.m_overallScore, 'color: #ffa700', 'Current', this.m_scenario.getAllScore(), 'color: #cc8500', 'goal'],
+        //];
+        var i:number = 1;
+        ret[0] = ['ScoreType', 'CurrentScore', { role: 'style' }, { role: 'annotation' }, 'GoalScore', { role: 'style' }, { role: 'annotation' }];
+        if (this.m_scenario.getfinGoal().toString() != "no")
+            ret[i++] = ['Financial', this.m_financialScore, 'color: #0057e7', 'Current', this.m_scenario.getfinGoal(), 'color: #0045b8', 'goal'];
+        if (this.m_scenario.getEcoGoal().toString() != "no")
+            ret[i++] = ['Environmental', this.m_environmentalScore, 'color: #008744', 'Current', this.m_scenario.getEcoGoal(), 'color: #006c36', 'goal'];
+        if (this.m_scenario.getSocGoal().toString() != "no")
+            ret[i++] = ['Social', this.m_socialScore, 'color: #d62d20', 'Current', this.m_scenario.getSocGoal(), 'color: #ab2419', 'goal'];
+        if (this.m_scenario.getAllScore().toString() != "no")
+            ret[i++] = ['Overall', this.m_overallScore, 'color: #ffa700', 'Current', this.m_scenario.getAllScore(), 'color: #cc8500', 'goal'];
+
+        return ret;
     }
 }

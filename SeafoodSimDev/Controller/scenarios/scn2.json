@@ -2,7 +2,7 @@
   "name":  "Scenario 2",
   "financialScoreGoal": 1500,
   "environmentalScoreGoal": 2000,
-  "socialScoreGoal": 0,
+  "socialScoreGoal": "no",
   "overallscoreGoal": 1000,
   "description": "Can you save the environment, and still be financial succesful",
   "linkToMCA": "Link to MCA is coming soon",
@@ -21,6 +21,6 @@
   "schoolMsy": 1800,
   "schoolMinimum": 10,
   "schoolMaximum": 5000,
-  "DefaultNoDays": 100,
-  "DefaultTickSize": "days" 
+  "defaultNoDays": 50,
+  "defaultTickSize": 1
 }

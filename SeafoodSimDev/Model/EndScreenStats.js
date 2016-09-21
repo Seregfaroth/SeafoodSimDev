@@ -1,5 +1,5 @@
 var EndScreenStats = (function () {
-    function EndScreenStats() {
+    function EndScreenStats(p_scenario) {
         this.m_time = [];
         this.m_biomassPrTimeUnit = [];
         this.m_yieldPrTimeUnit = [];
@@ -15,6 +15,7 @@ var EndScreenStats = (function () {
         this.m_environmentalScorePrTimeUnit = [];
         this.m_socialScorePrTimeUnit = [];
         this.m_overallScorePrTimeUnit = [];
+        this.m_scenario = p_scenario;
     }
     EndScreenStats.prototype.setTimeAt = function (p_index, p_timeValue) {
         this.m_time[p_index] = p_timeValue;
