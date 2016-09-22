@@ -24,6 +24,20 @@
 
     private m_defaultNoDays: number;
     private m_defaultTickSize: number;
+
+    private m_taxingRate: number;
+    private m_shipOwner;
+    private m_shipOwnerStartMoney: number;
+    private m_shipPrice: number;
+    private m_aiBuyShipBalance: number;
+    private m_aiSellShipBalance: number;
+
+
+    private m_fishingPercentage: number;
+
+    private m_financialMaxScore: number;
+    private m_environmentalMaxScore: number;
+    private m_socialMaxScore: number;
     constructor() {       
         //this.m_name = "no";
     }
@@ -67,6 +81,21 @@
 
         this.m_defaultNoDays = p_json.defaultNoDays;
         this.m_defaultTickSize = p_json.defaultTickSize;
+
+        this.m_taxingRate = p_json.taxingRate;
+        this.m_map = p_json.map;
+        this.m_shipOwner = p_json.shipOwner;
+        this.m_shipOwnerStartMoney = p_json.shipOwnerStartMoney;
+        this.m_shipPrice = p_json.shipPrice;
+        this.m_aiBuyShipBalance = p_json.aiShipBuyBalance;
+        this.m_aiSellShipBalance = p_json.aiShipSellBalance;
+
+
+        this.m_fishingPercentage = p_json.fishingPercentage;
+
+        this.m_financialMaxScore = p_json.financialMaxScore;
+        this.m_environmentalMaxScore = p_json.environmentalMaxScore;
+        this.m_socialMaxScore = p_json.socialMaxScore;
     }
     public getName(): string {
         return this.m_name;
@@ -124,5 +153,38 @@
     }
     public getDefaultTicksize(): number {
         return this.m_defaultTickSize;
+    }
+    public getTaxingRate(): number {
+        return this.m_taxingRate;
+    }
+    public getMap(): Map {
+        return this.m_map;
+    }
+    public getShipOwner() {
+        return this.m_shipOwner;
+    }
+    public getShipOwnerStartMoney(): number {
+        return this.m_shipOwnerStartMoney;
+    }
+    public getShipPrice(): number {
+        return this.m_shipPrice;
+    }
+    public getAiBuyShipBalance(): number {
+        return this.m_aiBuyShipBalance;
+    }
+    public getAiSellShipBalance(): number {
+        return this.m_aiSellShipBalance;
+    }
+    public getFinancialMaxScore(): number {
+        return this.m_financialMaxScore;
+    }
+    public getEnvironmentalMaxScore(): number {
+        return this.m_environmentalMaxScore;
+    }
+    public getSocialMaxScore(): number {
+        return this.m_socialMaxScore;
+    }
+    public getFishingPercentage(): number {
+        return this.m_fishingPercentage;
     }
 }

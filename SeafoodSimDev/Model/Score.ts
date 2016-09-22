@@ -1,7 +1,6 @@
 ﻿/// <reference path="../Controller/Configuration.ts"/>
 
 class Score {
-    private m_config: Configuration;
     private m_scenario: Scenario;
     private m_financialScore: number;
     private m_socialScore: number;
@@ -12,8 +11,7 @@ class Score {
     private m_maximumScore: number = 9999999;
     private financial: number[] = []; //List of the financial ownings every day the last year
 
-    public constructor(p_config: Configuration, p_scenario: Scenario) {
-        this.m_config = p_config;
+    public constructor(p_scenario: Scenario) {
         this.m_scenario = p_scenario;
         this.m_financialScore = 0;
         this.m_environmentalScore = 0;
@@ -78,9 +76,9 @@ class Score {
         });
 
         //Make sure score stays inside a specific range
-        this.m_environmentalScore = this.normalize(this.m_environmentalScore, 0, this.m_config.getEnvironmentalMaxScore(), 1000);
-        this.m_socialScore = this.normalize(this.m_socialScore, 0, this.m_config.getSocialMaxScore(), 1000);
-        this.m_financialScore = this.normalize(this.m_financialScore, 0, this.m_config.getFinancialMaxScore(), 1000);
+        this.m_environmentalScore = this.normalize(this.m_environmentalScore, 0, this.m_scenario.getEnvironmentalMaxScore(), 1000);
+        this.m_socialScore = this.normalize(this.m_socialScore, 0, this.m_scenario.getSocialMaxScore(), 1000);
+        this.m_financialScore = this.normalize(this.m_financialScore, 0, this.m_scenario.getFinancialMaxScore(), 1000);
         /*
         this.m_environmentalScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_environmentalScore));
         this.m_financialScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_financialScore));

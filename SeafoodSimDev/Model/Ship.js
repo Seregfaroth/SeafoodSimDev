@@ -13,13 +13,13 @@ var FishType;
     FishType[FishType["Mackerel"] = 1] = "Mackerel";
 })(FishType || (FishType = {}));
 var Ship = (function () {
-    function Ship(p_owner, p_config) {
+    function Ship(p_owner, p_scenario) {
         this.m_fuelCapacity = 150;
         this.m_cargoCapacity = 800;
         this.m_path = [];
         this.m_fuelPerMove = 1;
         this.history = [[], []]; //For debugging  purpose
-        this.m_config = p_config;
+        this.m_scenario = p_scenario;
         this.m_position = p_owner.getShipStartPosition();
         this.m_cargo = [[], []];
         this.m_yield = [[], []];

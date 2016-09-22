@@ -9,11 +9,11 @@ var simState;
 })(simState || (simState = {}));
 var Controller = (function () {
     //private m_sce: Scenario;
-    function Controller(p_config) {
+    function Controller() {
         var _this = this;
-        this.m_noGraphicSimulation = true;
+        this.m_noGraphicSimulation = false;
         this.restart = function () {
-            _this.m_model = new Model(_this.m_config, _this.m_scenario);
+            _this.m_model = new Model(_this.m_scenario);
             _this.m_model.getMap().setScenario(_this.m_scenario);
             _this.m_view.changeMap(_this.m_model.getMap());
             //this.m_view.reset(this.m_model);
@@ -55,18 +55,17 @@ var Controller = (function () {
                 this.endSimulation();
             }*/
         };
-        this.m_config = p_config;
         console.log("Controller loading");
         this.m_scenario = new Scenario();
         this.m_simState = simState.paused;
         this.m_delayPerTick = 1000;
         this.m_fastDelayPerTick = 1;
         //this.m_statFreq = 30;
-        this.m_model = new Model(this.m_config, this.m_scenario);
-        this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
-        this.m_eventHandler = new EventHandler(this);
-        this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_config, this.m_scenario);
-        this.m_scenario.loadScenario('Controller/scenarios/scn1.json', this.m_startScreenEventHandler.updateInfo);
+        //this.m_model = new Model(this.m_scenario);
+        //this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
+        new StartScreen();
+        this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_scenario);
+        //this.m_scenario.loadScenario('Controller/scenarios/scn1.json', this.m_startScreenEventHandler.updateInfo);
         //this.m_view.updateMainView(this.m_model);
     }
     //public getScenario(): number {
@@ -92,6 +91,8 @@ var Controller = (function () {
     };
     Controller.prototype.setModel = function (p_model) {
         this.m_model = p_model;
+        this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
+        this.m_eventHandler = new EventHandler(this);
     };
     Controller.prototype.getEventHandler = function () {
         return this.m_eventHandler;

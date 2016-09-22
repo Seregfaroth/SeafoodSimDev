@@ -1,11 +1,9 @@
 ﻿class StartScreenEventHandler {
     private m_controller: Controller;
-    private m_config: Configuration;
     private m_scenario: Scenario;
 
-    constructor(p_controller: Controller, p_config: Configuration, p_scenario: Scenario) {
+    constructor(p_controller: Controller, p_scenario: Scenario) {
         this.m_controller = p_controller;
-        this.m_config = p_config;
         this.m_scenario = p_scenario;
 
         $("#scenario1").on("change", { scenario: 1 }, this.radioChange);
@@ -47,12 +45,14 @@
         //var tm = this.m_controller.getModel().getMap();
         //this.m_controller.getModel().setMap(new Map(scenario.getMapType(), scenario.getMapSize(), scenario.getNumberOfSchools(), this.m_controller.getModel().getGovernment().getRestrictions(), this.m_config));
 
-        this.m_controller.getModel().getMap().setScenario(scenario);
+        //this.m_controller.getModel().getMap().setScenario(scenario);
+        this.m_controller.setModel(new Model(scenario));
+        //this.m_controller.getModel().getMap().setScenario(scenario);
         //var tm2 = this.m_controller.getModel().getMap();
         //new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
         //this.m_controller.setMainView(new MainView(this.m_controller.getModel().getMap(), this.m_controller.getModel().getShipOwners(), this.m_controller.getModel().getGovernment().getTaxingRate()));
         //this.m_controller.getMainView().updateMainView(this.m_controller.getModel());
-        this.m_controller.getMainView().changeMap(this.m_controller.getModel().getMap());
+        //this.m_controller.getMainView().changeMap(this.m_controller.getModel().getMap());
         this.m_controller.getMainView().updateMainView(this.m_controller.getModel());
     }
     public updateInfo = () => {

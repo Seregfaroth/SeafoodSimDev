@@ -1,12 +1,12 @@
 ﻿class Fish {
-    private m_config: Configuration;
+    private m_scenario: Scenario;
     private m_age: number;
     private m_maximumAge: number;
     private m_type: number;
     //Types: 0 = cod, 1 = mackerel
 
-    public constructor(p_config: Configuration, p_type: number, p_age?: number) {
-        this.m_config = p_config;
+    public constructor(p_scenario: Scenario, p_type: number, p_age?: number) {
+        this.m_scenario = p_scenario;
         this.m_age = 0;
         this.m_type = p_type;
         if (p_age != undefined) {

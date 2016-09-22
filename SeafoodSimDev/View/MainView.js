@@ -2,9 +2,10 @@
 /// <reference path="StartScreen.ts"/>
 var MainView = (function () {
     function MainView(p_map, p_ShipOwners, p_taxingRate) {
-        //this.m_mapView = new MapView(p_map);
+        $("#mainDiv canvas").remove();
+        this.m_mapView = new MapView(p_map);
         this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate);
-        new StartScreen();
+        //new StartScreen();
     }
     MainView.prototype.reset = function (p_model) {
         this.m_mapView.reset(p_model.getMap());

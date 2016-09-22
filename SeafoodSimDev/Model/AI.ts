@@ -1,15 +1,15 @@
 ﻿// <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class AI {
-    private m_config: Configuration;
+    private m_scenario: Scenario;
     private m_pathFinder: TKN_PathFinding = new TKN_PathFinding();
      private m_balanceToBuyShip: number;
      private m_balanceToSellShip: number;
      private m_fishingPath: Point2[] = [new Point2(2, 0),new Point2(1, 0), new Point2(1, 1), new Point2(1, 2), new Point2(1, 3), new Point2(1, 4), new Point2(2, 4),
          new Point2(3, 4), new Point2(3, 3), new Point2(3, 2), new Point2(3, 1), new Point2(3, 0), new Point2(2, 0)];
-     constructor(p_config: Configuration) {
-         this.m_config = p_config;
-         this.m_balanceToBuyShip = p_config.getAiBuyShipBalance();
-         this.m_balanceToSellShip = p_config.getAiSellShipBalance();
+     constructor(p_scenario: Scenario) {
+         this.m_scenario = p_scenario;
+         this.m_balanceToBuyShip = p_scenario.getAiBuyShipBalance();
+         this.m_balanceToSellShip = p_scenario.getAiSellShipBalance();
      }
 
     public run(p_shipOwner: ShipOwner, p_map: Map): void {

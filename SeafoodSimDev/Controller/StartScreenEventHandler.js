@@ -1,5 +1,5 @@
 var StartScreenEventHandler = (function () {
-    function StartScreenEventHandler(p_controller, p_config, p_scenario) {
+    function StartScreenEventHandler(p_controller, p_scenario) {
         var _this = this;
         this.radioChange = function (p_evt) {
             var t = _this;
@@ -25,12 +25,14 @@ var StartScreenEventHandler = (function () {
             _this.m_controller.setTicksPerMove($("#movesPerTick").val());
             //var tm = this.m_controller.getModel().getMap();
             //this.m_controller.getModel().setMap(new Map(scenario.getMapType(), scenario.getMapSize(), scenario.getNumberOfSchools(), this.m_controller.getModel().getGovernment().getRestrictions(), this.m_config));
-            _this.m_controller.getModel().getMap().setScenario(scenario);
+            //this.m_controller.getModel().getMap().setScenario(scenario);
+            _this.m_controller.setModel(new Model(scenario));
+            //this.m_controller.getModel().getMap().setScenario(scenario);
             //var tm2 = this.m_controller.getModel().getMap();
             //new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
             //this.m_controller.setMainView(new MainView(this.m_controller.getModel().getMap(), this.m_controller.getModel().getShipOwners(), this.m_controller.getModel().getGovernment().getTaxingRate()));
             //this.m_controller.getMainView().updateMainView(this.m_controller.getModel());
-            _this.m_controller.getMainView().changeMap(_this.m_controller.getModel().getMap());
+            //this.m_controller.getMainView().changeMap(this.m_controller.getModel().getMap());
             _this.m_controller.getMainView().updateMainView(_this.m_controller.getModel());
         };
         this.updateInfo = function () {
@@ -62,7 +64,6 @@ var StartScreenEventHandler = (function () {
             goal.append("</p>");
         };
         this.m_controller = p_controller;
-        this.m_config = p_config;
         this.m_scenario = p_scenario;
         $("#scenario1").on("change", { scenario: 1 }, this.radioChange);
         $("#scenario2").on("change", { scenario: 2 }, this.radioChange);

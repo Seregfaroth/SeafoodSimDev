@@ -39,6 +39,17 @@ var Scenario = (function () {
         this.m_schoolMaximum = p_json.schoolMaximum;
         this.m_defaultNoDays = p_json.defaultNoDays;
         this.m_defaultTickSize = p_json.defaultTickSize;
+        this.m_taxingRate = p_json.taxingRate;
+        this.m_map = p_json.map;
+        this.m_shipOwner = p_json.shipOwner;
+        this.m_shipOwnerStartMoney = p_json.shipOwnerStartMoney;
+        this.m_shipPrice = p_json.shipPrice;
+        this.m_aiBuyShipBalance = p_json.aiShipBuyBalance;
+        this.m_aiSellShipBalance = p_json.aiShipSellBalance;
+        this.m_fishingPercentage = p_json.fishingPercentage;
+        this.m_financialMaxScore = p_json.financialMaxScore;
+        this.m_environmentalMaxScore = p_json.environmentalMaxScore;
+        this.m_socialMaxScore = p_json.socialMaxScore;
     };
     Scenario.prototype.getName = function () {
         return this.m_name;
@@ -96,6 +107,39 @@ var Scenario = (function () {
     };
     Scenario.prototype.getDefaultTicksize = function () {
         return this.m_defaultTickSize;
+    };
+    Scenario.prototype.getTaxingRate = function () {
+        return this.m_taxingRate;
+    };
+    Scenario.prototype.getMap = function () {
+        return this.m_map;
+    };
+    Scenario.prototype.getShipOwner = function () {
+        return this.m_shipOwner;
+    };
+    Scenario.prototype.getShipOwnerStartMoney = function () {
+        return this.m_shipOwnerStartMoney;
+    };
+    Scenario.prototype.getShipPrice = function () {
+        return this.m_shipPrice;
+    };
+    Scenario.prototype.getAiBuyShipBalance = function () {
+        return this.m_aiBuyShipBalance;
+    };
+    Scenario.prototype.getAiSellShipBalance = function () {
+        return this.m_aiSellShipBalance;
+    };
+    Scenario.prototype.getFinancialMaxScore = function () {
+        return this.m_financialMaxScore;
+    };
+    Scenario.prototype.getEnvironmentalMaxScore = function () {
+        return this.m_environmentalMaxScore;
+    };
+    Scenario.prototype.getSocialMaxScore = function () {
+        return this.m_socialMaxScore;
+    };
+    Scenario.prototype.getFishingPercentage = function () {
+        return this.m_fishingPercentage;
     };
     return Scenario;
 }());

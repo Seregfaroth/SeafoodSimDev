@@ -1,18 +1,16 @@
 /// <reference path="../Controller/Configuration.ts"/>
 var Government = (function () {
-    function Government(p_restrictions, p_config, p_scenario) {
-        this.m_config = p_config;
+    function Government(p_restrictions, p_scenario) {
         this.m_scenario = p_scenario;
         this.m_restrictions = p_restrictions;
-        this.m_taxingRate = p_config.getTaxingRate();
-        p_config.getTaxingRate();
-        this.m_score = new Score(p_config, p_scenario);
+        this.m_taxingRate = p_scenario.getTaxingRate();
+        this.m_score = new Score(p_scenario);
     }
     Government.prototype.getScore = function () {
         return this.m_score;
     };
     Government.prototype.getStartingTaxingRate = function () {
-        return this.m_config.getTaxingRate();
+        return this.m_scenario.getTaxingRate();
     };
     Government.prototype.getTaxingRate = function () {
         return this.m_taxingRate;

@@ -1,6 +1,5 @@
 ﻿// <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
-class Map {
-    private m_config: Configuration;
+class Map {    
     private m_scenario: Scenario;
     private m_grid: Tile[][] = [];
     public m_schools: School[] = [];
@@ -9,15 +8,13 @@ class Map {
     private m_ships: Ship[] = [];
     private m_yield: number; //in fish, will be tonnes
 
-
-
-    public constructor(p_mapType: number,p_size: number, p_noOfSchools: number, p_restrictions: Restrictions, p_config: Configuration, p_scenario: Scenario) {
-        this.m_config = p_config;
+    public constructor(p_mapType: number,p_size: number, p_noOfSchools: number, p_restrictions: Restrictions,  p_scenario: Scenario) {       
         this.m_scenario = p_scenario;
         this.m_restrictions = p_restrictions;
         this.m_yield = 0;
-        this.m_fishingPercentage = this.m_config.getFishingPercentage();
-        this.generateExampleMap();
+        this.m_fishingPercentage = this.m_scenario.getFishingPercentage();
+        //this.generateExampleMap();
+        this.setScenario(p_scenario);
     }
     public setScenario(p_scenario: Scenario): void {
         this.m_scenario = p_scenario;
@@ -56,7 +53,7 @@ class Map {
             //Remove from school
             p_school.getAges()[i] -= noOfFish;
         }
-        this.m_schools.push(new Cod(noOfFishInNewSchool, this.m_scenario.getSchoolMsy(), p_school.getOrigin(), this.m_config, newSchoolAges));
+        this.m_schools.push(new Cod(noOfFishInNewSchool, this.m_scenario.getSchoolMsy(), p_school.getOrigin(), this.m_scenario, newSchoolAges));
     }
     public generateExampleMap() {
         for (var i = 0; i < 10; i++) {
@@ -118,7 +115,7 @@ class Map {
             placedInSamePlace++;
             var tile: Tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(p_schoolSize, p_schoolMsy, point, this.m_config));
+                this.addSchool(new Cod(p_schoolSize, p_schoolMsy, point, this.m_scenario));
                 schoolsPlaced++;
             }
         }
@@ -152,7 +149,9 @@ class Map {
         }
         if (p_size > 10) {
             this.m_grid[0][Math.floor(p_size / 2) - 1] = new LandingSite(2, 10000, 2000, p_prices, "landingSite1");
-            this.m_grid[p_size - p_size/5][p_size-1] = new FuelSite(2, 10000, 20, 10, "fuelsite1");
+            var t = p_size - p_size / 5;
+            var t3 = p_size - 1;
+            this.m_grid[p_size - Math.floor(p_size/5)][p_size-1] = new FuelSite(2, 10000, 20, 10, "fuelsite1");
         }
 
         for (var r = Math.floor(p_size / 5); r < p_size/ 2; r++) {

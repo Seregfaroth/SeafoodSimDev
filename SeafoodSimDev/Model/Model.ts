@@ -5,7 +5,6 @@
 /// <reference path = "EndScreenStats.ts"/>
 
 class Model {
-    private m_config: Configuration;
     private m_scenario: Scenario;
     private m_map: Map;
     private m_shipOwners: ShipOwner[] = [];
@@ -22,17 +21,17 @@ class Model {
     private m_noOfSchools: number = 30;
     private m_noOfMenPerShip = 8;
 
-    constructor(p_config: Configuration, p_scenario: Scenario) {
+    constructor(p_scenario: Scenario) {
         console.log("constructing model");
-        this.m_config = p_config;
+        
         this.m_scenario = p_scenario;
-        var restrictions: Restrictions = new Restrictions(this.m_config, this.m_scenario);
+        var restrictions: Restrictions = new Restrictions(this.m_scenario);
         this.m_stats = new EndScreenStats(this.m_scenario);
 
-        this.m_map = new Map(this.m_mapType, this.m_size, this.m_noOfSchools, restrictions, this.m_config, this.m_scenario);
+        this.m_map = new Map(this.m_mapType, this.m_size, this.m_noOfSchools, restrictions, this.m_scenario);
         //this.m_stats = new EndScreenStats(this.m_map);
-        this.m_goverment = new Government(restrictions, this.m_config, this.m_scenario);
-        this.m_ai = new AI(this.m_config);
+        this.m_goverment = new Government(restrictions, this.m_scenario);
+        this.m_ai = new AI(this.m_scenario);
         this.createShipOwner(new Point2(3, 3), 300000);
         this.createShipOwner(new Point2(6, 6), 300000);
         this.updateStats();
@@ -65,7 +64,7 @@ class Model {
         }
         this.m_stats.setYieldPrTimeUnitAt(statTime, income);
         //updating invest
-        var invest = this.getMap().getNoOfShips() * this.m_config.getShipPrice();
+        var invest = this.getMap().getNoOfShips() * this.m_scenario.getShipPrice();
         this.m_stats.setInvestPrTimeUnitAt(statTime, invest);
         //this.m_map.setYield(0);
         // updating scores
@@ -124,7 +123,7 @@ class Model {
         return this.m_goverment;
     }
     public createShipOwner(p_startingPoint: Point2, p_balance?: number) {
-        this.m_shipOwners.push(new ShipOwner(this.m_goverment, p_startingPoint, "shipOwner" + this.m_shipOwners.length, this.m_config, p_balance));
+        this.m_shipOwners.push(new ShipOwner(this.m_goverment, p_startingPoint, "shipOwner" + this.m_shipOwners.length, this.m_scenario, p_balance));
     }
     
     

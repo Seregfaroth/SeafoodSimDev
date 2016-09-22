@@ -1,7 +1,7 @@
 var Fish = (function () {
     //Types: 0 = cod, 1 = mackerel
-    function Fish(p_config, p_type, p_age) {
-        this.m_config = p_config;
+    function Fish(p_scenario, p_type, p_age) {
+        this.m_scenario = p_scenario;
         this.m_age = 0;
         this.m_type = p_type;
         if (p_age != undefined) {

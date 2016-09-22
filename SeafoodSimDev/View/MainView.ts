@@ -5,10 +5,11 @@ class MainView {
     private m_mapView: MapView;
     private m_mapMenu: MapMenu;
 
-    constructor(p_map: Map, p_ShipOwners: ShipOwner[],p_taxingRate: number) {
-        //this.m_mapView = new MapView(p_map);
+    constructor(p_map: Map, p_ShipOwners: ShipOwner[], p_taxingRate: number) {
+        $("#mainDiv canvas").remove();
+        this.m_mapView = new MapView(p_map);
         this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate);
-        new StartScreen();
+        //new StartScreen();
         
     }
     public reset(p_model: Model): void {

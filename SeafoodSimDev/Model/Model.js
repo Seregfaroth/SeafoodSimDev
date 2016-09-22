@@ -4,7 +4,7 @@
 /// <reference path = "Restrictions.ts"/>
 /// <reference path = "EndScreenStats.ts"/>
 var Model = (function () {
-    function Model(p_config, p_scenario) {
+    function Model(p_scenario) {
         this.m_shipOwners = [];
         this.m_time = 0;
         this.m_statFreq = 10;
@@ -16,14 +16,13 @@ var Model = (function () {
         this.m_noOfSchools = 30;
         this.m_noOfMenPerShip = 8;
         console.log("constructing model");
-        this.m_config = p_config;
         this.m_scenario = p_scenario;
-        var restrictions = new Restrictions(this.m_config, this.m_scenario);
+        var restrictions = new Restrictions(this.m_scenario);
         this.m_stats = new EndScreenStats(this.m_scenario);
-        this.m_map = new Map(this.m_mapType, this.m_size, this.m_noOfSchools, restrictions, this.m_config, this.m_scenario);
+        this.m_map = new Map(this.m_mapType, this.m_size, this.m_noOfSchools, restrictions, this.m_scenario);
         //this.m_stats = new EndScreenStats(this.m_map);
-        this.m_goverment = new Government(restrictions, this.m_config, this.m_scenario);
-        this.m_ai = new AI(this.m_config);
+        this.m_goverment = new Government(restrictions, this.m_scenario);
+        this.m_ai = new AI(this.m_scenario);
         this.createShipOwner(new Point2(3, 3), 300000);
         this.createShipOwner(new Point2(6, 6), 300000);
         this.updateStats();
@@ -56,7 +55,7 @@ var Model = (function () {
         }
         this.m_stats.setYieldPrTimeUnitAt(statTime, income);
         //updating invest
-        var invest = this.getMap().getNoOfShips() * this.m_config.getShipPrice();
+        var invest = this.getMap().getNoOfShips() * this.m_scenario.getShipPrice();
         this.m_stats.setInvestPrTimeUnitAt(statTime, invest);
         //this.m_map.setYield(0);
         // updating scores
@@ -107,7 +106,7 @@ var Model = (function () {
         return this.m_goverment;
     };
     Model.prototype.createShipOwner = function (p_startingPoint, p_balance) {
-        this.m_shipOwners.push(new ShipOwner(this.m_goverment, p_startingPoint, "shipOwner" + this.m_shipOwners.length, this.m_config, p_balance));
+        this.m_shipOwners.push(new ShipOwner(this.m_goverment, p_startingPoint, "shipOwner" + this.m_shipOwners.length, this.m_scenario, p_balance));
     };
     return Model;
 }());

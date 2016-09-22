@@ -7,8 +7,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var Cod = (function (_super) {
     __extends(Cod, _super);
-    function Cod(p_size, p_msy, p_position, p_config, p_ages) {
-        _super.call(this, p_size, p_msy, p_position, p_config);
+    function Cod(p_size, p_msy, p_position, p_scenario, p_ages) {
+        _super.call(this, p_size, p_msy, p_position, p_scenario);
         this.m_movingRadius = 1;
         this.m_recrutingPercentage = 0.32;
         this.m_origin = p_position;

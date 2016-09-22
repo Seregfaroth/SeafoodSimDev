@@ -7,7 +7,7 @@
   "description": "Can you save the environment, and still be financial succesful",
   "linkToMCA": "Link to MCA is coming soon",
   "mapType": 2,
-  "mapSize": 10,
+  "mapSize": 12,
   "numberOfSchools": 10,
   "prices": [
     {
@@ -22,5 +22,20 @@
   "schoolMinimum": 10,
   "schoolMaximum": 5000,
   "defaultNoDays": 50,
-  "defaultTickSize": 1
+  "defaultTickSize": 1,
+
+  "taxingRate": 0.2,
+  "map": "map1",
+  "shipOwner": "skipper1",
+  "shipOwnerStartMoney": 1000000,
+  "shipPrice": 100000,
+  "aiShipBuyBalance": 200000,
+  "aiShipSellBalance": 0,
+
+  
+
+  "financialMaxScore": 1000,
+  "environmentalMaxScore": 1000,
+  "socialMaxScore": 1000,
+  "fishingPercentage": 0.07
 }

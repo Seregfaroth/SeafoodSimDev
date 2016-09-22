@@ -1,11 +1,10 @@
 /// <reference path="../Controller/Configuration.ts"/>
 var Score = (function () {
-    function Score(p_config, p_scenario) {
+    function Score(p_scenario) {
         this.m_mininumSchool = 10;
         this.m_minimumScore = -100000;
         this.m_maximumScore = 9999999;
         this.financial = []; //List of the financial ownings every day the last year
-        this.m_config = p_config;
         this.m_scenario = p_scenario;
         this.m_financialScore = 0;
         this.m_environmentalScore = 0;
@@ -63,9 +62,9 @@ var Score = (function () {
             }
         });
         //Make sure score stays inside a specific range
-        this.m_environmentalScore = this.normalize(this.m_environmentalScore, 0, this.m_config.getEnvironmentalMaxScore(), 1000);
-        this.m_socialScore = this.normalize(this.m_socialScore, 0, this.m_config.getSocialMaxScore(), 1000);
-        this.m_financialScore = this.normalize(this.m_financialScore, 0, this.m_config.getFinancialMaxScore(), 1000);
+        this.m_environmentalScore = this.normalize(this.m_environmentalScore, 0, this.m_scenario.getEnvironmentalMaxScore(), 1000);
+        this.m_socialScore = this.normalize(this.m_socialScore, 0, this.m_scenario.getSocialMaxScore(), 1000);
+        this.m_financialScore = this.normalize(this.m_financialScore, 0, this.m_scenario.getFinancialMaxScore(), 1000);
         /*
         this.m_environmentalScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_environmentalScore));
         this.m_financialScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_financialScore));

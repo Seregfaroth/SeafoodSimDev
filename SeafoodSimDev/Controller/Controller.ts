@@ -1,7 +1,6 @@
 ﻿﻿/// <reference path = "../Model/EndScreenStats.ts"/>
 enum simState { starting, running, paused, ending, fast }
 class Controller {
-    private m_config;
     private m_view: MainView;
     private m_model: Model;
     private m_eventHandler: EventHandler;
@@ -17,11 +16,10 @@ class Controller {
     //private m_scenario: number;
     private m_scenario: Scenario;
     private m_endTime: number;
-    private m_noGraphicSimulation = true;
+    private m_noGraphicSimulation = false;
     private m_ticksPerMove: number;
     //private m_sce: Scenario;
-    constructor(p_config: Configuration) {
-        this.m_config = p_config;
+    constructor() {
         console.log("Controller loading");
         this.m_scenario = new Scenario();
         
@@ -29,11 +27,11 @@ class Controller {
         this.m_delayPerTick = 1000;
         this.m_fastDelayPerTick = 1;
         //this.m_statFreq = 30;
-        this.m_model = new Model(this.m_config, this.m_scenario);
-        this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
-        this.m_eventHandler = new EventHandler(this);
-        this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_config, this.m_scenario);
-        this.m_scenario.loadScenario('Controller/scenarios/scn1.json', this.m_startScreenEventHandler.updateInfo);
+        //this.m_model = new Model(this.m_scenario);
+        //this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
+        new StartScreen();
+        this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_scenario);
+        //this.m_scenario.loadScenario('Controller/scenarios/scn1.json', this.m_startScreenEventHandler.updateInfo);
         //this.m_view.updateMainView(this.m_model);
 
     }
@@ -60,6 +58,8 @@ class Controller {
     }
     public setModel(p_model: Model) {
         this.m_model = p_model;
+        this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
+        this.m_eventHandler = new EventHandler(this);
     }
 
     public getEventHandler(): EventHandler {
@@ -81,7 +81,7 @@ class Controller {
 
 
     public restart = (): void => {
-        this.m_model = new Model(this.m_config, this.m_scenario);
+        this.m_model = new Model(this.m_scenario);
         this.m_model.getMap().setScenario(this.m_scenario);
         this.m_view.changeMap(this.m_model.getMap());
         //this.m_view.reset(this.m_model);
