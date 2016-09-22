@@ -20,15 +20,58 @@ var EndScreen = (function () {
         endGameStatusGoalDiv.id = 'endGameStatusGoalDiv';
         endGameStatusGoalDiv.style.border = '1px solid black';
         //endGameStatusGoalDiv.style.margin = '10px';
+        endGameStatusGoalDiv.style.padding = '5px';
         endGameStatusGoalDiv.innerHTML = "";
-        if (this.m_model.getScenario().getfinGoal().toString() != "no")
-            endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + this.getFinancialScoreSucces() + "<br>";
-        if (this.m_model.getScenario().getEcoGoal().toString() != "no")
-            endGameStatusGoalDiv.innerHTML += "Enviromental Score Goal: " + this.getEnvironmentalScoreSucces() + "<br>";
-        if (this.m_model.getScenario().getSocGoal().toString() != "no")
-            endGameStatusGoalDiv.innerHTML += "Social Score Goal: " + this.getSocialScoreSucces() + "<br>";
-        if (this.m_model.getScenario().getAllScore().toString() != "no")
-            endGameStatusGoalDiv.innerHTML += "Overall Score Goal: " + this.getOverAllScoreSucces() + "<br>";
+        var scenarioSucces = true;
+        if (this.m_model.getScenario().getfinGoal().toString() != "no") {
+            if (this.getFinancialScoreSucces()) {
+                //endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + this.getFinancialScoreSucces() + "<br>";
+                endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + "succesful" + "<br>";
+            }
+            else {
+                endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + "unsuccesful" + "<br>";
+                scenarioSucces = false;
+            }
+        }
+        if (this.m_model.getScenario().getEcoGoal().toString() != "no") {
+            //endGameStatusGoalDiv.innerHTML += "Enviromental Score Goal: " + this.getEnvironmentalScoreSucces() + "<br>";
+            if (this.getEnvironmentalScoreSucces()) {
+                //endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + this.getFinancialScoreSucces() + "<br>";
+                endGameStatusGoalDiv.innerHTML += "Environmental Score Goal: " + "succesful" + "<br>";
+            }
+            else {
+                endGameStatusGoalDiv.innerHTML += "Environmental Score Goal: " + "unsuccesful" + "<br>";
+                scenarioSucces = false;
+            }
+        }
+        if (this.m_model.getScenario().getSocGoal().toString() != "no") {
+            //endGameStatusGoalDiv.innerHTML += "Social Score Goal: " + this.getSocialScoreSucces() + "<br>";
+            if (this.getSocialScoreSucces()) {
+                //endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + this.getFinancialScoreSucces() + "<br>";
+                endGameStatusGoalDiv.innerHTML += "Social Score Goal: " + "succesful" + "<br>";
+            }
+            else {
+                endGameStatusGoalDiv.innerHTML += "Social Score Goal: " + "unsuccesful" + "<br>";
+                scenarioSucces = false;
+            }
+        }
+        if (this.m_model.getScenario().getAllScore().toString() != "no") {
+            //endGameStatusGoalDiv.innerHTML += "Overall Score Goal: " + this.getOverAllScoreSucces() + "<br>";
+            if (this.getOverAllScoreSucces()) {
+                //endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + this.getFinancialScoreSucces() + "<br>";
+                endGameStatusGoalDiv.innerHTML += "OverAll Score Goal: " + "succesful" + "<br>";
+            }
+            else {
+                endGameStatusGoalDiv.innerHTML += "OverAll Score Goal: " + "unsuccesful" + "<br>";
+                scenarioSucces = false;
+            }
+        }
+        if (scenarioSucces) {
+            endGameStatusGoalDiv.innerHTML += "<br>All the scenario goals was achieved, so the scenario was accomplished succesfully";
+        }
+        else {
+            endGameStatusGoalDiv.innerHTML += "<br>All the scenario goals must be achieved for it to be a succes<br>Please try again";
+        }
         var scoreChartDiv = document.createElement("div");
         endDiv.appendChild(scoreChartDiv);
         scoreChartDiv.id = 'scoreChartDiv';
@@ -138,27 +181,27 @@ var EndScreen = (function () {
     }
     EndScreen.prototype.getFinancialScoreSucces = function () {
         if (this.m_model.getGovernment().getScore().getFinancialScore() < this.m_model.getScenario().getfinGoal())
-            return "Failed";
+            return false;
         else
-            return "Succes";
+            return true;
     };
     EndScreen.prototype.getEnvironmentalScoreSucces = function () {
         if (this.m_model.getGovernment().getScore().getEnvironmentalScore() < this.m_model.getScenario().getEcoGoal())
-            return "Failed";
+            return false;
         else
-            return "Succes";
+            return true;
     };
     EndScreen.prototype.getSocialScoreSucces = function () {
         if (this.m_model.getGovernment().getScore().getSocialScore() < this.m_model.getScenario().getSocGoal())
-            return "Failed";
+            return false;
         else
-            return "Succes";
+            return true;
     };
     EndScreen.prototype.getOverAllScoreSucces = function () {
         if (this.m_model.getGovernment().getScore().getOverallScore() < this.m_model.getScenario().getAllScore())
-            return "Failed";
+            return false;
         else
-            return "Succes";
+            return true;
     };
     return EndScreen;
 }());

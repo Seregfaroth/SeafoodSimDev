@@ -1,9 +1,9 @@
 {
   "name": "Scenario 3",
-  "financialScoreGoal": 1000,
+  "financialScoreGoal": 500,
   "environmentalScoreGoal": "no",
   "socialScoreGoal": "no",
-  "overallscoreGoal": 1000,
+  "overallscoreGoal": 500,
   "description": "Use the DST to get the best Overall Score",
   "linkToMCA": "Link to MCA is coming soon",
   "mapType": 1,

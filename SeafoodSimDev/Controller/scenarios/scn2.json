@@ -1,7 +1,7 @@
 {
   "name":  "Scenario 2",
   "financialScoreGoal": 1500,
-  "environmentalScoreGoal": 2000,
+  "environmentalScoreGoal": 20000,
   "socialScoreGoal": "no",
   "overallscoreGoal": 1000,
   "description": "Can you save the environment, and still be financial succesful",

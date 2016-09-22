@@ -25,16 +25,58 @@ class EndScreen {
         endGameStatusGoalDiv.id = 'endGameStatusGoalDiv';
         endGameStatusGoalDiv.style.border = '1px solid black';
         //endGameStatusGoalDiv.style.margin = '10px';
+        endGameStatusGoalDiv.style.padding = '5px';
         endGameStatusGoalDiv.innerHTML = "";
-        if (this.m_model.getScenario().getfinGoal().toString() != "no")
-            endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + this.getFinancialScoreSucces() + "<br>";
-        if (this.m_model.getScenario().getEcoGoal().toString() != "no")
-            endGameStatusGoalDiv.innerHTML += "Enviromental Score Goal: " + this.getEnvironmentalScoreSucces() + "<br>";
-        if (this.m_model.getScenario().getSocGoal().toString() != "no")
-            endGameStatusGoalDiv.innerHTML += "Social Score Goal: " + this.getSocialScoreSucces() + "<br>";
-        if (this.m_model.getScenario().getAllScore().toString() != "no")
-            endGameStatusGoalDiv.innerHTML += "Overall Score Goal: " + this.getOverAllScoreSucces() + "<br>";
-
+        var scenarioSucces: boolean = true;
+        if (this.m_model.getScenario().getfinGoal().toString() != "no") {
+            if (this.getFinancialScoreSucces()) {
+                //endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + this.getFinancialScoreSucces() + "<br>";
+                endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + "succesful" + "<br>";
+            }
+            else {
+                endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + "unsuccesful" + "<br>";
+                scenarioSucces = false;
+            }
+        }
+        if (this.m_model.getScenario().getEcoGoal().toString() != "no") {
+            //endGameStatusGoalDiv.innerHTML += "Enviromental Score Goal: " + this.getEnvironmentalScoreSucces() + "<br>";
+            if (this.getEnvironmentalScoreSucces()) {
+                //endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + this.getFinancialScoreSucces() + "<br>";
+                endGameStatusGoalDiv.innerHTML += "Environmental Score Goal: " + "succesful" + "<br>";
+            }
+            else {
+                endGameStatusGoalDiv.innerHTML += "Environmental Score Goal: " + "unsuccesful" + "<br>";
+                scenarioSucces = false;
+            }
+        }
+        if (this.m_model.getScenario().getSocGoal().toString() != "no") {
+            //endGameStatusGoalDiv.innerHTML += "Social Score Goal: " + this.getSocialScoreSucces() + "<br>";
+            if (this.getSocialScoreSucces()) {
+                //endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + this.getFinancialScoreSucces() + "<br>";
+                endGameStatusGoalDiv.innerHTML += "Social Score Goal: " + "succesful" + "<br>";
+            }
+            else {
+                endGameStatusGoalDiv.innerHTML += "Social Score Goal: " + "unsuccesful" + "<br>";
+                scenarioSucces = false;
+            }
+        }
+        if (this.m_model.getScenario().getAllScore().toString() != "no") {
+            //endGameStatusGoalDiv.innerHTML += "Overall Score Goal: " + this.getOverAllScoreSucces() + "<br>";
+            if (this.getOverAllScoreSucces()) {
+                //endGameStatusGoalDiv.innerHTML += "Financial Score Goal: " + this.getFinancialScoreSucces() + "<br>";
+                endGameStatusGoalDiv.innerHTML += "OverAll Score Goal: " + "succesful" + "<br>";
+            }
+            else {
+                endGameStatusGoalDiv.innerHTML += "OverAll Score Goal: " + "unsuccesful" + "<br>";
+                scenarioSucces = false;
+            }
+        }
+        if (scenarioSucces) {
+            endGameStatusGoalDiv.innerHTML += "<br>All the scenario goals was achieved, so the scenario was accomplished succesfully";
+        }
+        else {
+            endGameStatusGoalDiv.innerHTML += "<br>All the scenario goals must be achieved for it to be a succes<br>Please try again" ;
+        }
 
 
         var scoreChartDiv: HTMLDivElement = document.createElement("div");
@@ -72,7 +114,7 @@ class EndScreen {
             },
             title: 'Scores',
             chartArea: { left: '5%', top: '15%', width: '65%', height: '60%' },
-            colors: ['#0057e7', '#32b835', '#d62d20', '#ffa700' ],
+            colors: ['#0057e7', '#32b835', '#d62d20', '#ffa700'],
             lineWidth: 1,
             explorer: {},
             height: 300,
@@ -90,7 +132,7 @@ class EndScreen {
             //colors: ['#00361b', '#005e2f', '#008744', '#4cab7c', '#99cfb4'],
             //colors: ['#008A00', '#00B500', '#00DC00', '#2EDF2E', '#5CE55C'],
             colors: ['#227c24', '#279029', '#2da42f', '#32b835', '#3ac93d'],
-        
+
             chartArea: { left: '5%', top: '15%', width: '65%', height: '60%' },
             lineWidth: 1,
             explorer: {},
@@ -149,33 +191,34 @@ class EndScreen {
 
         $("#endScreen").dialog({
             minWidth: 1050,
-            minHeight: 300, 
+            minHeight: 300,
             maxWidth: 1250,
             maxHeight: 600
             //overflow: scroll
         });
     }
-    public getFinancialScoreSucces(): string {
+        
+    public getFinancialScoreSucces(): boolean {
         if (this.m_model.getGovernment().getScore().getFinancialScore() < this.m_model.getScenario().getfinGoal())
-            return "Failed";
+            return false;
         else
-            return "Succes";
+            return true;
     }
-    public getEnvironmentalScoreSucces(): string {
+    public getEnvironmentalScoreSucces(): boolean {
         if (this.m_model.getGovernment().getScore().getEnvironmentalScore() < this.m_model.getScenario().getEcoGoal())
-            return "Failed";
+            return false;
         else
-            return "Succes";
+            return true;
     }
-    public getSocialScoreSucces(): string {
+    public getSocialScoreSucces(): boolean {
         if (this.m_model.getGovernment().getScore().getSocialScore() < this.m_model.getScenario().getSocGoal())
-            return "Failed";
+            return false;
         else
-            return "Succes";
-    } public getOverAllScoreSucces(): string {
+            return true;
+    } public getOverAllScoreSucces(): boolean {
         if (this.m_model.getGovernment().getScore().getOverallScore() < this.m_model.getScenario().getAllScore())
-            return "Failed";
+            return false;
         else
-            return "Succes";
+            return true;
     }
 }
