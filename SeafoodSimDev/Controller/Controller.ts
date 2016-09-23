@@ -16,7 +16,7 @@ class Controller {
     //private m_scenario: number;
     private m_scenario: Scenario;
     private m_endTime: number;
-    private m_noGraphicSimulation = false;
+    
     private m_ticksPerMove: number;
     //private m_sce: Scenario;
     constructor() {
@@ -109,8 +109,7 @@ class Controller {
         }
         else {
             this.m_model.run(this.m_ticksPerMove);
-            if (!this.m_noGraphicSimulation)
-                this.m_view.updateMainView(this.m_model);
+            this.m_view.updateMainView(this.m_model);
         }
     }
 

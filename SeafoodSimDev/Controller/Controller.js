@@ -11,7 +11,6 @@ var Controller = (function () {
     //private m_sce: Scenario;
     function Controller() {
         var _this = this;
-        this.m_noGraphicSimulation = false;
         this.restart = function () {
             _this.m_model = new Model(_this.m_scenario);
             _this.m_model.getMap().setScenario(_this.m_scenario);
@@ -39,8 +38,7 @@ var Controller = (function () {
             }
             else {
                 _this.m_model.run(_this.m_ticksPerMove);
-                if (!_this.m_noGraphicSimulation)
-                    _this.m_view.updateMainView(_this.m_model);
+                _this.m_view.updateMainView(_this.m_model);
             }
         };
         this.runSimulation = function (p_ticks) {

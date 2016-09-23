@@ -2,6 +2,9 @@
 /// <reference path="StartScreen.ts"/>
 var MainView = (function () {
     function MainView(p_map, p_ShipOwners, p_taxingRate) {
+        this.m_noGraphicSimulation = true;
+        this.m_noDateUpdate = false;
+        this.m_noScoreUpdate = true;
         $("#mainDiv canvas").remove();
         this.m_mapView = new MapView(p_map);
         this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate);
@@ -17,9 +20,12 @@ var MainView = (function () {
     };
     MainView.prototype.updateMainView = function (p_model) {
         //console.log("updating mainView");
-        this.m_mapMenu.updateScore(p_model.getGovernment());
-        this.m_mapMenu.updateDate(p_model);
-        this.m_mapView.updateMapView(p_model.getMap());
+        if (!this.m_noScoreUpdate)
+            this.m_mapMenu.updateScore(p_model.getGovernment());
+        if (!this.m_noDateUpdate)
+            this.m_mapMenu.updateDate(p_model);
+        if (!this.m_noGraphicSimulation)
+            this.m_mapView.updateMapView(p_model.getMap());
     };
     MainView.prototype.changeMap = function (p_map) {
         $("#mainDiv canvas").remove();
