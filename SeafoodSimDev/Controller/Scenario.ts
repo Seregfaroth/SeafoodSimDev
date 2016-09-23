@@ -27,8 +27,7 @@
 
     private m_taxingRate: number;
     private m_shipOwner;
-    private m_shipOwnerStartMoney: number;
-    private m_shipPrice: number;
+
     private m_aiBuyShipBalance: number;
     private m_aiSellShipBalance: number;
 
@@ -38,7 +37,43 @@
     private m_financialMaxScore: number;
     private m_environmentalMaxScore: number;
     private m_socialMaxScore: number;
-    constructor() {       
+    private m_financialMinScore: number;
+    private m_environmentalMinScore: number;
+    private m_socialMinScore: number;
+
+    private m_landsiteShipCapacity: number;
+    private m_landsiteResourceCapacity: number;
+    private m_landsiteProcessPerDay: number;
+    private m_landsiteRunningCost: number;
+    private m_landsiteNumberOfEmployees: number;
+
+    private m_fuelsiteShipCapacity: number;
+    private m_fuelsiteResourceCapacity: number;
+    private m_fuelsiteProcessPerDay: number;
+    private m_fuelsiteRunningCost: number;
+    private m_fuelsiteFuelPrize: number;
+    private m_fuelsiteNumberOfEmployees: number;
+
+    private m_environmentalScoreMaxIncreasePerTick: number;
+
+    private m_codMovingRadius: number;
+    private m_codRecruitPercent: number;
+    private m_codSchoolMaxAge: number;
+
+    private m_modelStatFreq: number;
+    private m_modelRecruitAndAgeFreq: number;
+    private m_noOfEmployeesPerShip: number;
+
+    private m_shipFuelCapacity: number;
+    private m_shipCargoCapacity: number;
+    private m_shipFuelPerMove: number;
+    private m_shipMovesPerTick: number;
+
+    private m_shipOwnerStartMoney: number;
+    private m_shipOwnerShipPrice: number;
+    private m_shipOwnerLicense: boolean;
+
+    constructor() {
         //this.m_name = "no";
     }
     public loadScenario(p_path: string, p_callBack: Function) {
@@ -86,7 +121,7 @@
         this.m_map = p_json.map;
         this.m_shipOwner = p_json.shipOwner;
         this.m_shipOwnerStartMoney = p_json.shipOwnerStartMoney;
-        this.m_shipPrice = p_json.shipPrice;
+        this.m_shipOwnerShipPrice = p_json.shipPrice;
         this.m_aiBuyShipBalance = p_json.aiShipBuyBalance;
         this.m_aiSellShipBalance = p_json.aiShipSellBalance;
 
@@ -96,6 +131,40 @@
         this.m_financialMaxScore = p_json.financialMaxScore;
         this.m_environmentalMaxScore = p_json.environmentalMaxScore;
         this.m_socialMaxScore = p_json.socialMaxScore;
+        this.m_financialMinScore = p_json.financialMinScore;
+        this.m_environmentalMinScore = p_json.environmentalMinScore;
+        this.m_socialMinScore = p_json.socialMinScore;
+
+        this.m_landsiteShipCapacity = p_json.landsiteShipCapacity;
+        this.m_landsiteResourceCapacity = p_json.landsiteResourceCapacity;
+        this.m_landsiteProcessPerDay = p_json.landsiteProcessPerDay;
+        this.m_landsiteRunningCost = p_json.landsiteRunningCost;
+        this.m_landsiteNumberOfEmployees = p_json.landsiteNumberOfEmployees;
+
+        this.m_fuelsiteShipCapacity = p_json.fuelsiteShipCapacity;
+        this.m_fuelsiteResourceCapacity = p_json.fuelsiteResourceCapacity;
+        this.m_fuelsiteProcessPerDay = p_json.fuelsiteProcessPerDay;
+        this.m_fuelsiteRunningCost = p_json.fuelsiteRunningCost;
+        this.m_fuelsiteFuelPrize = p_json.fuelsiteFuelPrize;
+        this.m_fuelsiteNumberOfEmployees = p_json.fuelsiteNumberOfEmployees;
+
+        this.m_environmentalScoreMaxIncreasePerTick = p_json.environmentalScoreMaxIncreasePerTick;
+        this.m_codMovingRadius = p_json.codMovingRadius ;
+        this.m_codRecruitPercent = p_json.codRecruitPercent;
+        this.m_codSchoolMaxAge = p_json.codSchoolMaxAge;
+
+        this.m_modelStatFreq = p_json.modelStatFreq;
+        this.m_modelRecruitAndAgeFreq = p_json.modelRecruitAndAgeFreq;
+        this.m_noOfEmployeesPerShip = p_json.noOfEmployeesPerShip;
+
+        this.m_shipFuelCapacity = p_json.shipFuelCapacity;
+        this.m_shipCargoCapacity = p_json.shipCargoCapacity;
+        this.m_shipFuelPerMove = p_json.shipFuelPerMove;
+        this.m_shipMovesPerTick = p_json.shipMovesPerTick;
+
+        this.m_shipOwnerStartMoney = p_json.shipOwnerStartMoney;
+        this.m_shipOwnerShipPrice = p_json.shipOwnerShipPrice;
+        this.m_shipOwnerLicense = p_json.shipOwnerLicense;
     }
     public getName(): string {
         return this.m_name;
@@ -163,11 +232,8 @@
     public getShipOwner() {
         return this.m_shipOwner;
     }
-    public getShipOwnerStartMoney(): number {
-        return this.m_shipOwnerStartMoney;
-    }
     public getShipPrice(): number {
-        return this.m_shipPrice;
+        return this.m_shipOwnerShipPrice;
     }
     public getAiBuyShipBalance(): number {
         return this.m_aiBuyShipBalance;
@@ -187,4 +253,93 @@
     public getFishingPercentage(): number {
         return this.m_fishingPercentage;
     }
+    public getFinancialMinScore(): number {
+        return this.m_financialMinScore;
+    }
+    public getEnvironmentalMinScore(): number {
+        return this.m_environmentalMinScore;
+    }
+    public getSocialMinScore(): number {
+        return this.m_socialMinScore;
+    }
+    public getLandsiteShipCapacity(): number {
+        return this.m_landsiteShipCapacity;
+    }
+    public getLandsiteResourceCapacity(): number {
+        return this.m_landsiteResourceCapacity;
+    }
+    public getLandsiteProcessPerDay(): number {
+        return this.m_landsiteProcessPerDay;
+    }
+    public getLandsiteRunningCost(): number {
+        return this.m_landsiteRunningCost;
+    }
+    public getLandsiteNumberOfEmployees(): number {
+        return this.m_landsiteNumberOfEmployees;
+    }
+    public getFuelsiteShipCapacity(): number {
+        return this.m_fuelsiteShipCapacity;
+    }
+    public getFuelsiteResourceCapacity(): number {
+        return this.m_fuelsiteResourceCapacity;
+    }
+    public getFuelsiteProcessPerDay(): number {
+        return this.m_fuelsiteProcessPerDay;
+    }
+    public getFuelsiteRunningCost(): number {
+        return this.m_fuelsiteRunningCost;
+    }
+    public getFuelsiteFuelPrize(): number {
+        return this.m_fuelsiteFuelPrize;
+    }
+    public getFuelsiteNumberOfEmployees(): number {
+        return this.m_fuelsiteNumberOfEmployees;
+    }
+
+    public getEnvironmentalScoreMaxIncreasePerTick(): number {
+        return this.m_environmentalScoreMaxIncreasePerTick;
+    }
+    public getCodMovingRadius(): number {
+        return this.m_codMovingRadius;
+    }
+    public getCodRecruitPercent(): number {
+        return this.m_codRecruitPercent;
+    }
+    public getCodSchoolMaxAge(): number {
+        return this.m_codSchoolMaxAge;
+    }
+
+
+    public getModelStatFreq(): number {
+        return this.m_modelStatFreq;
+    }
+    public getModelRecruitAndAgeFreq(): number {
+        return this.m_modelRecruitAndAgeFreq;
+    }
+    public getNoOfEmployeesPerShip(): number {
+        return this.m_noOfEmployeesPerShip;
+    }
+    public getShipFuelCapacity(): number {
+        return this.m_shipFuelCapacity;
+    }
+    public getShipCargoCapacity(): number {
+        return this.m_shipCargoCapacity;
+    }
+    public getShipFuelPerMove(): number {
+        return this.m_shipFuelPerMove;
+    }
+    public getShipMovesPerTick(): number {
+        return this.m_shipMovesPerTick;
+    }
+
+    public getShipOwnerStartMoney(): number {
+        return this.m_shipOwnerStartMoney;
+    }
+    public getShipOwnerShipPrice(): number {
+        return this.m_shipOwnerShipPrice;
+    }
+    public getShipOwnerLicense(): boolean {
+        return this.m_shipOwnerLicense;
+    }
+
 }

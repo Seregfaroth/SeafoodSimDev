@@ -7,8 +7,8 @@ class Score {
     private m_environmentalScore: number;
     private m_overallScore: number;
     private m_mininumSchool: number = 10;
-    private m_minimumScore: number = -100000;
-    private m_maximumScore: number = 9999999;
+    //private m_minimumScore: number = -100000;
+    //private m_maximumScore: number = 9999999;
     private financial: number[] = []; //List of the financial ownings every day the last year
 
     public constructor(p_scenario: Scenario) {

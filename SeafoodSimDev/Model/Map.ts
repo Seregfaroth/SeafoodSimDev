@@ -8,7 +8,7 @@ class Map {
     private m_ships: Ship[] = [];
     private m_yield: number; //in fish, will be tonnes
 
-    public constructor(p_mapType: number,p_size: number, p_noOfSchools: number, p_restrictions: Restrictions,  p_scenario: Scenario) {       
+    public constructor( p_restrictions: Restrictions,  p_scenario: Scenario) {       
         this.m_scenario = p_scenario;
         this.m_restrictions = p_restrictions;
         this.m_yield = 0;

@@ -37,5 +37,38 @@
   "financialMaxScore": 1000,
   "environmentalMaxScore": 1000,
   "socialMaxScore": 1000,
-  "fishingPercentage": 0.07
+  "financialMinScore": 0,
+  "socialMinScore": 0,
+  "environmentalMinScore":  0,
+  "fishingPercentage": 0.07,
+  "landsiteShipCapacity": 0,
+  "landsiteResourceCapacity": 0,
+  "landsiteProcessPerDay": 0,
+  "landsiteRunningCost": 0,
+  "landsiteNumberOfEmployees": 0,
+
+  "fuelsiteShipCapacity": 0,
+  "fuelsiteResourceCapacity": 0,
+  "fuelsiteProcessPerDay": 0,
+  "fuelsiteRunningCost": 0,
+  "fuelsiteFuelPrize": 0,
+  "fuelsiteNumberOfEmployees": 0,
+
+  "environmentalScoreMaxIncreasePerTick": 0,
+  "codMovingRadius": 0,
+  "codRecruitPercent": 0,
+  "codSchoolMaxAge": 0,
+
+  "modelStatFreq": 0,
+  "modelRecruitAndAgeFreq": 0,
+  "noOfEmployeesPerShip": 0,
+
+  "shipFuelCapacity": 0,
+  "shipCargoCapacity": 0,
+  "shipFuelPerMove": 0,
+  "shipMovesPerTick": 0,
+
+  "shipOwnerShipPrice": 0,
+  "shipOwnerLicense": 0
+  
 }

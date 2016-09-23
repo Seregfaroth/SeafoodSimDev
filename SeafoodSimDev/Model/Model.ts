@@ -16,9 +16,9 @@ class Model {
     private m_recruitAndAgeFreq = 10;
     //private m_movesPrTick = 1;
     //private m_statFreq = 30;
-    private m_mapType: number = 2;
-    private m_size: number = 10;
-    private m_noOfSchools: number = 30;
+    //private m_mapType: number = 2;
+    //private m_size: number = 10;
+    //private m_noOfSchools: number = 30;
     private m_noOfMenPerShip = 8;
 
     constructor(p_scenario: Scenario) {
@@ -28,7 +28,7 @@ class Model {
         var restrictions: Restrictions = new Restrictions(this.m_scenario);
         this.m_stats = new EndScreenStats(this.m_scenario);
 
-        this.m_map = new Map(this.m_mapType, this.m_size, this.m_noOfSchools, restrictions, this.m_scenario);
+        this.m_map = new Map( restrictions, this.m_scenario);
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions, this.m_scenario);
         this.m_ai = new AI(this.m_scenario);

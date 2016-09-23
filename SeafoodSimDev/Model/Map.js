@@ -1,6 +1,6 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var Map = (function () {
-    function Map(p_mapType, p_size, p_noOfSchools, p_restrictions, p_scenario) {
+    function Map(p_restrictions, p_scenario) {
         this.m_grid = [];
         this.m_schools = [];
         this.m_ships = [];

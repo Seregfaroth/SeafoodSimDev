@@ -2,8 +2,8 @@
 var Score = (function () {
     function Score(p_scenario) {
         this.m_mininumSchool = 10;
-        this.m_minimumScore = -100000;
-        this.m_maximumScore = 9999999;
+        //private m_minimumScore: number = -100000;
+        //private m_maximumScore: number = 9999999;
         this.financial = []; //List of the financial ownings every day the last year
         this.m_scenario = p_scenario;
         this.m_financialScore = 0;
