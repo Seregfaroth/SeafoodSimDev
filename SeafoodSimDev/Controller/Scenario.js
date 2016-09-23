@@ -20,8 +20,8 @@ var Scenario = (function () {
         this.m_name = p_json.name;
         this.m_prices = p_json.prices;
         this.m_prices = {};
-        this.m_prices[FishType.Cod] = p_json.prices[0].Cod;
-        this.m_prices[FishType.Mackerel] = p_json.prices[0].Mackerel;
+        this.m_prices[FishType.Cod] = p_json.prices.Cod;
+        this.m_prices[FishType.Mackerel] = p_json.prices.Mackerel;
         this.m_finGoal = p_json.financialScoreGoal;
         this.m_ecoGoal = p_json.environmentalScoreGoal;
         this.m_socGoal = p_json.socialScoreGoal;
@@ -46,6 +46,15 @@ var Scenario = (function () {
         this.m_shipOwnerShipPrice = p_json.shipPrice;
         this.m_aiBuyShipBalance = p_json.aiShipBuyBalance;
         this.m_aiSellShipBalance = p_json.aiShipSellBalance;
+        this.m_subFinancialWeight = p_json.subFinancialWeight;
+        this.m_subEnvironmentalWeight = p_json.subEnvironmentalWeight;
+        this.m_subSocialWeight = p_json.subSocialWeight;
+        this.m_indicatorInvestmentWeight = p_json.indicatorInvestmentWeight;
+        this.m_indicatorIncomeWeight = p_json.indicatorIncomeWeight;
+        this.m_indicatorBiomassWeight = p_json.indicatorBiomassWeight;
+        this.m_indicatorRecruitmentWeight = p_json.indicatorRecruitmentWeight;
+        this.m_indicatorOnshoreEmployment = p_json.indicatorOnshoreEmployment;
+        this.m_indicatorOffshoreEmployment = p_json.indicatorOffshoreEmployment;
         this.m_fishingPercentage = p_json.fishingPercentage;
         this.m_financialMaxScore = p_json.financialMaxScore;
         this.m_environmentalMaxScore = p_json.environmentalMaxScore;
@@ -76,7 +85,7 @@ var Scenario = (function () {
         this.m_shipFuelPerMove = p_json.shipFuelPerMove;
         this.m_shipMovesPerTick = p_json.shipMovesPerTick;
         this.m_shipOwnerStartMoney = p_json.shipOwnerStartMoney;
-        this.m_shipOwnerShipPrice = p_json.shipOwnerShipPrice;
+        //this.m_shipOwnerShipPrice = p_json.shipOwnerShipPrice;
         this.m_shipOwnerLicense = p_json.shipOwnerLicense;
     };
     Scenario.prototype.getName = function () {
@@ -153,6 +162,33 @@ var Scenario = (function () {
     };
     Scenario.prototype.getAiSellShipBalance = function () {
         return this.m_aiSellShipBalance;
+    };
+    Scenario.prototype.getSubFinancialWeight = function () {
+        return this.m_subFinancialWeight;
+    };
+    Scenario.prototype.getSubEnvironmentalWeight = function () {
+        return this.m_subEnvironmentalWeight;
+    };
+    Scenario.prototype.getSubSocialWeight = function () {
+        return this.m_subSocialWeight;
+    };
+    Scenario.prototype.getIndicatorInvestmentWeight = function () {
+        return this.m_indicatorInvestmentWeight;
+    };
+    Scenario.prototype.getIndicatorIncomeWeight = function () {
+        return this.m_indicatorIncomeWeight;
+    };
+    Scenario.prototype.getIndicatorBiomassWeight = function () {
+        return this.m_indicatorBiomassWeight;
+    };
+    Scenario.prototype.getIndicatorRecruitmentWeight = function () {
+        return this.m_indicatorRecruitmentWeight;
+    };
+    Scenario.prototype.getIndicatorOnshoreEmployment = function () {
+        return this.m_indicatorOnshoreEmployment;
+    };
+    Scenario.prototype.getIndicatorOffshoreEmployment = function () {
+        return this.m_indicatorOffshoreEmployment;
     };
     Scenario.prototype.getFinancialMaxScore = function () {
         return this.m_financialMaxScore;

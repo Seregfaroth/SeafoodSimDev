@@ -31,6 +31,15 @@
     private m_aiBuyShipBalance: number;
     private m_aiSellShipBalance: number;
 
+    private m_subFinancialWeight: number;
+    private m_subEnvironmentalWeight: number;
+    private m_subSocialWeight: number;
+    private m_indicatorInvestmentWeight: number;
+    private m_indicatorIncomeWeight: number;
+    private m_indicatorBiomassWeight: number;
+    private m_indicatorRecruitmentWeight: number;
+    private m_indicatorOnshoreEmployment: number;
+    private m_indicatorOffshoreEmployment: number;
 
     private m_fishingPercentage: number;
 
@@ -94,8 +103,8 @@
         this.m_name = p_json.name;
         this.m_prices = p_json.prices;
         this.m_prices = {};
-        this.m_prices[FishType.Cod] = p_json.prices[0].Cod;
-        this.m_prices[FishType.Mackerel] = p_json.prices[0].Mackerel;
+        this.m_prices[FishType.Cod] = p_json.prices.Cod;
+        this.m_prices[FishType.Mackerel] = p_json.prices.Mackerel;
 
         this.m_finGoal = p_json.financialScoreGoal;
         this.m_ecoGoal = p_json.environmentalScoreGoal;
@@ -125,6 +134,15 @@
         this.m_aiBuyShipBalance = p_json.aiShipBuyBalance;
         this.m_aiSellShipBalance = p_json.aiShipSellBalance;
 
+        this.m_subFinancialWeight = p_json.subFinancialWeight;
+        this.m_subEnvironmentalWeight = p_json.subEnvironmentalWeight;
+        this.m_subSocialWeight = p_json.subSocialWeight;
+        this.m_indicatorInvestmentWeight = p_json.indicatorInvestmentWeight;
+        this.m_indicatorIncomeWeight = p_json.indicatorIncomeWeight;
+        this.m_indicatorBiomassWeight = p_json.indicatorBiomassWeight;
+        this.m_indicatorRecruitmentWeight = p_json.indicatorRecruitmentWeight;
+        this.m_indicatorOnshoreEmployment = p_json.indicatorOnshoreEmployment;
+        this.m_indicatorOffshoreEmployment = p_json.indicatorOffshoreEmployment;
 
         this.m_fishingPercentage = p_json.fishingPercentage;
 
@@ -163,7 +181,7 @@
         this.m_shipMovesPerTick = p_json.shipMovesPerTick;
 
         this.m_shipOwnerStartMoney = p_json.shipOwnerStartMoney;
-        this.m_shipOwnerShipPrice = p_json.shipOwnerShipPrice;
+        //this.m_shipOwnerShipPrice = p_json.shipOwnerShipPrice;
         this.m_shipOwnerLicense = p_json.shipOwnerLicense;
     }
     public getName(): string {
@@ -240,6 +258,33 @@
     }
     public getAiSellShipBalance(): number {
         return this.m_aiSellShipBalance;
+    }
+    public getSubFinancialWeight() {
+        return this.m_subFinancialWeight;
+    }
+    public getSubEnvironmentalWeight() {
+        return this.m_subEnvironmentalWeight;
+    }
+    public getSubSocialWeight() {
+        return this.m_subSocialWeight;
+    }
+    public getIndicatorInvestmentWeight() {
+        return this.m_indicatorInvestmentWeight;
+    }
+    public getIndicatorIncomeWeight() {
+        return this.m_indicatorIncomeWeight;
+    }
+    public getIndicatorBiomassWeight() {
+        return this.m_indicatorBiomassWeight;
+    }
+    public getIndicatorRecruitmentWeight() {
+        return this.m_indicatorRecruitmentWeight;
+    }
+    public getIndicatorOnshoreEmployment() {
+        return this.m_indicatorOnshoreEmployment;
+    }
+    public getIndicatorOffshoreEmployment() {
+        return this.m_indicatorOffshoreEmployment;
     }
     public getFinancialMaxScore(): number {
         return this.m_financialMaxScore;
