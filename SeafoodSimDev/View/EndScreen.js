@@ -106,7 +106,7 @@ var EndScreen = (function () {
             lineWidth: 1,
             explorer: {},
             height: 300,
-            width: 500
+            width: 500,
         };
         var environChartOptions = {
             hAxis: {

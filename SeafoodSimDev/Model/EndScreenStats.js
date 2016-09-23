@@ -4,6 +4,7 @@ var EndScreenStats = (function () {
         this.m_biomassPrTimeUnit = [];
         this.m_yieldPrTimeUnit = [];
         this.m_investPrTimeUnit = [];
+        this.m_incomePrTimeUnit = [];
         this.m_natDeathPrTimeUnit = [];
         //private m_mortalityPrTimeUnit: number[] = [];
         this.m_recruitmentPrTimeUnit = [];
@@ -59,6 +60,15 @@ var EndScreenStats = (function () {
     };
     EndScreenStats.prototype.getInvestPrTimeUnit = function () {
         return this.m_investPrTimeUnit;
+    };
+    EndScreenStats.prototype.getIncomePrTimeUnitAt = function (p_index) {
+        return this.m_incomePrTimeUnit[p_index];
+    };
+    EndScreenStats.prototype.setIncomePrTimeUnitAt = function (p_index, p_yield) {
+        this.m_incomePrTimeUnit[p_index] = p_yield;
+    };
+    EndScreenStats.prototype.getIncomePrTimeUnit = function () {
+        return this.m_incomePrTimeUnit;
     };
     EndScreenStats.prototype.getRecruitmentPrTimeUnitAt = function (p_index) {
         return this.m_recruitmentPrTimeUnit[p_index];
@@ -154,13 +164,13 @@ var EndScreenStats = (function () {
     };
     EndScreenStats.prototype.getFinancialVizArray = function () {
         var ret = [[]];
-        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Yield' }, { label: 'Invest' }];
+        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Income' }, { label: 'Invest' }];
         for (var i in this.m_time) {
             ret[parseInt(i) + 1] = [];
             //add timeScale
             ret[parseInt(i) + 1][0] = this.m_time[i];
             //add yield
-            ret[parseInt(i) + 1][1] = this.m_yieldPrTimeUnit[i];
+            ret[parseInt(i) + 1][1] = this.m_incomePrTimeUnit[i];
             //add invest
             ret[parseInt(i) + 1][2] = this.m_investPrTimeUnit[i];
         }

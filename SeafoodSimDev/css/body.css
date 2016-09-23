@@ -1,5 +1,8 @@
 ﻿body {
 }
+p {
+    margin: 5px;
+}
 .ui-button {
     bottom : 0;
     position: relative;

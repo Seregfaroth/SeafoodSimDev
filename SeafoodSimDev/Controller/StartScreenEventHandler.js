@@ -45,7 +45,7 @@ var StartScreenEventHandler = (function () {
             var t4 = scenario.getName();
             var t32 = scenario.getDescription();
             $("#name").html(scenario.getName());
-            $("#des").text(scenario.getDescription());
+            $("#des").html(scenario.getDescription());
             $("#link").html("<a target='_blank' href='" + scenario.getLink() + "'>" + scenario.getLink() + "</a>");
             var goal = $("#goal");
             goal.html("");
@@ -78,6 +78,7 @@ var StartScreenEventHandler = (function () {
             close: handler.close,
             beforeClose: handler.beforeClose
         });
+        this.m_controller.getScenario().loadScenario('Controller/scenarios/scn1.json', this.updateInfo);
     }
     return StartScreenEventHandler;
 }());

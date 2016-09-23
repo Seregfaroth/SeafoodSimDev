@@ -4,7 +4,7 @@ var MainView = (function () {
     function MainView(p_map, p_ShipOwners, p_taxingRate) {
         this.m_noGraphicSimulation = true;
         this.m_noDateUpdate = false;
-        this.m_noScoreUpdate = true;
+        this.m_noScoreUpdate = false;
         $("#mainDiv canvas").remove();
         this.m_mapView = new MapView(p_map);
         this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate);

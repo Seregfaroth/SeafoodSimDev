@@ -47,13 +47,15 @@ var Model = (function () {
         this.m_stats.setBiomassPrTimeUnitAt(statTime, biomass);
         this.m_stats.setRecruitmentPrTimeUnitAt(statTime, recruit);
         this.m_stats.setNatDeathPrTimeUnitAt(statTime, natDeath);
+        var t = this.m_map.getYield();
+        this.m_stats.setYieldPrTimeUnitAt(statTime, this.m_map.getYield());
         //updating income
         var income = 0;
         for (var _b = 0, _c = this.m_shipOwners; _b < _c.length; _b++) {
             var so = _c[_b];
             income += so.getTaxPayed();
         }
-        this.m_stats.setYieldPrTimeUnitAt(statTime, income);
+        this.m_stats.setIncomePrTimeUnitAt(statTime, income);
         //updating invest
         var invest = this.getMap().getNoOfShips() * this.m_scenario.getShipPrice();
         this.m_stats.setInvestPrTimeUnitAt(statTime, invest);

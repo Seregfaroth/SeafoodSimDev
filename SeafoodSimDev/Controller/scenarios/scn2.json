@@ -1,28 +1,28 @@
 {
   "name":  "Scenario 2",
-  "financialScoreGoal": 1500,
-  "environmentalScoreGoal": 20000,
+  "financialScoreGoal": "no",
+  "environmentalScoreGoal": 2000,
   "socialScoreGoal": "no",
-  "overallscoreGoal": 1000,
-  "description": "Can you save the environment, and still be financial succesful",
+  "overallscoreGoal": "no",
+  "description": "The government have identified the following sub-objectives: <p style='margin: 10px'> Financial 10%, Environmental 70%, Social 20% </p> For each sub-objective key indicators have been determined and priortized. <p style='margin: 10px'> Financial:  Invest 40%, Income 60% <br> Environmental: Biomass 70%, Recruitment 30% <br> Social: Onshore employment 20%, Offshore employment 80%</p>" ,
   "linkToMCA": "Link to MCA is coming soon",
   "mapType": 2,
   "mapSize": 12,
   "numberOfSchools": 10,
-  "prices": [
+  "prices": 
     {
       "Cod": 10,
       "Mackerel": 10
     }
-  ],
+  ,
   "oceanFishCapacity": 7000,
   "schoolsInOnePlace": 4,
   "schoolSize": 2000,
   "schoolMsy": 1800,
   "schoolMinimum": 10,
   "schoolMaximum": 5000,
-  "defaultNoDays": 50,
-  "defaultTickSize": 1,
+  "defaultNoDays": 1095,
+  "defaultTickSize": 30,
 
   "taxingRate": 0.2,
   "map": "map1",
@@ -32,6 +32,15 @@
   "aiShipBuyBalance": 200000,
   "aiShipSellBalance": 0,
 
+  "subFinancialWeight" : 10,
+  "subEnvironmentalWeight": 70,
+  "subSocialWeight": 20,
+  "indicatorInvestmentWeight": 40,  
+  "indicatorIncomeWeight":  60,
+  "indicatorBiomassWeight": 80,
+  "indicatorRecruitmentWeight": 20,
+  "indicatorOnshoreEmployment": 20,
+  "indicatorOffshoreEmployment": 80,
   
 
   "financialMaxScore": 1000,

@@ -6,7 +6,7 @@ class MainView {
     private m_mapMenu: MapMenu;
     private m_noGraphicSimulation = true;
     private m_noDateUpdate = false;
-    private m_noScoreUpdate = true;
+    private m_noScoreUpdate = false;
 
     constructor(p_map: Map, p_ShipOwners: ShipOwner[], p_taxingRate: number) {
         $("#mainDiv canvas").remove();

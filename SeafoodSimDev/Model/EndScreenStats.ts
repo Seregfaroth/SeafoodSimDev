@@ -6,6 +6,7 @@ class EndScreenStats {
     private m_biomassPrTimeUnit: number[] = [];
     private m_yieldPrTimeUnit: number[] = [];
     private m_investPrTimeUnit: number[] = [];
+    private m_incomePrTimeUnit: number[] = [];
     private m_natDeathPrTimeUnit: number[] = [];
     //private m_mortalityPrTimeUnit: number[] = [];
 
@@ -77,6 +78,16 @@ class EndScreenStats {
     }
     public getInvestPrTimeUnit(): number[] {
         return this.m_investPrTimeUnit;
+    }
+
+    public getIncomePrTimeUnitAt(p_index): number {
+        return this.m_incomePrTimeUnit[p_index];
+    }
+    public setIncomePrTimeUnitAt(p_index, p_yield) {
+        this.m_incomePrTimeUnit[p_index] = p_yield;
+    }
+    public getIncomePrTimeUnit(): number[] {
+        return this.m_incomePrTimeUnit;
     }
 
 
@@ -182,13 +193,13 @@ class EndScreenStats {
     }
     public getFinancialVizArray(): any[] {
         var ret: any[] = [[]];
-        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Yield' }, { label: 'Invest' }];
+        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Income' }, { label: 'Invest' }];
         for (var i in this.m_time) {
             ret[parseInt(i) + 1] = [];
             //add timeScale
             ret[parseInt(i) + 1][0] = this.m_time[i];
             //add yield
-            ret[parseInt(i) + 1][1] = this.m_yieldPrTimeUnit[i];
+            ret[parseInt(i) + 1][1] = this.m_incomePrTimeUnit[i];
             //add invest
             ret[parseInt(i) + 1][2] = this.m_investPrTimeUnit[i];
         }

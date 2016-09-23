@@ -56,13 +56,16 @@ class Model {
         this.m_stats.setBiomassPrTimeUnitAt(statTime, biomass);
         this.m_stats.setRecruitmentPrTimeUnitAt(statTime, recruit);
         this.m_stats.setNatDeathPrTimeUnitAt(statTime, natDeath);
+        var t = this.m_map.getYield();
+        this.m_stats.setYieldPrTimeUnitAt(statTime, this.m_map.getYield());
 
         //updating income
         var income = 0;
         for (var so of this.m_shipOwners) {
             income += so.getTaxPayed();
         }
-        this.m_stats.setYieldPrTimeUnitAt(statTime, income);
+        
+        this.m_stats.setIncomePrTimeUnitAt(statTime, income);
         //updating invest
         var invest = this.getMap().getNoOfShips() * this.m_scenario.getShipPrice();
         this.m_stats.setInvestPrTimeUnitAt(statTime, invest);

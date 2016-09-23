@@ -3,6 +3,14 @@
 // <reference path = "../../TSSeafoodSimDev/externals/model.d.ts"/>
 var StartScreen = (function () {
     function StartScreen() {
+        var text1 = "Welcome to SeafoodSim. Here you can choose which scenario to run. " +
+            "The scenarios have different purposes and different goals you have to achieve to " +
+            "win. You can also set the durion of the simulation.";
+        var text2 = "As a government official you have been given the responsibility and authority to govern a new fishery.";
+        var text3 = "Each scenario represents a different government type.";
+        var text4 = "The scoring of the game reflects the evaluation of the performance. ";
+        var text5 = "The government have identified the following sub-objectives: <br>Finanacial 70%, Enviromental 10%, Social 20%<br>The percentages indicate the priority";
+        var text6 = "For each sub-objective key indicators have been determined and priortized. <br>Financial: Investment 40%, Income 60%<br>Environmental: Biomass 80% Recruitment 20%<br>Social: Onshore employment 20% Offshore employment 80%";
         var mainDiv = document.createElement("div");
         $('body').append(mainDiv);
         mainDiv.id = "startScreen";
@@ -12,9 +20,7 @@ var StartScreen = (function () {
         headerDiv.classList.add("header");
         var textDiv = document.createElement("div");
         mainDiv.appendChild(textDiv);
-        textDiv.innerHTML = "Welcome to SeafoodSim. Here you can choose which scenario to run. " +
-            "The scenarios have different purposes and different goals you have to achieve to " +
-            "win. You can also set the durion of the simulation.";
+        textDiv.innerHTML = text2 + text3 + text4;
         textDiv.id = "welcomeText";
         var buttonTable = document.createElement("table");
         mainDiv.appendChild(buttonTable);
@@ -119,7 +125,7 @@ var StartScreen = (function () {
         goalP.id = "goal";
         goalP.innerHTML = "Goal: ";
         $("#startScreen").dialog({
-            minWidth: 700,
+            minWidth: 1100,
             minHeight: 700,
             modal: true
         });

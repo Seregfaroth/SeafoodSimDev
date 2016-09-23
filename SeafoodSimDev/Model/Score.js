@@ -62,9 +62,9 @@ var Score = (function () {
             }
         });
         //Make sure score stays inside a specific range
-        this.m_environmentalScore = this.normalize(this.m_environmentalScore, 0, this.m_scenario.getEnvironmentalMaxScore(), 1000);
-        this.m_socialScore = this.normalize(this.m_socialScore, 0, this.m_scenario.getSocialMaxScore(), 1000);
-        this.m_financialScore = this.normalize(this.m_financialScore, 0, this.m_scenario.getFinancialMaxScore(), 1000);
+        this.m_environmentalScore = this.normalize(this.m_environmentalScore, 0, this.m_scenario.getEnvironmentalMaxScore(), 1000) * this.m_scenario.getSubEnvironmentalWeight() / 100;
+        this.m_socialScore = this.normalize(this.m_socialScore, 0, this.m_scenario.getSocialMaxScore(), 1000) * this.m_scenario.getSubSocialWeight() / 100;
+        this.m_financialScore = this.normalize(this.m_financialScore, 0, this.m_scenario.getFinancialMaxScore(), 1000) * this.m_scenario.getSubFinancialWeight() / 100;
         /*
         this.m_environmentalScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_environmentalScore));
         this.m_financialScore = Math.max(this.m_minimumScore, Math.min(this.m_maximumScore, this.m_financialScore));

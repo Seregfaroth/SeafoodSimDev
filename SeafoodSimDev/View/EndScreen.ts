@@ -118,7 +118,8 @@ class EndScreen {
             lineWidth: 1,
             explorer: {},
             height: 300,
-            width: 500
+            width: 500,
+            //legend: 'in'
         }
         var environChartOptions = {
             hAxis: {
