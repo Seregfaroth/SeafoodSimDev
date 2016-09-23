@@ -2,7 +2,7 @@
 /// <reference path="StartScreen.ts"/>
 var MainView = (function () {
     function MainView(p_map, p_ShipOwners, p_taxingRate) {
-        this.m_noGraphicSimulation = true;
+        this.m_noGraphicSimulation = false;
         this.m_noDateUpdate = false;
         this.m_noScoreUpdate = false;
         $("#mainDiv canvas").remove();

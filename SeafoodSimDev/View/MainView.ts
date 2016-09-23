@@ -4,7 +4,7 @@
 class MainView {
     private m_mapView: MapView;
     private m_mapMenu: MapMenu;
-    private m_noGraphicSimulation = true;
+    private m_noGraphicSimulation = false;
     private m_noDateUpdate = false;
     private m_noScoreUpdate = false;
 
