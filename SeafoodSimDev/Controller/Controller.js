@@ -12,11 +12,16 @@ var Controller = (function () {
     function Controller() {
         var _this = this;
         this.restart = function () {
-            _this.m_model = new Model(_this.m_scenario);
-            _this.m_model.getMap().setScenario(_this.m_scenario);
-            _this.m_view.changeMap(_this.m_model.getMap());
+            //this.m_model = new Model(this.m_scenario);
+            // this.m_model.getMap().setScenario(this.m_scenario);
+            //this.m_view.changeMap(this.m_model.getMap());
             //this.m_view.reset(this.m_model);
-            _this.m_view.updateMainView(_this.m_model);
+            //this.m_view.updateMainView(this.m_model);
+            $("#startScreen").dialog({
+                minWidth: 1100,
+                minHeight: 700,
+                modal: true
+            });
             _this.m_eventHandler.bindFunctions(true);
             _this.m_simState = simState.paused;
             clearInterval(_this.m_timer);

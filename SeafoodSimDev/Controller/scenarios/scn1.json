@@ -1,17 +1,21 @@
 {
+  "noOfShipOwners":  2,
   "name": "Scenario 1",
   "financialScoreGoal": 2000,
   "environmentalScoreGoal": "no",
   "socialScoreGoal": "no",
   "overallscoreGoal": "no",
-  "description": "The government have identified the following sub-objectives: <p style='margin: 10px'> Financial 70%, Environmental 10%, Social 20% </p> For each sub-objective key indicators have been determined and priortized. <p style='margin: 10px'> Financial:  Invest 40%, Income 60% <br> Environmental: Biomass 70%, Recruitment 30% <br> Social: Onshore employment 20%, Offshore employment 80%</p>" ,
+  "description": "The government have identified the following sub-objectives: <p style='margin: 10px'> Financial 70%, Environmental 10%, Social 20% </p> For each sub-objective key indicators have been determined and priortized. <p style='margin: 10px'> Financial:  Invest 40%, Income 60% <br> Environmental: Biomass 70%, Recruitment 30% <br> Social: Onshore employment 20%, Offshore employment 80%</p>",
   "linkToMCA": "Link to MCA is coming soon",
   "mapType": 2,
   "mapSize": 15,
-  "numberOfSchools":  20,
-  "prices": {"Cod": 10, "Mackerel": 10},
+  "numberOfSchools": 20,
+  "prices": {
+    "Cod": 10,
+    "Mackerel": 10
+  },
   "oceanFishCapacity": 7000,
-  "schoolsInOnePlace": 2,  
+  "schoolsInOnePlace": 2,
   "schoolSize": 2000,
   "schoolMsy": 1800,
   "schoolMinimum": 10,
@@ -25,12 +29,13 @@
   "shipPrice": 100000,
   "aiShipBuyBalance": 200000,
   "aiShipSellBalance": 0,
+  "shipOwnerStartBalance": 300000,
 
-  "subFinancialWeight" : 70,
+  "subFinancialWeight": 70,
   "subEnvironmentalWeight": 10,
   "subSocialWeight": 20,
-  "indicatorInvestmentWeight": 40,  
-  "indicatorIncomeWeight":  60,
+  "indicatorInvestmentWeight": 40,
+  "indicatorIncomeWeight": 60,
   "indicatorBiomassWeight": 80,
   "indicatorRecruitmentWeight": 20,
   "indicatorOnshoreEmployment": 20,
@@ -40,11 +45,11 @@
   "environmentalMaxScore": 1000,
   "socialMaxScore": 1000,
   "fishingPercentage": 0.07,
-  
+
   "financialMinScore": 0,
   "socialMinScore": 0,
-  "environmentalMinScore":  0,
-  
+  "environmentalMinScore": 0,
+
   "landsiteShipCapacity": 0,
   "landsiteResourceCapacity": 0,
   "landsiteProcessPerDay": 0,
@@ -62,6 +67,10 @@
   "codMovingRadius": 0,
   "codRecruitPercent": 0,
   "codSchoolMaxAge": 0,
+  "recruitAndAgeFreq": 10,
+
+  "statFreq": 10,
+  "noOfMenPerShip": 8,
 
   "modelStatFreq": 0,
   "modelRecruitAndAgeFreq": 0,
@@ -72,11 +81,11 @@
   "shipFuelPerMove": 0,
   "shipMovesPerTick": 0,
 
-  "shipOwnerShipPrice": 0,
+  "shipOwnerShipPrice": 1000,
   "shipOwnerLicense": 0
-  
 
-  
-  
-  
+
+
+
+
 }

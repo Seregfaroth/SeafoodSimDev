@@ -37,7 +37,6 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Controller\configuration1.json" />
     <Content Include="Controller\scenarios\scn1.json" />
     <Content Include="Controller\scenarios\scn2.json" />
     <Content Include="Controller\scenarios\scn3.json" />
@@ -52,7 +51,6 @@
     <Folder Include="Controller\declarations\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Controller\Configuration.ts" />
     <TypeScriptCompile Include="Controller\Controller.ts" />
     <TypeScriptCompile Include="Controller\EventHandler.ts" />
     <TypeScriptCompile Include="Controller\Scenario.ts" />
@@ -64,7 +62,6 @@
     <TypeScriptCompile Include="Model\Cod.ts" />
     <TypeScriptCompile Include="Model\declarations\qunit.d.ts" />
     <TypeScriptCompile Include="Model\EndScreenStats.ts" />
-    <TypeScriptCompile Include="Model\Fish.ts" />
     <TypeScriptCompile Include="Model\FuelSite.ts" />
     <TypeScriptCompile Include="Model\Government.ts" />
     <TypeScriptCompile Include="Model\Land.ts" />

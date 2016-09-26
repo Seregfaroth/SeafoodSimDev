@@ -12,14 +12,6 @@ class Model {
     private m_ai: AI;
     private m_time: number = 0;
     private m_stats: EndScreenStats;
-    public m_statFreq = 10;
-    private m_recruitAndAgeFreq = 10;
-    //private m_movesPrTick = 1;
-    //private m_statFreq = 30;
-    //private m_mapType: number = 2;
-    //private m_size: number = 10;
-    //private m_noOfSchools: number = 30;
-    private m_noOfMenPerShip = 8;
 
     constructor(p_scenario: Scenario) {
         console.log("constructing model");
@@ -32,8 +24,14 @@ class Model {
         //this.m_stats = new EndScreenStats(this.m_map);
         this.m_goverment = new Government(restrictions, this.m_scenario);
         this.m_ai = new AI(this.m_scenario);
-        this.createShipOwner(new Point2(3, 3), 300000);
-        this.createShipOwner(new Point2(6, 6), 300000);
+        for (var i = 0; i < p_scenario.getNoOfShipOwners(); i++) {
+            var startShipPoint: Point2;
+            do {
+                startShipPoint = new Point2(Math.round(Math.random() * (this.m_map.getMapHeight() - 1)), Math.round(Math.random() * (this.m_map.getMapWidth() - 1)));
+            }   while (!(this.m_map.getTile(startShipPoint) instanceof Ocean))//If this is not an ocean tile, find a new tile
+            this.createShipOwner(startShipPoint);
+        }
+       
         this.updateStats();
     }
     public getScenario(): Scenario {
@@ -45,7 +43,7 @@ class Model {
         var recruit = 0;
         var natDeath = 0;
         // updating time
-        var statTime = this.getTime() / this.m_statFreq;
+        var statTime = this.getTime() / this.m_scenario.getStatFreq();
         this.m_stats.setTimeAt(statTime, this.getTime());
         //updating biomass and recruitment
         for (var sc of this.getMap().getSchools()) {
@@ -77,7 +75,7 @@ class Model {
         this.m_stats.setOverallScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getOverallScore());
 
         //updating social
-        var offshore = this.getMap().getNoOfShips() * this.m_noOfMenPerShip;
+        var offshore = this.getMap().getNoOfShips() * this.m_scenario.getNoOfMenPerShip();
         var onshore = this.getMap().getFuelSites().length * 5 + this.getMap().getLandingSites().length * 10;
         this.m_stats.setEmploymentLandBasedPrTimeUnitAt(statTime, onshore);
         this.m_stats.setEmploymentSeaBasedPrTimeUnitAt(statTime, offshore);
@@ -92,12 +90,12 @@ class Model {
         if (p_noOfMoves == undefined) p_noOfMoves = 1;
         
         for (var m = 0; m < p_noOfMoves; m++) {
-            if (!(this.m_time % this.m_statFreq)) this.updateStats();
+            if (!(this.m_time % this.m_scenario.getStatFreq())) this.updateStats();
             this.m_time++;
             //console.log("running model");
 
             this.m_map.run();
-            if (!(this.m_time % this.m_recruitAndAgeFreq)) {
+            if (!(this.m_time % this.m_scenario.getRecruitAndAgeFreq())) {
 
                 this.m_map.ageAndRecruit();
             }

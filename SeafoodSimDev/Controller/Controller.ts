@@ -81,11 +81,16 @@ class Controller {
 
 
     public restart = (): void => {
-        this.m_model = new Model(this.m_scenario);
-        this.m_model.getMap().setScenario(this.m_scenario);
-        this.m_view.changeMap(this.m_model.getMap());
+        //this.m_model = new Model(this.m_scenario);
+       // this.m_model.getMap().setScenario(this.m_scenario);
+        //this.m_view.changeMap(this.m_model.getMap());
         //this.m_view.reset(this.m_model);
-        this.m_view.updateMainView(this.m_model);
+        //this.m_view.updateMainView(this.m_model);
+        $("#startScreen").dialog({
+            minWidth: 1100,
+            minHeight: 700,
+            modal: true
+        });
         this.m_eventHandler.bindFunctions(true);
         this.m_simState = simState.paused;
         clearInterval(this.m_timer);

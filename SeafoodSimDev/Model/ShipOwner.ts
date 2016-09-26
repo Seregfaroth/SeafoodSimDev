@@ -2,9 +2,9 @@
 class ShipOwner {
     private m_scenario: Scenario;
     private m_ships: Ship[] = [];
-    private m_balance: number = 1000;
+    private m_balance: number;
     private m_license: boolean = true;
-    private m_shipPrice: number = 10000; // Should maybe be stored in map?
+    private m_shipPrice: number;
     private m_shipStartPosition: Point2;
     private m_id: string;
     private m_government: Government;
@@ -15,8 +15,12 @@ class ShipOwner {
         this.m_government = p_government;
         this.m_shipStartPosition = p_shipStartPosition;
         this.m_id = p_id;
+        this.m_shipPrice = p_scenario.getShipPrice();
         if (p_balance) {
             this.m_balance = p_balance;
+        }
+        else {
+            this.m_balance = p_scenario.getShipOwnerStartBalance();
         }
         this.m_taxPayed = 0;
     }

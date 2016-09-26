@@ -17,6 +17,7 @@ var Scenario = (function () {
         });
     };
     Scenario.prototype.fromJson = function (p_json) {
+        this.m_noOfShipOwners = p_json.noOfShipOwners;
         this.m_name = p_json.name;
         this.m_prices = p_json.prices;
         this.m_prices = {};
@@ -37,6 +38,10 @@ var Scenario = (function () {
         this.m_schoolMsy = p_json.schoolMsy;
         this.m_schoolMinimum = p_json.schoolMinimum;
         this.m_schoolMaximum = p_json.schoolMaximum;
+        this.m_recruitAndAgeFreq = p_json.recruitAndAgeFreq;
+        this.m_statFreq = p_json.statFreq;
+        this.m_noOfMenPerShip = p_json.noOfMenPerShip;
+        this.m_shipPrice = p_json.shipPrice;
         this.m_defaultNoDays = p_json.defaultNoDays;
         this.m_defaultTickSize = p_json.defaultTickSize;
         this.m_taxingRate = p_json.taxingRate;
@@ -46,6 +51,7 @@ var Scenario = (function () {
         this.m_shipOwnerShipPrice = p_json.shipPrice;
         this.m_aiBuyShipBalance = p_json.aiShipBuyBalance;
         this.m_aiSellShipBalance = p_json.aiShipSellBalance;
+        this.m_shipOwnerStartBalance = p_json.shipOwnerStartBalance;
         this.m_subFinancialWeight = p_json.subFinancialWeight;
         this.m_subEnvironmentalWeight = p_json.subEnvironmentalWeight;
         this.m_subSocialWeight = p_json.subSocialWeight;
@@ -285,6 +291,21 @@ var Scenario = (function () {
     };
     Scenario.prototype.getShipOwnerLicense = function () {
         return this.m_shipOwnerLicense;
+    };
+    Scenario.prototype.getRecruitAndAgeFreq = function () {
+        return this.m_recruitAndAgeFreq;
+    };
+    Scenario.prototype.getStatFreq = function () {
+        return this.m_statFreq;
+    };
+    Scenario.prototype.getNoOfMenPerShip = function () {
+        return this.m_noOfMenPerShip;
+    };
+    Scenario.prototype.getShipOwnerStartBalance = function () {
+        return this.m_shipOwnerStartBalance;
+    };
+    Scenario.prototype.getNoOfShipOwners = function () {
+        return this.m_noOfShipOwners;
     };
     return Scenario;
 }());

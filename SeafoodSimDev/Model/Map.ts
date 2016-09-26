@@ -4,7 +4,6 @@ class Map {
     private m_grid: Tile[][] = [];
     public m_schools: School[] = [];
     private m_restrictions: Restrictions;
-    private m_fishingPercentage: number;//The percentage of total fish a ship gets when fishing
     private m_ships: Ship[] = [];
     private m_yield: number; //in fish, will be tonnes
 
@@ -12,7 +11,6 @@ class Map {
         this.m_scenario = p_scenario;
         this.m_restrictions = p_restrictions;
         this.m_yield = 0;
-        this.m_fishingPercentage = this.m_scenario.getFishingPercentage();
         //this.generateExampleMap();
         this.setScenario(p_scenario);
     }
@@ -237,9 +235,6 @@ class Map {
 
     public getNoOfShips(): number {
         return this.m_ships.length;
-    }
-    public getFishingPercentage(): number {
-        return this.m_fishingPercentage;
     }
 
     public getSchoolsInTile(p_position: Point2): School[] {

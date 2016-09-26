@@ -1,5 +1,4 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
-/// <reference path="Fish.ts"/>
 var School = (function () {
     function School(p_size, p_msy, p_position, p_scenario) {
         this.m_ages = [];

@@ -6,9 +6,9 @@ var MainView = (function () {
         this.m_noDateUpdate = false;
         this.m_noScoreUpdate = false;
         $("#mainDiv canvas").remove();
+        $("#menuDiv").remove(); //Might not be necessary to remove mapMenu, but it needs to be updated
         this.m_mapView = new MapView(p_map);
         this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate);
-        //new StartScreen();
     }
     MainView.prototype.reset = function (p_model) {
         this.m_mapView.reset(p_model.getMap());

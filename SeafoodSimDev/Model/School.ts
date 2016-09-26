@@ -1,5 +1,4 @@
 ﻿// <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
-/// <reference path="Fish.ts"/>
 abstract class School {
     protected m_scenario: Scenario;
     protected m_position: Point2;

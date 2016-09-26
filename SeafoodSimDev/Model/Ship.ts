@@ -128,9 +128,8 @@ class Ship {
     public fish(p_map: Map): void {
         var ship: Ship = this;
 
-        var percentage: number = p_map.getFishingPercentage();
+        var percentage: number = this.m_scenario.getFishingPercentage();
         var noOfFishInTile: number = p_map.getNoOfFishInTile(this.m_position);
-        var fish: Fish[] = [];
         if (this.m_cargoCapacity - this.getCargoSize() < noOfFishInTile * percentage) {
             //If the ship is not able to fish the full percentage
             percentage = (this.m_cargoCapacity - this.getCargoSize()) / noOfFishInTile;

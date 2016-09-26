@@ -145,7 +145,7 @@ class AI {
         return bestPath;
     }
     public pathToFish(p_start: Point2, p_map: Map): Point2[] {
-        var randomNumber: number = Math.floor(Math.random() * p_map.getSchools().length);
+        var randomNumber: number = Math.floor(Math.random() * (p_map.getSchools().length-1));
         return this.pathFinding(p_map, p_start, p_map.getSchools()[randomNumber].getPosition());
     }
     private goFish(p_ship: Ship, p_map: Map, p_path:Point2[]): void {

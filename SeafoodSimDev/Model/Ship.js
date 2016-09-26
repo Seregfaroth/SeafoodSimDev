@@ -117,9 +117,8 @@ var Ship = (function () {
     };
     Ship.prototype.fish = function (p_map) {
         var ship = this;
-        var percentage = p_map.getFishingPercentage();
+        var percentage = this.m_scenario.getFishingPercentage();
         var noOfFishInTile = p_map.getNoOfFishInTile(this.m_position);
-        var fish = [];
         if (this.m_cargoCapacity - this.getCargoSize() < noOfFishInTile * percentage) {
             //If the ship is not able to fish the full percentage
             percentage = (this.m_cargoCapacity - this.getCargoSize()) / noOfFishInTile;

@@ -1,4 +1,4 @@
-﻿/// <reference path="../Controller/Configuration.ts"/>
+﻿
 class Government {
     private m_scenario: Scenario;
     private m_restrictions: Restrictions;

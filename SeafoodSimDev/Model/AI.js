@@ -134,7 +134,7 @@ var AI = (function () {
         return bestPath;
     };
     AI.prototype.pathToFish = function (p_start, p_map) {
-        var randomNumber = Math.floor(Math.random() * p_map.getSchools().length);
+        var randomNumber = Math.floor(Math.random() * (p_map.getSchools().length - 1));
         return this.pathFinding(p_map, p_start, p_map.getSchools()[randomNumber].getPosition());
     };
     AI.prototype.goFish = function (p_ship, p_map, p_path) {

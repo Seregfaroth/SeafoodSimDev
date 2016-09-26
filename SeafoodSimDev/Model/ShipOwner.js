@@ -2,15 +2,17 @@
 var ShipOwner = (function () {
     function ShipOwner(p_government, p_shipStartPosition, p_id, p_scenario, p_balance) {
         this.m_ships = [];
-        this.m_balance = 1000;
         this.m_license = true;
-        this.m_shipPrice = 10000; // Should maybe be stored in map?
         this.m_scenario = p_scenario;
         this.m_government = p_government;
         this.m_shipStartPosition = p_shipStartPosition;
         this.m_id = p_id;
+        this.m_shipPrice = p_scenario.getShipPrice();
         if (p_balance) {
             this.m_balance = p_balance;
+        }
+        else {
+            this.m_balance = p_scenario.getShipOwnerStartBalance();
         }
         this.m_taxPayed = 0;
     }

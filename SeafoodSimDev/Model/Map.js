@@ -7,7 +7,6 @@ var Map = (function () {
         this.m_scenario = p_scenario;
         this.m_restrictions = p_restrictions;
         this.m_yield = 0;
-        this.m_fishingPercentage = this.m_scenario.getFishingPercentage();
         //this.generateExampleMap();
         this.setScenario(p_scenario);
     }
@@ -217,9 +216,6 @@ var Map = (function () {
     };
     Map.prototype.getNoOfShips = function () {
         return this.m_ships.length;
-    };
-    Map.prototype.getFishingPercentage = function () {
-        return this.m_fishingPercentage;
     };
     Map.prototype.getSchoolsInTile = function (p_position) {
         var list = [];

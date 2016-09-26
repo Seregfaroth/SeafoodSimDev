@@ -1,4 +1,3 @@
-/// <reference path="../Controller/Configuration.ts"/>
 var Government = (function () {
     function Government(p_restrictions, p_scenario) {
         this.m_scenario = p_scenario;

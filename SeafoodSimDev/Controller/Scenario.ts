@@ -1,4 +1,6 @@
 ﻿class Scenario {
+    private m_noOfShipOwners: number;
+
     private m_name: string;
     private m_map: Map;
 
@@ -21,6 +23,10 @@
     private m_schoolMsy;
     private m_schoolMinimum: number;
     private m_schoolMaximum: number;
+    private m_recruitAndAgeFreq: number;
+    private m_statFreq: number;
+    private m_noOfMenPerShip: number;
+    private m_shipPrice: number;
 
     private m_defaultNoDays: number;
     private m_defaultTickSize: number;
@@ -30,6 +36,7 @@
 
     private m_aiBuyShipBalance: number;
     private m_aiSellShipBalance: number;
+    private m_shipOwnerStartBalance: number;
 
     private m_subFinancialWeight: number;
     private m_subEnvironmentalWeight: number;
@@ -100,6 +107,7 @@
         });
     }
     public fromJson(p_json: any): void {
+        this.m_noOfShipOwners = p_json.noOfShipOwners
         this.m_name = p_json.name;
         this.m_prices = p_json.prices;
         this.m_prices = {};
@@ -122,6 +130,10 @@
         this.m_schoolMsy = p_json.schoolMsy;
         this.m_schoolMinimum = p_json.schoolMinimum;
         this.m_schoolMaximum = p_json.schoolMaximum;
+        this.m_recruitAndAgeFreq = p_json.recruitAndAgeFreq;
+        this.m_statFreq = p_json.statFreq;
+        this.m_noOfMenPerShip = p_json.noOfMenPerShip;
+        this.m_shipPrice = p_json.shipPrice;
 
         this.m_defaultNoDays = p_json.defaultNoDays;
         this.m_defaultTickSize = p_json.defaultTickSize;
@@ -133,6 +145,7 @@
         this.m_shipOwnerShipPrice = p_json.shipPrice;
         this.m_aiBuyShipBalance = p_json.aiShipBuyBalance;
         this.m_aiSellShipBalance = p_json.aiShipSellBalance;
+        this.m_shipOwnerStartBalance = p_json.shipOwnerStartBalance;
 
         this.m_subFinancialWeight = p_json.subFinancialWeight;
         this.m_subEnvironmentalWeight = p_json.subEnvironmentalWeight;
@@ -386,5 +399,19 @@
     public getShipOwnerLicense(): boolean {
         return this.m_shipOwnerLicense;
     }
-
+    public getRecruitAndAgeFreq(): number {
+        return this.m_recruitAndAgeFreq;
+    }
+    public getStatFreq(): number {
+        return this.m_statFreq;
+    }
+    public getNoOfMenPerShip(): number {
+        return this.m_noOfMenPerShip;
+    }
+    public getShipOwnerStartBalance(): number {
+        return this.m_shipOwnerStartBalance;
+    }
+    public getNoOfShipOwners(): number {
+        return this.m_noOfShipOwners;
+    }
 }
