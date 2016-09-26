@@ -3,7 +3,7 @@
         "July", "August", "September", "October", "November", "December"
     ];
 
-    constructor(p_ShipOwners: ShipOwner[], p_landingSites: LandingSite[], p_taxingRate: number) {
+    constructor(p_ShipOwners: ShipOwner[], p_landingSites: LandingSite[], p_taxingRate: number, p_scenario: Scenario) {
         console.log("construct MapMenu");
         var menuDiv: HTMLElement = document.createElement("div");
         menuDiv.id = "menuDiv";
@@ -249,7 +249,7 @@
         var cell: HTMLTableCellElement = dateRow.insertCell();
         var valueDiv: HTMLDivElement = document.createElement("div");
         cell.appendChild(valueDiv);
-        valueDiv.innerHTML = "1";
+        valueDiv.innerHTML = p_scenario.getStartNoOfShips()+"";
         cell.className = "slider-value-cell";
         valueDiv.id = "maxNoShips";
 
@@ -262,7 +262,7 @@
         $("#noOfShipsSlider").slider();
         $("#noOfShipsSlider").slider("option", "min", 0);
         $("#noOfShipsSlider").slider("option", "max", 50);
-        $("#noOfShipsSlider").slider("value", 1);
+        $("#noOfShipsSlider").slider("value", p_scenario.getStartNoOfShips());
 
         //Create buttons
         var buttonsDiv: HTMLElement = document.createElement("legend");
@@ -335,12 +335,12 @@
         restartButton.innerHTML = "Restart";
     }
 
-    public reset(p_ShipOwners: ShipOwner[], p_landingSites: LandingSite[], p_taxingRate: number) {
+    public reset(p_ShipOwners: ShipOwner[], p_landingSites: LandingSite[], p_taxingRate: number,p_scenario:Scenario) {
         $("#taxSlider").slider("value", p_taxingRate * 100);
         $("#taxValue").text(p_taxingRate * 100 + "%");
 
-        $("#noOfShipsSlider").slider("value", 1);
-        $("#maxNoShips").text("1");
+        $("#noOfShipsSlider").slider("value", p_scenario.getStartNoOfShips());
+        $("#maxNoShips").text(p_scenario.getStartNoOfShips()+"");
 
         for (var i = 0; i < p_ShipOwners.length; i++) {
             $("#effortValue" + p_ShipOwners[i].getID()).text(0);

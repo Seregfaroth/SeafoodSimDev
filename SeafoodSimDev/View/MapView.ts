@@ -125,12 +125,18 @@ class MapView {
             i++;
         }
 
+        while (this.m_ships.length > p_map.getShips().length) {
+            //If there are more ships in scene than in the map
+            this.m_scene.remove(this.m_ships[0]);
+            this.m_ships.splice(0, 1);
+        }
         for(var i = 0; i < this.m_ships.length; i++) {
             this.m_ships[i].position = new Point2(p_map.getShips()[i].getPosition().row, p_map.getShips()[i].getPosition().col);
         }
         
         i = this.m_ships.length;
         while (this.m_ships.length < p_map.getShips().length) {
+            //If there are more ships in map than in scene
             this.m_ships[i] = new TKN_Mesh(new TKN_Geometry(0.3), this.m_blackMaterial);
             this.m_ships[i].position = p_map.getShips()[i].getPosition();
             this.m_scene.add(this.m_ships[i]);

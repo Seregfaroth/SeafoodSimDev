@@ -1,4 +1,7 @@
 {
+  "startNoOfShips": 3,
+  "movingRadius": 2,
+  "recrutingPercentage":  0.32,
   "noOfShipOwners":  2,
   "name": "Scenario 2",
   "financialScoreGoal": "no",

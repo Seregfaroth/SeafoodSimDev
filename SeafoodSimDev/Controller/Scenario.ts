@@ -1,5 +1,8 @@
 ﻿class Scenario {
+    private m_startNoOfShips: number;
     private m_noOfShipOwners: number;
+    private m_movingRadius: number;
+    private m_recrutingPercentage: number;
 
     private m_name: string;
     private m_map: Map;
@@ -107,6 +110,9 @@
         });
     }
     public fromJson(p_json: any): void {
+        this.m_startNoOfShips = p_json.startNoOfShips;
+        this.m_movingRadius = p_json.movingRadius;
+        this.m_recrutingPercentage = p_json.recrutingPercentage;
         this.m_noOfShipOwners = p_json.noOfShipOwners
         this.m_name = p_json.name;
         this.m_prices = p_json.prices;
@@ -367,7 +373,6 @@
         return this.m_codSchoolMaxAge;
     }
 
-
     public getModelStatFreq(): number {
         return this.m_modelStatFreq;
     }
@@ -413,5 +418,14 @@
     }
     public getNoOfShipOwners(): number {
         return this.m_noOfShipOwners;
+    }
+    public getMovingRadius(): number {
+        return this.m_movingRadius;
+    }
+    public getRecrutingPercentage(): number {
+        return this.m_recrutingPercentage;
+    }
+    public getStartNoOfShips(): number {
+        return this.m_startNoOfShips;
     }
 }

@@ -24,12 +24,15 @@ class AI {
             p_map.addShip(p_shipOwner.buyShip());
         }
         else if (p_shipOwner.getShips().length > 0 && p_shipOwner.getBalance() < this.m_balanceToSellShip) {
-            var ship: Ship = p_shipOwner.getShips()[0];
-            p_shipOwner.sellShip(ship);
-            p_map.removeShip(ship);
+            this.sellShip(p_shipOwner, p_map);
         }
+        
     }
-
+    private sellShip(p_shipOwner: ShipOwner, p_map: Map) {
+        var ship: Ship = p_shipOwner.getShips()[0];
+        p_shipOwner.sellShip(ship);
+        p_map.removeShip(ship);
+    }
     private runShips(p_shipOwner: ShipOwner, p_map: Map): void {
         var ai: AI = this;
         var n = 0;
@@ -57,7 +60,7 @@ class AI {
 
            else  if (ship.hasReachedGoal()) {
                 //If ship has reached a previous sat goal
-                ai.actOnGoal(ship, p_map);
+                ai.actOnGoal(ship, p_map, p_shipOwner);
             } 
             else {
                 try {
@@ -70,12 +73,17 @@ class AI {
         });
     }
 
-    private actOnGoal(p_ship: Ship, p_map: Map): void {
+    private actOnGoal(p_ship: Ship, p_map: Map, p_shipOwner: ShipOwner): void {
         var tile: Tile = p_map.getTile(p_ship.getPosition());
         if (p_ship.getState() === shipState.goingToLand) {
             //If ship has reached a landing site
             p_ship.land(<LandingSite>tile);
-            this.findNewPath(p_ship, p_map);
+            if (p_map.getRestrictions().getMaxShips() < p_map.getShips().length) {
+                this.sellShip(p_shipOwner, p_map);
+            }
+            else {
+                this.findNewPath(p_ship, p_map);
+            }
         }
         else if (p_ship.getState() === shipState.goingToRefuel) {
             //If ship has reached fuel site

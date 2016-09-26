@@ -1,5 +1,5 @@
 var MapMenu = (function () {
-    function MapMenu(p_ShipOwners, p_landingSites, p_taxingRate) {
+    function MapMenu(p_ShipOwners, p_landingSites, p_taxingRate, p_scenario) {
         this.m_monthNames = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
         ];
@@ -221,7 +221,7 @@ var MapMenu = (function () {
         var cell = dateRow.insertCell();
         var valueDiv = document.createElement("div");
         cell.appendChild(valueDiv);
-        valueDiv.innerHTML = "1";
+        valueDiv.innerHTML = p_scenario.getStartNoOfShips() + "";
         cell.className = "slider-value-cell";
         valueDiv.id = "maxNoShips";
         var cell = dateRow.insertCell();
@@ -233,7 +233,7 @@ var MapMenu = (function () {
         $("#noOfShipsSlider").slider();
         $("#noOfShipsSlider").slider("option", "min", 0);
         $("#noOfShipsSlider").slider("option", "max", 50);
-        $("#noOfShipsSlider").slider("value", 1);
+        $("#noOfShipsSlider").slider("value", p_scenario.getStartNoOfShips());
         //Create buttons
         var buttonsDiv = document.createElement("legend");
         buttonsDiv.classList.add("menu-legend");
@@ -297,11 +297,11 @@ var MapMenu = (function () {
         restartButton.classList.add("ui-button");
         restartButton.innerHTML = "Restart";
     }
-    MapMenu.prototype.reset = function (p_ShipOwners, p_landingSites, p_taxingRate) {
+    MapMenu.prototype.reset = function (p_ShipOwners, p_landingSites, p_taxingRate, p_scenario) {
         $("#taxSlider").slider("value", p_taxingRate * 100);
         $("#taxValue").text(p_taxingRate * 100 + "%");
-        $("#noOfShipsSlider").slider("value", 1);
-        $("#maxNoShips").text("1");
+        $("#noOfShipsSlider").slider("value", p_scenario.getStartNoOfShips());
+        $("#maxNoShips").text(p_scenario.getStartNoOfShips() + "");
         for (var i = 0; i < p_ShipOwners.length; i++) {
             $("#effortValue" + p_ShipOwners[i].getID()).text(0);
             $("#effortSlider" + p_ShipOwners[i].getID()).slider("value", 0);

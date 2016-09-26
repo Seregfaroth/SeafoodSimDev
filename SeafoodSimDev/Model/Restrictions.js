@@ -4,8 +4,8 @@ var Restrictions = (function () {
         this.m_effortLimits = {};
         this.m_restrictedAreas = [];
         this.m_landingDistrubutions = {};
-        this.m_maxShips = 1;
         this.m_scenario = p_scenario;
+        this.m_maxShips = p_scenario.getStartNoOfShips();
     }
     Restrictions.prototype.restrictArea = function (p_tile) {
         this.m_restrictedAreas.push(p_tile);

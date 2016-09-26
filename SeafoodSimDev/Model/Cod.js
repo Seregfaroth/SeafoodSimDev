@@ -9,8 +9,6 @@ var Cod = (function (_super) {
     __extends(Cod, _super);
     function Cod(p_size, p_msy, p_position, p_scenario, p_ages) {
         _super.call(this, p_size, p_msy, p_position, p_scenario);
-        this.m_movingRadius = 1;
-        this.m_recrutingPercentage = 0.32;
         this.m_origin = p_position;
         this.m_maxAge = 8; // OBS Ship also uses this value. It is hardcoded there at the moment
         for (var i = 0; i < this.m_maxAge; i++) {
@@ -75,7 +73,7 @@ var Cod = (function (_super) {
                     default:
                         break;
                 }
-            } while (!(p_map.getTile(newPoint) instanceof Ocean) || newPoint.manhattanDistTo(this.m_origin) > this.m_movingRadius);
+            } while (!(p_map.getTile(newPoint) instanceof Ocean) || newPoint.manhattanDistTo(this.m_origin) > this.m_scenario.getMovingRadius());
             this.m_position = newPoint;
         }
         //console.log("new postion: " + JSON.stringify(this.m_position));
@@ -83,9 +81,9 @@ var Cod = (function (_super) {
     Cod.prototype.recruit = function (p_map) {
         var tmp = p_map.getTile(this.m_position).getFishCapacity();
         var tmp2 = this.getSize();
-        if (p_map.getTile(this.m_position).getFishCapacity() > this.getSize()) {
+        if (p_map.getTile(this.m_position).getFishCapacity() > p_map.getNoOfFishInTile(this.m_position)) {
             //Only recruit if the tile is not full
-            var noOfNewFish = Math.floor(Math.random() * this.m_recrutingPercentage * this.getSize());
+            var noOfNewFish = Math.floor(Math.random() * this.m_scenario.getRecrutingPercentage() * this.getSize());
             this.m_ages[0] = noOfNewFish;
             this.m_size += noOfNewFish;
             this.m_recruitTotal += noOfNewFish;

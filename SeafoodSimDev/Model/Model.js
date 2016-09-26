@@ -80,6 +80,7 @@ var Model = (function () {
             this.m_time++;
             //console.log("running model");
             this.m_map.run();
+            var t = this.m_time % this.m_scenario.getRecruitAndAgeFreq();
             if (!(this.m_time % this.m_scenario.getRecruitAndAgeFreq())) {
                 this.m_map.ageAndRecruit();
             }

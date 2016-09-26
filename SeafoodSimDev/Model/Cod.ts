@@ -1,8 +1,6 @@
 ﻿/// <reference path="School.ts"/>
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class Cod extends School{
-    private m_movingRadius: number = 1;
-    private m_recrutingPercentage: number = 0.32;
     private m_origin: Point2;
 
     public constructor(p_size: number, p_msy: number, p_position: Point2, p_scenario: Scenario, p_ages?: number[]) {
@@ -75,7 +73,7 @@ class Cod extends School{
                     default:
                         break;
                 }
-            } while (!(p_map.getTile(newPoint) instanceof Ocean) || newPoint.manhattanDistTo(this.m_origin) > this.m_movingRadius);
+            } while (!(p_map.getTile(newPoint) instanceof Ocean) || newPoint.manhattanDistTo(this.m_origin) > this.m_scenario.getMovingRadius());
             this.m_position = newPoint;
         }
         //console.log("new postion: " + JSON.stringify(this.m_position));
@@ -85,9 +83,9 @@ class Cod extends School{
     protected recruit(p_map: Map): void {
         var tmp = (<Ocean>p_map.getTile(this.m_position)).getFishCapacity();
         var tmp2 = this.getSize();
-        if ((<Ocean>p_map.getTile(this.m_position)).getFishCapacity() > this.getSize()) {
+        if ((<Ocean>p_map.getTile(this.m_position)).getFishCapacity() > p_map.getNoOfFishInTile(this.m_position)) {
             //Only recruit if the tile is not full
-            var noOfNewFish: number = Math.floor(Math.random() * this.m_recrutingPercentage*this.getSize());
+            var noOfNewFish: number = Math.floor(Math.random() * this.m_scenario.getRecrutingPercentage()*this.getSize());
             this.m_ages[0] = noOfNewFish;
             this.m_size += noOfNewFish;
             this.m_recruitTotal += noOfNewFish;

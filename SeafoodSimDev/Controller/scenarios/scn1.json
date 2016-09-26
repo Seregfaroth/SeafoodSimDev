@@ -1,5 +1,8 @@
 {
-  "noOfShipOwners":  2,
+  "startNoOfShips":  3,
+  "movingRadius": 2,
+  "recrutingPercentage": 0.32,
+  "noOfShipOwners": 2,
   "name": "Scenario 1",
   "financialScoreGoal": 2000,
   "environmentalScoreGoal": "no",
@@ -26,7 +29,7 @@
   "map": "map1",
   "shipOwner": "skipper1",
   "shipOwnerStartMoney": 1000000,
-  "shipPrice": 100000,
+  "shipPrice": 10000,
   "aiShipBuyBalance": 200000,
   "aiShipSellBalance": 0,
   "shipOwnerStartBalance": 300000,
@@ -67,7 +70,7 @@
   "codMovingRadius": 0,
   "codRecruitPercent": 0,
   "codSchoolMaxAge": 0,
-  "recruitAndAgeFreq": 10,
+  "recruitAndAgeFreq": 1,
 
   "statFreq": 10,
   "noOfMenPerShip": 8,

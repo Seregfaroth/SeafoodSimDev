@@ -48,8 +48,7 @@ var School = (function () {
     School.prototype.getAges = function () {
         return this.m_ages;
     };
-    School.prototype.live = function (p_map) {
-        //this.move(p_map);
+    School.prototype.ageAndRecruit = function (p_map) {
         var t = this.m_ages[this.m_ages.length - 1];
         this.m_natDeath += this.m_ages[this.m_ages.length - 1];
         this.age();

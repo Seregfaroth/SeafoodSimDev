@@ -17,6 +17,9 @@ var Scenario = (function () {
         });
     };
     Scenario.prototype.fromJson = function (p_json) {
+        this.m_startNoOfShips = p_json.startNoOfShips;
+        this.m_movingRadius = p_json.movingRadius;
+        this.m_recrutingPercentage = p_json.recrutingPercentage;
         this.m_noOfShipOwners = p_json.noOfShipOwners;
         this.m_name = p_json.name;
         this.m_prices = p_json.prices;
@@ -306,6 +309,15 @@ var Scenario = (function () {
     };
     Scenario.prototype.getNoOfShipOwners = function () {
         return this.m_noOfShipOwners;
+    };
+    Scenario.prototype.getMovingRadius = function () {
+        return this.m_movingRadius;
+    };
+    Scenario.prototype.getRecrutingPercentage = function () {
+        return this.m_recrutingPercentage;
+    };
+    Scenario.prototype.getStartNoOfShips = function () {
+        return this.m_startNoOfShips;
     };
     return Scenario;
 }());

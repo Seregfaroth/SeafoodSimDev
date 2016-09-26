@@ -8,16 +8,16 @@ class MainView {
     private m_noDateUpdate = false;
     private m_noScoreUpdate = false;
 
-    constructor(p_map: Map, p_ShipOwners: ShipOwner[], p_taxingRate: number) {
+    constructor(p_map: Map, p_ShipOwners: ShipOwner[], p_taxingRate: number, p_scenario: Scenario) {
         $("#mainDiv canvas").remove();
         $("#menuDiv").remove();//Might not be necessary to remove mapMenu, but it needs to be updated
         this.m_mapView = new MapView(p_map);
-        this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate);
+        this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate, p_scenario);
         
     }
-    public reset(p_model: Model): void {
+    public reset(p_model: Model, p_scenario:Scenario): void {
         this.m_mapView.reset(p_model.getMap());
-        this.m_mapMenu.reset(p_model.getShipOwners(), p_model.getMap().getLandingSites(), p_model.getGovernment().getStartingTaxingRate());
+        this.m_mapMenu.reset(p_model.getShipOwners(), p_model.getMap().getLandingSites(), p_model.getGovernment().getStartingTaxingRate(),p_scenario);
         //this.updateMainView(p_mo
     }
     public getMapMenu(): MapMenu {

@@ -58,7 +58,7 @@ class Controller {
     }
     public setModel(p_model: Model) {
         this.m_model = p_model;
-        this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
+        this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate(),this.m_scenario);
         this.m_eventHandler = new EventHandler(this);
     }
 

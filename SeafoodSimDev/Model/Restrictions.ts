@@ -5,10 +5,11 @@
     private m_effortLimits: { [shipOwner: string]: number } = {};
    private m_restrictedAreas: Tile[] = [];
    private m_landingDistrubutions: { [Site: string]: number } = {};
-   private m_maxShips: number = 1;
+   private m_maxShips: number;
 
    constructor(p_scenario: Scenario) {
        this.m_scenario = p_scenario;
+       this.m_maxShips = p_scenario.getStartNoOfShips();
    }
     public restrictArea(p_tile: Tile): void {
         this.m_restrictedAreas.push(p_tile);

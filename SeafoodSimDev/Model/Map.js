@@ -18,13 +18,6 @@ var Map = (function () {
         var map = this;
         this.m_schools.forEach(function (s) {
             s.move(map);
-            //s.live(map);
-            if (s.getSize() < map.m_scenario.getSchoolMinimum()) {
-                map.removeSchool(s);
-            }
-            else if (s.getSize() > map.m_scenario.getSchoolMaximum()) {
-                map.splitCodSchool(s);
-            }
         });
         this.getLandingSites().forEach(function (ls) {
             ls.processFish();
@@ -74,7 +67,13 @@ var Map = (function () {
     Map.prototype.ageAndRecruit = function () {
         var map = this;
         this.m_schools.forEach(function (s) {
-            s.live(map);
+            s.ageAndRecruit(map);
+            if (s.getSize() < map.m_scenario.getSchoolMinimum()) {
+                map.removeSchool(s);
+            }
+            else if (s.getSize() > map.m_scenario.getSchoolMaximum()) {
+                map.splitCodSchool(s);
+            }
         });
     };
     Map.prototype.getYield = function () {
@@ -141,7 +140,7 @@ var Map = (function () {
             }
         }
         if (p_size > 10) {
-            this.m_grid[0][Math.floor(p_size / 2) - 1] = new LandingSite(2, 10000, 2000, p_prices, "landingSite1");
+            this.m_grid[0][Math.floor(p_size / 2) - 1] = new LandingSite(2, 100000, 20000, p_prices, "landingSite1");
             var t = p_size - p_size / 5;
             var t3 = p_size - 1;
             this.m_grid[p_size - Math.floor(p_size / 5)][p_size - 1] = new FuelSite(2, 10000, 20, 10, "fuelsite1");
@@ -172,7 +171,7 @@ var Map = (function () {
                 this.m_grid[r][c] = new Land();
             }
         }
-        this.m_grid[r - 1][2] = new LandingSite(2, 10000, 2000, p_prices, "landingSite0");
+        this.m_grid[r - 1][2] = new LandingSite(2, 100000, 20000, p_prices, "landingSite0");
         for (var c = p_size / 2; c < p_size; c++) {
             for (var r = p_size - 1; r > p_size - c / 5; r--) {
                 this.m_grid[r][c] = new Land();
@@ -190,13 +189,13 @@ var Map = (function () {
                 this.m_grid[r][c] = new Land();
             }
         }
-        this.m_grid[p_size - 1][Math.floor(p_size / 2 + p_size / 5) - 1] = new LandingSite(2, 10000, 2000, p_prices, "landingSite0");
+        this.m_grid[p_size - 1][Math.floor(p_size / 2 + p_size / 5) - 1] = new LandingSite(2, 100000, 20000, p_prices, "landingSite0");
         for (var r = Math.floor(p_size / 3); r < Math.floor(p_size / 2); r++) {
             for (var c = Math.floor(p_size / 3); c < Math.floor(p_size / 2); c++) {
                 this.m_grid[r][c] = new Land();
             }
         }
-        this.m_grid[Math.floor(p_size / 3)][Math.floor(p_size / 2)] = new LandingSite(2, 10000, 2000, p_prices, "landingSite1");
+        this.m_grid[Math.floor(p_size / 3)][Math.floor(p_size / 2)] = new LandingSite(2, 100000, 20000, p_prices, "landingSite1");
         this.m_grid[Math.floor(p_size / 2)][Math.floor(p_size / 3)] = new FuelSite(2, 60000, 50, 10, "fuelSite0");
         for (var r = Math.floor(p_size / 10) + 5; r < Math.floor(p_size / 6) + 5; r++) {
             this.m_grid[r][p_size - Math.floor(p_size / 8)] = new Land();
