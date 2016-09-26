@@ -17,6 +17,8 @@ var Scenario = (function () {
         });
     };
     Scenario.prototype.fromJson = function (p_json) {
+        this.m_maxNoDaysFishing = p_json.maxNoDaysFishing;
+        this.m_schoolSizeWeight = p_json.schoolSizeWeight;
         this.m_startNoOfShips = p_json.startNoOfShips;
         this.m_movingRadius = p_json.movingRadius;
         this.m_recrutingPercentage = p_json.recrutingPercentage;
@@ -318,6 +320,12 @@ var Scenario = (function () {
     };
     Scenario.prototype.getStartNoOfShips = function () {
         return this.m_startNoOfShips;
+    };
+    Scenario.prototype.getSchoolSizeWeight = function () {
+        return this.m_schoolSizeWeight;
+    };
+    Scenario.prototype.getMaxNoDaysFishing = function () {
+        return this.m_maxNoDaysFishing;
     };
     return Scenario;
 }());

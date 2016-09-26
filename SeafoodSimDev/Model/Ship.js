@@ -14,25 +14,32 @@ var FishType;
 })(FishType || (FishType = {}));
 var Ship = (function () {
     function Ship(p_owner, p_scenario) {
-        this.m_fuelCapacity = 150;
-        this.m_cargoCapacity = 800;
+        this.m_fishedFor = 0;
         this.m_path = [];
-        this.m_fuelPerMove = 1;
         this.history = [[], []]; //For debugging  purpose
         this.m_scenario = p_scenario;
         this.m_position = p_owner.getShipStartPosition();
         this.m_cargo = [[], []];
         this.m_yield = [[], []];
+        this.m_fuelCapacity = p_scenario.getShipFuelCapacity();
+        this.m_cargoCapacity = p_scenario.getShipCargoCapacity();
+        this.m_fuelPerMove = p_scenario.getShipFuelPerMove();
         this.m_fuel = this.m_fuelCapacity;
         this.m_owner = p_owner;
         this.m_state = shipState.waiting;
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < p_scenario.getCodSchoolMaxAge(); i++) {
             this.m_cargo[FishType.Cod][i] = 0;
         }
         for (var i = 0; i < 18; i++) {
             this.m_cargo[FishType.Mackerel][i] = 0;
         }
     }
+    Ship.prototype.getFishedFor = function () {
+        return this.m_fishedFor;
+    };
+    Ship.prototype.resetFishedFor = function () {
+        this.m_fishedFor = 0;
+    };
     Ship.prototype.getState = function () {
         return this.m_state;
     };
@@ -116,6 +123,7 @@ var Ship = (function () {
         this.m_path = [];
     };
     Ship.prototype.fish = function (p_map) {
+        this.m_fishedFor++;
         var ship = this;
         var percentage = this.m_scenario.getFishingPercentage();
         var noOfFishInTile = p_map.getNoOfFishInTile(this.m_position);
@@ -148,17 +156,6 @@ var Ship = (function () {
         this.m_owner.financialTransaction(-fuelAmount * p_fuelSite.getPrice());
         this.m_fuel += fuelAmount;
     };
-    /*private shuffleFish(): void {
-        var i: number;
-        var j: number;
-        var fishPlaceholder: Fish;
-        for (i = this.m_cargo.length; i; i--) {
-            j = Math.floor(Math.random() * i);
-            fishPlaceholder = this.m_cargo[i - 1];
-            this.m_cargo[i - 1] = this.m_cargo[j];
-            this.m_cargo[j] = fishPlaceholder;
-        }
-    }*/
     Ship.prototype.randomMove = function (p_map) {
         //console.log("Original position: " + JSON.stringify(this.m_position));
         var newPoint;

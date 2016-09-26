@@ -6,16 +6,17 @@ enum FishType {
     Mackerel = 1
 }
 class Ship {
+    private m_fishedFor: number = 0;
     private m_scenario: Scenario;
     private m_fuel: number;
     private m_cargo: number[][];
-    private m_fuelCapacity: number = 150;
-    private m_cargoCapacity: number = 800;
+    private m_fuelCapacity;
+    private m_cargoCapacity;
     private m_yield: number[][];
     private m_taxPayed: number;
     private m_position: Point2;
     private m_path: Point2[] = [];
-    private m_fuelPerMove: number = 1;
+    private m_fuelPerMove: number;
     private m_owner: ShipOwner;
     private m_state: shipState;
     public history: any[][] = [[],[]];//For debugging  purpose
@@ -25,15 +26,24 @@ class Ship {
         this.m_position = p_owner.getShipStartPosition();
         this.m_cargo = [[], []];
         this.m_yield = [[], []];
+        this.m_fuelCapacity = p_scenario.getShipFuelCapacity();
+        this.m_cargoCapacity = p_scenario.getShipCargoCapacity();
+        this.m_fuelPerMove = p_scenario.getShipFuelPerMove();
         this.m_fuel = this.m_fuelCapacity;
         this.m_owner = p_owner;
         this.m_state = shipState.waiting;
-        for (var i = 0; i < 8; i++) {//8 is the max age of cod. TODO max age should be stored somewhere where it is accesible from ship
+        for (var i = 0; i < p_scenario.getCodSchoolMaxAge(); i++) {
             this.m_cargo[FishType.Cod][i] = 0;
         }
         for (var i = 0; i < 18; i++) {//18 is the max age of mackerel. TODO max age should be stored somewhere where it is accesible from ship
             this.m_cargo[FishType.Mackerel][i] = 0;
         }
+    }
+    public getFishedFor(): number {
+        return this.m_fishedFor;
+    }
+    public resetFishedFor(): void {
+        this.m_fishedFor = 0;
     }
     public getState(): shipState {
         return this.m_state;
@@ -126,6 +136,7 @@ class Ship {
         this.m_path = [];
     }
     public fish(p_map: Map): void {
+        this.m_fishedFor++;
         var ship: Ship = this;
 
         var percentage: number = this.m_scenario.getFishingPercentage();
@@ -165,17 +176,6 @@ class Ship {
         this.m_fuel += fuelAmount;
     }
 
-    /*private shuffleFish(): void {
-        var i: number;
-        var j: number;
-        var fishPlaceholder: Fish;
-        for (i = this.m_cargo.length; i; i--) {
-            j = Math.floor(Math.random() * i);
-            fishPlaceholder = this.m_cargo[i - 1];
-            this.m_cargo[i - 1] = this.m_cargo[j];
-            this.m_cargo[j] = fishPlaceholder;
-        }
-    }*/
     public randomMove(p_map: Map): void {
         //console.log("Original position: " + JSON.stringify(this.m_position));
 

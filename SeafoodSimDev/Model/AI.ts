@@ -50,10 +50,15 @@ class AI {
                 //If ship is currently fishing, fish until cargo is at least 98% full
                 
                 if (ship.getCargoSize() >= ship.getCargoCapacity() * 0.98) {
+                    ship.resetFishedFor();
                     ai.findNewPath(ship, p_map);
                 }
+                else if (ship.getFishedFor() > ai.m_scenario.getMaxNoDaysFishing()) {
+                    //If ship has been too long in one position
+                    ai.findNewPath(ship, p_map);
+                    ship.resetFishedFor();
+                }
                 else {
-                    //OBS this could result in an infinite loop if there is no fish left in area
                     ship.fish(p_map);
                 }
             }
@@ -138,15 +143,16 @@ class AI {
         }
         return bestPath;
     }
-    public pathToNearestFishingArea(p_start: Point2, p_map: Map): Point2[] {
+    public pathToBestFishingArea(p_start: Point2, p_map: Map): Point2[] {
         var bestPath: Point2[];
-        var bestDist: number = Infinity;
+        var bestValue: number = Infinity;
+        var schoolSizeWeight: number = this.m_scenario.getSchoolSizeWeight();
         for (var school of p_map.getSchools()) {
             var path: Point2[] = this.pathFinding(p_map, p_start, school.getPosition());
             if (p_map.getRestrictions().getRestrictedAreas().indexOf(p_map.getTile(school.getPosition())) === -1
                 && (<Ocean>p_map.getTile(school.getPosition())).getShipCapacity() > p_map.getNoOfShipsInTile(school.getPosition())
-                && path.length < bestDist) {
-                bestDist = path.length;
+                && path.length + school.getSize() * schoolSizeWeight < bestValue) {
+                bestValue = path.length + school.getSize()*schoolSizeWeight;
                 bestPath = path;
             }
         }
@@ -158,7 +164,6 @@ class AI {
     }
     private goFish(p_ship: Ship, p_map: Map, p_path:Point2[]): void {
         
-        //var path: Point2[] = this.pathToNearestFishingArea(p_ship.getPosition(), p_map);
         p_ship.setPath(p_path);
         p_ship.setState(shipState.goingToFish);
         p_ship.history[0].push("going to fish");
@@ -207,12 +212,18 @@ class AI {
             }
             else {
                 //If ship does not need to land or refuel
-                var fishingPath: Point2[] = this.pathToFish(p_ship.getPosition(), p_map);
-                if (this.canReach(p_ship, p_map, fishingPath)) {
-                    this.goFish(p_ship, p_map, fishingPath);
+                var fishingPath: Point2[] = this.pathToBestFishingArea(p_ship.getPosition(), p_map);
+                if (fishingPath == undefined) {
+                    //If there is no school where the ship can fish
+                    p_ship.randomMove(p_map);
                 }
                 else {
-                    this.goRefuel(p_ship, p_map);
+                    if (this.canReach(p_ship, p_map, fishingPath)) {
+                        this.goFish(p_ship, p_map, fishingPath);
+                    }
+                    else {
+                        this.goRefuel(p_ship, p_map);
+                    }
                 }
             }
         }

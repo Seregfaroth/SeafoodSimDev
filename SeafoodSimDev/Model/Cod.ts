@@ -6,7 +6,7 @@ class Cod extends School{
     public constructor(p_size: number, p_msy: number, p_position: Point2, p_scenario: Scenario, p_ages?: number[]) {
         super(p_size, p_msy, p_position, p_scenario);
         this.m_origin = p_position;
-        this.m_maxAge = 8; // OBS Ship also uses this value. It is hardcoded there at the moment
+        this.m_maxAge = p_scenario.getCodSchoolMaxAge();
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }
