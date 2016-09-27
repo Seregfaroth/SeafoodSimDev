@@ -1,8 +1,10 @@
 {
+  "maxNoDaysFishing":  10,
+  "schoolSizeWeight":  0.001,
   "startNoOfShips": 3,
   "movingRadius": 2,
-  "recrutingPercentage":  0.32,
-  "noOfShipOwners":  2,
+  "recrutingPercentage": 0.32,
+  "noOfShipOwners": 2,
   "name": "Scenario 3",
   "financialScoreGoal": 2000,
   "environmentalScoreGoal": 2000,

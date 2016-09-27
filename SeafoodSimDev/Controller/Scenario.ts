@@ -1,4 +1,6 @@
 ﻿class Scenario {
+    private m_maxNoDaysFishing: number; //Maximum number of days a ship should fish at the same position
+    private m_schoolSizeWeight: number;
     private m_startNoOfShips: number;
     private m_noOfShipOwners: number;
     private m_movingRadius: number;
@@ -114,6 +116,8 @@
         });
     }
     public fromJson(p_json: any): void {
+        this.m_maxNoDaysFishing = p_json.maxNoDaysFishing;
+        this.m_schoolSizeWeight = p_json.schoolSizeWeight;
         this.m_startNoOfShips = p_json.startNoOfShips;
         this.m_movingRadius = p_json.movingRadius;
         this.m_recrutingPercentage = p_json.recrutingPercentage;
@@ -444,5 +448,11 @@
     }
     public getNoMenuScoreUpdate(): boolean {
         return this.m_noMenuScoreUpdate;
+    }
+    public getSchoolSizeWeight(): number {
+        return this.m_schoolSizeWeight;
+    }
+    public getMaxNoDaysFishing(): number {
+        return this.m_maxNoDaysFishing;
     }
 }

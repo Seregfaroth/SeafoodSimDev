@@ -1,5 +1,7 @@
 {
-  "startNoOfShips":  3,
+  "maxNoDaysFishing":  10,
+  "schoolSizeWeight": 0.01,
+  "startNoOfShips": 3,
   "movingRadius": 2,
   "recrutingPercentage": 0.32,
   "noOfShipOwners": 2,
@@ -12,13 +14,13 @@
   "linkToMCA": "Link to MCA is coming soon",
   "mapType": 2,
   "mapSize": 15,
-  "numberOfSchools": 20,
+  "numberOfSchools": 15,
   "prices": {
     "Cod": 10,
     "Mackerel": 10
   },
   "oceanFishCapacity": 7000,
-  "schoolsInOnePlace": 2,
+  "schoolsInOnePlace": 4,
   "schoolSize": 2000,
   "schoolMsy": 1800,
   "schoolMinimum": 10,
@@ -47,7 +49,7 @@
   "financialMaxScore": 1000,
   "environmentalMaxScore": 1000,
   "socialMaxScore": 1000,
-  "fishingPercentage": 0.07,
+  "fishingPercentage": 0.5,
 
   "financialMinScore": 0,
   "socialMinScore": 0,
