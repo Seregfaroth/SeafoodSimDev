@@ -92,6 +92,10 @@
     private m_shipOwnerShipPrice: number;
     private m_shipOwnerLicense: boolean;
 
+    private m_noGraphicsMapUpdate: boolean;
+    private m_noMenuDateUpdate: boolean;
+    private m_noMenuScoreUpdate: boolean;
+
     constructor() {
         //this.m_name = "no";
     }
@@ -202,6 +206,10 @@
         this.m_shipOwnerStartMoney = p_json.shipOwnerStartMoney;
         //this.m_shipOwnerShipPrice = p_json.shipOwnerShipPrice;
         this.m_shipOwnerLicense = p_json.shipOwnerLicense;
+
+        this.m_noGraphicsMapUpdate = p_json.noGraphicsMapUpdate;
+        this.m_noMenuDateUpdate = p_json.noMenuDateUpdate;
+        this.m_noMenuScoreUpdate = p_json.noMenuScoreUpdate;
     }
     public getName(): string {
         return this.m_name;
@@ -427,5 +435,14 @@
     }
     public getStartNoOfShips(): number {
         return this.m_startNoOfShips;
+    }
+    public getNoGraphicsMapUpdate(): boolean {
+        return this.m_noGraphicsMapUpdate;
+    }
+    public getNoMenuDateUpdate(): boolean {
+        return this.m_noMenuDateUpdate;
+    }
+    public getNoMenuScoreUpdate(): boolean {
+        return this.m_noMenuScoreUpdate;
     }
 }

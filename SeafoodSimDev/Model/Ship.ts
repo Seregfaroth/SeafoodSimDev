@@ -9,13 +9,16 @@ class Ship {
     private m_scenario: Scenario;
     private m_fuel: number;
     private m_cargo: number[][];
-    private m_fuelCapacity: number = 150;
-    private m_cargoCapacity: number = 800;
+    //private m_fuelCapacity: number = 150;
+    //private m_cargoCapacity: number = 800;
+    private m_fuelCapacity: number;
+    private m_cargoCapacity: number;
     private m_yield: number[][];
     private m_taxPayed: number;
     private m_position: Point2;
     private m_path: Point2[] = [];
-    private m_fuelPerMove: number = 1;
+    //private m_fuelPerMove: number = 1;
+    private m_fuelPerMove: number;
     private m_owner: ShipOwner;
     private m_state: shipState;
     public history: any[][] = [[],[]];//For debugging  purpose
@@ -25,6 +28,9 @@ class Ship {
         this.m_position = p_owner.getShipStartPosition();
         this.m_cargo = [[], []];
         this.m_yield = [[], []];
+        this.m_fuelCapacity = p_scenario.getShipFuelCapacity();
+        this.m_cargoCapacity = p_scenario.getShipCargoCapacity();
+        this.m_fuelPerMove = p_scenario.getShipFuelPerMove();
         this.m_fuel = this.m_fuelCapacity;
         this.m_owner = p_owner;
         this.m_state = shipState.waiting;

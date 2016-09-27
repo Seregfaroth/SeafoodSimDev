@@ -96,6 +96,9 @@ var Scenario = (function () {
         this.m_shipOwnerStartMoney = p_json.shipOwnerStartMoney;
         //this.m_shipOwnerShipPrice = p_json.shipOwnerShipPrice;
         this.m_shipOwnerLicense = p_json.shipOwnerLicense;
+        this.m_noGraphicsMapUpdate = p_json.noGraphicsMapUpdate;
+        this.m_noMenuDateUpdate = p_json.noMenuDateUpdate;
+        this.m_noMenuScoreUpdate = p_json.noMenuScoreUpdate;
     };
     Scenario.prototype.getName = function () {
         return this.m_name;
@@ -318,6 +321,15 @@ var Scenario = (function () {
     };
     Scenario.prototype.getStartNoOfShips = function () {
         return this.m_startNoOfShips;
+    };
+    Scenario.prototype.getNoGraphicsMapUpdate = function () {
+        return this.m_noGraphicsMapUpdate;
+    };
+    Scenario.prototype.getNoMenuDateUpdate = function () {
+        return this.m_noMenuDateUpdate;
+    };
+    Scenario.prototype.getNoMenuScoreUpdate = function () {
+        return this.m_noMenuScoreUpdate;
     };
     return Scenario;
 }());

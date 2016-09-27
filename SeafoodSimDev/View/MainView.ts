@@ -13,7 +13,15 @@ class MainView {
         $("#menuDiv").remove();//Might not be necessary to remove mapMenu, but it needs to be updated
         this.m_mapView = new MapView(p_map);
         this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate, p_scenario);
-        
+        var t = p_scenario.getNoGraphicsMapUpdate();
+        if (p_scenario.getNoGraphicsMapUpdate() != null)
+            this.m_noGraphicSimulation = p_scenario.getNoGraphicsMapUpdate();
+        if (p_scenario.getNoMenuDateUpdate() != null)
+            this.m_noDateUpdate = p_scenario.getNoMenuDateUpdate();
+        if (p_scenario.getNoMenuScoreUpdate() != null)
+            this.m_noScoreUpdate = p_scenario.getNoMenuScoreUpdate();
+    
+    
     }
     public reset(p_model: Model, p_scenario:Scenario): void {
         this.m_mapView.reset(p_model.getMap());

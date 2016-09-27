@@ -2,11 +2,11 @@
 var ShipOwner = (function () {
     function ShipOwner(p_government, p_shipStartPosition, p_id, p_scenario, p_balance) {
         this.m_ships = [];
-        this.m_license = true;
         this.m_scenario = p_scenario;
         this.m_government = p_government;
         this.m_shipStartPosition = p_shipStartPosition;
         this.m_id = p_id;
+        this.m_license = p_scenario.getShipOwnerLicense();
         this.m_shipPrice = p_scenario.getShipPrice();
         if (p_balance) {
             this.m_balance = p_balance;

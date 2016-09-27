@@ -10,7 +10,8 @@ var Cod = (function (_super) {
     function Cod(p_size, p_msy, p_position, p_scenario, p_ages) {
         _super.call(this, p_size, p_msy, p_position, p_scenario);
         this.m_origin = p_position;
-        this.m_maxAge = 8; // OBS Ship also uses this value. It is hardcoded there at the moment
+        //this.m_maxAge = 8; // OBS Ship also uses this value. It is hardcoded there at the moment
+        this.m_maxAge = p_scenario.getCodSchoolMaxAge();
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }

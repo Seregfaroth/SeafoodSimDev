@@ -22,8 +22,8 @@
   "schoolSize": 2000,
   "schoolMsy": 1800,
   "schoolMinimum": 10,
-  "schoolMaximum": 5000,
-  "defaultNoDays": 1095,
+  "schoolMaximum": 6500,
+  "defaultNoDays": 300,
   "defaultTickSize": 30,
   "taxingRate": 0.2,
   "map": "map1",
@@ -53,42 +53,41 @@
   "socialMinScore": 0,
   "environmentalMinScore": 0,
 
-  "landsiteShipCapacity": 0,
-  "landsiteResourceCapacity": 0,
-  "landsiteProcessPerDay": 0,
-  "landsiteRunningCost": 0,
-  "landsiteNumberOfEmployees": 0,
+  "landsiteShipCapacity": 1,
+  "landsiteResourceCapacity": 1000,
+  "landsiteProcessPerDay": 10,
+  "landsiteRunningCost": 5,
+  "landsiteNumberOfEmployees": 7,
 
-  "fuelsiteShipCapacity": 0,
-  "fuelsiteResourceCapacity": 0,
-  "fuelsiteProcessPerDay": 0,
-  "fuelsiteRunningCost": 0,
-  "fuelsiteFuelPrize": 0,
-  "fuelsiteNumberOfEmployees": 0,
+  "fuelsiteShipCapacity": 1,
+  "fuelsiteResourceCapacity": 1000,
+  "fuelsiteProcessPerDay": 5,
+  "fuelsiteRunningCost": 8,
+  "fuelsiteFuelPrize": 9,
+  "fuelsiteNumberOfEmployees": 4,
 
-  "environmentalScoreMaxIncreasePerTick": 0,
+  "environmentalScoreMaxIncreasePerTick": 1000,
   "codMovingRadius": 0,
-  "codRecruitPercent": 0,
-  "codSchoolMaxAge": 0,
-  "recruitAndAgeFreq": 1,
+  "codRecruitPercent": 0.35,
+  "codSchoolMaxAge": 8,
+  "recruitAndAgeFreq": 30,
 
   "statFreq": 10,
   "noOfMenPerShip": 8,
 
-  "modelStatFreq": 0,
-  "modelRecruitAndAgeFreq": 0,
-  "noOfEmployeesPerShip": 0,
+  "modelStatFreq": 30,
+  "modelRecruitAndAgeFreq": 30,
+  "noOfEmployeesPerShip": 8,
 
-  "shipFuelCapacity": 0,
-  "shipCargoCapacity": 0,
-  "shipFuelPerMove": 0,
-  "shipMovesPerTick": 0,
+  "shipFuelCapacity": 150,
+  "shipCargoCapacity": 800,
+  "shipFuelPerMove": 1,
+  "shipMovesPerTick": 1,
 
   "shipOwnerShipPrice": 1000,
-  "shipOwnerLicense": 0
+  "shipOwnerLicense": true,
 
-
-
-
-
+  "noGraphicsMapUpdate": false,
+  "noMenuDateUpdate":  false,
+  "noMenuScoreUpdate": false
 }

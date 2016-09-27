@@ -14,15 +14,15 @@ var FishType;
 })(FishType || (FishType = {}));
 var Ship = (function () {
     function Ship(p_owner, p_scenario) {
-        this.m_fuelCapacity = 150;
-        this.m_cargoCapacity = 800;
         this.m_path = [];
-        this.m_fuelPerMove = 1;
         this.history = [[], []]; //For debugging  purpose
         this.m_scenario = p_scenario;
         this.m_position = p_owner.getShipStartPosition();
         this.m_cargo = [[], []];
         this.m_yield = [[], []];
+        this.m_fuelCapacity = p_scenario.getShipFuelCapacity();
+        this.m_cargoCapacity = p_scenario.getShipCargoCapacity();
+        this.m_fuelPerMove = p_scenario.getShipFuelPerMove();
         this.m_fuel = this.m_fuelCapacity;
         this.m_owner = p_owner;
         this.m_state = shipState.waiting;

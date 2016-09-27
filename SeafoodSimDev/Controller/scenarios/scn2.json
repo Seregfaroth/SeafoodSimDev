@@ -83,6 +83,10 @@
   "shipMovesPerTick": 0,
 
   "shipOwnerShipPrice": 0,
-  "shipOwnerLicense": 0
+  "shipOwnerLicense": 0,
+
+  "noGraphicsMapUpdate": true,
+  "noMenuDateUpdate":  false,
+  "noMenuScoreUpdate": false
 
 }
