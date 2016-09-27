@@ -146,7 +146,7 @@ class StartScreen {
 
         $("#startScreen").dialog({
             minWidth: 1100,
-            minHeight: 700,
+            minHeight: 600,
             modal: true
         });
 

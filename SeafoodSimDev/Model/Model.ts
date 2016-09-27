@@ -15,7 +15,7 @@ class Model {
 
     constructor(p_scenario: Scenario) {
         console.log("constructing model");
-        
+        var t=p_scenario.getSchoolSizeWeight();
         this.m_scenario = p_scenario;
         var restrictions: Restrictions = new Restrictions(this.m_scenario);
         this.m_stats = new EndScreenStats(this.m_scenario);

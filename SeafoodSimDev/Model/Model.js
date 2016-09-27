@@ -8,6 +8,7 @@ var Model = (function () {
         this.m_shipOwners = [];
         this.m_time = 0;
         console.log("constructing model");
+        var t = p_scenario.getSchoolSizeWeight();
         this.m_scenario = p_scenario;
         var restrictions = new Restrictions(this.m_scenario);
         this.m_stats = new EndScreenStats(this.m_scenario);
