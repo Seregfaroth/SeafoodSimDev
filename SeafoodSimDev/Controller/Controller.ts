@@ -17,23 +17,27 @@ class Controller {
     private m_scenario: Scenario;
     private m_endTime: number;
     
+    
     private m_ticksPerMove: number;
     //private m_sce: Scenario;
-    constructor() {
+    constructor(p_mca?: boolean) {
         console.log("Controller loading");
         this.m_scenario = new Scenario();
-        
-        this.m_simState = simState.paused;
-        this.m_delayPerTick = 1000;
-        this.m_fastDelayPerTick = 1;
-        //this.m_statFreq = 30;
-        //this.m_model = new Model(this.m_scenario);
-        //this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
-        new StartScreen();
-        this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_scenario);
-        //this.m_scenario.loadScenario('Controller/scenarios/scn1.json', this.m_startScreenEventHandler.updateInfo);
-        //this.m_view.updateMainView(this.m_model);
-
+        if (p_mca === true) {
+            this.m_scenario.loadScenario('Controller/scenarios/scnMCA1.json', this.initMCA);
+        }
+        else {
+            this.m_simState = simState.paused;
+            this.m_delayPerTick = 1;
+            this.m_fastDelayPerTick = 1;
+            //this.m_statFreq = 30;
+            //this.m_model = new Model(this.m_scenario);
+            //this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
+            new StartScreen();
+            this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_scenario);
+            //this.m_scenario.loadScenario('Controller/scenarios/scn1.json', this.m_startScreenEventHandler.updateInfo);
+            //this.m_view.updateMainView(this.m_model);
+        }
     }
     //public getScenario(): number {
     //    return this.m_scenario;
@@ -41,6 +45,10 @@ class Controller {
     //public setScenario(p_scenario: number): void {
     //    this.m_scenario = p_scenario;
     //}
+    private initMCA = () => {
+        this.setModelMCA(new Model(this.m_scenario));
+        this.m_model.runMCA(this.m_scenario.getDefaultNoDays());
+    }
     public getTicksPerMove(): number {
         return this.m_ticksPerMove;
     }
@@ -55,6 +63,9 @@ class Controller {
     }
     public getModel(): Model {
         return this.m_model;
+    }
+    public setModelMCA(p_model: Model) {
+        this.m_model = p_model;
     }
     public setModel(p_model: Model) {
         this.m_model = p_model;
