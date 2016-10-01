@@ -89,6 +89,7 @@
     private m_shipCargoCapacity: number;
     private m_shipFuelPerMove: number;
     private m_shipMovesPerTick: number;
+    private m_shipFuelPerFishingTick: number;
 
     private m_shipOwnerStartMoney: number;
     private m_shipOwnerShipPrice: number;
@@ -97,6 +98,8 @@
     private m_noGraphicsMapUpdate: boolean;
     private m_noMenuDateUpdate: boolean;
     private m_noMenuScoreUpdate: boolean;
+
+    private m_noHistory: boolean;
 
     constructor() {
         //this.m_name = "no";
@@ -206,6 +209,7 @@
         this.m_shipCargoCapacity = p_json.shipCargoCapacity;
         this.m_shipFuelPerMove = p_json.shipFuelPerMove;
         this.m_shipMovesPerTick = p_json.shipMovesPerTick;
+        this.m_shipFuelPerFishingTick = p_json.shipFuelPerFishingTick;
 
         this.m_shipOwnerStartMoney = p_json.shipOwnerStartMoney;
         //this.m_shipOwnerShipPrice = p_json.shipOwnerShipPrice;
@@ -214,7 +218,13 @@
         this.m_noGraphicsMapUpdate = p_json.noGraphicsMapUpdate;
         this.m_noMenuDateUpdate = p_json.noMenuDateUpdate;
         this.m_noMenuScoreUpdate = p_json.noMenuScoreUpdate;
+
+        this.m_noHistory = p_json.noHistory;
     }
+    public setTaxrate(p_taxRate: number) {
+        this.m_taxingRate = p_taxRate;
+    }
+    
     public getName(): string {
         return this.m_name;
     }
@@ -406,6 +416,9 @@
     public getShipMovesPerTick(): number {
         return this.m_shipMovesPerTick;
     }
+    public getFuelFishingPerTick(): number {
+        return this.m_shipFuelPerFishingTick;
+    }
 
     public getShipOwnerStartMoney(): number {
         return this.m_shipOwnerStartMoney;
@@ -454,5 +467,8 @@
     }
     public getMaxNoDaysFishing(): number {
         return this.m_maxNoDaysFishing;
+    }
+    public getNoHistory(): boolean {
+        return this.m_noHistory;
     }
 }
