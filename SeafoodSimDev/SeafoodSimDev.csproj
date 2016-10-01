@@ -40,6 +40,7 @@
     <Content Include="Controller\scenarios\scn1.json" />
     <Content Include="Controller\scenarios\scn2.json" />
     <Content Include="Controller\scenarios\scn3.json" />
+    <Content Include="Controller\scenarios\scnMCA1.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

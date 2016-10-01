@@ -38,9 +38,7 @@ class EndScreenStats {
     }
 
     public getBiomassPrTimeUnitAt(p_index: number): number {
-        var b: number;
-
-        return b;
+        return this.m_biomassPrTimeUnit[p_index];
     }
     public setBiomassPrTimeUnitAt(p_index: number, p_biomass) {
         this.m_biomassPrTimeUnit[p_index] = p_biomass;

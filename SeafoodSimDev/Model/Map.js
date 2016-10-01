@@ -97,11 +97,19 @@ var Map = (function () {
     Map.prototype.placeSchools = function (p_n, p_schoolSize, p_schoolMsy, p_schoolsInOnePlace) {
         var schoolsPlaced = 0;
         var placedInSamePlace = 0;
-        var point = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
+        var schoolPoints = [];
+        schoolPoints[0] = new Point2(5, 9);
+        var point = schoolPoints[0]; // = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
+        schoolPoints[1] = new Point2(5, 12);
+        schoolPoints[2] = new Point2(7, 10);
+        schoolPoints[3] = new Point2(7, 13);
+        schoolPoints[4] = new Point2(9, 11);
+        var i = 1;
         while (schoolsPlaced < p_n) {
             if (placedInSamePlace === p_schoolsInOnePlace) {
                 placedInSamePlace = 0;
-                point = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
+                //point = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
+                point = schoolPoints[i++ % 5];
             }
             placedInSamePlace++;
             var tile = this.getTile(point);

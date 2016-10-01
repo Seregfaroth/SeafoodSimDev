@@ -16,14 +16,14 @@ class EndScreen {
         var endGameStatusDiv: HTMLDivElement = document.createElement("div");
         endDiv.appendChild(endGameStatusDiv);
         endGameStatusDiv.id = 'endGameStatusDiv';
-        endGameStatusDiv.style.border = '1px solid black';
+        endGameStatusDiv.style.border = '3px solid black';
         endGameStatusDiv.style.cssFloat = 'right';
         //endGameStatusDiv.style.margin = '30px';
 
         var endGameStatusGoalDiv: HTMLDivElement = document.createElement("div");
         endDiv.appendChild(endGameStatusGoalDiv);
         endGameStatusGoalDiv.id = 'endGameStatusGoalDiv';
-        endGameStatusGoalDiv.style.border = '1px solid black';
+        endGameStatusGoalDiv.style.border = '1px solid green';
         //endGameStatusGoalDiv.style.margin = '10px';
         endGameStatusGoalDiv.style.padding = '5px';
         endGameStatusGoalDiv.innerHTML = "";
@@ -194,12 +194,15 @@ class EndScreen {
             minWidth: 1050,
             minHeight: 300,
             maxWidth: 1250,
-            maxHeight: 600
+            maxHeight: 600,
+            close: this.closeEndScreen
             //overflow: scroll
         });
     }
         
     public getFinancialScoreSucces(): boolean {
+        var t = this.m_model.getGovernment().getScore().getFinancialScore();
+        var tt = this.m_model.getScenario().getfinGoal();
         if (this.m_model.getGovernment().getScore().getFinancialScore() < this.m_model.getScenario().getfinGoal())
             return false;
         else
@@ -221,5 +224,8 @@ class EndScreen {
             return false;
         else
             return true;
+    }
+    private closeEndScreen() {
+        $("#endScreen").empty().remove();
     }
 }

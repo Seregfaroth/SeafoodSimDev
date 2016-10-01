@@ -85,6 +85,8 @@ var Score = (function () {
         //    ['Overall', this.m_overallScore, 'color: #ffa700', 'Current', this.m_scenario.getAllScore(), 'color: #cc8500', 'goal'],
         //];
         var i = 1;
+        var t5 = this.m_financialScore;
+        var t6 = this.m_scenario.getfinGoal();
         ret[0] = ['ScoreType', 'CurrentScore', { role: 'style' }, { role: 'annotation' }, 'GoalScore', { role: 'style' }, { role: 'annotation' }];
         if (this.m_scenario.getfinGoal().toString() != "no")
             ret[i++] = ['Financial', this.m_financialScore, 'color: #0057e7', 'Current', this.m_scenario.getfinGoal(), 'color: #0045b8', 'goal'];

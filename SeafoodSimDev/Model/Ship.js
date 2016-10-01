@@ -18,12 +18,14 @@ var Ship = (function () {
         this.m_path = [];
         this.history = [[], []]; //For debugging  purpose
         this.m_scenario = p_scenario;
+        this.m_noHistory = p_scenario.getNoHistory();
         this.m_position = p_owner.getShipStartPosition();
         this.m_cargo = [[], []];
         this.m_yield = [[], []];
         this.m_fuelCapacity = p_scenario.getShipFuelCapacity();
         this.m_cargoCapacity = p_scenario.getShipCargoCapacity();
         this.m_fuelPerMove = p_scenario.getShipFuelPerMove();
+        this.m_fuelPerFishingTick = p_scenario.getFuelFishingPerTick();
         this.m_fuel = this.m_fuelCapacity;
         this.m_owner = p_owner;
         this.m_state = shipState.waiting;
@@ -66,10 +68,12 @@ var Ship = (function () {
             throw new Error("path is not starting at ship position");
         }
         this.m_path = p_path;
-        this.history[0].push("current + " + this.m_position.row + " , " + this.m_position.col);
-        this.history[0].push("path 0: " + p_path[0].row + ", " + p_path[0].col);
-        this.history[0].push(p_path.slice());
-        this.history[0].push("length:" + p_path.length);
+        if (!this.m_noHistory) {
+            this.history[0].push("current + " + this.m_position.row + " , " + this.m_position.col);
+            this.history[0].push("path 0: " + p_path[0].row + ", " + p_path[0].col);
+            this.history[0].push(p_path.slice());
+            this.history[0].push("length:" + p_path.length);
+        }
     };
     Ship.prototype.getPosition = function () {
         return this.m_position;
@@ -98,8 +102,10 @@ var Ship = (function () {
         else if (this.moveTo(this.m_path[1], p_map)) {
             //Only take point out of path if ship can move to point
             this.m_path.shift();
-            this.history[0].push(this.m_position);
-            this.history[0].push(this.m_fuel);
+            if (!this.m_noHistory) {
+                this.history[0].push(this.m_position);
+                this.history[0].push(this.m_fuel);
+            }
         }
     };
     Ship.prototype.hasReachedGoal = function () {
@@ -125,6 +131,7 @@ var Ship = (function () {
     Ship.prototype.fish = function (p_map) {
         this.m_fishedFor++;
         var ship = this;
+        this.m_fuel -= this.m_fuelPerFishingTick;
         var percentage = this.m_scenario.getFishingPercentage();
         var noOfFishInTile = p_map.getNoOfFishInTile(this.m_position);
         if (this.m_cargoCapacity - this.getCargoSize() < noOfFishInTile * percentage) {
@@ -141,10 +148,11 @@ var Ship = (function () {
                 ship.m_cargo[type][i] += noOfFish;
                 //Remove from school
                 school.getAges()[i] -= noOfFish;
-                var t1 = p_map.getYield();
+                //var t1 = p_map.getYield();
                 p_map.setYield(p_map.getYield() + noOfFish);
-                var t2 = p_map.getYield();
-                ship.history[1].push(noOfFish);
+                //var t2 = p_map.getYield();
+                if (!this.m_noHistory)
+                    ship.history[1].push(noOfFish);
             }
         });
     };

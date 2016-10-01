@@ -25,8 +25,7 @@ var EndScreenStats = (function () {
         return this.m_time[p_index];
     };
     EndScreenStats.prototype.getBiomassPrTimeUnitAt = function (p_index) {
-        var b;
-        return b;
+        return this.m_biomassPrTimeUnit[p_index];
     };
     EndScreenStats.prototype.setBiomassPrTimeUnitAt = function (p_index, p_biomass) {
         this.m_biomassPrTimeUnit[p_index] = p_biomass;

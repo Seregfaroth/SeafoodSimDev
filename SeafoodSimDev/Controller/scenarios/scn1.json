@@ -1,9 +1,9 @@
 {
-  "maxNoDaysFishing":  10,
+  "maxNoDaysFishing":  5,
   "schoolSizeWeight": 0.01,
-  "startNoOfShips": 3,
-  "movingRadius": 2,
-  "recrutingPercentage": 0.32,
+  "startNoOfShips": 0,
+  "movingRadius": 1,
+  "recrutingPercentage": 0.62,
   "noOfShipOwners": 2,
   "name": "Scenario 1",
   "financialScoreGoal": 2000,
@@ -14,27 +14,27 @@
   "linkToMCA": "Link to MCA is coming soon",
   "mapType": 2,
   "mapSize": 15,
-  "numberOfSchools": 15,
+  "numberOfSchools": 5,
   "prices": {
-    "Cod": 10,
+    "Cod": 15,
     "Mackerel": 10
   },
-  "oceanFishCapacity": 7000,
-  "schoolsInOnePlace": 4,
-  "schoolSize": 2000,
-  "schoolMsy": 1800,
+  "oceanFishCapacity": 20000,
+  "schoolsInOnePlace": 1,
+  "schoolSize": 12000,
+  "schoolMsy": 5000,
   "schoolMinimum": 10,
-  "schoolMaximum": 6500,
-  "defaultNoDays": 300,
+  "schoolMaximum": 16500,
+  "defaultNoDays": 120,
   "defaultTickSize": 30,
   "taxingRate": 0.2,
   "map": "map1",
   "shipOwner": "skipper1",
-  "shipOwnerStartMoney": 1000000,
-  "shipPrice": 10000,
+  "shipOwnerStartMoney": 1,
+  "shipPrice": 100000,
   "aiShipBuyBalance": 200000,
   "aiShipSellBalance": 0,
-  "shipOwnerStartBalance": 300000,
+  "shipOwnerStartBalance": 450000,
 
   "subFinancialWeight": 70,
   "subEnvironmentalWeight": 10,
@@ -49,7 +49,7 @@
   "financialMaxScore": 1000,
   "environmentalMaxScore": 1000,
   "socialMaxScore": 1000,
-  "fishingPercentage": 0.5,
+  "fishingPercentage": 0.3,
 
   "financialMinScore": 0,
   "socialMinScore": 0,
@@ -65,16 +65,16 @@
   "fuelsiteResourceCapacity": 1000,
   "fuelsiteProcessPerDay": 5,
   "fuelsiteRunningCost": 8,
-  "fuelsiteFuelPrize": 9,
+  "fuelsiteFuelPrize": 200,
   "fuelsiteNumberOfEmployees": 4,
 
-  "environmentalScoreMaxIncreasePerTick": 1000,
+  "environmentalScoreMaxIncreasePerTick": 2000,
   "codMovingRadius": 0,
   "codRecruitPercent": 0.35,
   "codSchoolMaxAge": 8,
   "recruitAndAgeFreq": 30,
 
-  "statFreq": 10,
+  "statFreq": 30,
   "noOfMenPerShip": 8,
 
   "modelStatFreq": 30,
@@ -85,11 +85,14 @@
   "shipCargoCapacity": 800,
   "shipFuelPerMove": 1,
   "shipMovesPerTick": 1,
+  "shipFuelPerFishingTick": 1,
 
   "shipOwnerShipPrice": 1000,
   "shipOwnerLicense": true,
 
   "noGraphicsMapUpdate": false,
   "noMenuDateUpdate":  false,
-  "noMenuScoreUpdate": false
+  "noMenuScoreUpdate": false,
+
+  "noHistory": false  
 }

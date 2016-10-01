@@ -5,6 +5,7 @@ var AI = (function () {
         this.m_fishingPath = [new Point2(2, 0), new Point2(1, 0), new Point2(1, 1), new Point2(1, 2), new Point2(1, 3), new Point2(1, 4), new Point2(2, 4),
             new Point2(3, 4), new Point2(3, 3), new Point2(3, 2), new Point2(3, 1), new Point2(3, 0), new Point2(2, 0)];
         this.m_scenario = p_scenario;
+        this.m_noHistory = p_scenario.getNoHistory();
         this.m_balanceToBuyShip = p_scenario.getAiBuyShipBalance();
         this.m_balanceToSellShip = p_scenario.getAiSellShipBalance();
     }
@@ -41,7 +42,7 @@ var AI = (function () {
             }
             if (ship.getState() === shipState.fishing) {
                 //If ship is currently fishing, fish until cargo is at least 98% full
-                if (ship.getCargoSize() >= ship.getCargoCapacity() * 0.98) {
+                if (ship.getCargoSize() >= ship.getCargoCapacity() * 0.98 || ship.getFuel() < ship.getFuelCapacity() * 0.3) {
                     ship.resetFishedFor();
                     ai.findNewPath(ship, p_map);
                 }
@@ -154,7 +155,8 @@ var AI = (function () {
     AI.prototype.goFish = function (p_ship, p_map, p_path) {
         p_ship.setPath(p_path);
         p_ship.setState(shipState.goingToFish);
-        p_ship.history[0].push("going to fish");
+        if (!this.m_noHistory)
+            p_ship.history[0].push("going to fish");
     };
     AI.prototype.goLand = function (p_ship, p_map, p_path) {
         if (!p_path) {
@@ -162,7 +164,8 @@ var AI = (function () {
         }
         p_ship.setPath(p_path);
         p_ship.setState(shipState.goingToLand);
-        p_ship.history[0].push("going to land");
+        if (!this.m_noHistory)
+            p_ship.history[0].push("going to land");
     };
     AI.prototype.goRefuel = function (p_ship, p_map, p_path) {
         if (!p_path) {
@@ -170,13 +173,16 @@ var AI = (function () {
         }
         p_ship.setPath(p_path);
         p_ship.setState(shipState.goingToRefuel);
-        p_ship.history[0].push("going to refuel");
+        if (!this.m_noHistory)
+            p_ship.history[0].push("going to refuel");
     };
     AI.prototype.canReach = function (p_ship, p_map, p_previousPath) {
         var fuelPath = this.pathToNearestFuelSite(p_previousPath[p_previousPath.length - 1], p_map);
         var sailingDist = p_previousPath.length - 1 + fuelPath.length;
-        p_ship.history[0].push("checking if ship can sail " + sailingDist + " with " + p_ship.getFuel() + " fuel :" + (p_ship.getFuel() > sailingDist * p_ship.getFuelPerMove()));
-        p_ship.history.push(fuelPath);
+        if (!this.m_noHistory)
+            p_ship.history[0].push("checking if ship can sail " + sailingDist + " with " + p_ship.getFuel() + " fuel :" + (p_ship.getFuel() > sailingDist * p_ship.getFuelPerMove()));
+        if (!this.m_noHistory)
+            p_ship.history.push(fuelPath);
         return (p_ship.getFuel() > sailingDist * p_ship.getFuelPerMove());
     };
     AI.prototype.findNewPath = function (p_ship, p_map) {
