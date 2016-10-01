@@ -55,8 +55,13 @@ class ShipOwner {
         return this.m_shipPrice;
     }
     public financialTransaction(p_amount: number): void {
-        this.m_balance += p_amount * (1 - this.m_government.getTaxingRate());
-        this.m_taxPayed += p_amount * this.m_government.getTaxingRate();
+        if (p_amount < 0) {
+            this.m_balance += p_amount;
+        }
+        else {
+            this.m_balance += p_amount * (1 - this.m_government.getTaxingRate());
+            this.m_taxPayed += p_amount * this.m_government.getTaxingRate();
+        }
     }
 
     public buyShip(): Ship{
