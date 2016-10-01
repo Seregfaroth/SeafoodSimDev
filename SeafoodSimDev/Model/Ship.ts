@@ -17,18 +17,22 @@ class Ship {
     private m_position: Point2;
     private m_path: Point2[] = [];
     private m_fuelPerMove: number;
+    private m_fuelPerFishingTick: number;
     private m_owner: ShipOwner;
     private m_state: shipState;
-    public history: any[][] = [[],[]];//For debugging  purpose
+    public history: any[][] = [[], []];//For debugging  purpose
+    private m_noHistory: boolean;
 
     public constructor(p_owner: ShipOwner, p_scenario: Scenario) {
         this.m_scenario = p_scenario;
+        this.m_noHistory = p_scenario.getNoHistory();
         this.m_position = p_owner.getShipStartPosition();
         this.m_cargo = [[], []];
         this.m_yield = [[], []];
         this.m_fuelCapacity = p_scenario.getShipFuelCapacity();
         this.m_cargoCapacity = p_scenario.getShipCargoCapacity();
         this.m_fuelPerMove = p_scenario.getShipFuelPerMove();
+        this.m_fuelPerFishingTick = p_scenario.getFuelFishingPerTick();
         this.m_fuel = this.m_fuelCapacity;
         this.m_owner = p_owner;
         this.m_state = shipState.waiting;
@@ -76,10 +80,12 @@ class Ship {
             throw new Error("path is not starting at ship position");
         }
         this.m_path = p_path;
-        this.history[0].push("current + " + this.m_position.row + " , " + this.m_position.col);
-        this.history[0].push("path 0: " + p_path[0].row + ", " + p_path[0].col);
-        this.history[0].push(p_path.slice());
-        this.history[0].push("length:" + p_path.length);
+        if (!this.m_noHistory) {
+            this.history[0].push("current + " + this.m_position.row + " , " + this.m_position.col);
+            this.history[0].push("path 0: " + p_path[0].row + ", " + p_path[0].col);
+            this.history[0].push(p_path.slice());
+            this.history[0].push("length:" + p_path.length);
+        }
     }
 
     public getPosition(): Point2 {
@@ -109,9 +115,10 @@ class Ship {
         else if (this.moveTo(this.m_path[1], p_map)) {
             //Only take point out of path if ship can move to point
             this.m_path.shift()
-            this.history[0].push(this.m_position);
-            this.history[0].push(this.m_fuel);
-            
+            if (!this.m_noHistory) {
+                this.history[0].push(this.m_position);
+                this.history[0].push(this.m_fuel);
+            }
         }
     }
     public hasReachedGoal(): boolean {
@@ -138,7 +145,7 @@ class Ship {
     public fish(p_map: Map): void {
         this.m_fishedFor++;
         var ship: Ship = this;
-
+        this.m_fuel -= this.m_fuelPerFishingTick;
         var percentage: number = this.m_scenario.getFishingPercentage();
         var noOfFishInTile: number = p_map.getNoOfFishInTile(this.m_position);
         if (this.m_cargoCapacity - this.getCargoSize() < noOfFishInTile * percentage) {
@@ -156,10 +163,11 @@ class Ship {
                 ship.m_cargo[type][i] += noOfFish;
                 //Remove from school
                 school.getAges()[i] -= noOfFish;
-                var t1 = p_map.getYield();
+                //var t1 = p_map.getYield();
                 p_map.setYield(p_map.getYield() + noOfFish);
-                var t2 = p_map.getYield();
-                ship.history[1].push(noOfFish);              
+                //var t2 = p_map.getYield();
+                if (!this.m_noHistory)
+                    ship.history[1].push(noOfFish);              
             }
         });
         
