@@ -24,6 +24,7 @@ class AI {
         var possibleToBuyShip: boolean = p_map.getNoOfShips() < p_map.getRestrictions().getMaxShips();
         if (possibleToBuyShip && p_shipOwner.getBalance() > this.m_balanceToBuyShip) {
             p_map.addShip(p_shipOwner.buyShip());
+            this.m_balanceToSellShip += this.m_balanceToBuyShip * 0.01;
         }
         else if (p_shipOwner.getShips().length > 0 && p_shipOwner.getBalance() < this.m_balanceToSellShip) {
             this.sellShip(p_shipOwner, p_map);
@@ -33,6 +34,7 @@ class AI {
     private sellShip(p_shipOwner: ShipOwner, p_map: Map) {
         var ship: Ship = p_shipOwner.getShips()[0];
         p_shipOwner.sellShip(ship);
+        this.m_balanceToSellShip -= 0.01 * this.m_balanceToBuyShip;
         p_map.removeShip(ship);
     }
     private runShips(p_shipOwner: ShipOwner, p_map: Map): void {
@@ -44,11 +46,15 @@ class AI {
             //console.log("cargo: " + ship.getCargoSize());
             //console.log("fuel: " + ship.getFuel());
             //console.log("position: " + ship.getPosition().row + ", " + ship.getPosition().col);
+            //ship.useFuel(0.25);
+            if (!this.m_noHistory)
+                ship.history[2].push(ship.getState());
             n++;
             if (ship.getFuel() === 0) {
-                //debugger;
+                ship.useFuel(-1.5);
             }
             if (ship.getState() === shipState.fishing) {
+                ship.history[3].push("fishing");
                 //If ship is currently fishing, fish until cargo is at least 98% full
 
                 if (ship.getCargoSize() >= ship.getCargoCapacity() * 0.98 || ship.getFuel() < ship.getFuelCapacity()*0.3) {
@@ -65,15 +71,18 @@ class AI {
                 }
             }
 
-           else  if (ship.hasReachedGoal()) {
+            else if (ship.hasReachedGoal()) {
+                ship.history[3].push("at goal");
                 //If ship has reached a previous sat goal
                 ai.actOnGoal(ship, p_map, p_shipOwner);
             } 
             else {
                 try {
+                    ship.history[3].push("follow path");
                     ship.followPath(p_map)
                 }
                 catch (e) {
+                    ship.history[3].push("find new path");
                     ai.findNewPath(ship, p_map);
                 }
             }
@@ -99,6 +108,9 @@ class AI {
         }
         else if(p_ship.getState() === shipState.goingToFish){
             //If ship has reached a fishing site
+            p_ship.history[3].push("************************* " + p_map.getNoOfShipsInTile(p_ship.getPosition()));
+            var t = p_map.getNoOfShipsInTile(p_ship.getPosition());
+            var t2 = (<Ocean>p_map.getTile(p_ship.getPosition())).getShipCapacity();
             if (p_map.getNoOfShipsInTile(p_ship.getPosition()) <= (<Ocean>p_map.getTile(p_ship.getPosition())).getShipCapacity()) {
                 p_ship.fish(p_map);
                 p_ship.setState(shipState.fishing);
@@ -117,32 +129,48 @@ class AI {
     public pathToNearestLandingSite(p_start: Point2, p_map: Map): Point2[] {
         var bestPath: Point2[];
         var bestDist: number = Infinity;
-        for (var r = 0; r < p_map.getMapHeight(); r++) {
-            for (var c = 0; c < p_map.getMapWidth(); c++) {
-                var path: Point2[] = this.pathFinding(p_map, p_start, new Point2(r, c));
-                if (p_map.getTile(new Point2(r, c)) instanceof LandingSite
-                    && path.length < bestDist) {
-                    bestDist = path.length;
-                    bestPath = path;
-                }
+        for (var ls of p_map.getLandingSites()) {
+            var t = ls.getPosition(); 
+            var path: Point2[] = this.pathFinding(p_map, p_start, ls.getPosition());
+            if (path.length < bestDist) {
+                bestDist = path.length;
+                bestPath = path;
             }
         }
+        //for (var r = 0; r < p_map.getMapHeight(); r++) {
+        //    for (var c = 0; c < p_map.getMapWidth(); c++) {
+        //        var path: Point2[] = this.pathFinding(p_map, p_start, new Point2(r, c));
+        //        if (p_map.getTile(new Point2(r, c)) instanceof LandingSite
+        //            && path.length < bestDist) {
+        //            bestDist = path.length;
+        //            bestPath = path;
+        //        }
+        //    }
+        //}
         return bestPath;
     }
 
     public pathToNearestFuelSite(p_start: Point2, p_map: Map): Point2[] {
         var bestPath: Point2[];
         var bestDist: number = Infinity;
-        for (var r = 0; r < p_map.getMapHeight(); r++) {
-            for (var c = 0; c < p_map.getMapWidth(); c++) {
-                var path: Point2[] = this.pathFinding(p_map, p_start, new Point2(r, c));
-                if (p_map.getTile(new Point2(r, c)) instanceof FuelSite
-                    && path.length < bestDist) {
-                    bestDist = path.length;
-                    bestPath = path;
-                }
+        for (var ls of p_map.getFuelSites()) {
+            var t = ls.getPosition(); 
+            var path: Point2[] = this.pathFinding(p_map, p_start, ls.getPosition());
+            if (path.length < bestDist) {
+                bestDist = path.length;
+                bestPath = path;
             }
         }
+        //for (var r = 0; r < p_map.getMapHeight(); r++) {
+        //    for (var c = 0; c < p_map.getMapWidth(); c++) {
+        //        var path: Point2[] = this.pathFinding(p_map, p_start, new Point2(r, c));
+        //        if (p_map.getTile(new Point2(r, c)) instanceof FuelSite
+        //            && path.length < bestDist) {
+        //            bestDist = path.length;
+        //            bestPath = path;
+        //        }
+        //    }
+        //}
         return bestPath;
     }
     public pathToBestFishingArea(p_start: Point2, p_map: Map): Point2[] {
@@ -158,11 +186,16 @@ class AI {
                 bestPath = path;
             }
         }
+        
         return bestPath;
     }
     public pathToFish(p_start: Point2, p_map: Map): Point2[] {
-        var randomNumber: number = Math.floor(Math.random() * (p_map.getSchools().length-1));
-        return this.pathFinding(p_map, p_start, p_map.getSchools()[randomNumber].getPosition());
+        if (p_map.getSchools().length !== 0) {
+            var randomNumber: number = Math.floor(Math.random() * (p_map.getSchools().length));
+            return this.pathFinding(p_map, p_start, p_map.getSchools()[randomNumber].getPosition());
+        }
+        else
+            return undefined;
     }
     private goFish(p_ship: Ship, p_map: Map, p_path:Point2[]): void {
         
@@ -219,7 +252,9 @@ class AI {
             }
             else {
                 //If ship does not need to land or refuel
-                var fishingPath: Point2[] = this.pathToBestFishingArea(p_ship.getPosition(), p_map);
+                //var fishingPath: Point2[] = this.pathToBestFishingArea(p_ship.getPosition(), p_map);
+                var fishingPath: Point2[] = this.pathToFish(p_ship.getPosition(), p_map);
+                //p_ship.history[4].push(JSON.stringify(fishingPath[fishingPath.length - 1]));
                 if (fishingPath == undefined) {
                     //If there is no school where the ship can fish
                     p_ship.randomMove(p_map);

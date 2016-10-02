@@ -20,7 +20,7 @@ class Ship {
     private m_fuelPerFishingTick: number;
     private m_owner: ShipOwner;
     private m_state: shipState;
-    public history: any[][] = [[], []];//For debugging  purpose
+    public history: any[][] = [[], [], [], [], []];//For debugging  purpose
     private m_noHistory: boolean;
 
     public constructor(p_owner: ShipOwner, p_scenario: Scenario) {
@@ -122,6 +122,10 @@ class Ship {
         }
     }
     public hasReachedGoal(): boolean {
+        //var t = this.m_path.length;
+        //var t2 = this.m_path[0];
+        //var t3 = this.m_position;
+        //this.history[3].push(this.m_path.length === 1 && this.m_path[0] === this.m_position);
         return this.m_path.length === 1 && this.m_path[0] === this.m_position;
     }
 
@@ -219,6 +223,9 @@ class Ship {
         } while (!newPoint || !(p_map.getTile(newPoint) instanceof Ocean));
         this.moveTo(newPoint,p_map);
     //console.log("new postion: " + JSON.stringify(this.m_position));
+    }
+    public useFuel(p_fuel: number) {
+        this.m_fuel -= p_fuel;
     }
 
 

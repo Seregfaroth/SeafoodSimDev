@@ -2,6 +2,7 @@
 var ShipOwner = (function () {
     function ShipOwner(p_government, p_shipStartPosition, p_id, p_scenario, p_balance) {
         this.m_ships = [];
+        this.m_shipBought = false;
         this.m_scenario = p_scenario;
         this.m_government = p_government;
         this.m_shipStartPosition = p_shipStartPosition;
@@ -53,6 +54,7 @@ var ShipOwner = (function () {
         var ship = new Ship(this, this.m_scenario);
         this.m_ships.push(ship);
         this.financialTransaction(-this.m_shipPrice);
+        this.m_shipBought = true;
         return ship;
     };
     ShipOwner.prototype.sellShip = function (ship) {

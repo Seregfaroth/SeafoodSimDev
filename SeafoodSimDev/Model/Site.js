@@ -6,13 +6,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="Tile.ts"/>
 var Site = (function (_super) {
     __extends(Site, _super);
-    function Site(p_shipCapacity, p_resourceCapacity, p_processPerDay, p_id) {
+    function Site(p_shipCapacity, p_resourceCapacity, p_processPerDay, p_id, p_position) {
         _super.call(this);
         this.m_shipCapacity = p_shipCapacity;
         this.m_resourceCapacity = p_resourceCapacity;
         this.m_processPerDay = p_processPerDay;
         this.m_runningCost = p_processPerDay * 0.005;
         this.m_id = p_id;
+        this.m_position = p_position;
     }
     Site.prototype.getID = function () {
         return this.m_id;
@@ -31,6 +32,9 @@ var Site = (function (_super) {
     };
     Site.prototype.getProcessPerDay = function () {
         return this.m_processPerDay;
+    };
+    Site.prototype.getPosition = function () {
+        return this.m_position;
     };
     return Site;
 }(Tile));

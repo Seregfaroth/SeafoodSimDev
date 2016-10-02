@@ -29,10 +29,10 @@ var Model = (function () {
         return this.m_scenario;
     };
     Model.prototype.updateStats = function () {
-        console.log("upStats, time: " + this.m_time);
+        //console.log("upStats, time: " + this.m_time);
         var biomass = 0;
-        var recruit = 0;
-        var natDeath = 0;
+        var recruit = this.m_map.m_recruit;
+        var natDeath = this.m_map.m_natDeath;
         // updating time
         var statTime = this.getTime() / this.m_scenario.getStatFreq();
         this.m_stats.setTimeAt(statTime, this.getTime());
@@ -74,9 +74,15 @@ var Model = (function () {
         return this.m_stats;
     };
     Model.prototype.runMCA = function (p_noOfMoves) {
-        var tax = [10, 10, 10, 10];
-        var maxShips = [6, 6];
+        //var tax: number[] = [10];
+        var tax = [10, 15, 20, 25];
+        //var tax: number[] = [10, 15, 20, 30, 40, 50, 60, 70];
         //var maxShips: number[] = [6];
+        //var maxShips: number[] = [6, 10, 14];
+        var maxShips = [6, 10, 14, 18, 22];
+        //var maxShips: number[] = [10, 20, 30, 40, 50];
+        //var maxShips: number[] = [8, 10, 12, 14, 16, 18, 20, 22, 24];
+        //var maxShips: number[] = [16];
         var result = [];
         for (var taxIndex = 0; taxIndex < tax.length; taxIndex++) {
             result[taxIndex] = [];
@@ -105,8 +111,10 @@ var Model = (function () {
                 var onShore = this.m_stats.getEmploymentLandBasedPrTimeUnitAt(index);
                 var offShore = this.m_stats.getEmploymentSeaBasedPrTimeUnitAt(index);
                 result[taxIndex][maxIndex] = [biomass, recruitment, income, invest, onShore, offShore];
-                console.log("Tax: " + tax[taxIndex]);
-                console.log("Maxships: " + maxShips[maxIndex]);
+                //console.log("Tax: " + tax[taxIndex]);
+                //console.log("Maxships: " + maxShips[maxIndex]);
+                //console.log("income: " + JSON.stringify(this.m_stats.getIncomePrTimeUnit()));
+                console.log("result: " + result[taxIndex][maxIndex]);
                 this.m_stats = new EndScreenStats(this.m_scenario);
                 this.m_shipOwners = [];
                 var j = 0;
@@ -117,12 +125,13 @@ var Model = (function () {
                     this.createShipOwner(startShipPoint[j++]);
                 }
                 this.m_time = 0;
+                this.m_ai = new AI(this.m_scenario);
                 this.m_map = new Map(this.getGovernment().getRestrictions(), this.m_scenario);
             }
         }
         $("#mainDiv").html(this.createJSONForMCA_HTML(result, tax, maxShips));
         console.log("Result: " + result);
-        debugger;
+        //debugger;
     };
     Model.prototype.run = function (p_noOfMoves) {
         if (p_noOfMoves == undefined)
@@ -225,9 +234,9 @@ var Model = (function () {
                 //retObj[id] = {
                 elements[id + 10] = {
                     "posX": (1000 + taxIndex * 160),
-                    "posY": (500 + maxIndex * 50),
+                    "posY": (300 + maxIndex * 50),
                     "elmtID": "elmt" + (id + 1000),
-                    "elmtName": "shipCount " + p_ship[maxIndex] + ", tax " + p_tax[taxIndex] + "%",
+                    "elmtName": "SC " + p_ship[maxIndex] + ", " + p_tax[taxIndex] + "% ",
                     "elmtDesc": "write description here",
                     "elmtType": 102,
                     "elmtWghtMthd": 0,
@@ -259,8 +268,8 @@ var Model = (function () {
             "elmtType": 100,
             "elmtWghtMthd": 2,
             "elmtDstType": 1,
-            "elmtDataMin": Math.min.apply(Math, biomass) - 10000,
-            "elmtDataMax": Math.max.apply(Math, biomass) + 10000,
+            "elmtDataMin": 0,
+            "elmtDataMax": Math.round(Math.max.apply(Math, biomass) * 1.5 / 1000) * 1000,
             "elmtDataUnit": "Tons",
             "elmtDataBaseLine": this.getBaseLine(biomass),
             "elmtDataArr": biomass,
@@ -292,8 +301,10 @@ var Model = (function () {
             "elmtType": 100,
             "elmtWghtMthd": 2,
             "elmtDstType": 1,
-            "elmtDataMin": Math.min.apply(Math, recruitment) - 10000,
-            "elmtDataMax": Math.max.apply(Math, recruitment) + 10000,
+            //"elmtDataMin": Math.min(...recruitment)-10000,
+            "elmtDataMin": 0,
+            //"elmtDataMax": Math.max(...recruitment) + 10000,
+            "elmtDataMax": Math.round(Math.max.apply(Math, recruitment) * 1.5 / 1000) * 1000,
             "elmtDataUnit": "Tons",
             "elmtDataBaseLine": this.getBaseLine(recruitment),
             "elmtDataArr": recruitment,
@@ -325,9 +336,11 @@ var Model = (function () {
             "elmtType": 100,
             "elmtWghtMthd": 2,
             "elmtDstType": 1,
-            "elmtDataMin": Math.min.apply(Math, income) - 10000,
-            "elmtDataMax": Math.max.apply(Math, income) + 10000,
-            "elmtDataUnit": "€",
+            // "elmtDataMin": Math.min(...income)-10000,
+            "elmtDataMin": 0,
+            //"elmtDataMax": Math.max(...income)+10000,
+            "elmtDataMax": Math.round(Math.max.apply(Math, income) * 1.5 / 1000) * 1000,
+            "elmtDataUnit": "Euros",
             "elmtDataBaseLine": this.getBaseLine(income),
             "elmtDataArr": income,
             "pwl": {
@@ -358,9 +371,9 @@ var Model = (function () {
             "elmtType": 100,
             "elmtWghtMthd": 2,
             "elmtDstType": 1,
-            "elmtDataMin": Math.min.apply(Math, invest) - 10000,
-            "elmtDataMax": Math.max.apply(Math, invest) + 10000,
-            "elmtDataUnit": "€",
+            "elmtDataMin": 0,
+            "elmtDataMax": Math.round(Math.max.apply(Math, invest) * 1.5 / 1000) * 1000,
+            "elmtDataUnit": "Euros",
             "elmtDataBaseLine": this.getBaseLine(invest),
             "elmtDataArr": invest,
             "pwl": {
@@ -458,9 +471,9 @@ var Model = (function () {
             "pwlFlipVertical": false,
             "pwlFlipHorizontal": false,
             "elmtData": [
-                ["conn18", 50],
-                ["conn19", 50],
-                ["conn20", 50]
+                ["conn18", this.m_scenario.getSubEnvironmentalWeight()],
+                ["conn19", this.m_scenario.getSubFinancialWeight()],
+                ["conn20", this.m_scenario.getSubSocialWeight()]
             ]
         };
         var environmentalObj = {
@@ -476,8 +489,8 @@ var Model = (function () {
             "pwlFlipVertical": false,
             "pwlFlipHorizontal": false,
             "elmtData": [
-                ["conn14", 50],
-                ["conn15", 50]
+                ["conn14", this.m_scenario.getIndicatorBiomassWeight()],
+                ["conn15", this.m_scenario.getIndicatorRecruitmentWeight()]
             ]
         };
         var financialObj = {
@@ -493,8 +506,8 @@ var Model = (function () {
             "pwlFlipVertical": false,
             "pwlFlipHorizontal": false,
             "elmtData": [
-                ["conn12", 50],
-                ["conn13", 50]
+                ["conn12", this.m_scenario.getIndicatorIncomeWeight()],
+                ["conn13", this.m_scenario.getIndicatorInvestmentWeight()]
             ]
         };
         var socialObj = {
@@ -510,8 +523,8 @@ var Model = (function () {
             "pwlFlipVertical": false,
             "pwlFlipHorizontal": false,
             "elmtData": [
-                ["conn16", 50],
-                ["conn17", 50]
+                ["conn16", this.m_scenario.getIndicatorOffshoreEmployment()],
+                ["conn17", this.m_scenario.getIndicatorOnshoreEmployment()]
             ]
         };
         elements[4] = biomassObj;

@@ -3,7 +3,7 @@
   "schoolSizeWeight": 0.01,
   "startNoOfShips": 0,
   "movingRadius": 1,
-  "recrutingPercentage": 0.62,
+  "recrutingPercentage": 0.35,
   "noOfShipOwners": 2,
   "name": "Scenario 1",
   "financialScoreGoal": 2000,
@@ -11,7 +11,7 @@
   "socialScoreGoal": "no",
   "overallscoreGoal": "no",
   "description": "The government have identified the following sub-objectives: <p style='margin: 10px'> Financial 70%, Environmental 10%, Social 20% </p> For each sub-objective key indicators have been determined and priortized. <p style='margin: 10px'> Financial:  Invest 40%, Income 60% <br> Environmental: Biomass 70%, Recruitment 30% <br> Social: Onshore employment 20%, Offshore employment 80%</p>",
-  "linkToMCA": "Link to MCA is coming soon",
+  "linkToMCA": "http://mareframe.mapix.com/dev/MCA/DST.html?model=sfsCampaign001",
   "mapType": 2,
   "mapSize": 15,
   "numberOfSchools": 5,
@@ -19,22 +19,22 @@
     "Cod": 15,
     "Mackerel": 10
   },
-  "oceanFishCapacity": 20000,
+  "oceanFishCapacity": 40000,
   "schoolsInOnePlace": 1,
-  "schoolSize": 12000,
+  "schoolSize": 22000,
   "schoolMsy": 5000,
-  "schoolMinimum": 10,
+  "schoolMinimum": 50,
   "schoolMaximum": 16500,
-  "defaultNoDays": 120,
+  "defaultNoDays": 900,
   "defaultTickSize": 30,
-  "taxingRate": 0.2,
+  "taxingRate": 0.1,
   "map": "map1",
   "shipOwner": "skipper1",
   "shipOwnerStartMoney": 1,
   "shipPrice": 100000,
   "aiShipBuyBalance": 200000,
   "aiShipSellBalance": 0,
-  "shipOwnerStartBalance": 450000,
+  "shipOwnerStartBalance": 350000,
 
   "subFinancialWeight": 70,
   "subEnvironmentalWeight": 10,
@@ -49,7 +49,7 @@
   "financialMaxScore": 1000,
   "environmentalMaxScore": 1000,
   "socialMaxScore": 1000,
-  "fishingPercentage": 0.3,
+  "fishingPercentage": 0.1,
 
   "financialMinScore": 0,
   "socialMinScore": 0,
@@ -58,14 +58,14 @@
   "landsiteShipCapacity": 1,
   "landsiteResourceCapacity": 1000,
   "landsiteProcessPerDay": 10,
-  "landsiteRunningCost": 5,
+  "landsiteRunningCost": 50,
   "landsiteNumberOfEmployees": 7,
 
   "fuelsiteShipCapacity": 1,
   "fuelsiteResourceCapacity": 1000,
   "fuelsiteProcessPerDay": 5,
-  "fuelsiteRunningCost": 8,
-  "fuelsiteFuelPrize": 200,
+  "fuelsiteRunningCost": 620,
+  "fuelsiteFuelPrize": 20,
   "fuelsiteNumberOfEmployees": 4,
 
   "environmentalScoreMaxIncreasePerTick": 2000,
@@ -74,12 +74,12 @@
   "codSchoolMaxAge": 8,
   "recruitAndAgeFreq": 30,
 
-  "statFreq": 30,
+  "statFreq": 100,
   "noOfMenPerShip": 8,
 
   "modelStatFreq": 30,
   "modelRecruitAndAgeFreq": 30,
-  "noOfEmployeesPerShip": 8,
+  "noOfEmployeesPerShip": 10,
 
   "shipFuelCapacity": 150,
   "shipCargoCapacity": 800,
@@ -94,5 +94,5 @@
   "noMenuDateUpdate":  false,
   "noMenuScoreUpdate": false,
 
-  "noHistory": false  
+  "noHistory": false 
 }

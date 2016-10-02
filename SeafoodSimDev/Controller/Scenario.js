@@ -95,12 +95,17 @@ var Scenario = (function () {
         this.m_shipCargoCapacity = p_json.shipCargoCapacity;
         this.m_shipFuelPerMove = p_json.shipFuelPerMove;
         this.m_shipMovesPerTick = p_json.shipMovesPerTick;
+        this.m_shipFuelPerFishingTick = p_json.shipFuelPerFishingTick;
         this.m_shipOwnerStartMoney = p_json.shipOwnerStartMoney;
         //this.m_shipOwnerShipPrice = p_json.shipOwnerShipPrice;
         this.m_shipOwnerLicense = p_json.shipOwnerLicense;
         this.m_noGraphicsMapUpdate = p_json.noGraphicsMapUpdate;
         this.m_noMenuDateUpdate = p_json.noMenuDateUpdate;
         this.m_noMenuScoreUpdate = p_json.noMenuScoreUpdate;
+        this.m_noHistory = p_json.noHistory;
+    };
+    Scenario.prototype.setTaxrate = function (p_taxRate) {
+        this.m_taxingRate = p_taxRate;
     };
     Scenario.prototype.getName = function () {
         return this.m_name;
@@ -291,6 +296,9 @@ var Scenario = (function () {
     Scenario.prototype.getShipMovesPerTick = function () {
         return this.m_shipMovesPerTick;
     };
+    Scenario.prototype.getFuelFishingPerTick = function () {
+        return this.m_shipFuelPerFishingTick;
+    };
     Scenario.prototype.getShipOwnerStartMoney = function () {
         return this.m_shipOwnerStartMoney;
     };
@@ -338,6 +346,9 @@ var Scenario = (function () {
     };
     Scenario.prototype.getMaxNoDaysFishing = function () {
         return this.m_maxNoDaysFishing;
+    };
+    Scenario.prototype.getNoHistory = function () {
+        return this.m_noHistory;
     };
     return Scenario;
 }());

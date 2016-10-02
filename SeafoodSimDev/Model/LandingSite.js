@@ -6,8 +6,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="Site.ts"/>
 var LandingSite = (function (_super) {
     __extends(LandingSite, _super);
-    function LandingSite(p_shipCapacity, p_resourceCapacity, p_processPerDay, p_prices, p_id) {
-        _super.call(this, p_shipCapacity, p_resourceCapacity, p_processPerDay, p_id);
+    function LandingSite(p_shipCapacity, p_resourceCapacity, p_processPerDay, p_prices, p_id, p_position) {
+        _super.call(this, p_shipCapacity, p_resourceCapacity, p_processPerDay, p_id, p_position);
         this.m_prices = {};
         this.m_untaxedValue = 0;
         this.m_resourceAtSite = 0;

@@ -9,6 +9,7 @@ class ShipOwner {
     private m_id: string;
     private m_government: Government;
     private m_taxPayed: number;
+    public m_shipBought: boolean = false;
 
     public constructor(p_government: Government, p_shipStartPosition: Point2, p_id: string, p_scenario: Scenario, p_balance?: number) {
         this.m_scenario = p_scenario;
@@ -68,6 +69,7 @@ class ShipOwner {
         var ship: Ship = new Ship(this, this.m_scenario);
         this.m_ships.push(ship);
         this.financialTransaction(-this.m_shipPrice);
+        this.m_shipBought = true;
         return ship;
     }
 

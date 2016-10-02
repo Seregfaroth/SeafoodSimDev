@@ -29,10 +29,10 @@ class Main {
     }
 
     public loadController = () => {
-        debugger;
-        this.m_controller = new Controller(true);
+        //debugger;
+       // this.m_controller = new Controller(true);
         
-       //this.m_controller = new Controller();
+       this.m_controller = new Controller();
     }
 
 }

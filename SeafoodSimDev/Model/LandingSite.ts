@@ -3,8 +3,8 @@ class LandingSite extends Site {
     private m_prices: { [fishType: number]: number } = {};
     private m_untaxedValue: number = 0;
 
-    public constructor(p_shipCapacity: number, p_resourceCapacity: number, p_processPerDay: number, p_prices: { [fishType: number]: number }, p_id: string) {
-        super(p_shipCapacity, p_resourceCapacity, p_processPerDay, p_id);
+    public constructor(p_shipCapacity: number, p_resourceCapacity: number, p_processPerDay: number, p_prices: { [fishType: number]: number }, p_id: string, p_position: Point2) {
+        super(p_shipCapacity, p_resourceCapacity, p_processPerDay, p_id, p_position);
         this.m_resourceAtSite = 0;
         this.m_prices = p_prices;
         

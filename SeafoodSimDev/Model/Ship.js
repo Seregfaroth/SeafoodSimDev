@@ -16,7 +16,7 @@ var Ship = (function () {
     function Ship(p_owner, p_scenario) {
         this.m_fishedFor = 0;
         this.m_path = [];
-        this.history = [[], []]; //For debugging  purpose
+        this.history = [[], [], [], [], []]; //For debugging  purpose
         this.m_scenario = p_scenario;
         this.m_noHistory = p_scenario.getNoHistory();
         this.m_position = p_owner.getShipStartPosition();
@@ -109,6 +109,10 @@ var Ship = (function () {
         }
     };
     Ship.prototype.hasReachedGoal = function () {
+        //var t = this.m_path.length;
+        //var t2 = this.m_path[0];
+        //var t3 = this.m_position;
+        //this.history[3].push(this.m_path.length === 1 && this.m_path[0] === this.m_position);
         return this.m_path.length === 1 && this.m_path[0] === this.m_position;
     };
     Ship.prototype.moveTo = function (p_position, p_map) {
@@ -197,6 +201,9 @@ var Ship = (function () {
         } while (!newPoint || !(p_map.getTile(newPoint) instanceof Ocean));
         this.moveTo(newPoint, p_map);
         //console.log("new postion: " + JSON.stringify(this.m_position));
+    };
+    Ship.prototype.useFuel = function (p_fuel) {
+        this.m_fuel -= p_fuel;
     };
     return Ship;
 }());

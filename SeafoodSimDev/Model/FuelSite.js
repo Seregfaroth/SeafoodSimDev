@@ -6,8 +6,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="Site.ts"/>
 var FuelSite = (function (_super) {
     __extends(FuelSite, _super);
-    function FuelSite(p_shipCapacity, p_resourceCapacity, p_processPerDay, p_price, p_id) {
-        _super.call(this, p_shipCapacity, p_resourceCapacity, p_processPerDay, p_id);
+    function FuelSite(p_shipCapacity, p_resourceCapacity, p_processPerDay, p_price, p_id, p_position) {
+        _super.call(this, p_shipCapacity, p_resourceCapacity, p_processPerDay, p_id, p_position);
         this.m_resourceAtSite = this.m_resourceCapacity;
         this.m_price = p_price;
     }
