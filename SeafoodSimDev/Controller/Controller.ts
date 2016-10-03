@@ -108,6 +108,7 @@ class Controller {
         $("#startButton").removeClass("marked");
         $("#fastForwardButton").removeClass("marked");
         $("#pauseButton").addClass("marked");
+        $("#scenario1").prop("checked", true).change();
     }
 
     simulationTick = () => {

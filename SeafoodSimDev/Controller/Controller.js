@@ -38,6 +38,7 @@ var Controller = (function () {
             $("#startButton").removeClass("marked");
             $("#fastForwardButton").removeClass("marked");
             $("#pauseButton").addClass("marked");
+            $("#scenario1").prop("checked", true).change();
         };
         this.simulationTick = function () {
             //console.log("Controller running simulationtick");
