@@ -76,6 +76,7 @@ var EventHandler = (function () {
     }
     EventHandler.prototype.bindFunctions = function (p_all) {
         var handler = this;
+        $(window).resize(this.m_controller.resizeWindow);
         $("#taxSlider").off("slide");
         $("#taxSlider").on("slide", function (event, ui) { handler.updateTaxValue(ui.value); });
         $("#taxSlider").on("slidechange", function (event, ui) { handler.setTax(ui.value); });

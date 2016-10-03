@@ -38,6 +38,9 @@ var MainView = (function () {
         $("#mainDiv canvas").remove();
         this.m_mapView = new MapView(p_map);
     };
+    MainView.prototype.resizeWindow = function () {
+        this.m_mapView.setMapSize();
+    };
     return MainView;
 }());
 //# sourceMappingURL=MainView.js.map

@@ -161,4 +161,7 @@ class Controller {
             this.m_timer = setInterval(this.simulationTick, this.m_fastDelayPerTick);
         }
     }
+    public resizeWindow = (): void => {
+        this.m_view.resizeWindow();
+    }
 }

@@ -70,6 +70,9 @@ var TKN_Renderer = (function () {
         enumerable: true,
         configurable: true
     });
+    TKN_Renderer.prototype.setSize = function (p_width, p_height) {
+        this.m_renderer.setSize(p_width, p_height);
+    };
     return TKN_Renderer;
 }());
 var TKN_Geometry = (function () {

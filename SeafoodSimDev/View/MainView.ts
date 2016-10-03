@@ -44,5 +44,7 @@ class MainView {
         $("#mainDiv canvas").remove();
         this.m_mapView = new MapView(p_map);
     }
-
+    public resizeWindow(): void {
+        this.m_mapView.setMapSize();
+    }
 }

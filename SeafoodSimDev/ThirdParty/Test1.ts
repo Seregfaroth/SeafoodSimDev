@@ -62,6 +62,9 @@ class TKN_Renderer {
     get domElement(): any {
         return this.m_renderer.domElement;
     }
+    setSize(p_width: number, p_height) {
+        this.m_renderer.setSize(p_width, p_height);
+    }
 }
 
 class TKN_Geometry {

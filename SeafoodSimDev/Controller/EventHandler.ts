@@ -11,6 +11,7 @@
 
     public bindFunctions(p_all?: boolean): void {
         var handler: EventHandler = this;
+        $(window).resize(this.m_controller.resizeWindow);
         $("#taxSlider").off("slide");
         $("#taxSlider").on("slide", function (event, ui) { handler.updateTaxValue(ui.value); });
         $("#taxSlider").on("slidechange", function (event, ui) { handler.setTax(ui.value); });

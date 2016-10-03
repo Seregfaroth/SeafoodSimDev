@@ -69,6 +69,9 @@ var Controller = (function () {
                 this.endSimulation();
             }*/
         };
+        this.resizeWindow = function () {
+            _this.m_view.resizeWindow();
+        };
         console.log("Controller loading");
         this.m_scenario = new Scenario();
         if (p_mca === true) {
