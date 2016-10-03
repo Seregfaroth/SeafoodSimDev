@@ -177,7 +177,6 @@ var EndScreen = (function () {
             minHeight: 300,
             maxWidth: 1250,
             maxHeight: 600,
-            close: this.closeEndScreen
         });
     }
     EndScreen.prototype.getFinancialScoreSucces = function () {

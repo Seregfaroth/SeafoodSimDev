@@ -195,7 +195,7 @@ class EndScreen {
             minHeight: 300,
             maxWidth: 1250,
             maxHeight: 600,
-            close: this.closeEndScreen
+            
             //overflow: scroll
         });
     }
@@ -225,7 +225,7 @@ class EndScreen {
         else
             return true;
     }
-    private closeEndScreen() {
+    public closeEndScreen() {
         $("#endScreen").empty().remove();
     }
 }

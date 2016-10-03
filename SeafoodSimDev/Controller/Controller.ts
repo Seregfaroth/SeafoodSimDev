@@ -116,7 +116,7 @@ class Controller {
 
         //if (!(this.m_model.getTime() % this.m_model.m_statFreq)) this.m_model.updateStats();
         //if (this.m_model.getTime() >= this.m_endTime || this.m_model.getMap().getSchools().length === 0) {
-        if (this.m_model.getTime() >= this.m_scenario.getDefaultNoDays() ) {
+        if (this.m_model.getTime() >= this.m_scenario.getDefaultNoDays()) {
             this.m_simState = simState.ending;
             this.m_model.updateStats();
             console.log("Simulation ended" + this.m_model.getStats());
@@ -124,13 +124,20 @@ class Controller {
             this.m_view.updateMainView(this.m_model);
             this.m_eventHandler.unBindFunctions(true);
             new EndScreen(this.m_model.getStats(), this.m_model);
+            $("#endScreen").dialog({
+                close: this.closeEndScreen
+            });
+            
         }
         else {
             this.m_model.run(this.m_ticksPerMove);
             this.m_view.updateMainView(this.m_model);
         }
     }
-
+    private closeEndScreen = (): void => {
+        $("#endScreen").empty().remove();
+        this.restart();
+    }
     runSimulation = (p_ticks?: number) => {
         if (this.m_simState == simState.paused || this.m_simState == simState.fast) {
             clearInterval(this.m_timer);
