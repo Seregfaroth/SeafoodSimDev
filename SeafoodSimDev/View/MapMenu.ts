@@ -333,6 +333,34 @@
         restartButton.id = "restart";
         restartButton.classList.add("ui-button");
         restartButton.innerHTML = "Restart";
+
+        //Information div
+        var informationDiv: HTMLDivElement = document.createElement("div");
+        menuDiv.appendChild(informationDiv);
+        informationDiv.style.width = "99%";
+        informationDiv.id = "information";
+
+        var nameP: HTMLParagraphElement = document.createElement("p");
+        informationDiv.appendChild(nameP);
+        nameP.innerHTML = $("#name").text();
+        nameP.style.fontWeight = "bold";
+
+        var desP: HTMLParagraphElement = document.createElement("p");
+        informationDiv.appendChild(desP);
+        desP.innerHTML = $("#des").text();
+
+        var linkP: HTMLParagraphElement = document.createElement("p");
+        informationDiv.appendChild(linkP);
+        linkP.innerHTML = "<a target='_blank' href='" + p_scenario.getLink() + "'>Link to MCA</a>";
+        linkP.classList.add("link");
+
+        var goalP: HTMLParagraphElement = document.createElement("p");
+        informationDiv.appendChild(goalP);
+        goalP.innerHTML = $("#goal").text();
+
+        var durationP: HTMLParagraphElement = document.createElement("p");
+        informationDiv.appendChild(durationP);
+        durationP.innerHTML = $("#endTime").text();
     }
 
     public reset(p_ShipOwners: ShipOwner[], p_landingSites: LandingSite[], p_taxingRate: number,p_scenario:Scenario) {

@@ -76,7 +76,7 @@ var Controller = (function () {
         }
         else {
             this.m_simState = simState.paused;
-            this.m_delayPerTick = 1;
+            this.m_delayPerTick = 100;
             this.m_fastDelayPerTick = 1;
             //this.m_statFreq = 30;
             //this.m_model = new Model(this.m_scenario);

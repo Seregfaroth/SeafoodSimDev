@@ -296,6 +296,28 @@ var MapMenu = (function () {
         restartButton.id = "restart";
         restartButton.classList.add("ui-button");
         restartButton.innerHTML = "Restart";
+        //Information div
+        var informationDiv = document.createElement("div");
+        menuDiv.appendChild(informationDiv);
+        informationDiv.style.width = "99%";
+        informationDiv.id = "information";
+        var nameP = document.createElement("p");
+        informationDiv.appendChild(nameP);
+        nameP.innerHTML = $("#name").text();
+        nameP.style.fontWeight = "bold";
+        var desP = document.createElement("p");
+        informationDiv.appendChild(desP);
+        desP.innerHTML = $("#des").text();
+        var linkP = document.createElement("p");
+        informationDiv.appendChild(linkP);
+        linkP.innerHTML = "<a target='_blank' href='" + p_scenario.getLink() + "'>Link to MCA</a>";
+        linkP.classList.add("link");
+        var goalP = document.createElement("p");
+        informationDiv.appendChild(goalP);
+        goalP.innerHTML = $("#goal").text();
+        var durationP = document.createElement("p");
+        informationDiv.appendChild(durationP);
+        durationP.innerHTML = $("#endTime").text();
     }
     MapMenu.prototype.reset = function (p_ShipOwners, p_landingSites, p_taxingRate, p_scenario) {
         $("#taxSlider").slider("value", p_taxingRate * 100);

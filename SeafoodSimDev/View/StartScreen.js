@@ -126,6 +126,7 @@ var StartScreen = (function () {
         informationDiv.appendChild(linkP);
         linkP.id = "link";
         linkP.innerHTML = "Link: ";
+        linkP.classList.add("link");
         var goalP = document.createElement("p");
         informationDiv.appendChild(goalP);
         goalP.id = "goal";

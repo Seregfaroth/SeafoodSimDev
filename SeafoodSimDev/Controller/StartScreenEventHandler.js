@@ -46,7 +46,7 @@ var StartScreenEventHandler = (function () {
             var t32 = scenario.getDescription();
             $("#name").html(scenario.getName());
             $("#des").html(scenario.getDescription());
-            $("#link").html("<a target='_blank' href='" + scenario.getLink() + "'>" + scenario.getLink() + "</a>");
+            $("#link").html("<a target='_blank' href='" + scenario.getLink() + "'>Link to MCA</a>");
             var goal = $("#goal");
             goal.html("");
             goal.append("<p>");

@@ -147,6 +147,7 @@ class StartScreen {
         informationDiv.appendChild(linkP);
         linkP.id = "link";
         linkP.innerHTML = "Link: ";
+        linkP.classList.add("link");
 
         var goalP: HTMLParagraphElement = document.createElement("p");
         informationDiv.appendChild(goalP);

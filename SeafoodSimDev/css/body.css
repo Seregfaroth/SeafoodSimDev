@@ -107,4 +107,7 @@ p {
     display: inline-block;
     clear: both;
 }
+.link {
+    text-decoration: underline;
+}
 
