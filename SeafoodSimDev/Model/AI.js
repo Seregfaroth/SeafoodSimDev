@@ -10,7 +10,7 @@ var AI = (function () {
         this.m_balanceToSellShip = p_scenario.getAiSellShipBalance();
     }
     AI.prototype.run = function (p_shipOwner, p_map) {
-        //console.log("runnig AI");
+        console.log("AI money: " + p_shipOwner.getBalance());
         this.buyOrSellShip(p_shipOwner, p_map);
         this.runShips(p_shipOwner, p_map);
     };

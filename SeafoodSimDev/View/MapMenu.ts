@@ -356,7 +356,19 @@
 
         var goalP: HTMLParagraphElement = document.createElement("p");
         informationDiv.appendChild(goalP);
-        goalP.innerHTML = $("#goal").text();
+        goalP.id = "goalInfo";
+        var goal = $("#goalInfo");
+        goal.html("");
+        goal.append("<p>");
+        if (p_scenario.getfinGoal().toString() != "no")
+            goal.append("Financial score goal: <span style='float:right' > " + p_scenario.getfinGoal() + "</span><br/>");
+        if (p_scenario.getEcoGoal().toString() != "no")
+            goal.append("Environmental score goal: <span style='float:right' > " + p_scenario.getEcoGoal() + "</span><br/>");
+        if (p_scenario.getSocGoal().toString() != "no")
+            goal.append("Social score goal: <span style='float:right' > " + p_scenario.getSocGoal() + "</span><br/>");
+        if (p_scenario.getAllScore().toString() != "no")
+            goal.append("Overall score goal: <span style='float:right' > " + p_scenario.getAllScore() + "</span><br/>");
+        goal.append("</p>");
 
         var durationP: HTMLParagraphElement = document.createElement("p");
         informationDiv.appendChild(durationP);
@@ -378,7 +390,6 @@
             $("#quoteSlider" + p_ShipOwners[i].getID()).slider("value", 0);
             
         }
-
     }
     
     public updateScore(p_government: Government): void {
