@@ -244,14 +244,12 @@ var MapMenu = (function () {
         menuDiv.appendChild(buttonsDiv);
         var startButton = document.createElement("div");
         startButton.id = "startButton";
-        startButton.style.margin = "10px";
         startButton.classList.add("ui-button");
         startButton.classList.add("fa");
         startButton.classList.add("fa-play");
         buttonsDiv.appendChild(startButton);
         var pauseButton = document.createElement("div");
         pauseButton.id = "pauseButton";
-        pauseButton.style.margin = "10px";
         pauseButton.classList.add("fa");
         pauseButton.classList.add("fa-pause");
         pauseButton.classList.add("ui-button");
@@ -259,7 +257,6 @@ var MapMenu = (function () {
         buttonsDiv.appendChild(pauseButton);
         var fastForwardButton = document.createElement("div");
         fastForwardButton.id = "fastForwardButton";
-        fastForwardButton.style.margin = "10px";
         fastForwardButton.classList.add("fa");
         fastForwardButton.classList.add("fa-fast-forward");
         fastForwardButton.classList.add("ui-button");

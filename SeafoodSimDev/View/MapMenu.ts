@@ -273,7 +273,6 @@
 
         var startButton: HTMLDivElement = document.createElement("div");
         startButton.id = "startButton";
-        startButton.style.margin = "10px";
         startButton.classList.add("ui-button");
         startButton.classList.add("fa");
         startButton.classList.add("fa-play");
@@ -281,7 +280,6 @@
 
         var pauseButton: HTMLDivElement = document.createElement("div");
         pauseButton.id = "pauseButton";
-        pauseButton.style.margin = "10px";
         pauseButton.classList.add("fa");
         pauseButton.classList.add("fa-pause");
         pauseButton.classList.add("ui-button");
@@ -290,7 +288,6 @@
 
         var fastForwardButton: HTMLDivElement = document.createElement("div");
         fastForwardButton.id = "fastForwardButton";
-        fastForwardButton.style.margin = "10px";
         fastForwardButton.classList.add("fa");
         fastForwardButton.classList.add("fa-fast-forward");
         fastForwardButton.classList.add("ui-button");

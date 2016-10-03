@@ -20,7 +20,7 @@ p {
     font-weight: bold;
 }
 .menu-legend {
-    padding: 5px;
+    padding: 0.5%;
 }
 .score{
    margin-left: 15px;
@@ -34,9 +34,10 @@ p {
 }
 .fa{
     color: black;
+    margin: 3%;
 }
 .slider-value-cell {
-    padding: 10px;
+    padding: 1%;
 }
 .date {
     text-align: center;
@@ -66,9 +67,8 @@ p {
 }
 
 #restart {
-    margin-bottom: 12px;
-    padding: 3px;
-    margin-left: 30px;
+    margin-bottom: 12%;
+    padding: 1%;
 }
 .selector-label {
     padding-right: 15px;
