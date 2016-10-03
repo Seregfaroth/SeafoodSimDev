@@ -10,12 +10,10 @@
         menuDiv.style.cssFloat = "left";
         menuDiv.style.paddingLeft = "3px";
         menuDiv.style.width = "25%";
-        menuDiv.style.minWidth = "300px";
+        //menuDiv.style.minWidth = "300px";
         menuDiv.style.height = "70%";
         menuDiv.classList.add("ui-widget-content");
         document.getElementById("mainDiv").appendChild(menuDiv);
-
-
 
         //Create score view
         var scoreLegend: HTMLLegendElement = document.createElement("legend");
@@ -152,44 +150,44 @@
         //    sliderValue.innerHTML = $("#quoteSlider" + p_ShipOwners[i].getID()).slider("option", "value");
         //}
 
-        //Create effort limit sliders
-        var effortLegend: HTMLElement = document.createElement("legend");
-        effortLegend.classList.add("menu-legend");
-        var effortLabel: HTMLElement = document.createElement("div");
-        effortLabel.innerHTML = "Effort Limits";
-        effortLabel.className = "legend-header";
-        //effortLegend.appendChild(effortLabel);
-        menuDiv.appendChild(effortLegend);
-        var effortTable: any = document.createElement("TABLE");
-        effortTable.classList.add("menu-text");
-        effortTable.width = "100%";
-        //effortLegend.appendChild(effortTable);
+        ////Create effort limit sliders
+        //var effortLegend: HTMLElement = document.createElement("legend");
+        //effortLegend.classList.add("menu-legend");
+        //var effortLabel: HTMLElement = document.createElement("div");
+        //effortLabel.innerHTML = "Effort Limits";
+        //effortLabel.className = "legend-header";
+        ////effortLegend.appendChild(effortLabel);
+        //menuDiv.appendChild(effortLegend);
+        //var effortTable: any = document.createElement("TABLE");
+        //effortTable.classList.add("menu-text");
+        //effortTable.width = "100%";
+        ////effortLegend.appendChild(effortTable);
 
-        for (var i = 0; i < p_ShipOwners.length; i++) {
-            var dateRow: HTMLTableRowElement = effortTable.insertRow();
-            var cell: HTMLTableCellElement = dateRow.insertCell();
-            var effortLabel: HTMLElement = document.createElement("div");
-            effortLabel.innerHTML = p_ShipOwners[i].getID() + ":";
-            effortLabel.style.cssFloat = "left";
-            cell.appendChild(effortLabel);
+        //for (var i = 0; i < p_ShipOwners.length; i++) {
+        //    var dateRow: HTMLTableRowElement = effortTable.insertRow();
+        //    var cell: HTMLTableCellElement = dateRow.insertCell();
+        //    var effortLabel: HTMLElement = document.createElement("div");
+        //    effortLabel.innerHTML = p_ShipOwners[i].getID() + ":";
+        //    effortLabel.style.cssFloat = "left";
+        //    cell.appendChild(effortLabel);
 
-            cell = dateRow.insertCell();
-            cell.className = "slider-value-cell";
-            var sliderValue: HTMLDivElement = document.createElement("div");
-            sliderValue.id = "effortValue" + p_ShipOwners[i].getID();
-            cell.appendChild(sliderValue);
+        //    cell = dateRow.insertCell();
+        //    cell.className = "slider-value-cell";
+        //    var sliderValue: HTMLDivElement = document.createElement("div");
+        //    sliderValue.id = "effortValue" + p_ShipOwners[i].getID();
+        //    cell.appendChild(sliderValue);
 
-            cell = dateRow.insertCell();
-            cell.className = "slider-cell";
-            var slider: HTMLElement = document.createElement("div");
-            slider.id = "effortSlider" + p_ShipOwners[i].getID();
-            slider.classList.add("slider");
-            cell.appendChild(slider);
-            $("#effortSlider" + p_ShipOwners[i].getID()).slider();
-            $("#effortSlider" + p_ShipOwners[i].getID()).slider("option", "min", 0);
-            $("#effortSlider" + p_ShipOwners[i].getID()).slider("option", "max", 100);
-            sliderValue.innerHTML = $("#effortSlider" + p_ShipOwners[i].getID()).slider("option", "value");
-        }
+        //    cell = dateRow.insertCell();
+        //    cell.className = "slider-cell";
+        //    var slider: HTMLElement = document.createElement("div");
+        //    slider.id = "effortSlider" + p_ShipOwners[i].getID();
+        //    slider.classList.add("slider");
+        //    cell.appendChild(slider);
+        //    $("#effortSlider" + p_ShipOwners[i].getID()).slider();
+        //    $("#effortSlider" + p_ShipOwners[i].getID()).slider("option", "min", 0);
+        //    $("#effortSlider" + p_ShipOwners[i].getID()).slider("option", "max", 100);
+        //    sliderValue.innerHTML = $("#effortSlider" + p_ShipOwners[i].getID()).slider("option", "value");
+        //}
         //Create landing distribution sliders
         //var landingLegend: HTMLElement = document.createElement("legend");
         //landingLegend.classList.add("menu-legend");
@@ -303,9 +301,19 @@
         menuDiv.appendChild(timeLegend);
         var timeTable: HTMLTableElement = document.createElement("table");
         timeTable.classList.add("menu-text");
+        timeTable.style.tableLayout = "fixed";
+        timeTable.style.width = "100%";
         timeLegend.appendChild(timeTable);
 
         var dateRow: HTMLTableRowElement = timeTable.insertRow();
+
+        var dayCell: HTMLTableCellElement = dateRow.insertCell();
+        var dayDiv: HTMLDivElement = document.createElement("div");
+        dayDiv.id = "day";
+        dayDiv.innerHTML = '0';
+        dayCell.appendChild(dayDiv);
+        dayDiv.classList.add("date");
+
         var monthCell: HTMLTableCellElement = dateRow.insertCell();
         var monthDiv: HTMLDivElement = document.createElement("div");
         monthDiv.id = "month";
@@ -318,13 +326,6 @@
         yearDiv.innerHTML = "2016";
         yearCell.appendChild(yearDiv);
         yearDiv.classList.add("date");
-
-        var dayCell: HTMLTableCellElement = dateRow.insertCell();
-        var dayDiv: HTMLDivElement = document.createElement("div");
-        dayDiv.id = "day";
-        dayDiv.innerHTML = '0';
-        dayCell.appendChild(dayDiv);
-        dayDiv.classList.add("date");
 
         var buttonCell: HTMLTableCellElement = dateRow.insertCell();
         buttonCell.style.cssFloat = "right";

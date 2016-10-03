@@ -19,7 +19,7 @@ p {
 .legend-header {
     font-weight: bold;
 }
-.menu-legend {day
+.menu-legend {
     padding: 5px;
 }
 .score{
@@ -37,24 +37,11 @@ p {
 }
 .slider-value-cell {
     padding: 10px;
-    min-width: 60px;
 }
 .date {
     text-align: center;
-    font-size: 1.3vw;
-    padding-left: 15px;
     padding-bottom: 14px;
     font-weight: bold;
-}
-#month {
-    min-width:8vw;
-}
-
-#day {
-    min-width: 4vw;
-}
-#mainDiv {
-    min-width: 1100px;
 }
 .header {
     padding: 14px;
@@ -109,5 +96,29 @@ p {
 }
 .link {
     text-decoration: underline;
+}
+
+* { 
+    font-size: 1.8vw;
+}
+@media (min-width: 1000px){/*when window size is more than 1000 font size stays constant at 18px*/
+    * {
+        font-size:18px;
+    }
+}
+@media (max-width: 600px){/*when window size is less than 600 font size stays constant at 10.8px*/
+    * {
+        font-size:10.8px;
+    }
+
+}
+
+@media (max-width: 1000px){/*when window size is less than 600 font size stays constant at 10.8px*/
+    #month {
+        visibility:hidden;
+    }
+        #year {
+        visibility:hidden;
+    }
 }
 

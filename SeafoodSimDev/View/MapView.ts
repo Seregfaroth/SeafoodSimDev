@@ -150,7 +150,7 @@ class MapView {
     }
     public setMapSize(): void {
         var windowHeight = $(window).height();
-        var windowWidth = $(window).width();
+        var windowWidth = $(window).width()*0.75;
         var size: number = Math.min(windowHeight, windowWidth)*0.9;
         this.m_renderer.setSize(size,size);
     }
