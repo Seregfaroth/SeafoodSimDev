@@ -115,7 +115,7 @@ class Controller {
 
         //if (!(this.m_model.getTime() % this.m_model.m_statFreq)) this.m_model.updateStats();
         //if (this.m_model.getTime() >= this.m_endTime || this.m_model.getMap().getSchools().length === 0) {
-        if (this.m_model.getTime() >= this.m_endTime ) {
+        if (this.m_model.getTime() >= this.m_scenario.getDefaultNoDays() ) {
             this.m_simState = simState.ending;
             this.m_model.updateStats();
             console.log("Simulation ended" + this.m_model.getStats());

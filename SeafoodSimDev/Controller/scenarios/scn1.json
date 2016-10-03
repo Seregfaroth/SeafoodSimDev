@@ -1,5 +1,5 @@
 {
-  "maxNoDaysFishing":  5,
+  "maxNoDaysFishing": 5,
   "schoolSizeWeight": 0.01,
   "startNoOfShips": 0,
   "movingRadius": 1,
@@ -91,8 +91,8 @@
   "shipOwnerLicense": true,
 
   "noGraphicsMapUpdate": false,
-  "noMenuDateUpdate":  false,
+  "noMenuDateUpdate": false,
   "noMenuScoreUpdate": false,
 
-  "noHistory": false 
+  "noHistory": false
 }

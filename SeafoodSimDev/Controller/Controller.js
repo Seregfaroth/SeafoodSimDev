@@ -43,7 +43,7 @@ var Controller = (function () {
             //console.log("Controller running simulationtick");
             //if (!(this.m_model.getTime() % this.m_model.m_statFreq)) this.m_model.updateStats();
             //if (this.m_model.getTime() >= this.m_endTime || this.m_model.getMap().getSchools().length === 0) {
-            if (_this.m_model.getTime() >= _this.m_endTime) {
+            if (_this.m_model.getTime() >= _this.m_scenario.getDefaultNoDays()) {
                 _this.m_simState = simState.ending;
                 _this.m_model.updateStats();
                 console.log("Simulation ended" + _this.m_model.getStats());
