@@ -21,8 +21,8 @@ var StartScreenEventHandler = (function () {
             var tm3 = e;
             //$("#startScreen").dialog("close");
             var scenario = _this.m_controller.getScenario();
-            _this.m_controller.setEndTime($("#endTime").val());
-            _this.m_controller.setTicksPerMove($("#movesPerTick").val());
+            //this.m_controller.setEndTime($("#endTime").val());
+            //this.m_controller.setTicksPerMove($("#movesPerTick").val());
             //var tm = this.m_controller.getModel().getMap();
             //this.m_controller.getModel().setMap(new Map(scenario.getMapType(), scenario.getMapSize(), scenario.getNumberOfSchools(), this.m_controller.getModel().getGovernment().getRestrictions(), this.m_config));
             //this.m_controller.getModel().getMap().setScenario(scenario);
@@ -38,15 +38,15 @@ var StartScreenEventHandler = (function () {
         this.updateInfo = function () {
             var scenario = _this.m_controller.getScenario();
             var t = $("#endTime");
-            document.getElementById("endTime").value = scenario.getDefaultNoDays().toString();
-            //$("#endTime").val(scenario.getDefaultNoDays().toString());
+            //(document.getElementById("endTime") as HTMLInputElement).value = scenario.getDefaultNoDays().toString();
+            $("#endTime").text("Duration of simulation: " + scenario.getDefaultNoDays() + " days");
             var t3 = $("#endTime").val();
-            document.getElementById("movesPerTick").value = scenario.getDefaultTicksize().toString();
+            //(document.getElementById("movesPerTick") as HTMLInputElement).value = scenario.getDefaultTicksize().toString();
             var t4 = scenario.getName();
             var t32 = scenario.getDescription();
             $("#name").html(scenario.getName());
             $("#des").html(scenario.getDescription());
-            $("#link").html("<a target='_blank' href='" + scenario.getLink() + "'>" + scenario.getLink() + "</a>");
+            $("#link").html("<a target='_blank' href='" + scenario.getLink() + "'>Link to MCA</a>");
             var goal = $("#goal");
             goal.html("");
             goal.append("<p>");

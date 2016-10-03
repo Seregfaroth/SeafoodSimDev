@@ -73,51 +73,61 @@ class StartScreen {
 
      
         var cell: HTMLTableCellElement = row.insertCell();
-        var label: HTMLLabelElement = document.createElement("label");
-        cell.appendChild(label);
-        label.htmlFor = "endTime";
-        label.innerHTML = "Select the duraion of the simulation: ";
-        label.classList.add("selector-label");
-        cell.appendChild(document.createElement("br"));
-        var endTime: HTMLInputElement = document.createElement("input");
-        cell.appendChild(endTime);
-        endTime.id = "endTime";
-        endTime.type = "number";
-        endTime.max = "99999";
-        endTime.min = "10";
-        endTime.step = "10";
-        endTime.value = "100";
-        var span: HTMLSpanElement = document.createElement("span");
-        cell.appendChild(span);
-        span.innerHTML = "days";
-        span.style.marginLeft = "5px";
+        //var label: HTMLLabelElement = document.createElement("label");
+        //cell.appendChild(label);
+        //label.htmlFor = "endTime";
+        //label.innerHTML = "Select the duraion of the simulation: ";
+        //label.classList.add("selector-label");
+        //cell.appendChild(document.createElement("br"));
+        //var endTime: HTMLInputElement = document.createElement("input");
+        //cell.appendChild(endTime);
+        //endTime.id = "endTime";
+        //endTime.type = "number";
+        //endTime.max = "99999";
+        //endTime.min = "10";
+        //endTime.step = "10";
+        //endTime.value = "100";
+        //var span: HTMLSpanElement = document.createElement("span");
+        //cell.appendChild(span);
+        //span.innerHTML = "days";
+        //span.style.marginLeft = "5px";
+
+        var div: HTMLDivElement = document.createElement("div");
+        cell.appendChild(div);
+        div.id = "endTime";
+        
 
         var cell: HTMLTableCellElement = row.insertCell();
-        var label: HTMLLabelElement = document.createElement("label");
-        cell.appendChild(label);
-        label.htmlFor = "movesPerTick";
-        label.classList.add("selector-label");
-        label.innerHTML = "Select number of moves pr tick: ";
-        cell.appendChild(document.createElement("br"));
-        var movesPrTick: HTMLSelectElement = document.createElement("select");
-        cell.appendChild(movesPrTick);
-        movesPrTick.id = "movesPerTick";
-        var option: HTMLOptionElement = document.createElement("option");
-        movesPrTick.appendChild(option);
-        option.innerHTML = "One day";
-        option.value = "1";
-        var option: HTMLOptionElement = document.createElement("option");
-        movesPrTick.appendChild(option);
-        option.innerHTML = "One week";
-        option.value = "7";
-        var option: HTMLOptionElement = document.createElement("option");
-        movesPrTick.appendChild(option);
-        option.innerHTML = "One month";
-        option.value = "30";
-        var option: HTMLOptionElement = document.createElement("option");
-        movesPrTick.appendChild(option);
-        option.innerHTML = "One year";
-        option.value = "365";
+        //var label: HTMLLabelElement = document.createElement("label");
+        //cell.appendChild(label);
+        //label.htmlFor = "movesPerTick";
+        //label.classList.add("selector-label");
+        //label.innerHTML = "Select number of moves pr tick: ";
+        //cell.appendChild(document.createElement("br"));
+        //var movesPrTick: HTMLSelectElement = document.createElement("select");
+        //cell.appendChild(movesPrTick);
+        //movesPrTick.id = "movesPerTick";
+        //var option: HTMLOptionElement = document.createElement("option");
+        //movesPrTick.appendChild(option);
+        //option.innerHTML = "One day";
+        //option.value = "1";
+        //var option: HTMLOptionElement = document.createElement("option");
+        //movesPrTick.appendChild(option);
+        //option.innerHTML = "One week";
+        //option.value = "7";
+        //var option: HTMLOptionElement = document.createElement("option");
+        //movesPrTick.appendChild(option);
+        //option.innerHTML = "One month";
+        //option.value = "30";
+        //var option: HTMLOptionElement = document.createElement("option");
+        //movesPrTick.appendChild(option);
+        //option.innerHTML = "One year";
+        //option.value = "365";
+
+        var div: HTMLDivElement = document.createElement("div");
+        cell.appendChild(div);
+        div.id = "movesPerTick";
+
 
         var informationDiv: HTMLDivElement = document.createElement("div");
         mainDiv.appendChild(informationDiv);
@@ -137,6 +147,7 @@ class StartScreen {
         informationDiv.appendChild(linkP);
         linkP.id = "link";
         linkP.innerHTML = "Link: ";
+        linkP.classList.add("link");
 
         var goalP: HTMLParagraphElement = document.createElement("p");
         informationDiv.appendChild(goalP);

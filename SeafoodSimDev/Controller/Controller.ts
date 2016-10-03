@@ -28,7 +28,7 @@ class Controller {
         }
         else {
             this.m_simState = simState.paused;
-            this.m_delayPerTick = 1;
+            this.m_delayPerTick = 100;
             this.m_fastDelayPerTick = 1;
             //this.m_statFreq = 30;
             //this.m_model = new Model(this.m_scenario);
@@ -115,7 +115,7 @@ class Controller {
 
         //if (!(this.m_model.getTime() % this.m_model.m_statFreq)) this.m_model.updateStats();
         //if (this.m_model.getTime() >= this.m_endTime || this.m_model.getMap().getSchools().length === 0) {
-        if (this.m_model.getTime() >= this.m_endTime ) {
+        if (this.m_model.getTime() >= this.m_scenario.getDefaultNoDays() ) {
             this.m_simState = simState.ending;
             this.m_model.updateStats();
             console.log("Simulation ended" + this.m_model.getStats());
