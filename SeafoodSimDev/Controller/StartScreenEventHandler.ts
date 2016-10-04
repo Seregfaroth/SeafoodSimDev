@@ -20,7 +20,7 @@
             close: handler.close,
             beforeClose: handler.beforeClose
         });
-        this.m_controller.getScenario().loadScenario('Controller/scenarios/scn1.json', this.updateInfo);
+        this.m_controller.getScenario().loadScenario('Controller/scenarios/scn4.json', this.updateInfo);
     }
 
     private radioChange = (p_evt: BaseJQueryEventObject): void => {
