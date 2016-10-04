@@ -26,9 +26,9 @@
     private radioChange = (p_evt: BaseJQueryEventObject): void => {
         var t = this;
         var t2 = this.m_controller.getScenario();
-        if (p_evt.data.scenario === 1) this.m_controller.getScenario().loadScenario('Controller/scenarios/scn1.json', this.updateInfo);
-        if (p_evt.data.scenario === 2) this.m_controller.getScenario().loadScenario('Controller/scenarios/scn2.json', this.updateInfo);
-        if (p_evt.data.scenario === 3) this.m_controller.getScenario().loadScenario('Controller/scenarios/scn3.json', this.updateInfo);
+        if (p_evt.data.scenario === 1) this.m_controller.getScenario().loadScenario('Controller/scenarios/scn4.json', this.updateInfo);
+        if (p_evt.data.scenario === 2) this.m_controller.getScenario().loadScenario('Controller/scenarios/scn5.json', this.updateInfo);
+        if (p_evt.data.scenario === 3) this.m_controller.getScenario().loadScenario('Controller/scenarios/scn6.json', this.updateInfo);
         //$("#information").text(this.m_controller.getScenario().getName());
         //$("#information").text("Here is some information about scenario " + p_evt.data.scenario +". What is "+
         //    "the purpose of this scenario and how to win in this scenario.");

@@ -5,11 +5,11 @@ var StartScreenEventHandler = (function () {
             var t = _this;
             var t2 = _this.m_controller.getScenario();
             if (p_evt.data.scenario === 1)
-                _this.m_controller.getScenario().loadScenario('Controller/scenarios/scn1.json', _this.updateInfo);
+                _this.m_controller.getScenario().loadScenario('Controller/scenarios/scn4.json', _this.updateInfo);
             if (p_evt.data.scenario === 2)
-                _this.m_controller.getScenario().loadScenario('Controller/scenarios/scn2.json', _this.updateInfo);
+                _this.m_controller.getScenario().loadScenario('Controller/scenarios/scn5.json', _this.updateInfo);
             if (p_evt.data.scenario === 3)
-                _this.m_controller.getScenario().loadScenario('Controller/scenarios/scn3.json', _this.updateInfo);
+                _this.m_controller.getScenario().loadScenario('Controller/scenarios/scn6.json', _this.updateInfo);
             //$("#information").text(this.m_controller.getScenario().getName());
             //$("#information").text("Here is some information about scenario " + p_evt.data.scenario +". What is "+
             //    "the purpose of this scenario and how to win in this scenario.");
