@@ -6,7 +6,7 @@ var Main = (function () {
         var _this = this;
         this.loadController = function () {
             //debugger;
-            // this.m_controller = new Controller(true);
+            //this.m_controller = new Controller(true);
             _this.m_controller = new Controller();
         };
         console.log("loading Game");

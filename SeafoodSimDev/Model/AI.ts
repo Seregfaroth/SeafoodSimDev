@@ -15,7 +15,7 @@ class AI {
      }
 
     public run(p_shipOwner: ShipOwner, p_map: Map): void {
-        console.log("AI money: "+ p_shipOwner.getBalance());
+        //console.log("AI money: "+ p_shipOwner.getBalance());
         this.buyOrSellShip(p_shipOwner, p_map);
         this.runShips(p_shipOwner, p_map);
     }

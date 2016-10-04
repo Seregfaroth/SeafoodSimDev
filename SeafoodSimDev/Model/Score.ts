@@ -66,8 +66,8 @@ class Score {
         this.m_environmentalScore = 0;
         p_map.getSchools().forEach(function (s) {
             var t = s.getSize() - s.getMsy()
-            if (t > 1000) {
-                score.m_environmentalScore += 1000;
+            if (t > score.m_scenario.getEnvironmentalScoreMaxIncreasePerTick() ) {
+                score.m_environmentalScore += score.m_scenario.getEnvironmentalScoreMaxIncreasePerTick();
             }
             else {
                 score.m_environmentalScore += t;

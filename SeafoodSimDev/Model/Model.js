@@ -74,14 +74,14 @@ var Model = (function () {
         return this.m_stats;
     };
     Model.prototype.runMCA = function (p_noOfMoves) {
-        //var tax: number[] = [10];
+        //var tax: number[] = [20,20,20,20];
         var tax = [10, 15, 20, 25];
         //var tax: number[] = [10, 15, 20, 30, 40, 50, 60, 70];
-        //var maxShips: number[] = [6];
+        //var maxShips: number[] = [22,22,22,22];
         //var maxShips: number[] = [6, 10, 14];
-        var maxShips = [6, 10, 14, 18, 22];
+        //var maxShips: number[] = [6, 10, 14, 18, 22];
         //var maxShips: number[] = [10, 20, 30, 40, 50];
-        //var maxShips: number[] = [8, 10, 12, 14, 16, 18, 20, 22, 24];
+        var maxShips = [8, 10, 12, 14, 16, 18, 20, 22, 24];
         //var maxShips: number[] = [16];
         var result = [];
         for (var taxIndex = 0; taxIndex < tax.length; taxIndex++) {
@@ -337,7 +337,7 @@ var Model = (function () {
             "elmtWghtMthd": 2,
             "elmtDstType": 1,
             // "elmtDataMin": Math.min(...income)-10000,
-            "elmtDataMin": 0,
+            "elmtDataMin": 200000,
             //"elmtDataMax": Math.max(...income)+10000,
             "elmtDataMax": Math.round(Math.max.apply(Math, income) * 1.5 / 1000) * 1000,
             "elmtDataUnit": "Euros",
@@ -371,7 +371,7 @@ var Model = (function () {
             "elmtType": 100,
             "elmtWghtMthd": 2,
             "elmtDstType": 1,
-            "elmtDataMin": 0,
+            "elmtDataMin": 500000,
             "elmtDataMax": Math.round(Math.max.apply(Math, invest) * 1.5 / 1000) * 1000,
             "elmtDataUnit": "Euros",
             "elmtDataBaseLine": this.getBaseLine(invest),

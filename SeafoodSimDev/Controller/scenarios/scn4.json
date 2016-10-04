@@ -10,10 +10,10 @@
   "environmentalScoreGoal": "no",
   "socialScoreGoal": "no",
   "overallscoreGoal": "no",
-  "description": "The government have identified the following sub-objectives: <p style='margin: 10px'> Financial 70%, Environmental 10%, Social 20% </p> For each sub-objective key indicators have been determined and priortized. <p style='margin: 10px'> Financial:  Invest 40%, Income 60% <br> Environmental: Biomass 70%, Recruitment 30% <br> Social: Onshore employment 20%, Offshore employment 80%</p>",
-  "linkToMCA": "Link to MCA is coming soon",
-  "mapType": 2,
-  "mapSize": 15,
+  "description": "some description",
+  "linkToMCA": "http://mareframe.mapix.com/dev/MCA/DST.html",
+  "mapType": 1,
+  "mapSize": 20,
   "numberOfSchools": 5,
   "prices": {
     "Cod": 18,
@@ -46,9 +46,9 @@
   "indicatorOnshoreEmployment": 20,
   "indicatorOffshoreEmployment": 80,
 
-  "financialMaxScore": 1000,
-  "environmentalMaxScore": 1000,
-  "socialMaxScore": 1000,
+  "financialMaxScore": 150000,
+  "environmentalMaxScore": 30000,
+  "socialMaxScore": 2000,
   "fishingPercentage": 0.1,
 
   "financialMinScore": 0,
@@ -68,7 +68,7 @@
   "fuelsiteFuelPrize": 300,
   "fuelsiteNumberOfEmployees": 4,
 
-  "environmentalScoreMaxIncreasePerTick": 2000,
+  "environmentalScoreMaxIncreasePerTick": 20000,
   "codMovingRadius": 0,
   "codRecruitPercent": 0.35,
   "codSchoolMaxAge": 8,
@@ -91,8 +91,8 @@
   "shipOwnerLicense": true,
 
   "noGraphicsMapUpdate": false,
-  "noMenuDateUpdate":  false,
+  "noMenuDateUpdate": false,
   "noMenuScoreUpdate": false,
 
-  "noHistory": false 
+  "noHistory": false
 }

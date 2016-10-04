@@ -90,7 +90,14 @@ var EndScreen = (function () {
             width: 600,
             height: 400,
             bar: { groupWidth: "90%" },
-            legend: { position: "none" }
+            legend: { position: "none" },
+            hAxis: {
+                minValue: -2000
+            },
+            animation: {
+                duration: 1500,
+                startup: true
+            }
         };
         var scoreChartOptions = {
             hAxis: {
@@ -176,7 +183,7 @@ var EndScreen = (function () {
             minWidth: 1050,
             minHeight: 300,
             maxWidth: 1250,
-            maxHeight: 600,
+            maxHeight: 1000,
         });
     }
     EndScreen.prototype.getFinancialScoreSucces = function () {

@@ -6,7 +6,7 @@
   "recrutingPercentage": 0.35,
   "noOfShipOwners": 2,
   "name": "Scenario 2",
-  "financialScoreGoal": "no",
+  "financialScoreGoal": 0,
   "environmentalScoreGoal": 2000,
   "socialScoreGoal": "no",
   "overallscoreGoal": "no",
