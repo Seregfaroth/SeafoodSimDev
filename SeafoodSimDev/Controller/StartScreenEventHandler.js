@@ -65,11 +65,6 @@ var StartScreenEventHandler = (function () {
         };
         this.m_controller = p_controller;
         this.m_scenario = p_scenario;
-        $("#scenario1").on("change", { scenario: 1 }, this.radioChange);
-        $("#scenario2").on("change", { scenario: 2 }, this.radioChange);
-        $("#scenario3").on("change", { scenario: 3 }, this.radioChange);
-        $('[name="radio"][value="false"]').attr("checked", 'true');
-        $('#chooseScenario').buttonset();
         var handler = this;
         $("#startScreen").dialog({
             buttons: {
@@ -80,6 +75,13 @@ var StartScreenEventHandler = (function () {
         });
         this.m_controller.getScenario().loadScenario('Controller/scenarios/scn1.json', this.updateInfo);
     }
+    StartScreenEventHandler.prototype.initialize = function () {
+        $("#scenario1").on("change", { scenario: 1 }, this.radioChange);
+        $("#scenario2").on("change", { scenario: 2 }, this.radioChange);
+        $("#scenario3").on("change", { scenario: 3 }, this.radioChange);
+        $("#scenario1").attr("checked", 'true'); //Sceanrio 1 is checked by default at the start (if changed, this must be changed in the constructor too)
+        $('#chooseScenario').buttonset();
+    };
     return StartScreenEventHandler;
 }());
 //# sourceMappingURL=StartScreenEventHandler.js.map
