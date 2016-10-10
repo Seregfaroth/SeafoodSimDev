@@ -24,8 +24,8 @@ class Main {
         this.loadController();
         
         
-        //if (p_test) 
-        //    new Test();
+        if (p_test) 
+           new Test();
     }
 
     public loadController = () => {

@@ -25,8 +25,8 @@ var Main = (function () {
         //this.m_config = new Configuration();
         //this.m_config.loadConfig('Controller/configuration1.json', this.loadController);
         this.loadController();
-        //if (p_test) 
-        //    new Test();
+        if (p_test)
+            new Test();
     }
     return Main;
 }());

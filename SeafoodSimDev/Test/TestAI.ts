@@ -1,12 +1,16 @@
 ﻿class TestAI {
+    private scenario: Scenario;
     public constructor(p_scenario: Scenario) {
-        var ai: AI = new AI(p_scenario);
-        var gov: Government = new Government(new Restrictions(p_scenario), p_scenario);
-        var map: Map = new Map(gov.getRestrictions(), p_scenario);
         
-        var richShipOwner: ShipOwner = new ShipOwner(gov, new Point2(0, 0), "0", p_scenario, 10000000000000000000);
-        var poorShipOwner: ShipOwner = new ShipOwner(gov, new Point2(0, 0), "1", p_scenario, - 10000000000000000000);
-
+        this.scenario = p_scenario;
+        this.scenario.loadScenario('Controller/scenarios/scnTest.json', this.runTests);
+    }
+    public runTests = (): void => {
+        var ai: AI = new AI(this.scenario);
+        var gov: Government = new Government(new Restrictions(this.scenario), this.scenario);
+        var map: Map = new Map(gov.getRestrictions(), this.scenario);
+        var richShipOwner: ShipOwner = new ShipOwner(gov, new Point2(0, 0), "0", this.scenario, 10000000000000000000);
+        var poorShipOwner: ShipOwner = new ShipOwner(gov, new Point2(0, 0), "1", this.scenario, - 10000000000000000000);
         QUnit.test("AI: pathToNearestLandingSite", function (assert) {
             map.emptyGrid();
             map.getGrid()[2][2] = new LandingSite(1, 10, 1, {},"0", new Point2(2,2));
@@ -37,7 +41,7 @@
         });
 
         QUnit.test("AI: find nearest fuel site with multiple sites", function (assert) {
-            var map: Map = new Map(gov.getRestrictions(), p_scenario);
+            var map: Map = new Map(gov.getRestrictions(), this.scenario);
             map.emptyGrid();
             map.getGrid()[5][3] = new FuelSite(1, 10, 10, 10, "0", new Point2(5,3));
             map.getGrid()[5][8] = new FuelSite(1, 10, 101, 10, "1", new Point2(5,8));
