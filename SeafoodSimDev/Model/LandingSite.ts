@@ -19,7 +19,7 @@ class LandingSite extends Site {
         return tax;
     }
 
-    //Returns a list of fish that were not taken in and a price
+    //Returns a price
     public receiveFish(p_fish: number[][]): number {
         var price: number = 0;
 
