@@ -35,6 +35,7 @@ class Controller {
             //this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
             new StartScreen();
             this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_scenario);
+            this.m_startScreenEventHandler.initialize();
             //this.m_scenario.loadScenario('Controller/scenarios/scn1.json', this.m_startScreenEventHandler.updateInfo);
             //this.m_view.updateMainView(this.m_model);
         }
@@ -92,11 +93,6 @@ class Controller {
 
 
     public restart = (): void => {
-        //this.m_model = new Model(this.m_scenario);
-       // this.m_model.getMap().setScenario(this.m_scenario);
-        //this.m_view.changeMap(this.m_model.getMap());
-        //this.m_view.reset(this.m_model);
-        //this.m_view.updateMainView(this.m_model);
         $("#startScreen").dialog({
             minWidth: 1100,
             minHeight: 700,
@@ -108,7 +104,8 @@ class Controller {
         $("#startButton").removeClass("marked");
         $("#fastForwardButton").removeClass("marked");
         $("#pauseButton").addClass("marked");
-        $("#scenario1").prop("checked", true).change();
+
+        $("#scenario1Label").removeClass("ui-state-focus");//This is hardcoded to prevent scenario 1 from being checked by default
     }
 
     simulationTick = () => {

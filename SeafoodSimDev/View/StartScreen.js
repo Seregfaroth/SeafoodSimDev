@@ -35,8 +35,8 @@ var StartScreen = (function () {
         button.type = "radio";
         button.id = "scenario1";
         button.name = "radio";
-        button.value = "false";
         var label = document.createElement("label");
+        label.id = "scenario1Label";
         fieldSet.appendChild(label);
         label.htmlFor = "scenario1";
         label.innerHTML = "Scenario 1";
@@ -45,7 +45,6 @@ var StartScreen = (function () {
         button.type = "radio";
         button.id = "scenario2";
         button.name = "radio";
-        button.value = "true";
         var label = document.createElement("label");
         fieldSet.appendChild(label);
         label.htmlFor = "scenario2";
@@ -55,7 +54,6 @@ var StartScreen = (function () {
         button.type = "radio";
         button.id = "scenario3";
         button.name = "radio";
-        button.value = "true";
         var label = document.createElement("label");
         fieldSet.appendChild(label);
         label.htmlFor = "scenario3";
