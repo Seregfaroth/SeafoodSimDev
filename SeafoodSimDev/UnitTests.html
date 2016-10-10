@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Test SeafoodSim</title>
+
+    <link type="text/css" href="css/Aristo/Aristo.css" rel="stylesheet" />
+    <!--<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <script src="js/three.js"></script>
+    <script src="js/pathfinding-browser.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="//code.playcanvas.com/playcanvas-stable.js"></script>
+
+    <link href="css/body.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <!--<script src="ts/test.js"></script>
+    <script src="ThirdParty/wrappers.js"></script>-->
+    <!--loading controller files-->
+    <script src="Controller/Scenario.js"></script>
+    <script src="Controller/Controller.js"></script>
+    <script src="Controller/EventHandler.js"></script>
+    <script src="Controller/StartScreenEventHandler.js"></script>
+    <script src="Controller/Configuration.js"></script>
+
+
+    <!--loading model files-->
+    <script src="Model/School.js"></script>
+    <script src="Model/Tile.js"></script>
+    <script src="Model/Site.js"></script>
+    <script src="Model/AI.js"></script>
+    <script src="Model/Cod.js"></script>
+    <script src="Model/Fish.js"></script>
+    <script src="Model/FuelSite.js"></script>
+    <script src="Model/Government.js"></script>
+    <script src="Model/Land.js"></script>
+    <script src="Model/LandingSite.js"></script>
+    <script src="Model/Mackerel.js"></script>
+    <script src="Model/Map.js"></script>
+    <script src="Model/Model.js"></script>
+    <script src="Model/Ocean.js"></script>
+    <script src="Model/Point.js"></script>
+    <script src="Model/Restrictions.js"></script>
+    <script src="Model/EndScreenStats.js"></script>
+    <script src="Model/Score.js"></script>
+    <script src="Model/Ship.js"></script>
+    <script src="Model/ShipOwner.js"></script>
+
+    <!--loading view files-->
+    <script src="View/MainView.js"></script>
+    <script src="View/MapMenu.js"></script>
+    <script src="View/MapView.js"></script>
+    <script src="View/StartScreen.js"></script>
+    <script src="View/EndScreen.js"></script>
+
+    <!--loading third party wrappers-->
+    <script src="ThirdParty/Point.js"></script>
+    <script src="ThirdParty/Test1.js"></script>
+    <script src="ThirdParty/TKN_PathFinding.js"></script>
+
+    <!--loading main-->
+    <script src="Main.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+        google.charts.load('current', {'packages':['corechart']});
+    </script>
+
+
+    <!--loading test framework-->
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.0.0.css">
+    <script src="https://code.jquery.com/qunit/qunit-2.0.0.js"></script>
+
+    <!--loading tests-->
+    <script src="Test/Test.js"></script>
+    <script src="Test/TestAI.js"></script>
+    <script src="Test/TestFuelSite.js"></script>
+    <script src="Test/TestLandingSite.js"></script>
+    <script src="Test/TestMap.js"></script>
+    <script src="Test/TestSchool.js"></script>
+    <script src="Test/TestShip.js"></script>
+    <script src="Test/TestShipOwner.js"></script>
+
+</head>
+<body>
+   
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <div id="mainDiv"></div>
+
+    <script>
+        window.onload = () => {
+        var main = new Main(true);
+        }
+    </script>
+
+</body>
+</html>

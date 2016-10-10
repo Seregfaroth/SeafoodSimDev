@@ -34,6 +34,8 @@
     <Content Include="js\pathfinding-browser.js" />
     <Content Include="js\three.js" />
     <Content Include="main.html" />
+    <Content Include="test.html" />
+    <Content Include="UnitTests.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controller\declarations\" />
+    <Folder Include="Model\declarations\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Controller\Controller.ts" />
@@ -61,7 +64,6 @@
     <TypeScriptCompile Include="Main.ts" />
     <TypeScriptCompile Include="Model\AI.ts" />
     <TypeScriptCompile Include="Model\Cod.ts" />
-    <TypeScriptCompile Include="Model\declarations\qunit.d.ts" />
     <TypeScriptCompile Include="Model\EndScreenStats.ts" />
     <TypeScriptCompile Include="Model\FuelSite.ts" />
     <TypeScriptCompile Include="Model\Government.ts" />
@@ -79,6 +81,15 @@
     <TypeScriptCompile Include="Model\ShipOwner.ts" />
     <TypeScriptCompile Include="Model\Site.ts" />
     <TypeScriptCompile Include="Model\Tile.ts" />
+    <TypeScriptCompile Include="Test\Declarations\qunit.d.ts" />
+    <TypeScriptCompile Include="Test\Test.ts" />
+    <TypeScriptCompile Include="Test\TestAI.ts" />
+    <TypeScriptCompile Include="Test\TestFuelSite.ts" />
+    <TypeScriptCompile Include="Test\TestLandingSite.ts" />
+    <TypeScriptCompile Include="Test\TestMap.ts" />
+    <TypeScriptCompile Include="Test\TestSchool.ts" />
+    <TypeScriptCompile Include="Test\TestShip.ts" />
+    <TypeScriptCompile Include="Test\TestShipOwner.ts" />
     <TypeScriptCompile Include="ThirdParty\declarations\three.d.ts" />
     <TypeScriptCompile Include="ThirdParty\Point.ts" />
     <TypeScriptCompile Include="ThirdParty\Test1.ts" />
