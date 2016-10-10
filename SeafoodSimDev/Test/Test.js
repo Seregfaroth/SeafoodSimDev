@@ -2,7 +2,7 @@ var Test = (function () {
     function Test() {
         this.m_scenario = new Scenario();
         new TestAI(this.m_scenario);
-        new TestSchool();
+        new TestSchool(this.m_scenario);
         new TestShip(this.m_scenario);
         new TestShipOwner(this.m_scenario);
         new TestFuelSite();
