@@ -1,11 +1,13 @@
-﻿/// <reference path = "../../TSSeafoodSimDevXTest/ts/declarations/qunit.d.ts"/>
-/// <reference path = "../../TSSeafoodSimDev/externals/model.d.ts"/>
+﻿// <reference path = "../../TSSeafoodSimDevXTest/ts/declarations/qunit.d.ts"/>
+// <reference path = "../../TSSeafoodSimDev/externals/model.d.ts"/>
 
 class TestShip {
     constructor() {
-        var owner: ShipOwner = new ShipOwner(new Point2(0,0), "0");
-        var ship: Ship = new Ship(owner);
-        var map: Map = new Map(10, 0, new Restrictions());
+        var scenario: Scenario = new Scenario();
+        var gov: Government = new Government(new Restrictions(scenario), scenario);
+        var owner: ShipOwner = new ShipOwner(gov, new Point2(0, 0), "0", scenario);
+        var ship: Ship = new Ship(owner, scenario);
+        var map: Map = new Map(gov.getRestrictions(), scenario);
         map.emptyGrid();
 
 
@@ -15,7 +17,7 @@ class TestShip {
             assert.equal(testShip, undefined);
 
             //Create ship and check members
-            testShip = new Ship(owner);
+            testShip = new Ship(owner, scenario);
             assert.ok(testShip);
             assert.deepEqual(testShip.getCargo(), []);
             assert.deepEqual(testShip.getFuel(), testShip.getFuelCapacity());
@@ -48,8 +50,8 @@ class TestShip {
 
         QUnit.test("Ship: follow path not possible", function (assert) {
             map.emptyGrid();
-            map.getGrid()[0][0] = new LandingSite(1, 10, 101, {}, "0");
-            map.addShip(new Ship(new ShipOwner(new Point2(0, 0), "0")));
+            map.getGrid()[0][0] = new LandingSite(1, 10, 101, {}, "0", new Point2(0, 0));
+            map.addShip(new Ship(new ShipOwner(gov, new Point2(0, 0), "0", scenario), scenario));
             var path: Point2[] = [ship.getPosition(), new Point2(0, 0), new Point2(0, 1)];
             var oldPosition: Point2 = ship.getPosition();
             ship.setPath(path);
@@ -57,7 +59,7 @@ class TestShip {
             //Check that ship has not moved
             assert.deepEqual(oldPosition, ship.getPosition(), "ship should not have moved");
             assert.deepEqual(path.length, 3, "path should not be modified");
-            map.getGrid()[0][0] = new LandingSite(1, 0, 0, {}, "0");
+            map.getGrid()[0][0] = new LandingSite(1, 0, 0, {}, "0", new Point2(0,0));
             ship.setPath(path);
             ship.followPath(map);
             //Check that ship has not moved
@@ -77,11 +79,11 @@ class TestShip {
         });
 
         QUnit.test("Ship: fish", function (assert) {
-            var map: Map = new Map(5, 0, new Restrictions());
+            var map: Map = new Map(gov.getRestrictions(), scenario);
             map.emptyGrid();
             var point: Point2 = new Point2(2, 2);
             var noOfFishInSchool: number = 100;
-            var school: Cod = new Cod(noOfFishInSchool, point);
+            var school: Cod = new Cod(noOfFishInSchool, 10, point, scenario);
             map.addSchool(school);
             var path: Point2[] = [ship.getPosition(), point];
             ship.setPath(path);
@@ -92,20 +94,20 @@ class TestShip {
 
             ship.fish(map);
             //Check if ship has fished
-            assert.deepEqual(ship.getCargo().length, Math.floor(noOfFishInSchool * map.getFishingPercentage()), "ship should have fished");
+            assert.deepEqual(ship.getCargo().length, Math.floor(noOfFishInSchool * scenario.getFishingPercentage()), "ship should have fished");
         });
 
         QUnit.test("Ship: land", function (assert) {
-            var map: Map = new Map(5, 0, new Restrictions);
+            var map: Map = new Map(gov.getRestrictions(), scenario);
             map.emptyGrid();
             var prices: { [fishType: number]: number } = {};
             prices[0] = 10;
             prices[1] = 8;
-            var site: LandingSite = new LandingSite(1, 10, 1, prices, "0");
+            var site: LandingSite = new LandingSite(1, 10, 1, prices, "0", new Point2(2,2));
             map.getGrid()[2][2] = site;
             var point: Point2 = new Point2(2, 2);
             var noOfFishInSchool: number = 100;
-            var school: Cod = new Cod(noOfFishInSchool, point);
+            var school: Cod = new Cod(noOfFishInSchool, 10, point, scenario);
             map.addSchool(school);
             var path: Point2[] = [ship.getPosition(), point];
             ship.setPath(path);
@@ -117,7 +119,7 @@ class TestShip {
             var balance: number = owner.getBalance();
             var price: number = 0;
             ship.getCargo().forEach(function (f) {
-                price += prices[f.getType()];
+                price += prices[0];
             });
             ship.land(site);
             assert.deepEqual(ship.getCargo().length, 0, "ship should have fished");
@@ -126,7 +128,7 @@ class TestShip {
 
         QUnit.test("Ship: refuel", function (assert) {
             map.emptyGrid();
-            var fuelSite: FuelSite = new FuelSite(1, 100, 1, 1, "0");
+            var fuelSite: FuelSite = new FuelSite(1, 100, 1, 1, "0", new Point2(0,0));
             var balance: number = ship.getOwner().getBalance();
             ship.setPath([new Point2(0, 0), new Point2(0, 1)]);
             ship.followPath(map);
