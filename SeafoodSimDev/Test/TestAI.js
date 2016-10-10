@@ -2,6 +2,7 @@ var TestAI = (function () {
     function TestAI(p_scenario) {
         var _this = this;
         this.runTests = function () {
+            var testAi = _this;
             var ai = new AI(_this.scenario);
             var gov = new Government(new Restrictions(_this.scenario), _this.scenario);
             var map = new Map(gov.getRestrictions(), _this.scenario);
@@ -35,7 +36,7 @@ var TestAI = (function () {
                 assert.deepEqual(path[path.length - 1], new Point2(0, 4), "Nearest from 4,4 should be 0,4");
             });
             QUnit.test("AI: find nearest fuel site with multiple sites", function (assert) {
-                var map = new Map(gov.getRestrictions(), this.scenario);
+                var map = new Map(gov.getRestrictions(), testAi.scenario);
                 map.emptyGrid();
                 map.getGrid()[5][3] = new FuelSite(1, 10, 10, 10, "0", new Point2(5, 3));
                 map.getGrid()[5][8] = new FuelSite(1, 10, 101, 10, "1", new Point2(5, 8));

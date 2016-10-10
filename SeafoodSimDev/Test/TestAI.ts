@@ -1,11 +1,12 @@
 ﻿class TestAI {
     private scenario: Scenario;
     public constructor(p_scenario: Scenario) {
-        
+
         this.scenario = p_scenario;
         this.scenario.loadScenario('Controller/scenarios/scnTest.json', this.runTests);
     }
     public runTests = (): void => {
+        var testAi: TestAI = this;
         var ai: AI = new AI(this.scenario);
         var gov: Government = new Government(new Restrictions(this.scenario), this.scenario);
         var map: Map = new Map(gov.getRestrictions(), this.scenario);
@@ -41,7 +42,7 @@
         });
 
         QUnit.test("AI: find nearest fuel site with multiple sites", function (assert) {
-            var map: Map = new Map(gov.getRestrictions(), this.scenario);
+            var map: Map = new Map(gov.getRestrictions(), testAi.scenario);
             map.emptyGrid();
             map.getGrid()[5][3] = new FuelSite(1, 10, 10, 10, "0", new Point2(5,3));
             map.getGrid()[5][8] = new FuelSite(1, 10, 101, 10, "1", new Point2(5,8));

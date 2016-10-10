@@ -1,7 +1,7 @@
 {
   "maxNoDaysFishing":  5,
   "schoolSizeWeight": 0.01,
-  "startNoOfShips": 0,
+  "startNoOfShips": 5,
   "movingRadius": 1,
   "recrutingPercentage": 0.35,
   "noOfShipOwners": 2,
@@ -13,8 +13,8 @@
   "description": "The government have identified the following sub-objectives: <p style='margin: 10px'> Financial 70%, Environmental 10%, Social 20% </p> For each sub-objective key indicators have been determined and priortized. <p style='margin: 10px'> Financial:  Invest 40%, Income 60% <br> Environmental: Biomass 70%, Recruitment 30% <br> Social: Onshore employment 20%, Offshore employment 80%</p>",
   "linkToMCA": "http://mareframe.mapix.com/dev/MCA/DST.html?model=sfsCampaign001",
   "mapType": 2,
-  "mapSize": 5,
-  "numberOfSchools": 5,
+  "mapSize": 10,
+  "numberOfSchools": 0,
   "prices": {
     "Cod": 18,
     "Mackerel": 10
