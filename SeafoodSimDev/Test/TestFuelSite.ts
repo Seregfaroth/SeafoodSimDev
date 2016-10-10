@@ -1,11 +1,11 @@
 ﻿class TestFuelSite {
     constructor() {
-        var fuelSite: FuelSite = new FuelSite(1, 100, 10, 1, "0");
+        var fuelSite: FuelSite = new FuelSite(1, 100, 10, 1, "0", new Point2(0,0));
 
         QUnit.test("FuelSite: constructor", function (assert) {
             var testFuelSite: FuelSite;
             assert.equal(testFuelSite, undefined, "fuel site should be undefined");
-            testFuelSite = new FuelSite(1, 1, 1, 1,  "0");
+            testFuelSite = new FuelSite(1, 1, 1, 1,  "0", new Point2(0,0));
             //Test that the site has been created with the correct members
             assert.ok(testFuelSite, "fuel site should not be undefined");
             assert.deepEqual(testFuelSite.getPrice(), 1, "price should be 1");
