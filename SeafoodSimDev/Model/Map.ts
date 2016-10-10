@@ -111,18 +111,18 @@ class Map {
         var placedInSamePlace: number = 0;
         var schoolPoints: Point2[] = []; 
         schoolPoints[0] = new Point2(5, 9);
-        var point: Point2 = schoolPoints[0]; // = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
+        var point: Point2 = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
         
-        schoolPoints[1] = new Point2(5, 12);
-        schoolPoints[2] = new Point2(7, 10);
-        schoolPoints[3] = new Point2(7, 13);
-        schoolPoints[4] = new Point2(9, 11);
+        //schoolPoints[1] = new Point2(5, 12);
+        //schoolPoints[2] = new Point2(7, 10);
+        //schoolPoints[3] = new Point2(7, 13);
+        //schoolPoints[4] = new Point2(9, 11);
         var i = 1;
         while (schoolsPlaced < p_n) {
             if (placedInSamePlace === p_schoolsInOnePlace) {
                 placedInSamePlace = 0;
-                //point = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
-                point = schoolPoints[i++%5];
+                point = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
+                //point = schoolPoints[i++%5];
             }
             placedInSamePlace++;
             var tile: Tile = this.getTile(point);
@@ -148,6 +148,7 @@ class Map {
         switch (p_mapType) {
             case 1: this.placeLandAndSites(p_size, p_prices); break;
             case 2: this.placeLandAndSites2(p_size, p_prices); break;
+            case 3: this.placeLandAndSites3(p_size, p_prices); break;
         }
         this.placeSchools(p_noOfSchools, this.m_scenario.getSchoolSize(), this.m_scenario.getSchoolMsy(), p_schoolsInOnePlace);
     }

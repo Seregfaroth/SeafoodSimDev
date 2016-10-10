@@ -13,8 +13,8 @@
   "description": "some description",
   "linkToMCA": "http://mareframe.mapix.com/dev/MCA/DST.html",
   "mapType": 1,
-  "mapSize": 20,
-  "numberOfSchools": 5,
+  "mapSize": 30,
+  "numberOfSchools": 15,
   "prices": {
     "Cod": 18,
     "Mackerel": 10
@@ -25,7 +25,7 @@
   "schoolMsy": 5000,
   "schoolMinimum": 50,
   "schoolMaximum": 36500,
-  "defaultNoDays": 300,
+  "defaultNoDays": 800,
   "defaultTickSize": 30,
   "taxingRate": 0.1,
   "map": "map1",

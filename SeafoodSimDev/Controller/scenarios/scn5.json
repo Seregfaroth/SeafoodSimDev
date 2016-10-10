@@ -12,9 +12,9 @@
   "overallscoreGoal": "no",
   "description": "Scenario 5 Description",
   "linkToMCA": "http://mareframe.mapix.com/dev/MCA/DST.html",
-  "mapType": 2,
-  "mapSize": 15,
-  "numberOfSchools": 5,
+  "mapType": 3,
+  "mapSize": 20,
+  "numberOfSchools": 25,
   "prices": {
     "Cod": 18,
     "Mackerel": 10
@@ -25,7 +25,7 @@
   "schoolMsy": 5000,
   "schoolMinimum": 50,
   "schoolMaximum": 36500,
-  "defaultNoDays": 100,
+  "defaultNoDays": 600,
   "defaultTickSize": 30,
   "taxingRate": 0.1,
   "map": "map1",
