@@ -71,7 +71,7 @@
   "environmentalScoreMaxIncreasePerTick": 20000,
   "codMovingRadius": 0,
   "codRecruitPercent": 0.35,
-  "codSchoolMaxAge": 8,
+  "codSchoolMaxAge": 3,
   "recruitAndAgeFreq": 30,
 
   "statFreq": 100,

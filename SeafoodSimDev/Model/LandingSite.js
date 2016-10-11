@@ -21,7 +21,7 @@ var LandingSite = (function (_super) {
         this.m_untaxedValue = 0;
         return tax;
     };
-    //Returns a list of fish that were not taken in and a price
+    //Returns a price
     LandingSite.prototype.receiveFish = function (p_fish) {
         var price = 0;
         var percentage = 1;
