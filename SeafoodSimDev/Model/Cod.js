@@ -7,10 +7,11 @@ var __extends = (this && this.__extends) || function (d, b) {
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var Cod = (function (_super) {
     __extends(Cod, _super);
-    function Cod(p_size, p_msy, p_position, p_scenario, p_ages) {
-        _super.call(this, p_size, p_msy, p_position, p_scenario);
+    function Cod(p_size, p_msy, p_position, p_ages) {
+        _super.call(this, p_size, p_msy, p_position);
+        this.m_scenario = Scenario.getInstance();
         this.m_origin = p_position;
-        this.m_maxAge = p_scenario.getCodSchoolMaxAge();
+        this.m_maxAge = this.m_scenario.getCodSchoolMaxAge();
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }

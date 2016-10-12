@@ -3,6 +3,7 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class Main {
     private m_controller: Controller;
+
     
 
     constructor(p_test: boolean) {

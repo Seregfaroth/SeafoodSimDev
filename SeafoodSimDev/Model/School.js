@@ -1,11 +1,11 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var School = (function () {
-    function School(p_size, p_msy, p_position, p_scenario) {
+    function School(p_size, p_msy, p_position) {
         this.m_ages = [];
         this.m_recruitTotal = 0;
         this.m_natDeath = 0;
         this.m_yield = 0;
-        this.m_scenario = p_scenario;
+        //this.m_scenario = p_scenario;
         this.m_position = p_position;
         this.m_msy = p_msy;
     }

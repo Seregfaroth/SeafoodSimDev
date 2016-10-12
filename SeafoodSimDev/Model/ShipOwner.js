@@ -1,19 +1,19 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var ShipOwner = (function () {
-    function ShipOwner(p_government, p_shipStartPosition, p_id, p_scenario, p_balance) {
+    function ShipOwner(p_government, p_shipStartPosition, p_id, p_balance) {
         this.m_ships = [];
         this.m_shipBought = false;
-        this.m_scenario = p_scenario;
+        this.m_scenario = Scenario.getInstance();
         this.m_government = p_government;
         this.m_shipStartPosition = p_shipStartPosition;
         this.m_id = p_id;
-        this.m_license = p_scenario.getShipOwnerLicense();
-        this.m_shipPrice = p_scenario.getShipPrice();
+        this.m_license = this.m_scenario.getShipOwnerLicense();
+        this.m_shipPrice = this.m_scenario.getShipPrice();
         if (p_balance) {
             this.m_balance = p_balance;
         }
         else {
-            this.m_balance = p_scenario.getShipOwnerStartBalance();
+            this.m_balance = this.m_scenario.getShipOwnerStartBalance();
         }
         this.m_taxPayed = 0;
     }
@@ -51,7 +51,7 @@ var ShipOwner = (function () {
         }
     };
     ShipOwner.prototype.buyShip = function () {
-        var ship = new Ship(this, this.m_scenario);
+        var ship = new Ship(this);
         this.m_ships.push(ship);
         this.financialTransaction(-this.m_shipPrice);
         this.m_shipBought = true;

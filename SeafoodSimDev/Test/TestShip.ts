@@ -3,16 +3,16 @@
 
 class TestShip {
     private scenario: Scenario;
-    constructor(p_scenario ) {
-        this.scenario = p_scenario;
+    constructor() {
+        this.scenario = Scenario.getInstance();
         this.scenario.loadScenario('Controller/scenarios/scnTest.json', this.runTests);
     }
     public runTests = (): void => {
         
-        var gov: Government = new Government(new Restrictions(this.scenario), this.scenario);
-        var owner: ShipOwner = new ShipOwner(gov, new Point2(0, 0), "0", this.scenario);
-        var ship: Ship = new Ship(owner, this.scenario);
-        var map: Map = new Map(gov.getRestrictions(), this.scenario);
+        var gov: Government = new Government(new Restrictions());
+        var owner: ShipOwner = new ShipOwner(gov, new Point2(0, 0), "0");
+        var ship: Ship = new Ship(owner);
+        var map: Map = new Map(gov.getRestrictions());
         var thisPlaceholder: TestShip = this;
         map.emptyGrid();
 
@@ -23,7 +23,7 @@ class TestShip {
             assert.equal(testShip, undefined, "ship should be undefined");
 
             //Create ship and check members
-            testShip = new Ship(owner, thisPlaceholder.scenario);
+            testShip = new Ship(owner);
             assert.ok(testShip, "Ship should have been created");
 
             var noOfFish: number = 0;
@@ -66,7 +66,7 @@ class TestShip {
         QUnit.test("Ship: follow path not possible", function (assert) {
             map.emptyGrid();
             map.getGrid()[0][0] = new LandingSite(1, 10, 101, {}, "0", new Point2(0, 0));
-            map.addShip(new Ship(new ShipOwner(gov, new Point2(0, 0), "0", thisPlaceholder.scenario), thisPlaceholder.scenario));
+            map.addShip(new Ship(new ShipOwner(gov, new Point2(0, 0), "0")));
             var path: Point2[] = [ship.getPosition(), new Point2(0, 0), new Point2(0, 1)];
             var oldPosition: Point2 = ship.getPosition();
             ship.setPath(path);
@@ -94,11 +94,11 @@ class TestShip {
         });
 
         QUnit.test("Ship: fish", function (assert) {
-            var map: Map = new Map(gov.getRestrictions(), thisPlaceholder.scenario);
+            var map: Map = new Map(gov.getRestrictions());
             map.emptyGrid();
             var point: Point2 = new Point2(2, 2);
             var noOfFishInSchool: number = 100;
-            var school: Cod = new Cod(noOfFishInSchool, 10, point, thisPlaceholder.scenario);
+            var school: Cod = new Cod(noOfFishInSchool, 10, point);
             map.addSchool(school);
             var path: Point2[] = [ship.getPosition(), point];
             ship.setPath(path);
@@ -113,7 +113,7 @@ class TestShip {
         });
 
         QUnit.test("Ship: land", function (assert) {
-            var map: Map = new Map(gov.getRestrictions(), thisPlaceholder.scenario);
+            var map: Map = new Map(gov.getRestrictions());
             map.emptyGrid();
             var prices: { [fishType: number]: number } = {};
             prices[0] = 10;
@@ -122,7 +122,7 @@ class TestShip {
             map.getGrid()[2][2] = site;
             var point: Point2 = new Point2(2, 2);
             var noOfFishInSchool: number = 100;
-            var school: Cod = new Cod(noOfFishInSchool, 10, point, thisPlaceholder.scenario);
+            var school: Cod = new Cod(noOfFishInSchool, 10, point);
             map.addSchool(school);
             var path: Point2[] = [ship.getPosition(), point];
             ship.setPath(path);

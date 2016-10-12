@@ -95,6 +95,7 @@
     <TypeScriptCompile Include="ThirdParty\Point.ts" />
     <TypeScriptCompile Include="ThirdParty\Test1.ts" />
     <TypeScriptCompile Include="ThirdParty\TKN_PathFinding.ts" />
+    <TypeScriptCompile Include="ThirdParty\TKN_Singleton.ts" />
     <TypeScriptCompile Include="View\declarations\google.visualization.d.ts" />
     <TypeScriptCompile Include="View\EndScreen.ts" />
     <TypeScriptCompile Include="View\MainView.ts" />

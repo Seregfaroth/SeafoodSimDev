@@ -7,9 +7,9 @@
    private m_landingDistrubutions: { [Site: string]: number } = {};
    private m_maxShips: number;
 
-   constructor(p_scenario: Scenario) {
-       this.m_scenario = p_scenario;
-       this.m_maxShips = p_scenario.getStartNoOfShips();
+   constructor() {
+       this.m_scenario = Scenario.getInstance();
+       this.m_maxShips = this.m_scenario.getStartNoOfShips();
    }
     public restrictArea(p_tile: Tile): void {
         this.m_restrictedAreas.push(p_tile);

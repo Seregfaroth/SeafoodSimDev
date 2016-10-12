@@ -1,15 +1,15 @@
 var TestShipOwner = (function () {
-    function TestShipOwner(p_scenario) {
+    function TestShipOwner() {
         var _this = this;
         this.runTests = function () {
-            var gov = new Government(new Restrictions(_this.scenario), _this.scenario);
-            var owner = new ShipOwner(gov, new Point2(0, 0), "0", _this.scenario);
+            var gov = new Government(new Restrictions());
+            var owner = new ShipOwner(gov, new Point2(0, 0), "0");
             var thisPlaceholder = _this;
             QUnit.test("ShipOwner: constructor", function (assert) {
                 var testOwner;
                 var point = new Point2(0, 0);
                 assert.equal(testOwner, undefined, "Ship owner should not have been created");
-                testOwner = new ShipOwner(gov, point, "1", thisPlaceholder.scenario);
+                testOwner = new ShipOwner(gov, point, "1");
                 //Check that the ship owner has been created with the correct memebers
                 assert.ok(testOwner, "should be created");
                 assert.deepEqual(testOwner.getShipStartPosition(), point, "should have the correct start position");
@@ -41,13 +41,13 @@ var TestShipOwner = (function () {
                 assert.deepEqual(owner.getBalance(), balance + owner.getShipPrice() - owner.getShipPrice() * thisPlaceholder.scenario.getTaxingRate(), "owner should be paid");
             });
             QUnit.test("ShipOwner: sell ship exception", function (assert) {
-                var ship = new Ship(new ShipOwner(gov, new Point2(1, 1), "1", thisPlaceholder.scenario), thisPlaceholder.scenario);
+                var ship = new Ship(new ShipOwner(gov, new Point2(1, 1), "1"));
                 assert.throws(function () {
                     owner.sellShip(ship);
                 }, Error, "should throw an error");
             });
         };
-        this.scenario = p_scenario;
+        this.scenario = Scenario.getInstance();
         this.scenario.loadScenario('Controller/scenarios/scnTest.json', this.runTests);
     }
     return TestShipOwner;

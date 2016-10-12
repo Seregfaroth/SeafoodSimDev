@@ -1,13 +1,13 @@
 var TestAI = (function () {
-    function TestAI(p_scenario) {
+    function TestAI() {
         var _this = this;
         this.runTests = function () {
             var testAi = _this;
-            var ai = new AI(_this.scenario);
-            var gov = new Government(new Restrictions(_this.scenario), _this.scenario);
-            var map = new Map(gov.getRestrictions(), _this.scenario);
-            var richShipOwner = new ShipOwner(gov, new Point2(0, 0), "0", _this.scenario, 10000000000000000000);
-            var poorShipOwner = new ShipOwner(gov, new Point2(0, 0), "1", _this.scenario, -10000000000000000000);
+            var ai = new AI();
+            var gov = new Government(new Restrictions());
+            var map = new Map(gov.getRestrictions());
+            var richShipOwner = new ShipOwner(gov, new Point2(0, 0), "0", 10000000000000000000);
+            var poorShipOwner = new ShipOwner(gov, new Point2(0, 0), "1", -10000000000000000000);
             QUnit.test("AI: pathToNearestLandingSite", function (assert) {
                 map.emptyGrid();
                 map.getGrid()[2][2] = new LandingSite(1, 10, 1, {}, "0", new Point2(2, 2));
@@ -36,7 +36,7 @@ var TestAI = (function () {
                 assert.deepEqual(path[path.length - 1], new Point2(0, 4), "Nearest from 4,4 should be 0,4");
             });
             QUnit.test("AI: find nearest fuel site with multiple sites", function (assert) {
-                var map = new Map(gov.getRestrictions(), testAi.scenario);
+                var map = new Map(gov.getRestrictions());
                 map.emptyGrid();
                 map.getGrid()[5][3] = new FuelSite(1, 10, 10, 10, "0", new Point2(5, 3));
                 map.getGrid()[5][8] = new FuelSite(1, 10, 101, 10, "1", new Point2(5, 8));
@@ -83,7 +83,7 @@ var TestAI = (function () {
                 assert.deepEqual(path, expectedPath, "should find a path around the land");
             });
         };
-        this.scenario = p_scenario;
+        this.scenario = Scenario.getInstance();
         this.scenario.loadScenario('Controller/scenarios/scnTest.json', this.runTests);
     }
     return TestAI;

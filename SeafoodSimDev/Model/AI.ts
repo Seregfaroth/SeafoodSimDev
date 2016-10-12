@@ -7,11 +7,11 @@ class AI {
      private m_fishingPath: Point2[] = [new Point2(2, 0),new Point2(1, 0), new Point2(1, 1), new Point2(1, 2), new Point2(1, 3), new Point2(1, 4), new Point2(2, 4),
          new Point2(3, 4), new Point2(3, 3), new Point2(3, 2), new Point2(3, 1), new Point2(3, 0), new Point2(2, 0)];
      private m_noHistory: boolean;
-     constructor(p_scenario: Scenario) {
-         this.m_scenario = p_scenario;
-         this.m_noHistory = p_scenario.getNoHistory();
-         this.m_balanceToBuyShip = p_scenario.getAiBuyShipBalance();
-         this.m_balanceToSellShip = p_scenario.getAiSellShipBalance();
+     constructor() {
+         this.m_scenario = Scenario.getInstance();
+         this.m_noHistory = this.m_scenario.getNoHistory();
+         this.m_balanceToBuyShip = this.m_scenario.getAiBuyShipBalance();
+         this.m_balanceToSellShip = this.m_scenario.getAiSellShipBalance();
      }
 
     public run(p_shipOwner: ShipOwner, p_map: Map): void {

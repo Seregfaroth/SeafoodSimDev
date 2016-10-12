@@ -27,8 +27,8 @@ class EndScreenStats {
     private m_socialScorePrTimeUnit: number[] = [];
     private m_overallScorePrTimeUnit: number[] = [];
 
-    constructor(p_scenario: Scenario) {
-        this.m_scenario = p_scenario;
+    constructor() {
+        this.m_scenario = Scenario.getInstance();
     }
     public setTimeAt(p_index: number, p_timeValue: number) {
         this.m_time[p_index] = p_timeValue;

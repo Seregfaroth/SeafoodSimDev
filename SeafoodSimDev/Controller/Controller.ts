@@ -22,7 +22,7 @@ class Controller {
     //private m_sce: Scenario;
     constructor(p_mca?: boolean) {
         console.log("Controller loading");
-        this.m_scenario = new Scenario();
+        this.m_scenario = Scenario.getInstance();
         if (p_mca === true) {
             this.m_scenario.loadScenario('Controller/scenarios/scnMCA1.json', this.initMCA);
         }
@@ -33,8 +33,8 @@ class Controller {
             //this.m_statFreq = 30;
             //this.m_model = new Model(this.m_scenario);
             //this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
-            new StartScreen();
-            this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_scenario);
+            
+            this.m_startScreenEventHandler = new StartScreenEventHandler(this, new StartScreen());
             this.m_startScreenEventHandler.initialize();
             //this.m_scenario.loadScenario('Controller/scenarios/scn1.json', this.m_startScreenEventHandler.updateInfo);
             //this.m_view.updateMainView(this.m_model);
@@ -47,7 +47,7 @@ class Controller {
     //    this.m_scenario = p_scenario;
     //}
     private initMCA = () => {
-        this.setModelMCA(new Model(this.m_scenario));
+        this.setModelMCA(new Model());
         this.m_model.runMCA(this.m_scenario.getDefaultNoDays());
     }
     public getTicksPerMove(): number {

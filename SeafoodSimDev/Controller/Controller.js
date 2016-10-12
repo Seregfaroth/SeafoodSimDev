@@ -18,7 +18,7 @@ var Controller = (function () {
         //    this.m_scenario = p_scenario;
         //}
         this.initMCA = function () {
-            _this.setModelMCA(new Model(_this.m_scenario));
+            _this.setModelMCA(new Model());
             _this.m_model.runMCA(_this.m_scenario.getDefaultNoDays());
         };
         this.restart = function () {
@@ -76,7 +76,7 @@ var Controller = (function () {
             _this.m_view.resizeWindow();
         };
         console.log("Controller loading");
-        this.m_scenario = new Scenario();
+        this.m_scenario = Scenario.getInstance();
         if (p_mca === true) {
             this.m_scenario.loadScenario('Controller/scenarios/scnMCA1.json', this.initMCA);
         }
@@ -87,8 +87,7 @@ var Controller = (function () {
             //this.m_statFreq = 30;
             //this.m_model = new Model(this.m_scenario);
             //this.m_view = new MainView(this.m_model.getMap(), this.m_model.getShipOwners(), this.m_model.getGovernment().getTaxingRate());
-            new StartScreen();
-            this.m_startScreenEventHandler = new StartScreenEventHandler(this, this.m_scenario);
+            this.m_startScreenEventHandler = new StartScreenEventHandler(this, new StartScreen());
             this.m_startScreenEventHandler.initialize();
         }
     }

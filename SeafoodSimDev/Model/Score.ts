@@ -10,8 +10,8 @@ class Score {
     //private m_maximumScore: number = 9999999;
     private financial: number[] = []; //List of the financial ownings every day the last year
 
-    public constructor(p_scenario: Scenario) {
-        this.m_scenario = p_scenario;
+    public constructor(p_scenario) {
+        this.m_scenario = Scenario.getInstance();
         this.m_financialScore = 0;
         this.m_environmentalScore = 0;
         this.m_socialScore = 0;

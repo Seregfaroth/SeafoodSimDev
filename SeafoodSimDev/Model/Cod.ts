@@ -2,11 +2,13 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class Cod extends School{
     private m_origin: Point2;
+    private m_scenario: Scenario;
 
-    public constructor(p_size: number, p_msy: number, p_position: Point2, p_scenario: Scenario, p_ages?: number[]) {
-        super(p_size, p_msy, p_position, p_scenario);
+    public constructor(p_size: number, p_msy: number, p_position: Point2, p_ages?: number[]) {
+        super(p_size, p_msy, p_position);
+        this.m_scenario = Scenario.getInstance();
         this.m_origin = p_position;
-        this.m_maxAge = p_scenario.getCodSchoolMaxAge();
+        this.m_maxAge = this.m_scenario.getCodSchoolMaxAge();
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }

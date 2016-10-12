@@ -4,20 +4,19 @@
 /// <reference path = "Restrictions.ts"/>
 /// <reference path = "EndScreenStats.ts"/>
 var Model = (function () {
-    function Model(p_scenario) {
+    function Model() {
         this.m_shipOwners = [];
         this.m_time = 0;
         console.log("constructing model");
-        var t = p_scenario.getSchoolSizeWeight();
-        this.m_scenario = p_scenario;
-        var restrictions = new Restrictions(this.m_scenario);
-        this.m_stats = new EndScreenStats(this.m_scenario);
-        this.m_map = new Map(restrictions, this.m_scenario);
+        this.m_scenario = Scenario.getInstance();
+        var restrictions = new Restrictions();
+        this.m_stats = new EndScreenStats();
+        this.m_map = new Map(restrictions);
         //this.m_stats = new EndScreenStats(this.m_map);
-        this.m_goverment = new Government(restrictions, this.m_scenario);
-        this.m_ai = new AI(this.m_scenario);
+        this.m_goverment = new Government(restrictions);
+        this.m_ai = new AI();
         var j = 0;
-        for (var i = 0; i < p_scenario.getNoOfShipOwners(); i++) {
+        for (var i = 0; i < this.m_scenario.getNoOfShipOwners(); i++) {
             var startShipPoint = [new Point2(6, 11), new Point2(7, 12)];
             do {
             } while (!(this.m_map.getTile(startShipPoint[j]) instanceof Ocean)); //If this is not an ocean tile, find a new tile
@@ -115,7 +114,7 @@ var Model = (function () {
                 //console.log("Maxships: " + maxShips[maxIndex]);
                 //console.log("income: " + JSON.stringify(this.m_stats.getIncomePrTimeUnit()));
                 console.log("result: " + result[taxIndex][maxIndex]);
-                this.m_stats = new EndScreenStats(this.m_scenario);
+                this.m_stats = new EndScreenStats();
                 this.m_shipOwners = [];
                 var j = 0;
                 for (var i = 0; i < this.m_scenario.getNoOfShipOwners(); i++) {
@@ -125,8 +124,8 @@ var Model = (function () {
                     this.createShipOwner(startShipPoint[j++]);
                 }
                 this.m_time = 0;
-                this.m_ai = new AI(this.m_scenario);
-                this.m_map = new Map(this.getGovernment().getRestrictions(), this.m_scenario);
+                this.m_ai = new AI();
+                this.m_map = new Map(this.getGovernment().getRestrictions());
             }
         }
         $("#mainDiv").html(this.createJSONForMCA_HTML(result, tax, maxShips));
@@ -168,7 +167,7 @@ var Model = (function () {
         return this.m_goverment;
     };
     Model.prototype.createShipOwner = function (p_startingPoint, p_balance) {
-        this.m_shipOwners.push(new ShipOwner(this.m_goverment, p_startingPoint, "shipOwner" + this.m_shipOwners.length, this.m_scenario, p_balance));
+        this.m_shipOwners.push(new ShipOwner(this.m_goverment, p_startingPoint, "shipOwner" + this.m_shipOwners.length, p_balance));
     };
     Model.prototype.createJSONForMCA_HTML = function (p_res, p_tax, p_ship) {
         var ret = "";

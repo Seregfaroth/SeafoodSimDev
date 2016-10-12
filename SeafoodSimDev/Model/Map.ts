@@ -9,12 +9,12 @@ class Map {
     public m_natDeath: number=0; 
     public m_recruit: number = 0;
 
-    public constructor( p_restrictions: Restrictions,  p_scenario: Scenario) {       
-        this.m_scenario = p_scenario;
+    public constructor(p_restrictions: Restrictions) {
+        this.m_scenario = Scenario.getInstance();
         this.m_restrictions = p_restrictions;
         this.m_yield = 0;
         //this.generateExampleMap();
-        this.setScenario(p_scenario);
+        this.setScenario(this.m_scenario);
     }
     public setScenario(p_scenario: Scenario): void {
         this.m_scenario = p_scenario;
@@ -48,7 +48,7 @@ class Map {
             //Remove from school
             p_school.getAges()[i] -= noOfFish;
         }
-        this.m_schools.push(new Cod(noOfFishInNewSchool, this.m_scenario.getSchoolMsy(), p_school.getOrigin(), this.m_scenario, newSchoolAges));
+        this.m_schools.push(new Cod(noOfFishInNewSchool, this.m_scenario.getSchoolMsy(), p_school.getOrigin(), newSchoolAges));
     }
     public generateExampleMap() {
         for (var i = 0; i < 10; i++) {
@@ -127,7 +127,7 @@ class Map {
             placedInSamePlace++;
             var tile: Tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(p_schoolSize, p_schoolMsy, point, this.m_scenario));
+                this.addSchool(new Cod(p_schoolSize, p_schoolMsy, point));
                 schoolsPlaced++;
             }
         }

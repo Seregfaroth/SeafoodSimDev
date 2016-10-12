@@ -1,17 +1,17 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var Map = (function () {
-    function Map(p_restrictions, p_scenario) {
+    function Map(p_restrictions) {
         this.m_grid = [];
         this.m_schools = [];
         this.m_ships = [];
         this.m_yield = 0; //in fish, will be tonnes
         this.m_natDeath = 0;
         this.m_recruit = 0;
-        this.m_scenario = p_scenario;
+        this.m_scenario = Scenario.getInstance();
         this.m_restrictions = p_restrictions;
         this.m_yield = 0;
         //this.generateExampleMap();
-        this.setScenario(p_scenario);
+        this.setScenario(this.m_scenario);
     }
     Map.prototype.setScenario = function (p_scenario) {
         this.m_scenario = p_scenario;
@@ -45,7 +45,7 @@ var Map = (function () {
             //Remove from school
             p_school.getAges()[i] -= noOfFish;
         }
-        this.m_schools.push(new Cod(noOfFishInNewSchool, this.m_scenario.getSchoolMsy(), p_school.getOrigin(), this.m_scenario, newSchoolAges));
+        this.m_schools.push(new Cod(noOfFishInNewSchool, this.m_scenario.getSchoolMsy(), p_school.getOrigin(), newSchoolAges));
     };
     Map.prototype.generateExampleMap = function () {
         for (var i = 0; i < 10; i++) {
@@ -119,7 +119,7 @@ var Map = (function () {
             placedInSamePlace++;
             var tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(p_schoolSize, p_schoolMsy, point, this.m_scenario));
+                this.addSchool(new Cod(p_schoolSize, p_schoolMsy, point));
                 schoolsPlaced++;
             }
         }
