@@ -22,6 +22,7 @@ var Controller = (function () {
             _this.m_model.runMCA(_this.m_scenario.getDefaultNoDays());
         };
         this.restart = function () {
+            $("#endDialogDiv").empty().remove();
             $("#startScreen").dialog({
                 minWidth: 1100,
                 minHeight: 700,
@@ -57,8 +58,8 @@ var Controller = (function () {
             }
         };
         this.closeEndScreen = function () {
-            $("#endDialogDiv").empty().remove();
-            console.log("closing endscreen");
+            //$("#endDialogDiv").empty().remove();
+            //console.log("closing endscreen");
             _this.restart();
         };
         this.runSimulation = function (p_ticks) {
@@ -129,6 +130,9 @@ var Controller = (function () {
     };
     Controller.prototype.setEndTime = function (p_endTime) {
         this.m_endTime = p_endTime;
+    };
+    Controller.prototype.getEndtime = function () {
+        return this.m_endTime;
     };
     Controller.prototype.endSimulation = function () {
     };

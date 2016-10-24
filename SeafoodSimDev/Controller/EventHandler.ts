@@ -2,6 +2,7 @@
     private m_controller: Controller;
     public constructor(p_controller: Controller) {
         this.m_controller = p_controller;
+
         $("#startButton").on("click", this.start);
         $("#pauseButton").on("click", this.pause);
         $("#fastForwardButton").on("click", this.fastForward);
@@ -75,7 +76,14 @@
         }
     }
     public restart = (): void => {
-        if (confirm("Are you sure you want to restart the simulation?")) {
+        var t = this.m_controller.getModel().getTime();
+        var t2 = Scenario.getInstance().getDefaultNoDays()
+        if (this.m_controller.getModel().getTime() < Scenario.getInstance().getDefaultNoDays()) {
+            if (confirm("Are you sure you want to restart the simulation?")) {
+                this.m_controller.restart();
+            }
+        }
+        else {
             this.m_controller.restart();
         }
     }
