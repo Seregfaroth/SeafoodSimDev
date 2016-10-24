@@ -2,14 +2,14 @@
 // <reference path = "../../TSSeafoodSimDevXTest/ts/declarations/qunit.d.ts"/>
 // <reference path = "../../TSSeafoodSimDev/externals/model.d.ts"/>
 var TestSchool = (function () {
-    function TestSchool(p_scenario) {
+    function TestSchool() {
         var _this = this;
         this.runTests = function () {
             var startPosition = new Point2(0, 0);
-            var singleCod = new Cod(1, 1, startPosition, _this.scenario);
-            var singleMackerel = new Mackerel(1, 1, startPosition, _this.scenario);
-            var gov = new Government(new Restrictions(_this.scenario), _this.scenario);
-            var map = new Map(gov.getRestrictions(), _this.scenario);
+            var singleCod = new Cod(1, 1, startPosition);
+            var singleMackerel = new Mackerel(1, 1, startPosition);
+            var gov = new Government(new Restrictions());
+            var map = new Map(gov.getRestrictions());
             var thisPlaceholder = _this;
             map.getGrid()[0][0] = new Ocean(100, 1);
             QUnit.test("Cod: constructor", function (assert) {
@@ -17,13 +17,13 @@ var TestSchool = (function () {
                 //Check that testCod is undefined
                 assert.equal(testCod, undefined);
                 //Create cod and check members
-                testCod = new Cod(1, 1, startPosition, thisPlaceholder.scenario);
+                testCod = new Cod(1, 1, startPosition);
                 assert.ok(testCod);
                 assert.deepEqual(testCod.getSize(), 1);
                 assert.deepEqual(testCod.getPosition(), startPosition);
             });
             QUnit.test("Cod: age function", function (assert) {
-                var singleCod = new Cod(1, 1, startPosition, thisPlaceholder.scenario);
+                var singleCod = new Cod(1, 1, startPosition);
                 var age;
                 for (var i = 0; i < thisPlaceholder.scenario.getCodSchoolMaxAge(); i++) {
                     if (singleCod.getAges()[i] == 1) {
@@ -42,7 +42,7 @@ var TestSchool = (function () {
                 }
             });
             QUnit.test("Cod: natural death", function (assert) {
-                var singleCod = new Cod(1, 1, startPosition, thisPlaceholder.scenario);
+                var singleCod = new Cod(1, 1, startPosition);
                 //Make cod grow old
                 while (singleCod.getAges()[thisPlaceholder.scenario.getCodSchoolMaxAge() - 1] == 0) {
                     singleCod.ageAndRecruit(map);
@@ -92,7 +92,7 @@ var TestSchool = (function () {
                 assert.deepEqual(singleMackerel.getFish().indexOf(testingFish), -1);
             });*/
         };
-        this.scenario = p_scenario;
+        this.scenario = Scenario.getInstance();
         this.scenario.loadScenario('Controller/scenarios/scnTest.json', this.runTests);
     }
     return TestSchool;

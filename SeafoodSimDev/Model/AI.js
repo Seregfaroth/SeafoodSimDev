@@ -1,13 +1,13 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var AI = (function () {
-    function AI(p_scenario) {
+    function AI() {
         this.m_pathFinder = new TKN_PathFinding();
         this.m_fishingPath = [new Point2(2, 0), new Point2(1, 0), new Point2(1, 1), new Point2(1, 2), new Point2(1, 3), new Point2(1, 4), new Point2(2, 4),
             new Point2(3, 4), new Point2(3, 3), new Point2(3, 2), new Point2(3, 1), new Point2(3, 0), new Point2(2, 0)];
-        this.m_scenario = p_scenario;
-        this.m_noHistory = p_scenario.getNoHistory();
-        this.m_balanceToBuyShip = p_scenario.getAiBuyShipBalance();
-        this.m_balanceToSellShip = p_scenario.getAiSellShipBalance();
+        this.m_scenario = Scenario.getInstance();
+        this.m_noHistory = this.m_scenario.getNoHistory();
+        this.m_balanceToBuyShip = this.m_scenario.getAiBuyShipBalance();
+        this.m_balanceToSellShip = this.m_scenario.getAiSellShipBalance();
     }
     AI.prototype.run = function (p_shipOwner, p_map) {
         //console.log("AI money: "+ p_shipOwner.getBalance());

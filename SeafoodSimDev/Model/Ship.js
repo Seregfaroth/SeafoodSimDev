@@ -13,23 +13,23 @@ var FishType;
     FishType[FishType["Mackerel"] = 1] = "Mackerel";
 })(FishType || (FishType = {}));
 var Ship = (function () {
-    function Ship(p_owner, p_scenario) {
+    function Ship(p_owner) {
         this.m_fishedFor = 0;
         this.m_path = [];
         this.history = [[], [], [], [], []]; //For debugging  purpose
-        this.m_scenario = p_scenario;
-        this.m_noHistory = p_scenario.getNoHistory();
+        this.m_scenario = Scenario.getInstance();
+        this.m_noHistory = this.m_scenario.getNoHistory();
         this.m_position = p_owner.getShipStartPosition();
         this.m_cargo = [[], []];
         this.m_yield = [[], []];
-        this.m_fuelCapacity = p_scenario.getShipFuelCapacity();
-        this.m_cargoCapacity = p_scenario.getShipCargoCapacity();
-        this.m_fuelPerMove = p_scenario.getShipFuelPerMove();
-        this.m_fuelPerFishingTick = p_scenario.getFuelFishingPerTick();
+        this.m_fuelCapacity = this.m_scenario.getShipFuelCapacity();
+        this.m_cargoCapacity = this.m_scenario.getShipCargoCapacity();
+        this.m_fuelPerMove = this.m_scenario.getShipFuelPerMove();
+        this.m_fuelPerFishingTick = this.m_scenario.getFuelFishingPerTick();
         this.m_fuel = this.m_fuelCapacity;
         this.m_owner = p_owner;
         this.m_state = shipState.waiting;
-        for (var i = 0; i < p_scenario.getCodSchoolMaxAge(); i++) {
+        for (var i = 0; i < this.m_scenario.getCodSchoolMaxAge(); i++) {
             this.m_cargo[FishType.Cod][i] = 0;
         }
         for (var i = 0; i < 18; i++) {

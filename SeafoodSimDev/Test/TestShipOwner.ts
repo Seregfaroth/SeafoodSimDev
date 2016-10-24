@@ -1,19 +1,19 @@
 ﻿class TestShipOwner {
     private scenario: Scenario;
-    public constructor(p_scenario: Scenario) {
-        this.scenario = p_scenario;
+    public constructor() {
+        this.scenario = Scenario.getInstance();
         this.scenario.loadScenario('Controller/scenarios/scnTest.json', this.runTests);
     }
     public runTests = (): void => {
-        var gov = new Government(new Restrictions(this.scenario), this.scenario);
-        var owner: ShipOwner = new ShipOwner(gov, new Point2(0, 0), "0", this.scenario);
+        var gov = new Government(new Restrictions());
+        var owner: ShipOwner = new ShipOwner(gov, new Point2(0, 0), "0");
         var thisPlaceholder: TestShipOwner = this;
 
         QUnit.test("ShipOwner: constructor", function (assert) {
             var testOwner: ShipOwner;
             var point: Point2 = new Point2(0, 0);
             assert.equal(testOwner, undefined, "Ship owner should not have been created");
-            testOwner = new ShipOwner(gov, point, "1", thisPlaceholder.scenario);
+            testOwner = new ShipOwner(gov, point, "1");
             //Check that the ship owner has been created with the correct memebers
             assert.ok(testOwner, "should be created");
             assert.deepEqual(testOwner.getShipStartPosition(), point, "should have the correct start position");
@@ -50,7 +50,7 @@
         });
 
         QUnit.test("ShipOwner: sell ship exception", function (assert) {
-            var ship: Ship = new Ship(new ShipOwner(gov, new Point2(1, 1), "1", thisPlaceholder.scenario), thisPlaceholder.scenario);
+            var ship: Ship = new Ship(new ShipOwner(gov, new Point2(1, 1), "1"));
             assert.throws(function () {
                 owner.sellShip(ship);
             }, Error, "should throw an error");

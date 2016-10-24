@@ -100,9 +100,21 @@
     private m_noMenuScoreUpdate: boolean;
 
     private m_noHistory: boolean;
+    private static ms_instance: Scenario;
 
     constructor() {
-        //this.m_name = "no";
+        if (Scenario.ms_instance) {
+            throw ("Use get Scenario.getInstance()");
+        }
+    }
+
+    public static getInstance(): Scenario {
+        if (Scenario.ms_instance)
+            return Scenario.ms_instance;
+        else {
+            Scenario.ms_instance = new Scenario();
+            return Scenario.ms_instance;
+        }
     }
     public loadScenario(p_path: string, p_callBack: Function) {
         var path: string = 'scn1.json';

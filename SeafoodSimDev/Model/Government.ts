@@ -5,12 +5,12 @@ class Government {
     private m_taxingRate: number;
     private m_score: Score;
 
-    public constructor(p_restrictions: Restrictions, p_scenario: Scenario) {
-        
-        this.m_scenario = p_scenario;
+    public constructor(p_restrictions: Restrictions) {
+
+        this.m_scenario = Scenario.getInstance();
         this.m_restrictions = p_restrictions;
-        this.m_taxingRate = p_scenario.getTaxingRate();
-        this.m_score = new Score(p_scenario);
+        this.m_taxingRate = this.m_scenario.getTaxingRate();
+        this.m_score = new Score(this.m_scenario);
     }
 
     public getScore(): Score {

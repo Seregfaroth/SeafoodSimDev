@@ -1,13 +1,13 @@
 // <reference path = "../../TSSeafoodSimDevXTest/ts/declarations/qunit.d.ts"/>
 // <reference path = "../../TSSeafoodSimDev/externals/model.d.ts"/>
 var TestShip = (function () {
-    function TestShip(p_scenario) {
+    function TestShip() {
         var _this = this;
         this.runTests = function () {
-            var gov = new Government(new Restrictions(_this.scenario), _this.scenario);
-            var owner = new ShipOwner(gov, new Point2(0, 0), "0", _this.scenario);
-            var ship = new Ship(owner, _this.scenario);
-            var map = new Map(gov.getRestrictions(), _this.scenario);
+            var gov = new Government(new Restrictions());
+            var owner = new ShipOwner(gov, new Point2(0, 0), "0");
+            var ship = new Ship(owner);
+            var map = new Map(gov.getRestrictions());
             var thisPlaceholder = _this;
             map.emptyGrid();
             QUnit.test("Ship: Constructor", function (assert) {
@@ -15,7 +15,7 @@ var TestShip = (function () {
                 //Check that ship is undefined
                 assert.equal(testShip, undefined, "ship should be undefined");
                 //Create ship and check members
-                testShip = new Ship(owner, thisPlaceholder.scenario);
+                testShip = new Ship(owner);
                 assert.ok(testShip, "Ship should have been created");
                 var noOfFish = 0;
                 for (var i = 0; i < testShip.getCargo()[FishType.Cod].length; i++) {
@@ -52,7 +52,7 @@ var TestShip = (function () {
             QUnit.test("Ship: follow path not possible", function (assert) {
                 map.emptyGrid();
                 map.getGrid()[0][0] = new LandingSite(1, 10, 101, {}, "0", new Point2(0, 0));
-                map.addShip(new Ship(new ShipOwner(gov, new Point2(0, 0), "0", thisPlaceholder.scenario), thisPlaceholder.scenario));
+                map.addShip(new Ship(new ShipOwner(gov, new Point2(0, 0), "0")));
                 var path = [ship.getPosition(), new Point2(0, 0), new Point2(0, 1)];
                 var oldPosition = ship.getPosition();
                 ship.setPath(path);
@@ -77,11 +77,11 @@ var TestShip = (function () {
                 assert.ok(ship.hasReachedGoal());
             });
             QUnit.test("Ship: fish", function (assert) {
-                var map = new Map(gov.getRestrictions(), thisPlaceholder.scenario);
+                var map = new Map(gov.getRestrictions());
                 map.emptyGrid();
                 var point = new Point2(2, 2);
                 var noOfFishInSchool = 100;
-                var school = new Cod(noOfFishInSchool, 10, point, thisPlaceholder.scenario);
+                var school = new Cod(noOfFishInSchool, 10, point);
                 map.addSchool(school);
                 var path = [ship.getPosition(), point];
                 ship.setPath(path);
@@ -94,7 +94,7 @@ var TestShip = (function () {
                 assert.ok(ship.getCargoSize() > 0, "ship should have fished");
             });
             QUnit.test("Ship: land", function (assert) {
-                var map = new Map(gov.getRestrictions(), thisPlaceholder.scenario);
+                var map = new Map(gov.getRestrictions());
                 map.emptyGrid();
                 var prices = {};
                 prices[0] = 10;
@@ -103,7 +103,7 @@ var TestShip = (function () {
                 map.getGrid()[2][2] = site;
                 var point = new Point2(2, 2);
                 var noOfFishInSchool = 100;
-                var school = new Cod(noOfFishInSchool, 10, point, thisPlaceholder.scenario);
+                var school = new Cod(noOfFishInSchool, 10, point);
                 map.addSchool(school);
                 var path = [ship.getPosition(), point];
                 ship.setPath(path);
@@ -132,7 +132,7 @@ var TestShip = (function () {
                 assert.deepEqual(ship.getOwner().getBalance(), balance - fuelSite.getPrice() * (ship.getFuel() - fuel), "owner should have been charged");
             });
         };
-        this.scenario = p_scenario;
+        this.scenario = Scenario.getInstance();
         this.scenario.loadScenario('Controller/scenarios/scnTest.json', this.runTests);
     }
     return TestShip;

@@ -2,8 +2,10 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 // <reference path = "../../TSSeafoodSimDev/externals/model.d.ts"/>
 class StartScreen {
+    private m_scenario: Scenario;
 
     constructor() {
+        this.m_scenario = Scenario.getInstance();
         var text1 = "Welcome to SeafoodSim. Here you can choose which scenario to run. " +
             "The scenarios have different purposes and different goals you have to achieve to " +
             "win. You can also set the durion of the simulation.";
@@ -152,6 +154,8 @@ class StartScreen {
         goalP.id = "goal";
         goalP.innerHTML = "Goal: ";
         
+        $("#scenario1").attr("checked", 'true');//Sceanrio 1 is checked by default at the start (if changed, this must be changed in the constructor too)
+        $('#chooseScenario').buttonset();
 
         $("#startScreen").dialog({
             minWidth: 1100,
@@ -162,5 +166,24 @@ class StartScreen {
         
     }
 
-
+    public updateInfo = () => {
+        //var scenario = this.m_controller.getScenario();
+        var t = $("#endTime");
+        $("#endTime").text("Duration of simulation: " + this.m_scenario.getDefaultNoDays() + " days");
+        $("#name").html(this.m_scenario.getName());
+        $("#des").html(this.m_scenario.getDescription());
+        $("#link").html("<a target='_blank' href='" + this.m_scenario.getLink() + "'>Link to MCA</a>");
+        var goal = $("#goal");
+        goal.html("");
+        goal.append("<p>");
+        if (this.m_scenario.getfinGoal().toString() != "no")
+            goal.append("Financial score goal: <span style='float:right' > " + this.m_scenario.getfinGoal() + "</span><br/>");
+        if (this.m_scenario.getEcoGoal().toString() != "no")
+            goal.append("Environmental score goal: <span style='float:right' > " + this.m_scenario.getEcoGoal() + "</span><br/>");
+        if (this.m_scenario.getSocGoal().toString() != "no")
+            goal.append("Social score goal: <span style='float:right' > " + this.m_scenario.getSocGoal() + "</span><br/>");
+        if (this.m_scenario.getAllScore().toString() != "no")
+            goal.append("Overall score goal: <span style='float:right' > " + this.m_scenario.getAllScore() + "</span><br/>");
+        goal.append("</p>");
+    }
 }

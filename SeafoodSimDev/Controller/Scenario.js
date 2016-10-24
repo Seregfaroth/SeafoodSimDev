@@ -1,7 +1,17 @@
 var Scenario = (function () {
     function Scenario() {
-        //this.m_name = "no";
+        if (Scenario.ms_instance) {
+            throw ("Use get Scenario.getInstance()");
+        }
     }
+    Scenario.getInstance = function () {
+        if (Scenario.ms_instance)
+            return Scenario.ms_instance;
+        else {
+            Scenario.ms_instance = new Scenario();
+            return Scenario.ms_instance;
+        }
+    };
     Scenario.prototype.loadScenario = function (p_path, p_callBack) {
         var path = 'scn1.json';
         var scn = this;

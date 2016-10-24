@@ -1,9 +1,9 @@
 var Government = (function () {
-    function Government(p_restrictions, p_scenario) {
-        this.m_scenario = p_scenario;
+    function Government(p_restrictions) {
+        this.m_scenario = Scenario.getInstance();
         this.m_restrictions = p_restrictions;
-        this.m_taxingRate = p_scenario.getTaxingRate();
-        this.m_score = new Score(p_scenario);
+        this.m_taxingRate = this.m_scenario.getTaxingRate();
+        this.m_score = new Score(this.m_scenario);
     }
     Government.prototype.getScore = function () {
         return this.m_score;
