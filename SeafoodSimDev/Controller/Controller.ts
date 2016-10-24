@@ -121,9 +121,9 @@ class Controller {
             this.m_view.updateMainView(this.m_model);
             this.m_eventHandler.unBindFunctions(true);
             new EndScreen(this.m_model.getStats(), this.m_model);
-            //$("#endScreen").dialog({
-            //    close: this.closeEndScreen
-            //});
+            $("#endDialogDiv").dialog({
+                close: this.closeEndScreen
+            });
             
         }
         else {
@@ -132,7 +132,8 @@ class Controller {
         }
     }
     private closeEndScreen = (): void => {
-        $("#endScreen").empty().remove();
+        $("#endDialogDiv").empty().remove();
+        console.log("closing endscreen");
         this.restart();
     }
     runSimulation = (p_ticks?: number) => {

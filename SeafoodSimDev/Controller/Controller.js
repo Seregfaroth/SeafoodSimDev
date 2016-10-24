@@ -47,6 +47,9 @@ var Controller = (function () {
                 _this.m_view.updateMainView(_this.m_model);
                 _this.m_eventHandler.unBindFunctions(true);
                 new EndScreen(_this.m_model.getStats(), _this.m_model);
+                $("#endDialogDiv").dialog({
+                    close: _this.closeEndScreen
+                });
             }
             else {
                 _this.m_model.run(_this.m_ticksPerMove);
@@ -54,7 +57,8 @@ var Controller = (function () {
             }
         };
         this.closeEndScreen = function () {
-            $("#endScreen").empty().remove();
+            $("#endDialogDiv").empty().remove();
+            console.log("closing endscreen");
             _this.restart();
         };
         this.runSimulation = function (p_ticks) {
