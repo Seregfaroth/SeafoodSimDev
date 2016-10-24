@@ -31,7 +31,4 @@ class Government {
     public getRestrictions(): Restrictions {
         return this.m_restrictions;
     }
-
-
-    
 }
