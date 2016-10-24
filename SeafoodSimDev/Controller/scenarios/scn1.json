@@ -25,7 +25,7 @@
   "schoolMsy": 5000,
   "schoolMinimum": 50,
   "schoolMaximum": 36500,
-  "defaultNoDays": 900,
+  "defaultNoDays": 90,
   "defaultTickSize": 30,
   "taxingRate": 0.1,
   "map": "map1",

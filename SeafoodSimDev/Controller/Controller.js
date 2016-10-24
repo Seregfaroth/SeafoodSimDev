@@ -47,9 +47,6 @@ var Controller = (function () {
                 _this.m_view.updateMainView(_this.m_model);
                 _this.m_eventHandler.unBindFunctions(true);
                 new EndScreen(_this.m_model.getStats(), _this.m_model);
-                $("#endScreen").dialog({
-                    close: _this.closeEndScreen
-                });
             }
             else {
                 _this.m_model.run(_this.m_ticksPerMove);
@@ -82,7 +79,7 @@ var Controller = (function () {
         }
         else {
             this.m_simState = simState.paused;
-            this.m_delayPerTick = 100;
+            this.m_delayPerTick = 500;
             this.m_fastDelayPerTick = 1;
             //this.m_statFreq = 30;
             //this.m_model = new Model(this.m_scenario);

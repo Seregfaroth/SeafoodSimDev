@@ -4,24 +4,34 @@ class EndScreen {
 
     constructor(p_endStats: EndScreenStats, p_model: Model) {
         this.m_model = p_model;
-        var endDiv: HTMLDivElement = document.createElement("div");
-        $('body').append(endDiv);
-        endDiv.id = "endScreen";
+        var endDialogDiv: HTMLDivElement = document.createElement("div");
+        $('body').append(endDialogDiv);
+        endDialogDiv.id = "endDialogDiv";
 
-        var headerDiv: HTMLDivElement = document.createElement("div");
-        endDiv.appendChild(headerDiv);
-        headerDiv.innerHTML = "EndScreen";
+        var endAccordionDiv1: HTMLElement = document.createElement("div");
+        endDialogDiv.appendChild(endAccordionDiv1);
+        endAccordionDiv1.id = "endAccordionDiv1";
+
+        //var headerDiv: HTMLDivElement = document.createElement("div");
+        //endAccordionDiv.appendChild(headerDiv);
+        //headerDiv.innerHTML = "EndScreen";
         //headerDiv.classList.add("header");
-
+        var h3gs: HTMLHeadingElement = document.createElement("h3");
+        h3gs.innerHTML = "GameStatus";
+        endAccordionDiv1.appendChild(h3gs);
         var endGameStatusDiv: HTMLDivElement = document.createElement("div");
-        endDiv.appendChild(endGameStatusDiv);
+        endAccordionDiv1.appendChild(endGameStatusDiv);
+        var endGameStatusColumn: HTMLDivElement = document.createElement("div");
+        endGameStatusDiv.appendChild(endGameStatusColumn);
         endGameStatusDiv.id = 'endGameStatusDiv';
         endGameStatusDiv.style.border = '3px solid black';
-        endGameStatusDiv.style.cssFloat = 'right';
+        //endGameStatusDiv.style.cssFloat = 'right';
         //endGameStatusDiv.style.margin = '30px';
 
+        
+
         var endGameStatusGoalDiv: HTMLDivElement = document.createElement("div");
-        endDiv.appendChild(endGameStatusGoalDiv);
+        endGameStatusDiv.appendChild(endGameStatusGoalDiv);
         endGameStatusGoalDiv.id = 'endGameStatusGoalDiv';
         endGameStatusGoalDiv.style.border = '1px solid green';
         //endGameStatusGoalDiv.style.margin = '10px';
@@ -78,22 +88,67 @@ class EndScreen {
             endGameStatusGoalDiv.innerHTML += "<br>All the scenario goals must be achieved for it to be a succes<br>Please try again" ;
         }
 
-
+        var endAccordionDiv2: HTMLElement = document.createElement("div");
+        endDialogDiv.appendChild(endAccordionDiv2);
+        endAccordionDiv2.id = "endAccordionDiv2";
+        var h3sco: HTMLHeadingElement = document.createElement("h3");
+        h3sco.innerHTML = "Score Progression";
+        endAccordionDiv2.appendChild(h3sco);
         var scoreChartDiv: HTMLDivElement = document.createElement("div");
-        endDiv.appendChild(scoreChartDiv);
+        endAccordionDiv2.appendChild(scoreChartDiv);
         scoreChartDiv.id = 'scoreChartDiv';
 
+        var endAccordionDiv3: HTMLElement = document.createElement("div");
+        endDialogDiv.appendChild(endAccordionDiv3);
+        endAccordionDiv3.id = "endAccordionDiv3";
+        var h3env: HTMLHeadingElement = document.createElement("h3");
+        h3env.innerHTML = "Environmental Indicators";
+        endAccordionDiv3.appendChild(h3env);
         var environChartDiv: HTMLDivElement = document.createElement("div");
-        endDiv.appendChild(environChartDiv);
+        endAccordionDiv3.appendChild(environChartDiv);
         environChartDiv.id = 'environChartDiv';
 
+        var endAccordionDiv4: HTMLElement = document.createElement("div");
+        endDialogDiv.appendChild(endAccordionDiv4);
+        endAccordionDiv4.id = "endAccordionDiv4";
+        var h3soc: HTMLHeadingElement = document.createElement("h3");
+        h3soc.innerHTML = "Social Indicators";
+        endAccordionDiv4.appendChild(h3soc);
         var socialChartDiv: HTMLDivElement = document.createElement("div");
-        endDiv.appendChild(socialChartDiv);
+        endAccordionDiv4.appendChild(socialChartDiv);
         socialChartDiv.id = 'socialChartDiv';
 
+        var endAccordionDiv5: HTMLElement = document.createElement("div");
+        endDialogDiv.appendChild(endAccordionDiv5);
+        endAccordionDiv5.id = "endAccordionDiv5";
+        var h3fin: HTMLHeadingElement = document.createElement("h3");
+        h3fin.innerHTML = "Financial Indicators";
+        endAccordionDiv5.appendChild(h3fin);
         var financialChartDiv: HTMLDivElement = document.createElement("div");
-        endDiv.appendChild(financialChartDiv);
+        endAccordionDiv5.appendChild(financialChartDiv);
         financialChartDiv.id = 'financialChartDiv';
+
+        var footerDiv: HTMLElement = document.createElement("div");
+        footerDiv.id = "footerDiv";
+        endDialogDiv.appendChild(footerDiv);
+
+        var prevButton: HTMLButtonElement = document.createElement("button");
+        footerDiv.appendChild(prevButton);
+        prevButton.innerHTML = "Prev";
+
+        //var prevButtonInput: HTMLInputElement = document.createElement("input");
+        //footerDiv.appendChild(prevButtonInput);
+        //prevButtonInput.type = "submit";
+        ////prevButtonInput.value = "Prev";
+
+        var nextButton: HTMLButtonElement = document.createElement("button");
+        footerDiv.appendChild(nextButton);
+        nextButton.innerHTML = "Next";
+
+        //var nextButtonInput: HTMLInputElement = document.createElement("input");
+        //footerDiv.appendChild(nextButtonInput);
+        //nextButtonInput.type = "submit";
+        ////prevButtonInput.value = "Prev";
 
         var t = p_endStats.getBiomassPrTimeUnit();
 
@@ -196,8 +251,17 @@ class EndScreen {
         environChart.draw(environChartData, environChartOptions);
         socialChart.draw(socialChartData, socialChartOptions);
         financialChart.draw(financialChartData, financialChartOptions);
+        //var endAccordionDiv: HTMLDivElement = document.createElement("div");
+        $("#endAccordionDiv1").accordion({ collapsible: true });
+        $("#endAccordionDiv2").accordion({ collapsible: true, active: false });
+        $("#endAccordionDiv3").accordion({ collapsible: true, active: false });
+        $("#endAccordionDiv4").accordion({ collapsible: true, active: false });
+        $("#endAccordionDiv5").accordion({ collapsible: true, active: false });
+        //$("#endAccordionDiv").multiOpenAccordion();
+        $("#prevButton").button();
 
-        $("#endScreen").dialog({
+        $("#nextButton").button();
+        $("#endDialogDiv").dialog({
             minWidth: 1050,
             minHeight: 300,
             maxWidth: 1250,
@@ -233,6 +297,6 @@ class EndScreen {
             return true;
     }
     public closeEndScreen() {
-        $("#endScreen").empty().remove();
+        $("#endDialogDiv").empty().remove();
     }
 }

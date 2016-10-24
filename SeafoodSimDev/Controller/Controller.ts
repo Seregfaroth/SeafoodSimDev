@@ -28,7 +28,7 @@ class Controller {
         }
         else {
             this.m_simState = simState.paused;
-            this.m_delayPerTick = 100;
+            this.m_delayPerTick = 500;
             this.m_fastDelayPerTick = 1;
             //this.m_statFreq = 30;
             //this.m_model = new Model(this.m_scenario);
@@ -121,9 +121,9 @@ class Controller {
             this.m_view.updateMainView(this.m_model);
             this.m_eventHandler.unBindFunctions(true);
             new EndScreen(this.m_model.getStats(), this.m_model);
-            $("#endScreen").dialog({
-                close: this.closeEndScreen
-            });
+            //$("#endScreen").dialog({
+            //    close: this.closeEndScreen
+            //});
             
         }
         else {

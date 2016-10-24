@@ -406,8 +406,8 @@
         $("#month").text(monthName);
         $("#day").text(p_model.getTime());
 
-        console.log("time: " + p_model.getTime());
-        console.log("year: " + year);
-        console.log("month: " + month);
+        //console.log("time: " + p_model.getTime());
+        //console.log("year: " + year);
+        //console.log("month: " + month);
     }
 }
