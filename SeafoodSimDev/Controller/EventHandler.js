@@ -2,7 +2,14 @@ var EventHandler = (function () {
     function EventHandler(p_controller) {
         var _this = this;
         this.restart = function () {
-            if (confirm("Are you sure you want to restart the simulation?")) {
+            var t = _this.m_controller.getModel().getTime();
+            var t2 = Scenario.getInstance().getDefaultNoDays();
+            if (_this.m_controller.getModel().getTime() < Scenario.getInstance().getDefaultNoDays()) {
+                if (confirm("Are you sure you want to restart the simulation?")) {
+                    _this.m_controller.restart();
+                }
+            }
+            else {
                 _this.m_controller.restart();
             }
         };

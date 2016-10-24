@@ -90,9 +90,13 @@ class Controller {
     public setEndTime(p_endTime: number): void {
         this.m_endTime = p_endTime;
     }
+    public getEndtime(): number {
+        return this.m_endTime;
+    }
 
 
     public restart = (): void => {
+        $("#endDialogDiv").empty().remove();
         $("#startScreen").dialog({
             minWidth: 1100,
             minHeight: 700,
@@ -132,8 +136,8 @@ class Controller {
         }
     }
     private closeEndScreen = (): void => {
-        $("#endDialogDiv").empty().remove();
-        console.log("closing endscreen");
+        //$("#endDialogDiv").empty().remove();
+        //console.log("closing endscreen");
         this.restart();
     }
     runSimulation = (p_ticks?: number) => {
