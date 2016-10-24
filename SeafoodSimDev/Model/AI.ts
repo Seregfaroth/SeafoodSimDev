@@ -111,7 +111,7 @@ class AI {
             p_ship.history[3].push("************************* " + p_map.getNoOfShipsInTile(p_ship.getPosition()));
             var t = p_map.getNoOfShipsInTile(p_ship.getPosition());
             var t2 = (<Ocean>p_map.getTile(p_ship.getPosition())).getShipCapacity();
-            if (p_map.getNoOfShipsInTile(p_ship.getPosition()) <= (<Ocean>p_map.getTile(p_ship.getPosition())).getShipCapacity()) {
+            if (p_map.getNoOfShipsInTile(p_ship.getPosition()) <= (<Ocean>tile).getShipCapacity()) {
                 p_ship.fish(p_map);
                 p_ship.setState(shipState.fishing);
             }
@@ -247,7 +247,7 @@ class AI {
                     this.goLand(p_ship, p_map, landingPath);
                 }
                 else {
-                    this.goRefuel(p_ship, p_map);
+                    this.goRefuel(p_ship, p_map, fuelPath);
                 }
             }
             else {
@@ -264,7 +264,7 @@ class AI {
                         this.goFish(p_ship, p_map, fishingPath);
                     }
                     else {
-                        this.goRefuel(p_ship, p_map);
+                        this.goRefuel(p_ship, p_map, fuelPath);
                     }
                 }
             }

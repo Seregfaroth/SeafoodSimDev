@@ -101,7 +101,7 @@ var AI = (function () {
             p_ship.history[3].push("************************* " + p_map.getNoOfShipsInTile(p_ship.getPosition()));
             var t = p_map.getNoOfShipsInTile(p_ship.getPosition());
             var t2 = p_map.getTile(p_ship.getPosition()).getShipCapacity();
-            if (p_map.getNoOfShipsInTile(p_ship.getPosition()) <= p_map.getTile(p_ship.getPosition()).getShipCapacity()) {
+            if (p_map.getNoOfShipsInTile(p_ship.getPosition()) <= tile.getShipCapacity()) {
                 p_ship.fish(p_map);
                 p_ship.setState(shipState.fishing);
             }
@@ -234,7 +234,7 @@ var AI = (function () {
                     this.goLand(p_ship, p_map, landingPath);
                 }
                 else {
-                    this.goRefuel(p_ship, p_map);
+                    this.goRefuel(p_ship, p_map, fuelPath);
                 }
             }
             else {
@@ -251,7 +251,7 @@ var AI = (function () {
                         this.goFish(p_ship, p_map, fishingPath);
                     }
                     else {
-                        this.goRefuel(p_ship, p_map);
+                        this.goRefuel(p_ship, p_map, fuelPath);
                     }
                 }
             }
