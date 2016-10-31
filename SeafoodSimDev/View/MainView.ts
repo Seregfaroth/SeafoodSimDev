@@ -32,7 +32,7 @@ class MainView {
         return this.m_mapMenu;
     }
     updateMainView(p_model: Model) {
-        //console.log("updating mainView");
+        console.log("updating mainView");
         if (!this.m_noScoreUpdate)
             this.m_mapMenu.updateScore(p_model.getGovernment());
         if (!this.m_noDateUpdate)

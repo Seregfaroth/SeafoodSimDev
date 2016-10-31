@@ -3,20 +3,25 @@ abstract class School {
     //protected m_scenario: Scenario;
     protected m_position: Point2;
     protected m_maxAge: number;
-    protected m_type: FishType;
+    protected m_type: string;
     protected m_ages: number[] = [];
     protected m_msy: number;
-    protected m_mey: number;
+    protected m_tac: number;
     protected m_recruitTotal: number = 0;
     protected m_natDeath: number = 0;
     protected m_yield: number = 0;
     protected m_size: number;
+    protected m_growthRate: number;
 
-    public constructor(p_size: number, p_msy: number, p_position: Point2) {
+    public constructor(p_size: number, p_position: Point2) {
         //this.m_scenario = p_scenario;
         this.m_position = p_position;
-        this.m_msy = p_msy;        
+        //this.m_msy = p_msy;        
     }
+    public getType(): string {
+        return this.m_type;
+    }
+
     public getRecruitTotal(): number {
         return this.m_recruitTotal;
     }
@@ -41,11 +46,11 @@ abstract class School {
     }
 
     public getMey(): number {
-        return this.m_mey;
+        return this.m_tac;
     }
 
     public setMey(p_mey: number) {
-        this.m_mey = p_mey;
+        this.m_tac = p_mey;
     }
 
     public getSize(): number {
@@ -83,6 +88,14 @@ abstract class School {
     public getMaxAge(): number {
         return this.m_maxAge;
     }
-    protected abstract recruit(p_map:Map): void
+    public getSsb(): number {
+        var ssb: number = 0;
+        for (var i = 2; i < this.m_ages.length; i++) {
+            ssb += this.m_ages[i];
+        }
+        return ssb;
+    }
+    protected abstract recruit(p_map: Map): void;
+    protected abstract recruit2(p_map: Map, cc: number, gr: number): void;
     public abstract move(p_map: Map): void;
 }

@@ -26,8 +26,8 @@ class Model {
         this.m_ai = new AI();
         var j = 0;
         for (var i = 0; i < this.m_scenario.getNoOfShipOwners(); i++) {
-            var startShipPoint: Point2[] = [new Point2(6, 11), new Point2(7, 12)];
-            
+            //var startShipPoint: Point2[] = [new Point2(6, 11), new Point2(7, 12)];
+            var startShipPoint: Point2[] = [new Point2(1, 1), new Point2(1, 1)];
             do {
                 //startShipPoint = new Point2(Math.round(Math.random() * (this.m_map.getMapHeight() - 1)), Math.round(Math.random() * (this.m_map.getMapWidth() - 1)));
                 //startShipPoint[i] = new Point2(6, 11);

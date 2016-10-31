@@ -1,14 +1,17 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var School = (function () {
-    function School(p_size, p_msy, p_position) {
+    function School(p_size, p_position) {
         this.m_ages = [];
         this.m_recruitTotal = 0;
         this.m_natDeath = 0;
         this.m_yield = 0;
         //this.m_scenario = p_scenario;
         this.m_position = p_position;
-        this.m_msy = p_msy;
+        //this.m_msy = p_msy;        
     }
+    School.prototype.getType = function () {
+        return this.m_type;
+    };
     School.prototype.getRecruitTotal = function () {
         return this.m_recruitTotal;
     };
@@ -30,10 +33,10 @@ var School = (function () {
         this.m_msy = p_msy;
     };
     School.prototype.getMey = function () {
-        return this.m_mey;
+        return this.m_tac;
     };
     School.prototype.setMey = function (p_mey) {
-        this.m_mey = p_mey;
+        this.m_tac = p_mey;
     };
     School.prototype.getSize = function () {
         var size = 0;
@@ -64,6 +67,13 @@ var School = (function () {
     };
     School.prototype.getMaxAge = function () {
         return this.m_maxAge;
+    };
+    School.prototype.getSsb = function () {
+        var ssb = 0;
+        for (var i = 2; i < this.m_ages.length; i++) {
+            ssb += this.m_ages[i];
+        }
+        return ssb;
     };
     return School;
 }());

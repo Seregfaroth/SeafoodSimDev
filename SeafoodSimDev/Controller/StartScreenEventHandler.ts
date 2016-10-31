@@ -16,7 +16,7 @@
             close: handler.close,
             beforeClose: handler.beforeClose
         });
-        this.m_controller.getScenario().loadScenario('Controller/scenarios/scn1.json', this.m_startScreen.updateInfo);
+        this.m_controller.getScenario().loadScenario('Controller/scenarios/scn4.json', this.m_startScreen.updateInfo);
     }
 
     public initialize(): void {
@@ -27,7 +27,7 @@
     private radioChange = (p_evt: BaseJQueryEventObject): void => {
         var t = this;
         var t2 = this.m_controller.getScenario();
-        if (p_evt.data.scenario === 1) this.m_controller.getScenario().loadScenario('Controller/scenarios/scn1.json', this.m_startScreen.updateInfo);
+        if (p_evt.data.scenario === 1) this.m_controller.getScenario().loadScenario('Controller/scenarios/scn4.json', this.m_startScreen.updateInfo);
         if (p_evt.data.scenario === 2) this.m_controller.getScenario().loadScenario('Controller/scenarios/scn2.json', this.m_startScreen.updateInfo);
         if (p_evt.data.scenario === 3) this.m_controller.getScenario().loadScenario('Controller/scenarios/scn3.json', this.m_startScreen.updateInfo);
     }

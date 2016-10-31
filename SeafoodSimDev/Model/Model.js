@@ -17,7 +17,8 @@ var Model = (function () {
         this.m_ai = new AI();
         var j = 0;
         for (var i = 0; i < this.m_scenario.getNoOfShipOwners(); i++) {
-            var startShipPoint = [new Point2(6, 11), new Point2(7, 12)];
+            //var startShipPoint: Point2[] = [new Point2(6, 11), new Point2(7, 12)];
+            var startShipPoint = [new Point2(1, 1), new Point2(1, 1)];
             do {
             } while (!(this.m_map.getTile(startShipPoint[j]) instanceof Ocean)); //If this is not an ocean tile, find a new tile
             this.createShipOwner(startShipPoint[j++]);

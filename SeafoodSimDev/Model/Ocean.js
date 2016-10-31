@@ -6,17 +6,20 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="Tile.ts"/>
 var Ocean = (function (_super) {
     __extends(Ocean, _super);
-    function Ocean(p_fishCapacity, p_shipCapacity, p_fishingArea) {
+    function Ocean(p_carryingCapacity, p_shipCapacity, p_fishingArea) {
         _super.call(this);
         this.m_fishingArea = false;
-        this.m_fishCapacity = p_fishCapacity;
+        this.m_carryingCapacityC = p_carryingCapacity;
         this.m_shipCapacity = p_shipCapacity;
         if (p_fishingArea) {
             this.m_fishingArea = p_fishingArea;
         }
     }
-    Ocean.prototype.getFishCapacity = function () {
-        return this.m_fishCapacity;
+    Ocean.prototype.getCarryingCapacity = function () {
+        return this.m_carryingCapacityC;
+    };
+    Ocean.prototype.getCarryingCapacityBySpecies = function (p_name) {
+        var ret;
     };
     Ocean.prototype.getShipCapacity = function () {
         return this.m_shipCapacity;

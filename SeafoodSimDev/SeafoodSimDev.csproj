@@ -44,6 +44,7 @@
     <Content Include="Controller\scenarios\scn3.json" />
     <Content Include="Controller\scenarios\scnMCA1.json" />
     <Content Include="Controller\scenarios\scnTest.json" />
+    <Content Include="Controller\scenarios\scn4.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -64,8 +65,10 @@
     <TypeScriptCompile Include="declarations\jqueryui.d.ts" />
     <TypeScriptCompile Include="Main.ts" />
     <TypeScriptCompile Include="Model\AI.ts" />
+    <TypeScriptCompile Include="Model\CarryingCapacity.ts" />
     <TypeScriptCompile Include="Model\Cod.ts" />
     <TypeScriptCompile Include="Model\EndScreenStats.ts" />
+    <TypeScriptCompile Include="Model\FishGroup.ts" />
     <TypeScriptCompile Include="Model\FuelSite.ts" />
     <TypeScriptCompile Include="Model\Government.ts" />
     <TypeScriptCompile Include="Model\Land.ts" />

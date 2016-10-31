@@ -262,8 +262,8 @@ class EndScreen {
 
         $("#nextButton").button();
         $("#endDialogDiv").dialog({
-            minWidth: 1050,
-            minHeight: 300,
+           // minWidth: 1050,
+           // minHeight: 300,
             maxWidth: 1250,
             maxHeight: 1000,
             

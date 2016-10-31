@@ -4,11 +4,12 @@ class Cod extends School{
     private m_origin: Point2;
     private m_scenario: Scenario;
 
-    public constructor(p_size: number, p_msy: number, p_position: Point2, p_ages?: number[]) {
-        super(p_size, p_msy, p_position);
+    public constructor(p_size: number, p_position: Point2, p_ages?: number[]) {
+        super(p_size, p_position);
         this.m_scenario = Scenario.getInstance();
         this.m_origin = p_position;
         this.m_maxAge = this.m_scenario.getCodSchoolMaxAge();
+        this.m_type = "cod";
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }
@@ -23,7 +24,7 @@ class Cod extends School{
         }
         this.m_size = p_size;
     }
-
+    
     public getOrigin(): Point2 {
         return this.m_origin;
     }
@@ -84,16 +85,27 @@ class Cod extends School{
 
 
     protected recruit(p_map: Map): void {
-        //var tmp = (<Ocean>p_map.getTile(this.m_position)).getFishCapacity();
-        //var tmp2 = this.getSize();
-        if ((<Ocean>p_map.getTile(this.m_position)).getFishCapacity() > p_map.getNoOfFishInTile(this.m_position)) {
-            //Only recruit if the tile is not full
-            //var noOfNewFish: number = Math.floor(Math.random() * this.m_scenario.getRecrutingPercentage()*this.getSize());
-            var noOfNewFish: number = Math.floor(0.5 * this.m_scenario.getRecrutingPercentage() * this.getSize());
-            this.m_ages[0] = noOfNewFish;
-            this.m_size += noOfNewFish;
-            this.m_recruitTotal += noOfNewFish;
+        var currentTile = <Ocean>p_map.getTile(this.m_position);
+        var recruitment = 0;
+        //for each of the fishGroups in CarryingCapacity get the carrying Capacity 
+        for (var group of currentTile.getCarryingCapacity().m_fishGroups) {
+            var cc = currentTile.getCarryingCapacity().getCapacityGroupNumbers(group.m_name);
+            //var sbb = p_map.getSsbOf(this.getType(), this.m_position);      
+            var ssb = this.getSsb();
+            var fraction = p_map.getBiosmassFractionOf(this.getType(), this.m_position);
+            recruitment += this.m_growthRate * ssb * ( cc * fraction - ssb );                       
         }
+        this.m_ages[0] = recruitment;
+            this.m_size += recruitment;
+            this.m_recruitTotal += recruitment;
+        //if ((<Ocean>p_map.getTile(this.m_position)).getFishCapacity() > p_map.getNoOfFishInTile(this.m_position)) {
+        //    //Only recruit if the tile is not full
+        //    //var noOfNewFish: number = Math.floor(Math.random() * this.m_scenario.getRecrutingPercentage()*this.getSize());
+        //    var noOfNewFish: number = Math.floor(0.5 * this.m_scenario.getRecrutingPercentage() * this.getSize());
+        //    this.m_ages[0] = noOfNewFish;
+        //    this.m_size += noOfNewFish;
+        //    this.m_recruitTotal += noOfNewFish;
+        //}
     }
 
 }

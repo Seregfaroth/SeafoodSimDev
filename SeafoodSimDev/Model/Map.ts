@@ -1,7 +1,7 @@
 ﻿// <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class Map {    
     private m_scenario: Scenario;
-    private m_grid: Tile[][] = [];
+    private m_grid: Tile[][] = []; // we could change this to a class called MapGrid
     public m_schools: School[] = [];
     private m_restrictions: Restrictions;
     private m_ships: Ship[] = [];
@@ -18,7 +18,8 @@ class Map {
     }
     public setScenario(p_scenario: Scenario): void {
         this.m_scenario = p_scenario;
-        this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), this.m_scenario.getOceanFishCapacity(), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace());
+    //    this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), this.m_scenario.getOceanFishCapacity(), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace());
+        this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [100000]), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace());
     }
     public run(): void {
         var map: Map = this;
@@ -54,7 +55,7 @@ class Map {
         for (var i = 0; i < 10; i++) {
             var row: Tile[] = [];
             for (var j = 0; j < 10; j++) {
-                row.push(new Ocean(0, 1));
+                row.push(new Ocean(new CarryingCapacity([new FishGroup("grp1", ["fish"])], [100]), 1));
             }
             this.m_grid.push(row);
         }
@@ -110,13 +111,13 @@ class Map {
         var schoolsPlaced: number = 0;
         var placedInSamePlace: number = 0;
         var schoolPoints: Point2[] = []; 
-        schoolPoints[0] = new Point2(5, 9);
+        schoolPoints[0] = new Point2(1, 0);
         var point: Point2 = schoolPoints[0]; // = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
         
-        schoolPoints[1] = new Point2(5, 12);
-        schoolPoints[2] = new Point2(7, 10);
-        schoolPoints[3] = new Point2(7, 13);
-        schoolPoints[4] = new Point2(9, 11);
+        //schoolPoints[1] = new Point2(5, 12);
+        //schoolPoints[2] = new Point2(7, 10);
+        //schoolPoints[3] = new Point2(7, 13);
+        //schoolPoints[4] = new Point2(9, 11);
         var i = 1;
         while (schoolsPlaced < p_n) {
             if (placedInSamePlace === p_schoolsInOnePlace) {
@@ -135,8 +136,8 @@ class Map {
     public addSchool(p_school: School): void {
         this.m_schools.push(p_school);
     }
-    
-    public generateMap(p_mapType: number, p_size: number, p_prices: { [fishType: number]: number }, p_oceanFishCapacity: number, p_noOfSchools: number, p_schoolsInOnePlace: number ) {
+
+    public generateMap(p_mapType: number, p_size: number, p_prices: { [fishType: number]: number }, p_oceanFishCapacity: CarryingCapacity, p_noOfSchools: number, p_schoolsInOnePlace: number) {
         this.m_grid = [];
         for (var i = 0; i < p_size; i++) {
             var row: Tile[] = [];
@@ -146,10 +147,15 @@ class Map {
             this.m_grid.push(row);
         }
         switch (p_mapType) {
+            case 0: this.tinyTest(p_size, p_prices); break;
             case 1: this.placeLandAndSites(p_size, p_prices); break;
             case 2: this.placeLandAndSites2(p_size, p_prices); break;
         }
         this.placeSchools(p_noOfSchools, this.m_scenario.getSchoolSize(), this.m_scenario.getSchoolMsy(), p_schoolsInOnePlace);
+    }
+    private tinyTest(p_size, p_prices) {
+        this.m_grid[0][0] = new LandingSite(2, 100000, 20000, p_prices, "landingSite1", new Point2(0,0));
+        this.m_grid[0][1] = new FuelSite(2, 10000, 20, this.m_scenario.getFuelsiteFuelPrize(), "fuelsite1", new Point2(0, 1));
     }
 
     private placeLandAndSites3(p_size: number, p_prices: { [fishType: number]: number }) {
@@ -385,8 +391,44 @@ class Map {
     public emptyGrid(): void {
         for (var r = 0; r < this.getMapHeight(); r++) {
             for (var c = 0; c < this.getMapWidth(); c++) {
-                this.m_grid[r][c] = new Ocean(100,100);
+                this.m_grid[r][c] = new Ocean(new CarryingCapacity([new FishGroup("grp1",["fish"])],[100]), 100);
             }
         }
     }
+    getCarryingCapacityBySpecies(p_species: string, m_position: Point2): number {
+        var ret;
+
+        return ret;
+    }
+    public getBiomassOf(p_name: string, m_position: Point2): number {
+        var ret;
+        for (var school of this.m_schools) {
+            if (school.getType() === p_name) {
+                ret = school.getSize();
+                break;
+            }
+            else
+                ret = 0;
+        }
+        return ret;
+    }
+    public getBiosmassFractionOf(p_name: string, m_position: Point2): number {
+        var ret;
+        var totalBiomass = 0;
+        for (var school of this.m_schools) {
+            totalBiomass += school.getSize();
+        }
+        if (totalBiomass !== 0) {
+            ret = this.getBiomassOf(p_name, m_position);
+        }
+        else
+            ret = 0;
+        return ret;
+    }
+    public getSsbOf(p_name: string, p_position: Point2): number {
+        var ret: number;
+
+        return ret;
+    }
+
 }
