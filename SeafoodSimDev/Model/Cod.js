@@ -83,6 +83,7 @@ var Cod = (function (_super) {
         }
         //console.log("new postion: " + JSON.stringify(this.m_position));
     };
+    //Recruitment using a logistic population growth model
     Cod.prototype.recruit = function (p_map) {
         var currentTile = p_map.getTile(this.m_position);
         var recruitment = 0;
@@ -93,11 +94,13 @@ var Cod = (function (_super) {
             //var sbb = p_map.getSsbOf(this.getType(), this.m_position);      
             var ssb = this.getSsb();
             var fraction = p_map.getBiosmassFractionOf(this.getType(), this.m_position);
-            recruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
+            if (cc != 0 && fraction != 0) {
+                recruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
+            }
         }
-        this.m_ages[0] = recruitment;
-        this.m_size += recruitment;
-        this.m_recruitTotal += recruitment;
+        this.m_ages[0] = recruitment; //Add new fish
+        this.m_size += recruitment; //Update size
+        this.m_recruitTotal += recruitment; //Update total recruitment
         //if ((<Ocean>p_map.getTile(this.m_position)).getFishCapacity() > p_map.getNoOfFishInTile(this.m_position)) {
         //    //Only recruit if the tile is not full
         //    //var noOfNewFish: number = Math.floor(Math.random() * this.m_scenario.getRecrutingPercentage()*this.getSize());

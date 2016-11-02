@@ -16,11 +16,11 @@ class AI {
 
     public run(p_shipOwner: ShipOwner, p_map: Map): void {
         //console.log("AI money: "+ p_shipOwner.getBalance());
-        this.buyOrSellShip(p_shipOwner, p_map);
+       // this.buyOrSellShip(p_shipOwner, p_map);
         this.runShips(p_shipOwner, p_map);
     }
 
-    private buyOrSellShip(p_shipOwner: ShipOwner, p_map: Map): void {
+   /* private buyOrSellShip(p_shipOwner: ShipOwner, p_map: Map): void {
         var possibleToBuyShip: boolean = p_map.getNoOfShips() < p_map.getRestrictions().getMaxShips();
         if (possibleToBuyShip && p_shipOwner.getBalance() > this.m_balanceToBuyShip) {
             p_map.addShip(p_shipOwner.buyShip());
@@ -36,7 +36,7 @@ class AI {
         p_shipOwner.sellShip(ship);
         this.m_balanceToSellShip -= 0.01 * this.m_balanceToBuyShip;
         p_map.removeShip(ship);
-    }
+    }*/
     private runShips(p_shipOwner: ShipOwner, p_map: Map): void {
         var ai: AI = this;
         var n = 0;
@@ -94,10 +94,10 @@ class AI {
         if (p_ship.getState() === shipState.goingToLand) {
             //If ship has reached a landing site
             p_ship.land(<LandingSite>tile);
-            if (p_map.getRestrictions().getMaxShips() < p_map.getShips().length) {
+            /*if (p_map.getRestrictions().getMaxShips() < p_map.getShips().length) {
                 this.sellShip(p_shipOwner, p_map);
             }
-            else {
+            else*/ {
                 this.findNewPath(p_ship, p_map);
             }
         }

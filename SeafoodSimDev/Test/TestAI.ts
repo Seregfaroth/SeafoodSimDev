@@ -51,7 +51,7 @@
 
         });
 
-        QUnit.test("AI: buy ship", function (assert) {
+        /*QUnit.test("AI: buy ship", function (assert) {
             map.emptyGrid();
             assert.deepEqual(richShipOwner.getShips(), [], "rich ship owner should not have any ships");
             assert.deepEqual(poorShipOwner.getShips(), [], "poor ship owner should not have any ships");
@@ -78,7 +78,7 @@
              ai.run(richShipOwner, map);
              assert.ok(richShipOwner.getShips().length >= noOfShips, "rich ship owner should not sell any of his ships");
         });
-
+        */
         QUnit.test("AI: pathfinding straight line", function (assert) {
             map.emptyGrid();
             var expectedPath: Point2[] = [new Point2(0, 0), new Point2(0, 1), new Point2(0,2)];

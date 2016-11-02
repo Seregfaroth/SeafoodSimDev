@@ -5,7 +5,7 @@ var Restrictions = (function () {
         this.m_restrictedAreas = [];
         this.m_landingDistrubutions = {};
         this.m_scenario = Scenario.getInstance();
-        this.m_maxShips = this.m_scenario.getStartNoOfShips();
+        this.m_noCodOfShips = this.m_scenario.getStartNoCodShips();
     }
     Restrictions.prototype.restrictArea = function (p_tile) {
         this.m_restrictedAreas.push(p_tile);
@@ -34,14 +34,26 @@ var Restrictions = (function () {
     Restrictions.prototype.getLandingDistrubutions = function () {
         return this.m_landingDistrubutions;
     };
-    Restrictions.prototype.setMaxShips = function (p_n) {
-        this.m_maxShips = p_n;
+    Restrictions.prototype.setNoCodShips = function (p_n) {
+        this.m_noCodOfShips = p_n;
     };
-    Restrictions.prototype.getMaxShips = function () {
-        return this.m_maxShips;
+    Restrictions.prototype.getNoCodOfShips = function () {
+        return this.m_noCodOfShips;
+    };
+    Restrictions.prototype.setNoMackerelShips = function (p_n) {
+        this.m_noMackerelOfShips = p_n;
+    };
+    Restrictions.prototype.getNoMackerelOfShips = function () {
+        return this.m_noMackerelOfShips;
     };
     Restrictions.prototype.isRestricted = function (p_tile) {
         return this.m_restrictedAreas.indexOf(p_tile) > -1;
+    };
+    Restrictions.prototype.setTacMackerel = function (p_n) {
+        this.m_tacMackerel = p_n;
+    };
+    Restrictions.prototype.setTacCod = function (p_n) {
+        this.m_tacCod = p_n;
     };
     return Restrictions;
 }());

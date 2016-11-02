@@ -380,6 +380,7 @@ var Map = (function () {
         }
         return ret;
     };
+    //Calculate how big a fraction the type p_name is of the total biomass
     Map.prototype.getBiosmassFractionOf = function (p_name, m_position) {
         var ret;
         var totalBiomass = 0;

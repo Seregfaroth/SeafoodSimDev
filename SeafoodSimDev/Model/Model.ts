@@ -122,7 +122,7 @@ class Model {
             result[taxIndex] = [];
             for (var maxIndex = 0; maxIndex < maxShips.length; maxIndex++) {
                 result[taxIndex][maxIndex] = [];
-                this.getGovernment().getRestrictions().setMaxShips(maxShips[maxIndex]);
+                this.getGovernment().getRestrictions().setNoShips(maxShips[maxIndex]);
                 this.getGovernment().setTaxingRate(tax[taxIndex]/100);
                 for (var m = 0; m < p_noOfMoves; m++) {
                     if (!(this.m_time % this.m_scenario.getStatFreq()))
@@ -605,6 +605,17 @@ class Model {
         }
         return Math.round(sum / l);
     }
-    
-    
+
+    //Updates number of ships in map to correspond to restrictions
+    public updateNoShips(): void {
+        var noOfShips: number = this.m_goverment.getRestrictions().getNoCodOfShips();
+        var shipOwner: ShipOwner = this.m_shipOwners[0]; //OBS assuming only one ship owner
+        while (this.m_map.getShips().length > noOfShips) {
+            this.m_map.removeShip(shipOwner.getShips()[0]);
+            shipOwner.sellShip(shipOwner.getShips()[0]);
+        }
+        while (this.m_map.getShips().length < noOfShips) {
+            this.m_map.addShip(shipOwner.buyShip());
+        }
+    }
 }

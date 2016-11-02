@@ -1,6 +1,5 @@
 var Test = (function () {
     function Test() {
-        this.m_scenario = new Scenario();
         new TestAI();
         new TestSchool();
         new TestShip();
@@ -8,6 +7,7 @@ var Test = (function () {
         new TestFuelSite();
         new TestLandingSite();
         new TestMap();
+        new TestModel();
     }
     return Test;
 }());

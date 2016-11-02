@@ -11,25 +11,26 @@ var AI = (function () {
     }
     AI.prototype.run = function (p_shipOwner, p_map) {
         //console.log("AI money: "+ p_shipOwner.getBalance());
-        this.buyOrSellShip(p_shipOwner, p_map);
+        // this.buyOrSellShip(p_shipOwner, p_map);
         this.runShips(p_shipOwner, p_map);
     };
-    AI.prototype.buyOrSellShip = function (p_shipOwner, p_map) {
-        var possibleToBuyShip = p_map.getNoOfShips() < p_map.getRestrictions().getMaxShips();
-        if (possibleToBuyShip && p_shipOwner.getBalance() > this.m_balanceToBuyShip) {
-            p_map.addShip(p_shipOwner.buyShip());
-            this.m_balanceToSellShip += this.m_balanceToBuyShip * 0.01;
-        }
-        else if (p_shipOwner.getShips().length > 0 && p_shipOwner.getBalance() < this.m_balanceToSellShip) {
-            this.sellShip(p_shipOwner, p_map);
-        }
-    };
-    AI.prototype.sellShip = function (p_shipOwner, p_map) {
-        var ship = p_shipOwner.getShips()[0];
-        p_shipOwner.sellShip(ship);
-        this.m_balanceToSellShip -= 0.01 * this.m_balanceToBuyShip;
-        p_map.removeShip(ship);
-    };
+    /* private buyOrSellShip(p_shipOwner: ShipOwner, p_map: Map): void {
+         var possibleToBuyShip: boolean = p_map.getNoOfShips() < p_map.getRestrictions().getMaxShips();
+         if (possibleToBuyShip && p_shipOwner.getBalance() > this.m_balanceToBuyShip) {
+             p_map.addShip(p_shipOwner.buyShip());
+             this.m_balanceToSellShip += this.m_balanceToBuyShip * 0.01;
+         }
+         else if (p_shipOwner.getShips().length > 0 && p_shipOwner.getBalance() < this.m_balanceToSellShip) {
+             this.sellShip(p_shipOwner, p_map);
+         }
+         
+     }
+     private sellShip(p_shipOwner: ShipOwner, p_map: Map) {
+         var ship: Ship = p_shipOwner.getShips()[0];
+         p_shipOwner.sellShip(ship);
+         this.m_balanceToSellShip -= 0.01 * this.m_balanceToBuyShip;
+         p_map.removeShip(ship);
+     }*/
     AI.prototype.runShips = function (p_shipOwner, p_map) {
         var ai = this;
         var n = 0;
@@ -84,10 +85,10 @@ var AI = (function () {
         if (p_ship.getState() === shipState.goingToLand) {
             //If ship has reached a landing site
             p_ship.land(tile);
-            if (p_map.getRestrictions().getMaxShips() < p_map.getShips().length) {
+            /*if (p_map.getRestrictions().getMaxShips() < p_map.getShips().length) {
                 this.sellShip(p_shipOwner, p_map);
             }
-            else {
+            else*/ {
                 this.findNewPath(p_ship, p_map);
             }
         }

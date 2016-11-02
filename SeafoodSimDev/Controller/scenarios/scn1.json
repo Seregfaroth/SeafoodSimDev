@@ -1,7 +1,8 @@
 {
   "maxNoDaysFishing":  5,
   "schoolSizeWeight": 0.01,
-  "startNoOfShips": 0,
+  "startNoCodShips": 0,
+  "startNoMackerelShips": 0,
   "movingRadius": 1,
   "recrutingPercentage": 0.35,
   "noOfShipOwners": 2,
@@ -94,5 +95,6 @@
   "noMenuDateUpdate": false,
   "noMenuScoreUpdate": false,
 
-  "noHistory": false
+  "noHistory": false,
+
 }

@@ -14,7 +14,7 @@ p {
 .slider {
     width: 100%;
     float: right;
-    margin: 10px;
+    margin: 5%;
 }
 .legend-header {
     font-weight: bold;
@@ -38,6 +38,8 @@ p {
 }
 .slider-value-cell {
     padding: 1%;
+    text-align:left;
+    padding-right: 5%;
 }
 .date {
     text-align: center;
@@ -70,6 +72,13 @@ p {
     margin-bottom: 12%;
     padding: 1%;
 }
+
+#startSim {
+    margin: 1.5%;
+    padding: 0.5%;
+    padding-right: 3%;
+    padding-left: 3%;
+}
 .selector-label {
     padding-right: 15px;
 }
@@ -101,6 +110,24 @@ p {
 * { 
     font-size: 1.8vw;
 }
+
+
+#startSim { 
+    /*This was being overridden somewhere for startSim that's why this is needed*/
+    font-size: 1.8vw;
+}
+
+@media (min-width: 1000px){/*when window size is more than 1000 font size stays constant at 18px*/
+    #startSim {
+        font-size:18px;
+    }
+}
+@media (max-width: 600px){/*when window size is less than 600 font size stays constant at 10.8px*/
+    #startSim {
+        font-size:10.8px;
+    }
+
+}
 @media (min-width: 1000px){/*when window size is more than 1000 font size stays constant at 18px*/
     * {
         font-size:18px;
@@ -113,7 +140,7 @@ p {
 
 }
 
-@media (max-width: 1000px){/*when window size is less than 600 font size stays constant at 10.8px*/
+@media (max-width: 1000px){/*when window size is less than 1000 month and year is hidden*/
     #month {
         visibility:hidden;
     }

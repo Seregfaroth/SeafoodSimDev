@@ -10,6 +10,7 @@ var StartScreen = (function () {
             $("#endTime").text("Duration of simulation: " + _this.m_scenario.getDefaultNoDays() + " days");
             $("#name").html(_this.m_scenario.getName());
             $("#des").html(_this.m_scenario.getDescription());
+            $("#des").append(" Taxing rate is " + _this.m_scenario.getTaxingRate() * 100 + "%");
             $("#link").html("<a target='_blank' href='" + _this.m_scenario.getLink() + "'>Link to MCA</a>");
             var goal = $("#goal");
             goal.html("");
@@ -151,7 +152,7 @@ var StartScreen = (function () {
         informationDiv.appendChild(goalP);
         goalP.id = "goal";
         goalP.innerHTML = "Goal: ";
-        $("#scenario1").attr("checked", 'true'); //Sceanrio 1 is checked by default at the start (if changed, this must be changed in the constructor too)
+        $("#scenario1").attr("checked", 'true'); //Scenario 1 is checked by default at the start (if changed, this must be changed in the constructor too)
         $('#chooseScenario').buttonset();
         $("#startScreen").dialog({
             minWidth: 1100,

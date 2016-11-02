@@ -45,7 +45,6 @@ var Controller = (function () {
                 _this.m_model.updateStats();
                 console.log("Simulation ended" + _this.m_model.getStats());
                 clearInterval(_this.m_timer);
-                _this.m_view.updateMainView(_this.m_model);
                 _this.m_eventHandler.unBindFunctions(true);
                 new EndScreen(_this.m_model.getStats(), _this.m_model);
                 $("#endDialogDiv").dialog({
@@ -54,8 +53,8 @@ var Controller = (function () {
             }
             else {
                 _this.m_model.run(_this.m_ticksPerMove);
-                _this.m_view.updateMainView(_this.m_model);
             }
+            _this.m_view.updateMainView(_this.m_model);
         };
         this.closeEndScreen = function () {
             //$("#endDialogDiv").empty().remove();

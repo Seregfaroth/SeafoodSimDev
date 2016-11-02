@@ -417,6 +417,7 @@ class Map {
         }
         return ret;
     }
+    //Calculate how big a fraction the type p_name is of the total biomass
     public getBiosmassFractionOf(p_name: string, m_position: Point2): number {
         var ret;
         var totalBiomass = 0;
@@ -435,5 +436,6 @@ class Map {
 
         return ret;
     }
+
 
 }

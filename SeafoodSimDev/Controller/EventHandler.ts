@@ -7,6 +7,7 @@
         $("#pauseButton").on("click", this.pause);
         $("#fastForwardButton").on("click", this.fastForward);
         $("#restart").on("click", this.restart);
+        $("#startSim").on("click", this.startSim);
         this.bindFunctions();
     }
 
@@ -42,9 +43,21 @@
                 handler.setLandingDistrubution(ls.getID(), ui.value);
             });
         });
-        $("#noOfShipsSlider").off("slide");
-        $("#noOfShipsSlider").on("slide", function (event, ui) { handler.updateMaxNoShipsValue(ui.value); });
-        $("#noOfShipsSlider").on("slidechange", function (event, ui) { handler.setMaxNoShips(ui.value); });
+        $("#noCodShipsSlider").off("slide");
+        $("#noCodShipsSlider").on("slide", function (event, ui) { handler.updateNoCodShipsValue(ui.value); });
+        //$("#noCodShipsSlider").on("slidechange", function (event, ui) { handler.setNoCodShips(ui.value); });
+
+        $("#noMackerelShipsSlider").off("slide");
+        $("#noMackerelShipsSlider").on("slide", function (event, ui) { handler.updateNoMackerelShipsValue(ui.value); });
+        //$("#noMackerelShipsSlider").on("slidechange", function (event, ui) { handler.setNoMackerelShips(ui.value); });
+
+        $("#tacCodSlider").off("slide");
+        $("#tacCodSlider").on("slide", function (event, ui) { handler.updateTacCodValue(ui.value); });
+       // $("#tacCodSlider").on("slidechange", function (event, ui) { handler.setTacCod(ui.value); });
+
+        $("#tacMackerelSlider").off("slide");
+        $("#tacMackerelSlider").on("slide", function (event, ui) { handler.updateTacMackerelValue(ui.value); });
+        //$("#tacMackerelSlider").on("slidechange", function (event, ui) { handler.setTacMackerel(ui.value); });
         if (p_all) {
             $("#startButton").on("click", this.start);
             $("#pauseButton").on("click", this.pause);
@@ -67,8 +80,14 @@
             $("#landingSlider" + ls.getID()).off("slide");
             $("#landingSlider" + ls.getID()).on("slide", function(event, ui) {return false; });
         });
-        $("#noOfShipsSlider").off("slide");
-        $("#noOfShipsSlider").on("slide", function (event, ui) { return false; });
+        $("#noCodShipsSlider").off("slide");
+        $("#noCodShipsSlider").on("slide", function (event, ui) { return false; });
+        $("#noMackerelShipsSlider").off("slide");
+        $("#noMackerelShipsSlider").on("slide", function (event, ui) { return false; });
+        $("#tacCodSlider").off("slide");
+        $("#tacCodSlider").on("slide", function (event, ui) { return false; });
+        $("#tacMackerelSlider").off("slide");
+        $("#tacMackerelSlider").on("slide", function (event, ui) { return false; });
         if (p_all) {
             $("#startButton").off("click");
             $("#pauseButton").off("click");
@@ -86,6 +105,18 @@
         else {
             this.m_controller.restart();
         }
+    }
+
+    public startSim = (): void => {
+        $("#startSim").css("display", "none");
+        $(".fa").css("display", "initial");
+        this.unBindFunctions();
+        this.setNoCodShips($('#noCodShipsSlider').slider("option", "value"));
+        this.setNoMackerelShips($('#noMackerelShipsSlider').slider("option", "value"));
+        this.setTacCod($('#tacCodSlider').slider("option", "value"));
+        this.setTacMackerel($('#tacMackerelSlider').slider("option", "value"));
+        this.m_controller.getModel().updateNoShips();
+        this.start();
     }
     public setTax = (p_n: number): void => {
         this.updateTaxValue(p_n);
@@ -116,13 +147,35 @@
     public updateLandingValue = (site: string, p_n: number): void => {
         $("#landingValue" + site).text(p_n);
     }
-    public setMaxNoShips = (p_n: number): void => {
-        this.m_controller.getModel().getGovernment().getRestrictions().setMaxShips(p_n);
-        this.updateMaxNoShipsValue(p_n);
+    public setNoCodShips = (p_n: number): void => {
+        this.m_controller.getModel().getGovernment().getRestrictions().setNoCodShips(p_n);
+        this.updateNoCodShipsValue(p_n);
     } 
-    public updateMaxNoShipsValue(p_n: number): void {
-        $("#maxNoShips").text(p_n);
+    public updateNoCodShipsValue(p_n: number): void {
+        $("#noCodShips").text(p_n);
     } 
+    public setNoMackerelShips = (p_n: number): void => {
+        this.m_controller.getModel().getGovernment().getRestrictions().setNoMackerelShips(p_n);
+        this.updateNoMackerelShipsValue(p_n);
+    }
+    public updateNoMackerelShipsValue(p_n: number): void {
+        $("#noMackerelShips").text(p_n);
+    } 
+    public setTacCod = (p_n: number): void => {
+        this.m_controller.getModel().getGovernment().getRestrictions().setTacCod(p_n);
+        this.updateTacCodValue(p_n);
+    }
+    public updateTacCodValue(p_n: number): void {
+        $("#tacCod").text(p_n);
+    } 
+    public setTacMackerel = (p_n: number): void => {
+        this.m_controller.getModel().getGovernment().getRestrictions().setTacMackerel(p_n);
+        this.updateTacMackerelValue(p_n);
+    }
+    public updateTacMackerelValue(p_n: number): void {
+        $("#tacMackerel").text(p_n);
+    } 
+
     public start = (): void => {
         $("#fastForwardButton").removeClass("marked");
         $("#pauseButton").removeClass("marked");
@@ -135,7 +188,7 @@
         $("#startButton").removeClass("marked");
         $("#fastForwardButton").removeClass("marked");
         $("#pauseButton").addClass("marked");
-        this.bindFunctions();
+        //this.bindFunctions();
         this.m_controller.pause();
         
     }

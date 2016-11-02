@@ -88,6 +88,7 @@ abstract class School {
     public getMaxAge(): number {
         return this.m_maxAge;
     }
+    //Spawning stock biomass, the biomass older than 2 years
     public getSsb(): number {
         var ssb: number = 0;
         for (var i = 2; i < this.m_ages.length; i++) {

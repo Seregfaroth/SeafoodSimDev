@@ -30,7 +30,11 @@ class TestSchool {
             assert.deepEqual(testCod.getPosition(), startPosition);
         });
         QUnit.test("Cod: age function", function (assert) {
-            var singleCod: Cod = new Cod(1, startPosition);
+            var singleCod: Cod;
+            do {
+                singleCod = new Cod(1, startPosition);
+            } while (singleCod.getAges()[thisPlaceholder.scenario.getCodSchoolMaxAge() - 1] == 1); //This is to ensure that cod is not old
+            map.addSchool(singleCod);
             var age: number;
             for (var i = 0; i < thisPlaceholder.scenario.getCodSchoolMaxAge(); i++) {
                 if (singleCod.getAges()[i] == 1) {
@@ -51,6 +55,9 @@ class TestSchool {
 
         QUnit.test("Cod: natural death", function (assert) {
             var singleCod: Cod = new Cod(1, startPosition);
+            var map: Map = new Map(gov.getRestrictions());
+            map.getGrid()[0][0] = new Ocean(new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [1]), 1);
+            map.addSchool(singleCod);
             //Make cod grow old
             while(singleCod.getAges()[thisPlaceholder.scenario.getCodSchoolMaxAge()-1] == 0) {
                 singleCod.ageAndRecruit(map);

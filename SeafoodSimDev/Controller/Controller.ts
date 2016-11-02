@@ -122,7 +122,6 @@ class Controller {
             this.m_model.updateStats();
             console.log("Simulation ended" + this.m_model.getStats());
             clearInterval(this.m_timer);
-            this.m_view.updateMainView(this.m_model);
             this.m_eventHandler.unBindFunctions(true);
             new EndScreen(this.m_model.getStats(), this.m_model);
             $("#endDialogDiv").dialog({
@@ -132,8 +131,8 @@ class Controller {
         }
         else {
             this.m_model.run(this.m_ticksPerMove);
-            this.m_view.updateMainView(this.m_model);
         }
+        this.m_view.updateMainView(this.m_model);
     }
     private closeEndScreen = (): void => {
         //$("#endDialogDiv").empty().remove();
@@ -174,4 +173,6 @@ class Controller {
     public resizeWindow = (): void => {
         this.m_view.resizeWindow();
     }
+
+    
 }

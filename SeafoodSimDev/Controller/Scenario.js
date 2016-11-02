@@ -1,7 +1,7 @@
 var Scenario = (function () {
     function Scenario() {
         if (Scenario.ms_instance) {
-            throw ("Use get Scenario.getInstance()");
+            throw ("Cannot create new scenario. Use get Scenario.getInstance()");
         }
     }
     Scenario.getInstance = function () {
@@ -29,7 +29,8 @@ var Scenario = (function () {
     Scenario.prototype.fromJson = function (p_json) {
         this.m_maxNoDaysFishing = p_json.maxNoDaysFishing;
         this.m_schoolSizeWeight = p_json.schoolSizeWeight;
-        this.m_startNoOfShips = p_json.startNoOfShips;
+        this.m_startNoCodShips = p_json.startNoCodShips;
+        this.m_startNoMackerelShips = p_json.startNoMackerelShips;
         this.m_movingRadius = p_json.movingRadius;
         this.m_recrutingPercentage = p_json.recrutingPercentage;
         this.m_noOfShipOwners = p_json.noOfShipOwners;
@@ -339,8 +340,11 @@ var Scenario = (function () {
     Scenario.prototype.getRecrutingPercentage = function () {
         return this.m_recrutingPercentage;
     };
-    Scenario.prototype.getStartNoOfShips = function () {
-        return this.m_startNoOfShips;
+    Scenario.prototype.getStartNoCodShips = function () {
+        return this.m_startNoCodShips;
+    };
+    Scenario.prototype.getStartNoMackerelShips = function () {
+        return this.m_startNoMackerelShips;
     };
     Scenario.prototype.getNoGraphicsMapUpdate = function () {
         return this.m_noGraphicsMapUpdate;

@@ -2,7 +2,6 @@
     private m_scenario: Scenario;
     constructor() {
         
-        this.m_scenario = new Scenario();
         new TestAI();
         new TestSchool();
         new TestShip();
@@ -10,6 +9,7 @@
         new TestFuelSite();
         new TestLandingSite();
         new TestMap();
+        new TestModel();
         
     }
 }

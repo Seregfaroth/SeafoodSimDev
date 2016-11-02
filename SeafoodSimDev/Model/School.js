@@ -68,6 +68,7 @@ var School = (function () {
     School.prototype.getMaxAge = function () {
         return this.m_maxAge;
     };
+    //Spawning stock biomass, the biomass older than 2 years
     School.prototype.getSsb = function () {
         var ssb = 0;
         for (var i = 2; i < this.m_ages.length; i++) {

@@ -30,7 +30,7 @@
         var financialRow: HTMLTableRowElement = scoreTable.insertRow();
         var labelCell: HTMLTableCellElement = financialRow.insertCell();
         var finacialScoreLabel: HTMLDivElement = document.createElement("div");
-        finacialScoreLabel.innerHTML = "Financial Score:";
+        finacialScoreLabel.innerHTML = "Economic Score:";
 
         labelCell.appendChild(finacialScoreLabel);
         var scoreCell: HTMLTableCellElement = financialRow.insertCell();
@@ -75,41 +75,6 @@
         score.id = "overallScore"; 
         score.classList.add("score");
         scoreCell.appendChild(score);
-
-        //Create tax slider
-        var legend: HTMLElement = document.createElement("legend");
-        legend.classList.add("menu-legend");
-        var label: HTMLElement = document.createElement("div");
-        label.innerHTML = "Taxing rate";
-        label.className = "legend-header";
-        legend.appendChild(label);
-        menuDiv.appendChild(legend);
-
-        var table: any = document.createElement("TABLE");
-        table.width = "100%";
-        table.classList.add("menu-text");
-        legend.appendChild(table);
-        var dateRow: HTMLTableRowElement = table.insertRow();
-
-        var cell: HTMLTableCellElement = dateRow.insertCell();
-        var valueDiv: HTMLDivElement = document.createElement("div");
-        cell.appendChild(valueDiv);
-        valueDiv.innerHTML = p_taxingRate * 100 + "%";
-        cell.className = "slider-value-cell";
-        valueDiv.id = "taxValue";
-
-        var cell = dateRow.insertCell();
-        var slider: HTMLElement = document.createElement("div");
-        slider.id = "taxSlider";
-        
-        slider.classList.add("slider");
-        cell.className = "slider-cell";
-        cell.appendChild(slider);
-        $("#taxSlider").slider();
-        $("#taxSlider").slider("option", "min", 0);
-        $("#taxSlider").slider("option", "max", 100);
-        $("#taxSlider").slider("option", "step", 1);
-        $("#taxSlider").slider("value", p_taxingRate * 100);
 
         //Create quote sliders
         //var quoteLegend: HTMLElement = document.createElement("legend");
@@ -229,15 +194,78 @@
         //    sliderValue.innerHTML = $("#landingSlider" + p_landingSites[i].getID()).slider("option", "value");
         //}
 
-        //Create maximum number of ships slider
+        //Create number of ships slider
         var legend: HTMLElement = document.createElement("legend");
         legend.classList.add("menu-legend");
         var label: HTMLElement = document.createElement("div");
-        label.innerHTML = "Maximum number of ships";
+        label.innerHTML = "Number of ships";
         label.className = "legend-header";
         legend.appendChild(label);
         menuDiv.appendChild(legend);
 
+        var table: any = document.createElement("TABLE");
+        table.width = "100%";
+        table.classList.add("menu-text");
+        legend.appendChild(table);
+        
+
+        var dateRow: HTMLTableRowElement = table.insertRow();
+
+        var cell: HTMLTableCellElement = dateRow.insertCell();
+        var valueDiv: HTMLDivElement = document.createElement("div");
+        cell.appendChild(valueDiv);
+        valueDiv.innerHTML = "Cod Ships:";
+
+        var cell: HTMLTableCellElement = dateRow.insertCell();
+        var valueDiv: HTMLDivElement = document.createElement("div");
+        cell.appendChild(valueDiv);
+        valueDiv.innerHTML = p_scenario.getStartNoMackerelShips() + "";
+        cell.className = "slider-value-cell";
+        valueDiv.id = "noCodShips";
+
+        var cell = dateRow.insertCell();
+        var slider: HTMLElement = document.createElement("div");
+        slider.id = "noCodShipsSlider";
+        slider.classList.add("slider");
+        cell.className = "slider-cell";
+        cell.appendChild(slider);
+        $("#noCodShipsSlider").slider();
+        $("#noCodShipsSlider").slider("option", "min", 0);
+        $("#noCodShipsSlider").slider("option", "max", 50);
+        $("#noCodShipsSlider").slider("value", p_scenario.getStartNoMackerelShips());
+        var dateRow: HTMLTableRowElement = table.insertRow();
+
+        var cell: HTMLTableCellElement = dateRow.insertCell();
+        var valueDiv: HTMLDivElement = document.createElement("div");
+        cell.appendChild(valueDiv);
+        valueDiv.innerHTML = "Mackerel Ships:";
+
+        var cell: HTMLTableCellElement = dateRow.insertCell();
+        var valueDiv: HTMLDivElement = document.createElement("div");
+        cell.appendChild(valueDiv);
+        valueDiv.innerHTML = p_scenario.getStartNoCodShips() + "";
+        cell.className = "slider-value-cell";
+        valueDiv.id = "noMackerelShips";
+
+        var cell = dateRow.insertCell();
+        var slider: HTMLElement = document.createElement("div");
+        slider.id = "noMackerelShipsSlider";
+        slider.classList.add("slider");
+        cell.className = "slider-cell";
+        cell.appendChild(slider);
+        $("#noMackerelShipsSlider").slider();
+        $("#noMackerelShipsSlider").slider("option", "min", 0);
+        $("#noMackerelShipsSlider").slider("option", "max", 50);
+        $("#noMackerelShipsSlider").slider("value", p_scenario.getStartNoCodShips());
+        //Create tac sliders
+        var legend: HTMLElement = document.createElement("legend");
+        legend.classList.add("menu-legend");
+        var label: HTMLElement = document.createElement("div");
+        label.innerHTML = "Total Allowable Catch";
+        label.className = "legend-header";
+        legend.appendChild(label);
+        menuDiv.appendChild(legend);
+        
         var table: any = document.createElement("TABLE");
         table.width = "100%";
         table.classList.add("menu-text");
@@ -247,20 +275,50 @@
         var cell: HTMLTableCellElement = dateRow.insertCell();
         var valueDiv: HTMLDivElement = document.createElement("div");
         cell.appendChild(valueDiv);
-        valueDiv.innerHTML = p_scenario.getStartNoOfShips()+"";
+        valueDiv.innerHTML = "Cod:";
+
+        var cell: HTMLTableCellElement = dateRow.insertCell();
+        var valueDiv: HTMLDivElement = document.createElement("div");
+        cell.appendChild(valueDiv);
+        valueDiv.innerHTML = 0 + "";
         cell.className = "slider-value-cell";
-        valueDiv.id = "maxNoShips";
+        valueDiv.id = "tacCod";
 
         var cell = dateRow.insertCell();
         var slider: HTMLElement = document.createElement("div");
-        slider.id = "noOfShipsSlider";
+        slider.id = "tacCodSlider";
         slider.classList.add("slider");
         cell.className = "slider-cell";
         cell.appendChild(slider);
-        $("#noOfShipsSlider").slider();
-        $("#noOfShipsSlider").slider("option", "min", 0);
-        $("#noOfShipsSlider").slider("option", "max", 50);
-        $("#noOfShipsSlider").slider("value", p_scenario.getStartNoOfShips());
+        $("#tacCodSlider").slider();
+        $("#tacCodSlider").slider("option", "min", 0);
+        $("#tacCodSlider").slider("option", "max", 50);
+        $("#tacCodSlider").slider("value", 0);
+
+        var dateRow: HTMLTableRowElement = table.insertRow();
+
+        var cell: HTMLTableCellElement = dateRow.insertCell();
+        var valueDiv: HTMLDivElement = document.createElement("div");
+        cell.appendChild(valueDiv);
+        valueDiv.innerHTML = "Mackerel:";
+
+        var cell: HTMLTableCellElement = dateRow.insertCell();
+        var valueDiv: HTMLDivElement = document.createElement("div");
+        cell.appendChild(valueDiv);
+        valueDiv.innerHTML = 0 + "";
+        cell.className = "slider-value-cell";
+        valueDiv.id = "tacMackerel";
+
+        var cell = dateRow.insertCell();
+        var slider: HTMLElement = document.createElement("div");
+        slider.id = "tacMackerelSlider";
+        slider.classList.add("slider");
+        cell.className = "slider-cell";
+        cell.appendChild(slider);
+        $("#tacMackerelSlider").slider();
+        $("#tacMackerelSlider").slider("option", "min", 0);
+        $("#tacMackerelSlider").slider("option", "max", 50);
+        $("#tacMackerelSlider").slider("value", 0);
 
         //Create buttons
         var buttonsDiv: HTMLElement = document.createElement("legend");
@@ -293,6 +351,14 @@
         fastForwardButton.classList.add("ui-button");
         buttonsDiv.appendChild(fastForwardButton);
 
+        $(".fa").css("display", "none");//These are hidden until user starts simulation
+
+        var startSimButton: HTMLButtonElement = document.createElement("button");
+        buttonsDiv.appendChild(startSimButton);
+        startSimButton.id = "startSim";
+        startSimButton.classList.add("ui-button");
+        startSimButton.innerHTML = "Start Simulation";
+        
         // Create time view
         var timeLegend: HTMLLegendElement = document.createElement("legend");
         menuDiv.appendChild(timeLegend);
@@ -377,8 +443,8 @@
         $("#taxSlider").slider("value", p_taxingRate * 100);
         $("#taxValue").text(p_taxingRate * 100 + "%");
 
-        $("#noOfShipsSlider").slider("value", p_scenario.getStartNoOfShips());
-        $("#maxNoShips").text(p_scenario.getStartNoOfShips()+"");
+        $("#noCodShipsSlider").slider("value", p_scenario.getStartNoCodShips());
+        $("#noCodShips").text(p_scenario.getStartNoCodShips()+"");
 
         for (var i = 0; i < p_ShipOwners.length; i++) {
             $("#effortValue" + p_ShipOwners[i].getID()).text(0);

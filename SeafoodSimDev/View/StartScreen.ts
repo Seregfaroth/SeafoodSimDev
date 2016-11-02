@@ -154,7 +154,7 @@ class StartScreen {
         goalP.id = "goal";
         goalP.innerHTML = "Goal: ";
         
-        $("#scenario1").attr("checked", 'true');//Sceanrio 1 is checked by default at the start (if changed, this must be changed in the constructor too)
+        $("#scenario1").attr("checked", 'true');//Scenario 1 is checked by default at the start (if changed, this must be changed in the constructor too)
         $('#chooseScenario').buttonset();
 
         $("#startScreen").dialog({
@@ -172,6 +172,7 @@ class StartScreen {
         $("#endTime").text("Duration of simulation: " + this.m_scenario.getDefaultNoDays() + " days");
         $("#name").html(this.m_scenario.getName());
         $("#des").html(this.m_scenario.getDescription());
+        $("#des").append(" Taxing rate is " + this.m_scenario.getTaxingRate()*100 +"%");
         $("#link").html("<a target='_blank' href='" + this.m_scenario.getLink() + "'>Link to MCA</a>");
         var goal = $("#goal");
         goal.html("");

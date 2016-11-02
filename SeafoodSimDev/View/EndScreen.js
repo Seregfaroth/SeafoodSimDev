@@ -111,7 +111,7 @@ var EndScreen = (function () {
         endDialogDiv.appendChild(endAccordionDiv5);
         endAccordionDiv5.id = "endAccordionDiv5";
         var h3fin = document.createElement("h3");
-        h3fin.innerHTML = "Financial Indicators";
+        h3fin.innerHTML = "Economic Indicators";
         endAccordionDiv5.appendChild(h3fin);
         var financialChartDiv = document.createElement("div");
         endAccordionDiv5.appendChild(financialChartDiv);

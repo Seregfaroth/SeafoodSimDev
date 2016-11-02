@@ -91,6 +91,7 @@
     <TypeScriptCompile Include="Test\TestFuelSite.ts" />
     <TypeScriptCompile Include="Test\TestLandingSite.ts" />
     <TypeScriptCompile Include="Test\TestMap.ts" />
+    <TypeScriptCompile Include="Test\TestModel.ts" />
     <TypeScriptCompile Include="Test\TestSchool.ts" />
     <TypeScriptCompile Include="Test\TestShip.ts" />
     <TypeScriptCompile Include="Test\TestShipOwner.ts" />

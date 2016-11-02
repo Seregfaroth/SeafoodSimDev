@@ -1,10 +1,11 @@
 {
   "maxNoDaysFishing":  5,
   "schoolSizeWeight": 0.01,
-  "startNoOfShips": 5,
+  "startNoCodShips": 0,
+  "startNoMackerelShips": 0,
   "movingRadius": 1,
   "recrutingPercentage": 0.35,
-  "noOfShipOwners": 2,
+  "noOfShipOwners": 1,
   "name": "Scenario 1",
   "financialScoreGoal": 2000,
   "environmentalScoreGoal": "no",

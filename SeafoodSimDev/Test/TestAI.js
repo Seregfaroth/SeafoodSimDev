@@ -43,29 +43,34 @@ var TestAI = (function () {
                 var path = ai.pathToNearestFuelSite(new Point2(0, 8), map);
                 assert.deepEqual(path[path.length - 1], new Point2(5, 8), "nearest fuel site from 0,8 should be 5,8");
             });
-            QUnit.test("AI: buy ship", function (assert) {
+            /*QUnit.test("AI: buy ship", function (assert) {
                 map.emptyGrid();
                 assert.deepEqual(richShipOwner.getShips(), [], "rich ship owner should not have any ships");
                 assert.deepEqual(poorShipOwner.getShips(), [], "poor ship owner should not have any ships");
                 ai.run(richShipOwner, map);
                 //Check if owner has bought ship
                 assert.deepEqual(richShipOwner.getShips().length, 1, "rich ship owner should have one ship");
+    
                 ai.run(poorShipOwner, map);
                 //Poor ship owner should not buy a new ship
                 assert.deepEqual(poorShipOwner.getShips().length, 0, "poor ship owner should still have 0 ships");
             });
+    
             QUnit.test("AI: sell ship", function (assert) {
                 map.emptyGrid();
                 poorShipOwner.buyShip();
                 assert.deepEqual(poorShipOwner.getShips().length, 1, "poor ship owner should have 1 ship");
-                ai.run(poorShipOwner, map);
+                 ai.run(poorShipOwner, map);
                 //Poor ship owner should sell his ship
-                assert.deepEqual(poorShipOwner.getShips().length, 0, "poor ship owner should have 0 ships");
-                richShipOwner.buyShip();
-                var noOfShips = richShipOwner.getShips().length;
-                ai.run(richShipOwner, map);
-                assert.ok(richShipOwner.getShips().length >= noOfShips, "rich ship owner should not sell any of his ships");
+                 assert.deepEqual(poorShipOwner.getShips().length, 0, "poor ship owner should have 0 ships");
+    
+                 richShipOwner.buyShip();
+                 var noOfShips: number = richShipOwner.getShips().length;
+    
+                 ai.run(richShipOwner, map);
+                 assert.ok(richShipOwner.getShips().length >= noOfShips, "rich ship owner should not sell any of his ships");
             });
+            */
             QUnit.test("AI: pathfinding straight line", function (assert) {
                 map.emptyGrid();
                 var expectedPath = [new Point2(0, 0), new Point2(0, 1), new Point2(0, 2)];

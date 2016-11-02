@@ -5,11 +5,13 @@
     private m_effortLimits: { [shipOwner: string]: number } = {};
    private m_restrictedAreas: Tile[] = [];
    private m_landingDistrubutions: { [Site: string]: number } = {};
-   private m_maxShips: number;
-
+   private m_noCodOfShips: number;
+   private m_noMackerelOfShips: number;
+   private m_tacCod: number;
+   private m_tacMackerel: number;
    constructor() {
        this.m_scenario = Scenario.getInstance();
-       this.m_maxShips = this.m_scenario.getStartNoOfShips();
+       this.m_noCodOfShips = this.m_scenario.getStartNoCodShips();
    }
     public restrictArea(p_tile: Tile): void {
         this.m_restrictedAreas.push(p_tile);
@@ -47,14 +49,27 @@
         return this.m_landingDistrubutions;
     }
 
-    public setMaxShips(p_n: number): void {
-        this.m_maxShips = p_n;
+    public setNoCodShips(p_n: number): void {
+        this.m_noCodOfShips = p_n;
     }
 
-    public getMaxShips(): number {
-        return this.m_maxShips;
+    public getNoCodOfShips(): number {
+        return this.m_noCodOfShips;
+    }
+    public setNoMackerelShips(p_n: number): void {
+        this.m_noMackerelOfShips = p_n;
+    }
+
+    public getNoMackerelOfShips(): number {
+        return this.m_noMackerelOfShips;
     }
     public isRestricted(p_tile: Tile): boolean {
         return this.m_restrictedAreas.indexOf(p_tile) > -1;
+    }
+    public setTacMackerel(p_n: number): void {
+        this.m_tacMackerel = p_n;
+    }
+    public setTacCod(p_n: number): void {
+        this.m_tacCod = p_n;
     }
 }
