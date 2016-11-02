@@ -27,12 +27,12 @@
             map = new Map(gov.getRestrictions());
             var point: Point2 = new Point2(0, 0);
             assert.deepEqual(map.getNoOfFishInTile(point), 0, "there should be no fish in tile");
-            map.addSchool(new Cod(100, 80, new Point2(0, 1)));
+            map.addSchool(new Cod(100, new Point2(0, 1)));
             assert.deepEqual(map.getNoOfFishInTile(point), 0, "there should be no fish in tile");
-            map.addSchool(new Cod(100, 80, point));
+            map.addSchool(new Cod(100, point));
             //Check that fish have been added
             assert.deepEqual(map.getNoOfFishInTile(point), 100, "there should be 100 fish in tile");
-            map.addSchool(new Cod(50, 80, point));
+            map.addSchool(new Cod(50, point));
             assert.deepEqual(map.getNoOfFishInTile(point), 150, "there should be 150 fish in tile");
         });
         QUnit.test("Map: get number of ships in tile", function (assert) {

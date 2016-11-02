@@ -98,7 +98,7 @@ class TestShip {
             map.emptyGrid();
             var point: Point2 = new Point2(2, 2);
             var noOfFishInSchool: number = 100;
-            var school: Cod = new Cod(noOfFishInSchool, 10, point);
+            var school: Cod = new Cod(noOfFishInSchool, point);
             map.addSchool(school);
             var path: Point2[] = [ship.getPosition(), point];
             ship.setPath(path);
@@ -122,7 +122,7 @@ class TestShip {
             map.getGrid()[2][2] = site;
             var point: Point2 = new Point2(2, 2);
             var noOfFishInSchool: number = 100;
-            var school: Cod = new Cod(noOfFishInSchool, 10, point);
+            var school: Cod = new Cod(noOfFishInSchool, point);
             map.addSchool(school);
             var path: Point2[] = [ship.getPosition(), point];
             ship.setPath(path);

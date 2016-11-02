@@ -1,13 +1,17 @@
 var EndScreenStats = (function () {
     function EndScreenStats() {
         this.m_time = [];
-        this.m_biomassPrTimeUnit = [];
+        this.m_biomassCodPrTimeUnit = [];
+        this.m_biomassMacPrTimeUnit = [];
+        this.m_biomassOtherPrTimeUnit = [];
         this.m_yieldPrTimeUnit = [];
         this.m_investPrTimeUnit = [];
         this.m_incomePrTimeUnit = [];
         this.m_natDeathPrTimeUnit = [];
         //private m_mortalityPrTimeUnit: number[] = [];
-        this.m_recruitmentPrTimeUnit = [];
+        this.m_recruitmentCodPrTimeUnit = [];
+        this.m_recruitmentMacPrTimeUnit = [];
+        this.m_recruitmentOtherPrTimeUnit = [];
         this.m_fuelUsePrTimeUnit = [];
         this.m_employmentLandBasedPrTimeUnit = [];
         this.m_employmentSeaBasedPrTimeUnit = [];
@@ -24,14 +28,32 @@ var EndScreenStats = (function () {
     EndScreenStats.prototype.getTimeAt = function (p_index) {
         return this.m_time[p_index];
     };
-    EndScreenStats.prototype.getBiomassPrTimeUnitAt = function (p_index) {
-        return this.m_biomassPrTimeUnit[p_index];
+    EndScreenStats.prototype.getBiomassCodPrTimeUnitAt = function (p_index) {
+        return this.m_biomassCodPrTimeUnit[p_index];
     };
-    EndScreenStats.prototype.setBiomassPrTimeUnitAt = function (p_index, p_biomass) {
-        this.m_biomassPrTimeUnit[p_index] = p_biomass;
+    EndScreenStats.prototype.setBiomassCodPrTimeUnitAt = function (p_index, p_biomass) {
+        this.m_biomassCodPrTimeUnit[p_index] = p_biomass;
     };
-    EndScreenStats.prototype.getBiomassPrTimeUnit = function () {
-        return this.m_biomassPrTimeUnit;
+    EndScreenStats.prototype.getBiomassCodPrTimeUnit = function () {
+        return this.m_biomassCodPrTimeUnit;
+    };
+    EndScreenStats.prototype.getBiomassMacPrTimeUnitAt = function (p_index) {
+        return this.m_biomassMacPrTimeUnit[p_index];
+    };
+    EndScreenStats.prototype.setBiomassMacPrTimeUnitAt = function (p_index, p_biomass) {
+        this.m_biomassMacPrTimeUnit[p_index] = p_biomass;
+    };
+    EndScreenStats.prototype.getBiomassMacPrTimeUnit = function () {
+        return this.m_biomassMacPrTimeUnit;
+    };
+    EndScreenStats.prototype.getBiomassOtherPrTimeUnitAt = function (p_index) {
+        return this.m_biomassOtherPrTimeUnit[p_index];
+    };
+    EndScreenStats.prototype.setBiomassOtherPrTimeUnitAt = function (p_index, p_biomass) {
+        this.m_biomassOtherPrTimeUnit[p_index] = p_biomass;
+    };
+    EndScreenStats.prototype.getBiomassOtherPrTimeUnit = function () {
+        return this.m_biomassOtherPrTimeUnit;
     };
     EndScreenStats.prototype.getYieldprTimeUnitAt = function (p_index) {
         return this.m_yield[p_index];
@@ -69,14 +91,32 @@ var EndScreenStats = (function () {
     EndScreenStats.prototype.getIncomePrTimeUnit = function () {
         return this.m_incomePrTimeUnit;
     };
-    EndScreenStats.prototype.getRecruitmentPrTimeUnitAt = function (p_index) {
-        return this.m_recruitmentPrTimeUnit[p_index];
+    EndScreenStats.prototype.getRecruitmentCodPrTimeUnitAt = function (p_index) {
+        return this.m_recruitmentCodPrTimeUnit[p_index];
     };
-    EndScreenStats.prototype.setRecruitmentPrTimeUnitAt = function (p_index, p_recruitment) {
-        this.m_recruitmentPrTimeUnit[p_index] = p_recruitment;
+    EndScreenStats.prototype.setRecruitmentCodPrTimeUnitAt = function (p_index, p_recruitment) {
+        this.m_recruitmentCodPrTimeUnit[p_index] = p_recruitment;
     };
-    EndScreenStats.prototype.getRecruitmentPrTimeUnit = function () {
-        return this.m_recruitmentPrTimeUnit;
+    EndScreenStats.prototype.getRecruitmentCodPrTimeUnit = function () {
+        return this.m_recruitmentCodPrTimeUnit;
+    };
+    EndScreenStats.prototype.getRecruitmentMacPrTimeUnitAt = function (p_index) {
+        return this.m_recruitmentMacPrTimeUnit[p_index];
+    };
+    EndScreenStats.prototype.setRecruitmentMacPrTimeUnitAt = function (p_index, p_recruitment) {
+        this.m_recruitmentMacPrTimeUnit[p_index] = p_recruitment;
+    };
+    EndScreenStats.prototype.getRecruitmentMacPrTimeUnit = function () {
+        return this.m_recruitmentMacPrTimeUnit;
+    };
+    EndScreenStats.prototype.getRecruitmentOtherPrTimeUnitAt = function (p_index) {
+        return this.m_recruitmentOtherPrTimeUnit[p_index];
+    };
+    EndScreenStats.prototype.setRecruitmentOtherPrTimeUnitAt = function (p_index, p_recruitment) {
+        this.m_recruitmentOtherPrTimeUnit[p_index] = p_recruitment;
+    };
+    EndScreenStats.prototype.getRecruitmentOtherPrTimeUnit = function () {
+        return this.m_recruitmentOtherPrTimeUnit;
     };
     EndScreenStats.prototype.getFuelUsePrTimeUnitAt = function (p_index) {
         return this.m_fuelUsePrTimeUnit[p_index];
@@ -144,20 +184,24 @@ var EndScreenStats = (function () {
     EndScreenStats.prototype.getEnvironmentalVizArray = function () {
         var ret = [[]];
         //add header
-        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Biomass' }, { label: 'recruit' }, { label: 'Yield' }, { label: 'naturel Death' }];
+        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'BiomassCod' }, { label: 'BiomassMac' }, { label: 'BiomassOther' }, { label: 'recruitCod' }, { label: 'recruitMac' }, { label: 'recruitOther' }, { label: 'Yield' }, { label: 'naturel Death' }];
         //ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Biomass' }];
         for (var i in this.m_time) {
             ret[parseInt(i) + 1] = [];
             //add timeScale
             ret[parseInt(i) + 1][0] = this.m_time[i];
             //add biomass
-            ret[parseInt(i) + 1][1] = this.m_biomassPrTimeUnit[i];
+            ret[parseInt(i) + 1][1] = this.m_biomassCodPrTimeUnit[i];
+            ret[parseInt(i) + 1][2] = this.m_biomassMacPrTimeUnit[i];
+            ret[parseInt(i) + 1][3] = this.m_biomassOtherPrTimeUnit[i];
             //add recruitment
-            ret[parseInt(i) + 1][2] = this.m_recruitmentPrTimeUnit[i];
+            ret[parseInt(i) + 1][4] = this.m_recruitmentCodPrTimeUnit[i];
+            ret[parseInt(i) + 1][5] = this.m_recruitmentMacPrTimeUnit[i];
+            ret[parseInt(i) + 1][6] = this.m_recruitmentOtherPrTimeUnit[i];
             //add yield
-            ret[parseInt(i) + 1][3] = this.m_yieldPrTimeUnit[i];
+            ret[parseInt(i) + 1][7] = this.m_yieldPrTimeUnit[i];
             //add naturel death
-            ret[parseInt(i) + 1][4] = this.m_natDeathPrTimeUnit[i];
+            ret[parseInt(i) + 1][8] = this.m_natDeathPrTimeUnit[i];
         }
         return ret;
     };

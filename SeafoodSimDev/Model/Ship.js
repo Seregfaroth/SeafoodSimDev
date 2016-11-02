@@ -144,19 +144,21 @@ var Ship = (function () {
         }
         p_map.getSchoolsInTile(this.m_position).forEach(function (school) {
             var type = school instanceof Cod ? FishType.Cod : FishType.Mackerel;
-            for (var i = 0; i < school.getMaxAge(); i++) {
-                //The number of fish the ship is fishing
-                //var noOfFish: number = Math.floor(percentage * school.getAges()[i]);
-                var noOfFish = Math.ceil(percentage * school.getAges()[i]);
-                //Add to cargo
-                ship.m_cargo[type][i] += noOfFish;
-                //Remove from school
-                school.getAges()[i] -= noOfFish;
-                //var t1 = p_map.getYield();
-                p_map.setYield(p_map.getYield() + noOfFish);
-                //var t2 = p_map.getYield();
-                if (!this.m_noHistory)
-                    ship.history[1].push(noOfFish);
+            if (type === FishType.Cod) {
+                for (var i = 0; i < school.getMaxAge(); i++) {
+                    //The number of fish the ship is fishing
+                    //var noOfFish: number = Math.floor(percentage * school.getAges()[i]);
+                    var noOfFish = Math.ceil(percentage * school.getAges()[i]);
+                    //Add to cargo
+                    ship.m_cargo[type][i] += noOfFish;
+                    //Remove from school
+                    school.getAges()[i] -= noOfFish;
+                    //var t1 = p_map.getYield();
+                    p_map.setYield(p_map.getYield() + noOfFish);
+                    //var t2 = p_map.getYield();
+                    if (!this.m_noHistory)
+                        ship.history[1].push(noOfFish);
+                }
             }
         });
     };

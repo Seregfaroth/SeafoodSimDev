@@ -96,6 +96,6 @@ abstract class School {
         return ssb;
     }
     protected abstract recruit(p_map: Map): void;
-    protected abstract recruit2(p_map: Map, cc: number, gr: number): void;
+    //protected abstract recruit2(p_map: Map, cc: number, gr: number): void;
     public abstract move(p_map: Map): void;
 }

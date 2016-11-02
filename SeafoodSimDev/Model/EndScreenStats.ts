@@ -3,14 +3,18 @@ class EndScreenStats {
     private m_time: number[] = [];
     private m_scenario: Scenario;
 
-    private m_biomassPrTimeUnit: number[] = [];
+    private m_biomassCodPrTimeUnit: number[] = [];
+    private m_biomassMacPrTimeUnit: number[] = [];
+    private m_biomassOtherPrTimeUnit: number[] = [];
     private m_yieldPrTimeUnit: number[] = [];
     private m_investPrTimeUnit: number[] = [];
     private m_incomePrTimeUnit: number[] = [];
     private m_natDeathPrTimeUnit: number[] = [];
     //private m_mortalityPrTimeUnit: number[] = [];
 
-    private m_recruitmentPrTimeUnit: number[] = [];
+    private m_recruitmentCodPrTimeUnit: number[] = [];
+    private m_recruitmentMacPrTimeUnit: number[] = [];
+    private m_recruitmentOtherPrTimeUnit: number[] = [];
 
     private m_fuelUsePrTimeUnit: number[] = [];
 
@@ -37,14 +41,34 @@ class EndScreenStats {
         return this.m_time[p_index];
     }
 
-    public getBiomassPrTimeUnitAt(p_index: number): number {
-        return this.m_biomassPrTimeUnit[p_index];
+    public getBiomassCodPrTimeUnitAt(p_index: number): number {
+        return this.m_biomassCodPrTimeUnit[p_index];
     }
-    public setBiomassPrTimeUnitAt(p_index: number, p_biomass) {
-        this.m_biomassPrTimeUnit[p_index] = p_biomass;
+    public setBiomassCodPrTimeUnitAt(p_index: number, p_biomass) {
+        this.m_biomassCodPrTimeUnit[p_index] = p_biomass;
     }
-    public getBiomassPrTimeUnit(): number[] {
-        return this.m_biomassPrTimeUnit;
+    public getBiomassCodPrTimeUnit(): number[] {
+        return this.m_biomassCodPrTimeUnit;
+    }
+
+    public getBiomassMacPrTimeUnitAt(p_index: number): number {
+        return this.m_biomassMacPrTimeUnit[p_index];
+    }
+    public setBiomassMacPrTimeUnitAt(p_index: number, p_biomass) {
+        this.m_biomassMacPrTimeUnit[p_index] = p_biomass;
+    }
+    public getBiomassMacPrTimeUnit(): number[] {
+        return this.m_biomassMacPrTimeUnit;
+    }
+
+    public getBiomassOtherPrTimeUnitAt(p_index: number): number {
+        return this.m_biomassOtherPrTimeUnit[p_index];
+    }
+    public setBiomassOtherPrTimeUnitAt(p_index: number, p_biomass) {
+        this.m_biomassOtherPrTimeUnit[p_index] = p_biomass;
+    }
+    public getBiomassOtherPrTimeUnit(): number[] {
+        return this.m_biomassOtherPrTimeUnit;
     }
     
 
@@ -89,14 +113,34 @@ class EndScreenStats {
     }
 
 
-    public getRecruitmentPrTimeUnitAt(p_index): number {
-        return this.m_recruitmentPrTimeUnit[p_index];
+    public getRecruitmentCodPrTimeUnitAt(p_index): number {
+        return this.m_recruitmentCodPrTimeUnit[p_index];
     }
-    public setRecruitmentPrTimeUnitAt(p_index, p_recruitment) {
-        this.m_recruitmentPrTimeUnit[p_index] = p_recruitment;
+    public setRecruitmentCodPrTimeUnitAt(p_index, p_recruitment) {
+        this.m_recruitmentCodPrTimeUnit[p_index] = p_recruitment;
     }
-    public getRecruitmentPrTimeUnit(): number[] {
-        return this.m_recruitmentPrTimeUnit;
+    public getRecruitmentCodPrTimeUnit(): number[] {
+        return this.m_recruitmentCodPrTimeUnit;
+    }
+
+    public getRecruitmentMacPrTimeUnitAt(p_index): number {
+        return this.m_recruitmentMacPrTimeUnit[p_index];
+    }
+    public setRecruitmentMacPrTimeUnitAt(p_index, p_recruitment) {
+        this.m_recruitmentMacPrTimeUnit[p_index] = p_recruitment;
+    }
+    public getRecruitmentMacPrTimeUnit(): number[] {
+        return this.m_recruitmentMacPrTimeUnit;
+    }
+
+    public getRecruitmentOtherPrTimeUnitAt(p_index): number {
+        return this.m_recruitmentOtherPrTimeUnit[p_index];
+    }
+    public setRecruitmentOtherPrTimeUnitAt(p_index, p_recruitment) {
+        this.m_recruitmentOtherPrTimeUnit[p_index] = p_recruitment;
+    }
+    public getRecruitmentOtherPrTimeUnit(): number[] {
+        return this.m_recruitmentOtherPrTimeUnit;
     }
 
     public getFuelUsePrTimeUnitAt(p_index): number {
@@ -172,20 +216,24 @@ class EndScreenStats {
     public getEnvironmentalVizArray(): any[] {
         var ret: any[] = [[]];
         //add header
-        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Biomass' }, { label: 'recruit' }, { label: 'Yield' }, { label: 'naturel Death' }];
+        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'BiomassCod' }, { label: 'BiomassMac' }, { label: 'BiomassOther' }, { label: 'recruitCod' }, { label: 'recruitMac' }, { label: 'recruitOther' }, { label: 'Yield' }, { label: 'naturel Death' }];
         //ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Biomass' }];
         for (var i in this.m_time) {
             ret[parseInt(i) + 1] = [];
             //add timeScale
             ret[parseInt(i) + 1][0] = this.m_time[i];
             //add biomass
-            ret[parseInt(i) + 1][1] = this.m_biomassPrTimeUnit[i];
+            ret[parseInt(i) + 1][1] = this.m_biomassCodPrTimeUnit[i];
+            ret[parseInt(i) + 1][2] = this.m_biomassMacPrTimeUnit[i];
+            ret[parseInt(i) + 1][3] = this.m_biomassOtherPrTimeUnit[i];
             //add recruitment
-            ret[parseInt(i) + 1][2] = this.m_recruitmentPrTimeUnit[i];
+            ret[parseInt(i) + 1][4] = this.m_recruitmentCodPrTimeUnit[i];
+            ret[parseInt(i) + 1][5] = this.m_recruitmentMacPrTimeUnit[i];
+            ret[parseInt(i) + 1][6] = this.m_recruitmentOtherPrTimeUnit[i];
             //add yield
-            ret[parseInt(i) + 1][3] = this.m_yieldPrTimeUnit[i];
+            ret[parseInt(i) + 1][7] = this.m_yieldPrTimeUnit[i];
             //add naturel death
-            ret[parseInt(i) + 1][4] = this.m_natDeathPrTimeUnit[i];
+            ret[parseInt(i) + 1][8] = this.m_natDeathPrTimeUnit[i];
         }
         return ret;
     }

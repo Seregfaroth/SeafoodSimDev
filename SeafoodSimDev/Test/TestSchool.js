@@ -6,24 +6,24 @@ var TestSchool = (function () {
         var _this = this;
         this.runTests = function () {
             var startPosition = new Point2(0, 0);
-            var singleCod = new Cod(1, 1, startPosition);
-            var singleMackerel = new Mackerel(1, 1, startPosition);
+            var singleCod = new Cod(1, startPosition);
+            var singleMackerel = new Mackerel(1, startPosition);
             var gov = new Government(new Restrictions());
             var map = new Map(gov.getRestrictions());
             var thisPlaceholder = _this;
-            map.getGrid()[0][0] = new Ocean(100, 1);
+            map.getGrid()[0][0] = new Ocean(new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [100000]), 1);
             QUnit.test("Cod: constructor", function (assert) {
                 var testCod;
                 //Check that testCod is undefined
                 assert.equal(testCod, undefined);
                 //Create cod and check members
-                testCod = new Cod(1, 1, startPosition);
+                testCod = new Cod(1, startPosition);
                 assert.ok(testCod);
                 assert.deepEqual(testCod.getSize(), 1);
                 assert.deepEqual(testCod.getPosition(), startPosition);
             });
             QUnit.test("Cod: age function", function (assert) {
-                var singleCod = new Cod(1, 1, startPosition);
+                var singleCod = new Cod(1, startPosition);
                 var age;
                 for (var i = 0; i < thisPlaceholder.scenario.getCodSchoolMaxAge(); i++) {
                     if (singleCod.getAges()[i] == 1) {
@@ -42,7 +42,7 @@ var TestSchool = (function () {
                 }
             });
             QUnit.test("Cod: natural death", function (assert) {
-                var singleCod = new Cod(1, 1, startPosition);
+                var singleCod = new Cod(1, startPosition);
                 //Make cod grow old
                 while (singleCod.getAges()[thisPlaceholder.scenario.getCodSchoolMaxAge() - 1] == 0) {
                     singleCod.ageAndRecruit(map);

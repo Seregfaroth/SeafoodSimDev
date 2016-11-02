@@ -13,6 +13,7 @@ var Cod = (function (_super) {
         this.m_origin = p_position;
         this.m_maxAge = this.m_scenario.getCodSchoolMaxAge();
         this.m_type = "cod";
+        this.m_growthRate = 0.35;
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }
@@ -92,7 +93,7 @@ var Cod = (function (_super) {
             //var sbb = p_map.getSsbOf(this.getType(), this.m_position);      
             var ssb = this.getSsb();
             var fraction = p_map.getBiosmassFractionOf(this.getType(), this.m_position);
-            recruitment += this.m_growthRate * ssb * (cc * fraction - ssb);
+            recruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
         }
         this.m_ages[0] = recruitment;
         this.m_size += recruitment;

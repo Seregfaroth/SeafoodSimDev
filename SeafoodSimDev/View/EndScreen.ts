@@ -150,7 +150,7 @@ class EndScreen {
         //nextButtonInput.type = "submit";
         ////prevButtonInput.value = "Prev";
 
-        var t = p_endStats.getBiomassPrTimeUnit();
+        //var t = p_endStats.getBiomassPrTimeUnit();
 
         var scoreColumnChartOptions = {
             title: "Current and Goal scores",

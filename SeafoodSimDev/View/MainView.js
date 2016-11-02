@@ -26,7 +26,7 @@ var MainView = (function () {
         return this.m_mapMenu;
     };
     MainView.prototype.updateMainView = function (p_model) {
-        console.log("updating mainView");
+        //console.log("updating mainView");
         if (!this.m_noScoreUpdate)
             this.m_mapMenu.updateScore(p_model.getGovernment());
         if (!this.m_noDateUpdate)

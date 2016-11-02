@@ -37,7 +37,7 @@ var Controller = (function () {
             $("#scenario1Label").removeClass("ui-state-focus"); //This is hardcoded to prevent scenario 1 from being checked by default
         };
         this.simulationTick = function () {
-            console.log("Controller running simulationtick");
+            //console.log("Controller running simulationtick");
             //if (!(this.m_model.getTime() % this.m_model.m_statFreq)) this.m_model.updateStats();
             //if (this.m_model.getTime() >= this.m_endTime || this.m_model.getMap().getSchools().length === 0) {
             if (_this.m_model.getTime() >= _this.m_scenario.getDefaultNoDays()) {

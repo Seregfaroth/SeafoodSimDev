@@ -7,7 +7,10 @@ class Map {
     private m_ships: Ship[] = [];
     private m_yield: number =0; //in fish, will be tonnes
     public m_natDeath: number=0; 
-    public m_recruit: number = 0;
+    public m_recruitCod: number = 0;
+    public m_recruitMac: number = 0;
+    public m_recruitOther: number = 0;
+    
 
     public constructor(p_restrictions: Restrictions) {
         this.m_scenario = Scenario.getInstance();
@@ -34,9 +37,9 @@ class Map {
         });
     }
     private removeSchool(p_school: School): void {
-        this.m_recruit += p_school.getRecruitTotal();
-        this.m_natDeath += p_school.getNatDeathTotal();
-        this.m_schools.splice(this.m_schools.indexOf(p_school), 1);
+        //this.m_recruit += p_school.getRecruitTotal();
+        //this.m_natDeath += p_school.getNatDeathTotal();
+        //this.m_schools.splice(this.m_schools.indexOf(p_school), 1);
     }
     private splitCodSchool(p_school: Cod): void {
         var newSchoolAges: number[] = [];
@@ -49,7 +52,7 @@ class Map {
             //Remove from school
             p_school.getAges()[i] -= noOfFish;
         }
-        this.m_schools.push(new Cod(noOfFishInNewSchool, this.m_scenario.getSchoolMsy(), p_school.getOrigin(), newSchoolAges));
+        this.m_schools.push(new Cod(noOfFishInNewSchool, p_school.getOrigin(), newSchoolAges));
     }
     public generateExampleMap() {
         for (var i = 0; i < 10; i++) {
@@ -82,7 +85,7 @@ class Map {
                 map.removeSchool(s);
             }
             else if (s.getSize() > map.m_scenario.getSchoolMaximum()) {
-                map.splitCodSchool(s as Cod);
+                //map.splitCodSchool(s as Cod);
             }
         });
        
@@ -128,7 +131,9 @@ class Map {
             placedInSamePlace++;
             var tile: Tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(p_schoolSize, p_schoolMsy, point));
+                this.addSchool(new Cod(20000, point));
+                this.addSchool(new Mackerel(10000, point));
+
                 schoolsPlaced++;
             }
         }
@@ -419,7 +424,7 @@ class Map {
             totalBiomass += school.getSize();
         }
         if (totalBiomass !== 0) {
-            ret = this.getBiomassOf(p_name, m_position);
+            ret = this.getBiomassOf(p_name, m_position) / totalBiomass;
         }
         else
             ret = 0;

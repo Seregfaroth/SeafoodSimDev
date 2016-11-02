@@ -30,8 +30,12 @@ var Model = (function () {
     };
     Model.prototype.updateStats = function () {
         //console.log("upStats, time: " + this.m_time);
-        var biomass = 0;
-        var recruit = this.m_map.m_recruit;
+        var biomassCod = 0;
+        var biomassMac = 0;
+        var biomassOther = 0;
+        var recruitCod = this.m_map.m_recruitCod;
+        var recruitMac = this.m_map.m_recruitMac;
+        var recruitOther = this.m_map.m_recruitOther;
         var natDeath = this.m_map.m_natDeath;
         // updating time
         var statTime = this.getTime() / this.m_scenario.getStatFreq();
@@ -39,12 +43,26 @@ var Model = (function () {
         //updating biomass and recruitment
         for (var _i = 0, _a = this.getMap().getSchools(); _i < _a.length; _i++) {
             var sc = _a[_i];
-            biomass += sc.getBiomass();
-            recruit += sc.getRecruitTotal();
+            if (sc.getType() === "cod") {
+                biomassCod += sc.getBiomass();
+                recruitCod += sc.getRecruitTotal();
+            }
+            else if (sc.getType() === "mac") {
+                biomassMac += sc.getBiomass();
+                recruitMac += sc.getRecruitTotal();
+            }
+            else {
+                biomassOther += sc.getBiomass();
+                recruitOther += sc.getRecruitTotal();
+            }
             natDeath += sc.getNatDeathTotal();
         }
-        this.m_stats.setBiomassPrTimeUnitAt(statTime, biomass);
-        this.m_stats.setRecruitmentPrTimeUnitAt(statTime, recruit);
+        this.m_stats.setBiomassCodPrTimeUnitAt(statTime, biomassCod);
+        this.m_stats.setBiomassMacPrTimeUnitAt(statTime, biomassMac);
+        this.m_stats.setBiomassOtherPrTimeUnitAt(statTime, biomassOther);
+        this.m_stats.setRecruitmentCodPrTimeUnitAt(statTime, recruitCod);
+        this.m_stats.setRecruitmentMacPrTimeUnitAt(statTime, recruitMac);
+        this.m_stats.setRecruitmentOtherPrTimeUnitAt(statTime, recruitOther);
         this.m_stats.setNatDeathPrTimeUnitAt(statTime, natDeath);
         var t = this.m_map.getYield();
         this.m_stats.setYieldPrTimeUnitAt(statTime, this.m_map.getYield());

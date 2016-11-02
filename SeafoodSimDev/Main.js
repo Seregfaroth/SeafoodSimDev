@@ -10,8 +10,8 @@ var Main = (function () {
             _this.m_controller = new Controller();
         };
         console.log("loading Game");
-        var cc = new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [1000]);
-        //this.loadController();
+        //var cc = new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [1000]);
+        this.loadController();
         if (p_test)
             new Test();
     }

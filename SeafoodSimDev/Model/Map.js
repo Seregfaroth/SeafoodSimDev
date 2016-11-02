@@ -6,7 +6,9 @@ var Map = (function () {
         this.m_ships = [];
         this.m_yield = 0; //in fish, will be tonnes
         this.m_natDeath = 0;
-        this.m_recruit = 0;
+        this.m_recruitCod = 0;
+        this.m_recruitMac = 0;
+        this.m_recruitOther = 0;
         this.m_scenario = Scenario.getInstance();
         this.m_restrictions = p_restrictions;
         this.m_yield = 0;
@@ -31,9 +33,9 @@ var Map = (function () {
         });
     };
     Map.prototype.removeSchool = function (p_school) {
-        this.m_recruit += p_school.getRecruitTotal();
-        this.m_natDeath += p_school.getNatDeathTotal();
-        this.m_schools.splice(this.m_schools.indexOf(p_school), 1);
+        //this.m_recruit += p_school.getRecruitTotal();
+        //this.m_natDeath += p_school.getNatDeathTotal();
+        //this.m_schools.splice(this.m_schools.indexOf(p_school), 1);
     };
     Map.prototype.splitCodSchool = function (p_school) {
         var newSchoolAges = [];
@@ -46,7 +48,7 @@ var Map = (function () {
             //Remove from school
             p_school.getAges()[i] -= noOfFish;
         }
-        this.m_schools.push(new Cod(noOfFishInNewSchool, this.m_scenario.getSchoolMsy(), p_school.getOrigin(), newSchoolAges));
+        this.m_schools.push(new Cod(noOfFishInNewSchool, p_school.getOrigin(), newSchoolAges));
     };
     Map.prototype.generateExampleMap = function () {
         for (var i = 0; i < 10; i++) {
@@ -78,7 +80,6 @@ var Map = (function () {
                 map.removeSchool(s);
             }
             else if (s.getSize() > map.m_scenario.getSchoolMaximum()) {
-                map.splitCodSchool(s);
             }
         });
     };
@@ -120,7 +121,8 @@ var Map = (function () {
             placedInSamePlace++;
             var tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(p_schoolSize, p_schoolMsy, point));
+                this.addSchool(new Cod(20000, point));
+                this.addSchool(new Mackerel(10000, point));
                 schoolsPlaced++;
             }
         }
@@ -386,7 +388,7 @@ var Map = (function () {
             totalBiomass += school.getSize();
         }
         if (totalBiomass !== 0) {
-            ret = this.getBiomassOf(p_name, m_position);
+            ret = this.getBiomassOf(p_name, m_position) / totalBiomass;
         }
         else
             ret = 0;

@@ -10,6 +10,7 @@ class Cod extends School{
         this.m_origin = p_position;
         this.m_maxAge = this.m_scenario.getCodSchoolMaxAge();
         this.m_type = "cod";
+        this.m_growthRate = 0.35;
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }
@@ -93,11 +94,11 @@ class Cod extends School{
             //var sbb = p_map.getSsbOf(this.getType(), this.m_position);      
             var ssb = this.getSsb();
             var fraction = p_map.getBiosmassFractionOf(this.getType(), this.m_position);
-            recruitment += this.m_growthRate * ssb * ( cc * fraction - ssb );                       
+            recruitment += this.m_growthRate * ssb * ( 1 - ssb / (cc * fraction) );                       
         }
         this.m_ages[0] = recruitment;
-            this.m_size += recruitment;
-            this.m_recruitTotal += recruitment;
+        this.m_size += recruitment;
+        this.m_recruitTotal += recruitment;
         //if ((<Ocean>p_map.getTile(this.m_position)).getFishCapacity() > p_map.getNoOfFishInTile(this.m_position)) {
         //    //Only recruit if the tile is not full
         //    //var noOfNewFish: number = Math.floor(Math.random() * this.m_scenario.getRecrutingPercentage()*this.getSize());

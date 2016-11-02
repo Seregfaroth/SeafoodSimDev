@@ -11,12 +11,12 @@ class TestSchool {
     }
     public runTests = (): void => {
         var startPosition: Point2 = new Point2(0, 0);
-        var singleCod: Cod = new Cod(1, 1, startPosition);
-        var singleMackerel: Mackerel = new Mackerel(1, 1, startPosition);
+        var singleCod: Cod = new Cod(1, startPosition);
+        var singleMackerel: Mackerel = new Mackerel(1, startPosition);
         var gov: Government = new Government(new Restrictions());
         var map: Map = new Map(gov.getRestrictions());
         var thisPlaceholder: TestSchool = this;
-        map.getGrid()[0][0] = new Ocean(100, 1);
+        map.getGrid()[0][0] = new Ocean(new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [100000]), 1);
 
         QUnit.test("Cod: constructor", function (assert) {
             var testCod: Cod;
@@ -24,13 +24,13 @@ class TestSchool {
             assert.equal(testCod, undefined);
 
             //Create cod and check members
-            testCod = new Cod(1, 1, startPosition);
+            testCod = new Cod(1, startPosition);
             assert.ok(testCod);
             assert.deepEqual(testCod.getSize(), 1);
             assert.deepEqual(testCod.getPosition(), startPosition);
         });
         QUnit.test("Cod: age function", function (assert) {
-            var singleCod: Cod = new Cod(1, 1, startPosition);
+            var singleCod: Cod = new Cod(1, startPosition);
             var age: number;
             for (var i = 0; i < thisPlaceholder.scenario.getCodSchoolMaxAge(); i++) {
                 if (singleCod.getAges()[i] == 1) {
@@ -50,7 +50,7 @@ class TestSchool {
         });
 
         QUnit.test("Cod: natural death", function (assert) {
-            var singleCod: Cod = new Cod(1, 1, startPosition);
+            var singleCod: Cod = new Cod(1, startPosition);
             //Make cod grow old
             while(singleCod.getAges()[thisPlaceholder.scenario.getCodSchoolMaxAge()-1] == 0) {
                 singleCod.ageAndRecruit(map);
