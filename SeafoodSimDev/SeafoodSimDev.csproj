@@ -102,6 +102,7 @@
     <TypeScriptCompile Include="ThirdParty\TKN_Singleton.ts" />
     <TypeScriptCompile Include="View\declarations\google.visualization.d.ts" />
     <TypeScriptCompile Include="View\EndScreen.ts" />
+    <TypeScriptCompile Include="View\IntervalStats.ts" />
     <TypeScriptCompile Include="View\MainView.ts" />
     <TypeScriptCompile Include="View\MapMenu.ts" />
     <TypeScriptCompile Include="View\MapView.ts" />

@@ -1,5 +1,5 @@
 ﻿﻿/// <reference path = "../Model/EndScreenStats.ts"/>
-enum simState { starting, running, paused, ending, fast }
+enum simState { starting, running, paused, ending, fast, changeSettings }
 class Controller {
     private m_view: MainView;
     private m_model: Model;
@@ -27,7 +27,7 @@ class Controller {
             this.m_scenario.loadScenario('Controller/scenarios/scnMCA1.json', this.initMCA);
         }
         else {
-            this.m_simState = simState.paused;
+            this.m_simState = simState.changeSettings;
             this.m_delayPerTick = 500;
             this.m_fastDelayPerTick = 1;
             //this.m_statFreq = 30;
@@ -115,9 +115,30 @@ class Controller {
     simulationTick = () => {
         //console.log("Controller running simulationtick");
 
-        //if (!(this.m_model.getTime() % this.m_model.m_statFreq)) this.m_model.updateStats();
-        //if (this.m_model.getTime() >= this.m_endTime || this.m_model.getMap().getSchools().length === 0) {
-        if (this.m_model.getTime() >= this.m_scenario.getDefaultNoDays()) {
+        if (!((this.m_model.getTime() + 1) % this.m_scenario.getStatFreq())) {
+            //The reason for running model once more is that otherwise time would not change
+            //and we would get in here in next iteration as well
+            this.m_model.run(this.m_ticksPerMove);
+            this.m_simState = simState.changeSettings;
+            clearInterval(this.m_timer);
+            this.m_eventHandler.bindFunctions(false);
+            $("#startSim").text("Continue Simulation");
+            $("#startSim").css("display", "initial");
+            $(".fa").css("display", "none");
+
+            this.getMainView().getIntervalStats().update(this.m_model.getTime());
+            $("#intervalStatsDesc").dialog({
+                buttons: {
+                    Ok: function () {
+                        $(this).dialog("close"); //closing on Ok click
+                    }
+                },
+                modal: true,
+                width: 400,
+                height: 400
+            });
+        }
+        else if (this.m_model.getTime() >= this.m_scenario.getDefaultNoDays()) {
             this.m_simState = simState.ending;
             this.m_model.updateStats();
             console.log("Simulation ended" + this.m_model.getStats());
@@ -140,7 +161,7 @@ class Controller {
         this.restart();
     }
     runSimulation = (p_ticks?: number) => {
-        if (this.m_simState == simState.paused || this.m_simState == simState.fast) {
+        if (this.m_simState == simState.paused || this.m_simState == simState.fast || this.m_simState == simState.changeSettings) {
             clearInterval(this.m_timer);
             this.m_timer = setInterval(this.simulationTick, this.m_delayPerTick);
             this.m_simState = simState.running;

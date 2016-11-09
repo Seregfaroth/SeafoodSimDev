@@ -6,6 +6,7 @@ var simState;
     simState[simState["paused"] = 2] = "paused";
     simState[simState["ending"] = 3] = "ending";
     simState[simState["fast"] = 4] = "fast";
+    simState[simState["changeSettings"] = 5] = "changeSettings";
 })(simState || (simState = {}));
 var Controller = (function () {
     //private m_sce: Scenario;
@@ -38,9 +39,29 @@ var Controller = (function () {
         };
         this.simulationTick = function () {
             //console.log("Controller running simulationtick");
-            //if (!(this.m_model.getTime() % this.m_model.m_statFreq)) this.m_model.updateStats();
-            //if (this.m_model.getTime() >= this.m_endTime || this.m_model.getMap().getSchools().length === 0) {
-            if (_this.m_model.getTime() >= _this.m_scenario.getDefaultNoDays()) {
+            if (!((_this.m_model.getTime() + 1) % _this.m_scenario.getStatFreq())) {
+                //The reason for running model once more is that otherwise time would not change
+                //and we would get in here in next iteration as well
+                _this.m_model.run(_this.m_ticksPerMove);
+                _this.m_simState = simState.changeSettings;
+                clearInterval(_this.m_timer);
+                _this.m_eventHandler.bindFunctions(false);
+                $("#startSim").text("Continue Simulation");
+                $("#startSim").css("display", "initial");
+                $(".fa").css("display", "none");
+                _this.getMainView().getIntervalStats().update(_this.m_model.getTime());
+                $("#intervalStatsDesc").dialog({
+                    buttons: {
+                        Ok: function () {
+                            $(this).dialog("close"); //closing on Ok click
+                        }
+                    },
+                    modal: true,
+                    width: 400,
+                    height: 400
+                });
+            }
+            else if (_this.m_model.getTime() >= _this.m_scenario.getDefaultNoDays()) {
                 _this.m_simState = simState.ending;
                 _this.m_model.updateStats();
                 console.log("Simulation ended" + _this.m_model.getStats());
@@ -62,7 +83,7 @@ var Controller = (function () {
             _this.restart();
         };
         this.runSimulation = function (p_ticks) {
-            if (_this.m_simState == simState.paused || _this.m_simState == simState.fast) {
+            if (_this.m_simState == simState.paused || _this.m_simState == simState.fast || _this.m_simState == simState.changeSettings) {
                 clearInterval(_this.m_timer);
                 _this.m_timer = setInterval(_this.simulationTick, _this.m_delayPerTick);
                 _this.m_simState = simState.running;
@@ -82,7 +103,7 @@ var Controller = (function () {
             this.m_scenario.loadScenario('Controller/scenarios/scnMCA1.json', this.initMCA);
         }
         else {
-            this.m_simState = simState.paused;
+            this.m_simState = simState.changeSettings;
             this.m_delayPerTick = 500;
             this.m_fastDelayPerTick = 1;
             //this.m_statFreq = 30;

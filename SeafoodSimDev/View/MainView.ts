@@ -7,12 +7,14 @@ class MainView {
     private m_noGraphicSimulation = false;
     private m_noDateUpdate = false;
     private m_noScoreUpdate = false;
+    private m_intervalStats: IntervalStats;
 
     constructor(p_map: Map, p_ShipOwners: ShipOwner[], p_taxingRate: number, p_scenario: Scenario) {
         $("#mainDiv canvas").remove();
         $("#menuDiv").remove();//Might not be necessary to remove mapMenu, but it needs to be updated
         this.m_mapView = new MapView(p_map);
         this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate, p_scenario);
+        this.m_intervalStats = new IntervalStats();
         var t = p_scenario.getNoGraphicsMapUpdate();
         if (p_scenario.getNoGraphicsMapUpdate() != null)
             this.m_noGraphicSimulation = p_scenario.getNoGraphicsMapUpdate();
@@ -30,6 +32,9 @@ class MainView {
     }
     public getMapMenu(): MapMenu {
         return this.m_mapMenu;
+    }
+    public getIntervalStats(): IntervalStats {
+        return this.m_intervalStats;
     }
     updateMainView(p_model: Model) {
         //console.log("updating mainView");

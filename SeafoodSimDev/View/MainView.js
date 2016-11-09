@@ -9,6 +9,7 @@ var MainView = (function () {
         $("#menuDiv").remove(); //Might not be necessary to remove mapMenu, but it needs to be updated
         this.m_mapView = new MapView(p_map);
         this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate, p_scenario);
+        this.m_intervalStats = new IntervalStats();
         var t = p_scenario.getNoGraphicsMapUpdate();
         if (p_scenario.getNoGraphicsMapUpdate() != null)
             this.m_noGraphicSimulation = p_scenario.getNoGraphicsMapUpdate();
@@ -24,6 +25,9 @@ var MainView = (function () {
     };
     MainView.prototype.getMapMenu = function () {
         return this.m_mapMenu;
+    };
+    MainView.prototype.getIntervalStats = function () {
+        return this.m_intervalStats;
     };
     MainView.prototype.updateMainView = function (p_model) {
         //console.log("updating mainView");
