@@ -42,17 +42,11 @@ class AI {
         var n = 0;
         p_shipOwner.getShips().forEach(function (ship) {
             //console.log("ship " + n);
-            //console.log("state: " + ship.getState().toString());
-            //console.log("cargo: " + ship.getCargoSize());
-            //console.log("fuel: " + ship.getFuel());
-            //console.log("position: " + ship.getPosition().row + ", " + ship.getPosition().col);
+            console.log("state: " + ship.getState().toString() + " cargo: " + ship.getCargoSize() + " fuel: " + ship.getFuel()+ " position: " + ship.getPosition().row + ", " + ship.getPosition().col);
             //ship.useFuel(0.25);
             if (!this.m_noHistory)
                 ship.history[2].push(ship.getState());
             n++;
-            if (ship.getFuel() === 0) {
-                ship.useFuel(-1.5);
-            }
             if (ship.getState() === shipState.fishing) {
                 ship.history[3].push("fishing");
                 //If ship is currently fishing, fish until cargo is at least 98% full
@@ -61,10 +55,14 @@ class AI {
                     ship.resetFishedFor();
                     ai.findNewPath(ship, p_map);
                 }
-                else if (ship.getFishedFor() > ai.m_scenario.getMaxNoDaysFishing()) {
+               /* else if (ship.getFishedFor() > ai.m_scenario.getMaxNoDaysFishing()) {
                     //If ship has been too long in one position
                     ai.findNewPath(ship, p_map);
                     ship.resetFishedFor();
+                }*/
+                //OBS here we calculate path to nearest fuel site twice. This can be optimized by saving fuelPath
+                else if (!ai.canReach(ship, p_map, [ship.getPosition()])) {
+                    ai.goRefuel(ship, p_map);
                 }
                 else {
                     ship.fish(p_map);

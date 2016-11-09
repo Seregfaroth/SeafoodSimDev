@@ -115,10 +115,25 @@ class Controller {
     simulationTick = () => {
         //console.log("Controller running simulationtick");
 
-        if (!((this.m_model.getTime() + 1) % this.m_scenario.getStatFreq())) {
+        
+        if (this.m_model.getTime() >= this.m_scenario.getDefaultNoDays()) {
+            this.m_simState = simState.ending;
+            this.m_model.updateStats();
+            console.log("Simulation ended" + this.m_model.getStats());
+            clearInterval(this.m_timer);
+            this.m_eventHandler.unBindFunctions(true);
+            new EndScreen(this.m_model.getStats(), this.m_model);
+            $("#endDialogDiv").dialog({
+                close: this.closeEndScreen
+            });
+            
+        }
+        //The second condition makes sure the break screen is not shown at the end of the simulaiton
+        else if (!((this.m_model.getTime() + 1) % this.m_scenario.getStatFreq()) && this.m_model.getTime() < this.m_scenario.getDefaultNoDays()-1) {
             //The reason for running model once more is that otherwise time would not change
             //and we would get in here in next iteration as well
             this.m_model.run(this.m_ticksPerMove);
+
             this.m_simState = simState.changeSettings;
             clearInterval(this.m_timer);
             this.m_eventHandler.bindFunctions(false);
@@ -137,18 +152,6 @@ class Controller {
                 width: 400,
                 height: 400
             });
-        }
-        else if (this.m_model.getTime() >= this.m_scenario.getDefaultNoDays()) {
-            this.m_simState = simState.ending;
-            this.m_model.updateStats();
-            console.log("Simulation ended" + this.m_model.getStats());
-            clearInterval(this.m_timer);
-            this.m_eventHandler.unBindFunctions(true);
-            new EndScreen(this.m_model.getStats(), this.m_model);
-            $("#endDialogDiv").dialog({
-                close: this.closeEndScreen
-            });
-            
         }
         else {
             this.m_model.run(this.m_ticksPerMove);

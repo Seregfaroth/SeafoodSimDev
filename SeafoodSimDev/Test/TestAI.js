@@ -87,6 +87,40 @@ var TestAI = (function () {
                 var path = ai.pathFinding(map, new Point2(2, 0), new Point2(4, 0));
                 assert.deepEqual(path, expectedPath, "should find a path around the land");
             });
+            QUnit.test("AI: go fish", function (assert) {
+                map.emptyGrid();
+                map.getGrid()[0][4] = new LandingSite(1, 10, 1, {}, "0", new Point2(0, 4));
+                map.getGrid()[5][3] = new FuelSite(1, 10, 10, 10, "0", new Point2(5, 3));
+                var schoolPos = new Point2(0, 0);
+                map.addSchool(new Cod(10, schoolPos));
+                var shipOwner = new ShipOwner(gov, new Point2(3, 3), "shipOwner1");
+                var ship = shipOwner.buyShip();
+                assert.deepEqual(ship.getState(), shipState.waiting, "Ship should be in a waiting state");
+                ai.run(shipOwner, map);
+                assert.deepEqual(ship.getState(), shipState.goingToFish, "Ship should be going to fish");
+                assert.deepEqual(ship.getPath()[ship.getPath().length - 1], schoolPos, "Ship should heading to school.");
+            });
+            QUnit.test("AI: fuel running low while fishing", function (assert) {
+                map.emptyGrid();
+                map.getGrid()[0][4] = new LandingSite(1, 10, 1, {}, "0", new Point2(0, 4));
+                map.getGrid()[5][3] = new FuelSite(1, 10, 10, 10, "0", new Point2(5, 3));
+                var schoolPos = new Point2(0, 0);
+                map.addSchool(new Cod(1, schoolPos));
+                var shipOwner = new ShipOwner(gov, new Point2(3, 3), "shipOwner1");
+                var ship = shipOwner.buyShip();
+                ai.run(shipOwner, map);
+                while (!ship.hasReachedGoal()) {
+                    ai.run(shipOwner, map);
+                }
+                ai.run(shipOwner, map);
+                assert.deepEqual(ship.getState(), shipState.fishing, "Ship should be fishing");
+                var fuelPathLength = ai.pathToNearestFuelSite(schoolPos, map).length;
+                while (ship.getFuel() > fuelPathLength * testAi.scenario.getShipFuelPerMove()) {
+                    ship.useFuel(1);
+                }
+                ai.run(shipOwner, map);
+                assert.deepEqual(ship.getState(), shipState.goingToRefuel, "Ship should go to refuel");
+            });
         };
         this.scenario = Scenario.getInstance();
         this.scenario.loadScenario('Controller/scenarios/scnTest.json', this.runTests);

@@ -39,7 +39,18 @@ var Controller = (function () {
         };
         this.simulationTick = function () {
             //console.log("Controller running simulationtick");
-            if (!((_this.m_model.getTime() + 1) % _this.m_scenario.getStatFreq())) {
+            if (_this.m_model.getTime() >= _this.m_scenario.getDefaultNoDays()) {
+                _this.m_simState = simState.ending;
+                _this.m_model.updateStats();
+                console.log("Simulation ended" + _this.m_model.getStats());
+                clearInterval(_this.m_timer);
+                _this.m_eventHandler.unBindFunctions(true);
+                new EndScreen(_this.m_model.getStats(), _this.m_model);
+                $("#endDialogDiv").dialog({
+                    close: _this.closeEndScreen
+                });
+            }
+            else if (!((_this.m_model.getTime() + 1) % _this.m_scenario.getStatFreq()) && _this.m_model.getTime() < _this.m_scenario.getDefaultNoDays() - 1) {
                 //The reason for running model once more is that otherwise time would not change
                 //and we would get in here in next iteration as well
                 _this.m_model.run(_this.m_ticksPerMove);
@@ -59,17 +70,6 @@ var Controller = (function () {
                     modal: true,
                     width: 400,
                     height: 400
-                });
-            }
-            else if (_this.m_model.getTime() >= _this.m_scenario.getDefaultNoDays()) {
-                _this.m_simState = simState.ending;
-                _this.m_model.updateStats();
-                console.log("Simulation ended" + _this.m_model.getStats());
-                clearInterval(_this.m_timer);
-                _this.m_eventHandler.unBindFunctions(true);
-                new EndScreen(_this.m_model.getStats(), _this.m_model);
-                $("#endDialogDiv").dialog({
-                    close: _this.closeEndScreen
                 });
             }
             else {

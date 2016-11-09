@@ -24,14 +24,15 @@
             welcomeText = "This is your " + words[round-1] + " break. ";
         }
         else {
-            welcomeText = "This is your interval break number " + round + " . ";
+            welcomeText = "This is your break number " + round + " . ";
         }
         welcomeText += "You are given some statistics over the simulation so far and you have the option to change some of the settings before continuing.";
+        welcomeText += "You have " + timeLeft + " days and " + breaksLeft;
         if (breaksLeft != 1) {
-            welcomeText += "You have " + timeLeft + " days and " + breaksLeft + " breaks left.";
+                welcomeText += " breaks left."
         }
         else {
-            welcomeText += "You have " + timeLeft + " days and " + breaksLeft + " break left.";
+            welcomeText += " break left.";
         }
 
         $("#intervalStatsDesc").text(welcomeText);

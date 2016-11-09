@@ -14,21 +14,21 @@
         var poorShipOwner: ShipOwner = new ShipOwner(gov, new Point2(0, 0), "1", - 10000000000000000000);
         QUnit.test("AI: pathToNearestLandingSite", function (assert) {
             map.emptyGrid();
-            map.getGrid()[2][2] = new LandingSite(1, 10, 1, {},"0", new Point2(2,2));
+            map.getGrid()[2][2] = new LandingSite(1, 10, 1, {}, "0", new Point2(2, 2));
             var path: Point2[] = ai.pathToNearestLandingSite(new Point2(2, 2), map);
             assert.deepEqual(path[path.length - 1], new Point2(2, 2), "Should find nearest landing site at 2,2");
-            path = ai.pathToNearestLandingSite(new Point2(0,0), map);
+            path = ai.pathToNearestLandingSite(new Point2(0, 0), map);
             assert.deepEqual(path[path.length - 1], new Point2(2, 2), "Should find nearest landing site at 2,2");
             path = ai.pathToNearestLandingSite(new Point2(4, 4), map);
             assert.deepEqual(path[path.length - 1], new Point2(2, 2), "Should find nearest landing site at 2,2");
-            path = ai.pathToNearestLandingSite(new Point2(1,3), map);
-            assert.deepEqual(path[path.length - 1],new Point2(2, 2), "Should find nearest landing site at 2,2");
+            path = ai.pathToNearestLandingSite(new Point2(1, 3), map);
+            assert.deepEqual(path[path.length - 1], new Point2(2, 2), "Should find nearest landing site at 2,2");
         });
 
         QUnit.test("AI: pathToNearestLandingSite with multiple sites", function (assert) {
             map.emptyGrid();
-            map.getGrid()[0][4] = new LandingSite(1, 10, 1, {}, "0", new Point2(0,4));
-            map.getGrid()[3][0] = new LandingSite(1, 10, 1, {}, "1", new Point2(3,0));
+            map.getGrid()[0][4] = new LandingSite(1, 10, 1, {}, "0", new Point2(0, 4));
+            map.getGrid()[3][0] = new LandingSite(1, 10, 1, {}, "1", new Point2(3, 0));
             var path: Point2[] = ai.pathToNearestLandingSite(new Point2(0, 0), map);
             assert.deepEqual(path[path.length - 1], new Point2(3, 0), "Nearest from 0,0 should be 3,0");
             path = ai.pathToNearestLandingSite(new Point2(4, 0), map);
@@ -44,10 +44,10 @@
         QUnit.test("AI: find nearest fuel site with multiple sites", function (assert) {
             var map: Map = new Map(gov.getRestrictions());
             map.emptyGrid();
-            map.getGrid()[5][3] = new FuelSite(1, 10, 10, 10, "0", new Point2(5,3));
-            map.getGrid()[5][8] = new FuelSite(1, 10, 101, 10, "1", new Point2(5,8));
+            map.getGrid()[5][3] = new FuelSite(1, 10, 10, 10, "0", new Point2(5, 3));
+            map.getGrid()[5][8] = new FuelSite(1, 10, 101, 10, "1", new Point2(5, 8));
             var path: Point2[] = ai.pathToNearestFuelSite(new Point2(0, 8), map);
-            assert.deepEqual(path[path.length-1], new Point2(5, 8), "nearest fuel site from 0,8 should be 5,8");
+            assert.deepEqual(path[path.length - 1], new Point2(5, 8), "nearest fuel site from 0,8 should be 5,8");
 
         });
 
@@ -81,8 +81,8 @@
         */
         QUnit.test("AI: pathfinding straight line", function (assert) {
             map.emptyGrid();
-            var expectedPath: Point2[] = [new Point2(0, 0), new Point2(0, 1), new Point2(0,2)];
-            var path: Point2[] = ai.pathFinding(map,new Point2(0, 0), new Point2(0, 2));
+            var expectedPath: Point2[] = [new Point2(0, 0), new Point2(0, 1), new Point2(0, 2)];
+            var path: Point2[] = ai.pathFinding(map, new Point2(0, 0), new Point2(0, 2));
             assert.deepEqual(path, expectedPath, "should find a straight line path");
         });
 
@@ -96,6 +96,43 @@
             var path: Point2[] = ai.pathFinding(map, new Point2(2, 0), new Point2(4, 0));
             assert.deepEqual(path, expectedPath, "should find a path around the land");
         });
+
+        QUnit.test("AI: go fish", function (assert) {
+            map.emptyGrid();
+            map.getGrid()[0][4] = new LandingSite(1, 10, 1, {}, "0", new Point2(0, 4));
+            map.getGrid()[5][3] = new FuelSite(1, 10, 10, 10, "0", new Point2(5, 3));
+            var schoolPos: Point2 = new Point2(0, 0);
+            map.addSchool(new Cod(10, schoolPos));
+            var shipOwner: ShipOwner = new ShipOwner(gov, new Point2(3, 3), "shipOwner1");
+            var ship: Ship = shipOwner.buyShip();
+            assert.deepEqual(ship.getState(), shipState.waiting, "Ship should be in a waiting state");
+            ai.run(shipOwner, map);
+            assert.deepEqual(ship.getState(), shipState.goingToFish, "Ship should be going to fish");
+            assert.deepEqual(ship.getPath()[ship.getPath().length-1], schoolPos, "Ship should heading to school.");
+        });
+
+        QUnit.test("AI: fuel running low while fishing", function (assert) {
+            map.emptyGrid();
+            map.getGrid()[0][4] = new LandingSite(1, 10, 1, {}, "0", new Point2(0, 4));
+            map.getGrid()[5][3] = new FuelSite(1, 10, 10, 10, "0", new Point2(5, 3));
+            var schoolPos: Point2 = new Point2(0, 0);
+            map.addSchool(new Cod(1, schoolPos));
+            var shipOwner: ShipOwner = new ShipOwner(gov, new Point2(3, 3), "shipOwner1");
+            var ship: Ship = shipOwner.buyShip();
+            ai.run(shipOwner, map);
+            while (!ship.hasReachedGoal()) {
+                ai.run(shipOwner, map);
+            }
+            ai.run(shipOwner, map);
+            assert.deepEqual(ship.getState(), shipState.fishing, "Ship should be fishing");
+            var fuelPathLength = ai.pathToNearestFuelSite(schoolPos, map).length;
+            while (ship.getFuel() > fuelPathLength * testAi.scenario.getShipFuelPerMove()) {
+                ship.useFuel(1);
+            }
+            ai.run(shipOwner, map);
+            assert.deepEqual(ship.getState(), shipState.goingToRefuel, "Ship should go to refuel");
+        });
     }
+             
 
 }
