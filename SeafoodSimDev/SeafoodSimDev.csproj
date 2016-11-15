@@ -31,6 +31,7 @@
     <Content Include="css\Aristo\images\ui-icons_454545_256x240.png" />
     <Content Include="css\body.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="HTMLPage1.html" />
     <Content Include="js\pathfinding-browser.js" />
     <Content Include="js\three.js" />
     <Content Include="main.html" />

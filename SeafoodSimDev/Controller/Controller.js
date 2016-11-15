@@ -57,11 +57,13 @@ var Controller = (function () {
                 _this.m_simState = simState.changeSettings;
                 clearInterval(_this.m_timer);
                 _this.m_eventHandler.bindFunctions(false);
+                _this.m_intervalStats = new IntervalStats(_this.m_model.getStats(), _this.m_model);
                 $("#startSim").text("Continue Simulation");
                 $("#startSim").css("display", "initial");
                 $(".fa").css("display", "none");
-                _this.getMainView().getIntervalStats().update(_this.m_model.getTime());
-                $("#intervalStatsDesc").dialog({
+                //this.getMainView().getIntervalStats().update(this.m_model.getTime());
+                _this.m_intervalStats.update(_this.m_model.getTime());
+                $("#intervalStats").dialog({
                     buttons: {
                         Ok: function () {
                             $(this).dialog("close"); //closing on Ok click

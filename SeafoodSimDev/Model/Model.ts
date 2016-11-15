@@ -138,14 +138,15 @@ class Model {
                     }
                 }
                 var index = Math.floor(this.m_scenario.getDefaultNoDays() / this.m_scenario.getStatFreq()-1);
-                var bio = this.m_stats.getBiomassPrTimeUnit();
-                var biomass = this.m_stats.getBiomassPrTimeUnitAt(index);
-                var recruitment = this.m_stats.getRecruitmentPrTimeUnitAt(index);
+                var bioCod = this.m_stats.getBiomassCodPrTimeUnit();
+                var biomassCod = this.m_stats.getBiomassCodPrTimeUnitAt(index);
+                var recruitmentCod = this.m_stats.getRecruitmentCodPrTimeUnitAt(index);
+
                 var income = this.m_stats.getIncomePrTimeUnitAt(index);
                 var invest = this.m_stats.getInvestprTimeUnitAt(index);
                 var onShore = this.m_stats.getEmploymentLandBasedPrTimeUnitAt(index);
                 var offShore = this.m_stats.getEmploymentSeaBasedPrTimeUnitAt(index);
-                result[taxIndex][maxIndex] = [biomass, recruitment, income, invest, onShore, offShore];
+                result[taxIndex][maxIndex] = [biomassCod, recruitmentCod, income, invest, onShore, offShore];
                 //console.log("Tax: " + tax[taxIndex]);
                 //console.log("Maxships: " + maxShips[maxIndex]);
                 //console.log("income: " + JSON.stringify(this.m_stats.getIncomePrTimeUnit()));

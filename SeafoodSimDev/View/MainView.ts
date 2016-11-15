@@ -14,7 +14,7 @@ class MainView {
         $("#menuDiv").remove();//Might not be necessary to remove mapMenu, but it needs to be updated
         this.m_mapView = new MapView(p_map);
         this.m_mapMenu = new MapMenu(p_ShipOwners, p_map.getLandingSites(), p_taxingRate, p_scenario);
-        this.m_intervalStats = new IntervalStats();
+        //this.m_intervalStats = new IntervalStats();
         var t = p_scenario.getNoGraphicsMapUpdate();
         if (p_scenario.getNoGraphicsMapUpdate() != null)
             this.m_noGraphicSimulation = p_scenario.getNoGraphicsMapUpdate();

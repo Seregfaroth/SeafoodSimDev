@@ -75,7 +75,7 @@
   "codSchoolMaxAge": 1100,
   "recruitAndAgeFreq": 1,
 
-  "statFreq": 45,
+  "statFreq": 30,
   "noOfMenPerShip": 8,
 
   "modelStatFreq": 1,

@@ -12,6 +12,7 @@ class Controller {
     private m_delayPerTick: number;
     private m_fastDelayPerTick: number;
     private m_stats: EndScreenStats;
+    private m_intervalStats: IntervalStats;
     private m_statFreq: number;
     //private m_scenario: number;
     private m_scenario: Scenario;
@@ -137,12 +138,14 @@ class Controller {
             this.m_simState = simState.changeSettings;
             clearInterval(this.m_timer);
             this.m_eventHandler.bindFunctions(false);
+            this.m_intervalStats = new IntervalStats(this.m_model.getStats(), this.m_model);
             $("#startSim").text("Continue Simulation");
             $("#startSim").css("display", "initial");
             $(".fa").css("display", "none");
 
-            this.getMainView().getIntervalStats().update(this.m_model.getTime());
-            $("#intervalStatsDesc").dialog({
+            //this.getMainView().getIntervalStats().update(this.m_model.getTime());
+            this.m_intervalStats.update(this.m_model.getTime());
+            $("#intervalStats").dialog({
                 buttons: {
                     Ok: function () {
                         $(this).dialog("close"); //closing on Ok click
