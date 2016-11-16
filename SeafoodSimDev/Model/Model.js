@@ -91,39 +91,41 @@ var Model = (function () {
     Model.prototype.getStats = function () {
         return this.m_stats;
     };
-    Model.prototype.runMCA = function (p_noOfMoves) {
+    /*public runMCA(p_noOfMoves: number) {
         //var tax: number[] = [20,20,20,20];
-        var tax = [10, 15, 20, 25];
+        var tax: number[] = [10, 15, 20, 25];
         //var tax: number[] = [10, 15, 20, 30, 40, 50, 60, 70];
         //var maxShips: number[] = [22,22,22,22];
         //var maxShips: number[] = [6, 10, 14];
         //var maxShips: number[] = [6, 10, 14, 18, 22];
         //var maxShips: number[] = [10, 20, 30, 40, 50];
-        var maxShips = [8, 10, 12, 14, 16, 18, 20, 22, 24];
+        var maxShips: number[] = [8, 10, 12, 14, 16, 18, 20, 22, 24];
         //var maxShips: number[] = [16];
-        var result = [];
+        var result: number[][][] = [];
         for (var taxIndex = 0; taxIndex < tax.length; taxIndex++) {
             result[taxIndex] = [];
             for (var maxIndex = 0; maxIndex < maxShips.length; maxIndex++) {
                 result[taxIndex][maxIndex] = [];
                 this.getGovernment().getRestrictions().setNoShips(maxShips[maxIndex]);
-                this.getGovernment().setTaxingRate(tax[taxIndex] / 100);
+                this.getGovernment().setTaxingRate(tax[taxIndex]/100);
                 for (var m = 0; m < p_noOfMoves; m++) {
                     if (!(this.m_time % this.m_scenario.getStatFreq()))
                         this.updateStats();
                     this.m_time++;
                     this.m_map.run();
                     if (!(this.m_time % this.m_scenario.getRecruitAndAgeFreq())) {
+
                         this.m_map.ageAndRecruit();
                     }
                     for (var i = 0; i < this.m_shipOwners.length; i++) {
                         this.m_ai.run(this.m_shipOwners[i], this.m_map);
                     }
                 }
-                var index = Math.floor(this.m_scenario.getDefaultNoDays() / this.m_scenario.getStatFreq() - 1);
+                var index = Math.floor(this.m_scenario.getDefaultNoDays() / this.m_scenario.getStatFreq()-1);
                 var bioCod = this.m_stats.getBiomassCodPrTimeUnit();
                 var biomassCod = this.m_stats.getBiomassCodPrTimeUnitAt(index);
                 var recruitmentCod = this.m_stats.getRecruitmentCodPrTimeUnitAt(index);
+
                 var income = this.m_stats.getIncomePrTimeUnitAt(index);
                 var invest = this.m_stats.getInvestprTimeUnitAt(index);
                 var onShore = this.m_stats.getEmploymentLandBasedPrTimeUnitAt(index);
@@ -137,9 +139,12 @@ var Model = (function () {
                 this.m_shipOwners = [];
                 var j = 0;
                 for (var i = 0; i < this.m_scenario.getNoOfShipOwners(); i++) {
-                    var startShipPoint = [new Point2(6, 11), new Point2(7, 12)];
+                    var startShipPoint: Point2[] = [new Point2(6, 11), new Point2(7, 12)];
+
                     do {
-                    } while (!(this.m_map.getTile(startShipPoint[j]) instanceof Ocean)); //If this is not an ocean tile, find a new tile
+                        //startShipPoint = new Point2(Math.round(Math.random() * (this.m_map.getMapHeight() - 1)), Math.round(Math.random() * (this.m_map.getMapWidth() - 1)));
+                        //startShipPoint[i] = new Point2(6, 11);
+                    } while (!(this.m_map.getTile(startShipPoint[j]) instanceof Ocean))//If this is not an ocean tile, find a new tile
                     this.createShipOwner(startShipPoint[j++]);
                 }
                 this.m_time = 0;
@@ -150,7 +155,7 @@ var Model = (function () {
         $("#mainDiv").html(this.createJSONForMCA_HTML(result, tax, maxShips));
         console.log("Result: " + result);
         //debugger;
-    };
+    }*/
     Model.prototype.run = function (p_noOfMoves) {
         if (p_noOfMoves == undefined)
             p_noOfMoves = 1;
@@ -572,6 +577,10 @@ var Model = (function () {
             sum += p_arr[i];
         }
         return Math.round(sum / l);
+    };
+    Model.prototype.startNewInterval = function () {
+        this.updateNoShips();
+        this.m_ai.startNewInterval();
     };
     //Updates number of ships in map to correspond to restrictions
     Model.prototype.updateNoShips = function () {

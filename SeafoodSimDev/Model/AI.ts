@@ -4,16 +4,21 @@ class AI {
     private m_pathFinder: TKN_PathFinding = new TKN_PathFinding();
      private m_balanceToBuyShip: number;
      private m_balanceToSellShip: number;
-     private m_fishingPath: Point2[] = [new Point2(2, 0),new Point2(1, 0), new Point2(1, 1), new Point2(1, 2), new Point2(1, 3), new Point2(1, 4), new Point2(2, 4),
-         new Point2(3, 4), new Point2(3, 3), new Point2(3, 2), new Point2(3, 1), new Point2(3, 0), new Point2(2, 0)];
      private m_noHistory: boolean;
+     private m_catchedSoFar: number[];
      constructor() {
          this.m_scenario = Scenario.getInstance();
          this.m_noHistory = this.m_scenario.getNoHistory();
          this.m_balanceToBuyShip = this.m_scenario.getAiBuyShipBalance();
          this.m_balanceToSellShip = this.m_scenario.getAiSellShipBalance();
+         this.m_catchedSoFar = [0, 0];
      }
-
+     public startNewInterval(): void {
+         this.m_catchedSoFar = [0,0];
+     }
+     public getCatchedSoFar(): number[] {
+         return this.m_catchedSoFar;
+     }
     public run(p_shipOwner: ShipOwner, p_map: Map): void {
         //console.log("AI money: "+ p_shipOwner.getBalance());
        // this.buyOrSellShip(p_shipOwner, p_map);
@@ -66,8 +71,11 @@ class AI {
                     (<Ocean>p_map.getTile(ship.getPosition())).releaseTile();
                     ai.goRefuel(ship, p_map);
                 }
-                else {
-                    ship.fish(p_map);
+                else if (ai.m_catchedSoFar[ship.getType()] < p_map.getRestrictions().getTAC()[ship.getType()]) {
+                    //If all tac is not fished yet
+                    ai.m_catchedSoFar[ship.getType()] += ship.fish(p_map);
+                    ship.setState(shipState.waiting); //Set state to waiting
+                    ship.emptyPath();
                 }
             }
 
@@ -112,7 +120,6 @@ class AI {
             var t = p_map.getNoOfShipsInTile(p_ship.getPosition());
             var t2 = (<Ocean>p_map.getTile(p_ship.getPosition())).getShipCapacity();
             if (p_map.getNoOfShipsInTile(p_ship.getPosition()) <= (<Ocean>tile).getShipCapacity()) {
-                p_ship.fish(p_map);
                 p_ship.setState(shipState.fishing);
             }
             else {
@@ -256,7 +263,7 @@ class AI {
                     this.goRefuel(p_ship, p_map, fuelPath);
                 }
             }
-            else {
+            else if (this.m_catchedSoFar[p_ship.getType()] < p_map.getRestrictions().getTAC()[p_ship.getType()]) {
                 //If ship does not need to land or refuel
                 //var fishingPath: Point2[] = this.pathToBestFishingArea(p_ship.getPosition(), p_map);
                 var fishingPath: Point2[] = this.pathToFish(p_ship.getPosition(), p_map);

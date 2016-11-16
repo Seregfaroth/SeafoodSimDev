@@ -17,7 +17,8 @@
         }
     }
 
-    public fish(p_position: Point2, p_map: Map): void {
+    public fish(p_position: Point2, p_map: Map): number {
+        var totalFish: number = 0;
         if (this.m_fishType === FishType.cod) {
             var noOfFishInTile: number = p_map.getNoOfCodInTile(p_position);
         }
@@ -43,11 +44,12 @@
                     school.getAges()[i] -= noOfFish;
                     //var t1 = p_map.getYield();
                     p_map.setYield(p_map.getYield() + noOfFish);
+                    totalFish += noOfFish;
                     //var t2 = p_map.getYield();
                 }
             }
         });
-
+        return totalFish;
 
     }
     public getCargoSize(): number {

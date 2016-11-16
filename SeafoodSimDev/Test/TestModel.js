@@ -7,10 +7,10 @@ var TestModel = (function () {
             QUnit.test("Model: update number of ships", function (assert) {
                 assert.deepEqual(map.getShips().length, 0, "there should not be any ships");
                 restrictions.setNoCodShips(3);
-                model.updateNoShips();
+                model.startNewInterval();
                 assert.deepEqual(map.getShips().length, 3, "there should be 3 ships");
                 restrictions.setNoCodShips(0);
-                model.updateNoShips();
+                model.startNewInterval();
                 assert.deepEqual(map.getShips().length, 0, "there should not be any ships");
             });
         };

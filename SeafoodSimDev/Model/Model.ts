@@ -107,7 +107,7 @@ class Model {
     public getStats(): EndScreenStats {
         return this.m_stats;
     }
-    public runMCA(p_noOfMoves: number) {
+    /*public runMCA(p_noOfMoves: number) {
         //var tax: number[] = [20,20,20,20];
         var tax: number[] = [10, 15, 20, 25];
         //var tax: number[] = [10, 15, 20, 30, 40, 50, 60, 70];
@@ -171,7 +171,7 @@ class Model {
         $("#mainDiv").html(this.createJSONForMCA_HTML(result, tax, maxShips));
         console.log("Result: " + result);
         //debugger;
-    }
+    }*/
      
     public run(p_noOfMoves?: number) {
         if (p_noOfMoves == undefined) p_noOfMoves = 1;
@@ -606,9 +606,12 @@ class Model {
         }
         return Math.round(sum / l);
     }
-
+    public startNewInterval(): void {
+        this.updateNoShips();
+        this.m_ai.startNewInterval();
+    }
     //Updates number of ships in map to correspond to restrictions
-    public updateNoShips(): void {
+    private updateNoShips(): void {
         var noOfCodShips: number = this.m_goverment.getRestrictions().getNoCodOfShips();
         var noOfMackerelShips: number = this.m_goverment.getRestrictions().getNoMackerelOfShips();
         var shipOwner: ShipOwner = this.m_shipOwners[0]; //OBS assuming only one ship owner

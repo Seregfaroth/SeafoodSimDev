@@ -12,6 +12,7 @@ var FishingGear = (function () {
         }
     }
     FishingGear.prototype.fish = function (p_position, p_map) {
+        var totalFish = 0;
         if (this.m_fishType === FishType.cod) {
             var noOfFishInTile = p_map.getNoOfCodInTile(p_position);
         }
@@ -36,9 +37,11 @@ var FishingGear = (function () {
                     school.getAges()[i] -= noOfFish;
                     //var t1 = p_map.getYield();
                     p_map.setYield(p_map.getYield() + noOfFish);
+                    totalFish += noOfFish;
                 }
             }
         });
+        return totalFish;
     };
     FishingGear.prototype.getCargoSize = function () {
         var size = 0;

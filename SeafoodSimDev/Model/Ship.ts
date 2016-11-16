@@ -138,9 +138,9 @@ class Ship {
         this.m_path = [];
     }
 
-    public fish(p_map: Map): void {
+    public fish(p_map: Map): number {
         this.m_fuel -= this.m_fuelPerFishingTick;
-        this.m_fishingGear.fish(this.m_position,p_map);
+        return this.m_fishingGear.fish(this.m_position,p_map);
     }
 
     public land(p_landingSite: LandingSite): void {

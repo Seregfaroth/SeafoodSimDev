@@ -21,7 +21,7 @@ var EventHandler = (function () {
             _this.setNoMackerelShips($('#noMackerelShipsSlider').slider("option", "value"));
             _this.setTacCod($('#tacCodSlider').slider("option", "value"));
             _this.setTacMackerel($('#tacMackerelSlider').slider("option", "value"));
-            _this.m_controller.getModel().updateNoShips();
+            _this.m_controller.getModel().startNewInterval();
             _this.start();
         };
         this.setTax = function (p_n) {
