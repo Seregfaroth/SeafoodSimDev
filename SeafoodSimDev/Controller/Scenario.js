@@ -95,6 +95,7 @@ var Scenario = (function () {
         this.m_fuelsiteRunningCost = p_json.fuelsiteRunningCost;
         this.m_fuelsiteFuelPrize = p_json.fuelsiteFuelPrize;
         this.m_fuelsiteNumberOfEmployees = p_json.fuelsiteNumberOfEmployees;
+        this.m_oceanShipCapacity = p_json.oceanShipCapacity;
         this.m_environmentalScoreMaxIncreasePerTick = p_json.environmentalScoreMaxIncreasePerTick;
         this.m_codMovingRadius = p_json.codMovingRadius;
         this.m_codRecruitPercent = p_json.codRecruitPercent;
@@ -363,6 +364,9 @@ var Scenario = (function () {
     };
     Scenario.prototype.getNoHistory = function () {
         return this.m_noHistory;
+    };
+    Scenario.prototype.getOceanShipCapacity = function () {
+        return this.m_oceanShipCapacity;
     };
     return Scenario;
 }());

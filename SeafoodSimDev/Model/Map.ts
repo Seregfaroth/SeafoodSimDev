@@ -22,7 +22,7 @@ class Map {
     public setScenario(p_scenario: Scenario): void {
         this.m_scenario = p_scenario;
     //    this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), this.m_scenario.getOceanFishCapacity(), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace());
-        this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [100000]), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace());
+        this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [100000]), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace(), this.m_scenario.getOceanShipCapacity());
     }
     public run(): void {
         var map: Map = this;
@@ -142,12 +142,12 @@ class Map {
         this.m_schools.push(p_school);
     }
 
-    public generateMap(p_mapType: number, p_size: number, p_prices: { [fishType: number]: number }, p_oceanFishCapacity: CarryingCapacity, p_noOfSchools: number, p_schoolsInOnePlace: number) {
+    public generateMap(p_mapType: number, p_size: number, p_prices: { [fishType: number]: number }, p_oceanFishCapacity: CarryingCapacity, p_noOfSchools: number, p_schoolsInOnePlace: number, p_oceanShipCapacity: number) {
         this.m_grid = [];
         for (var i = 0; i < p_size; i++) {
             var row: Tile[] = [];
             for (var j = 0; j < p_size; j++) {
-                row.push(new Ocean(p_oceanFishCapacity, 100));
+                row.push(new Ocean(p_oceanFishCapacity, p_oceanShipCapacity));
             }
             this.m_grid.push(row);
         }
@@ -393,10 +393,10 @@ class Map {
         return sites;
     }
 
-    public emptyGrid(): void {
+    public emptyGrid(p_oceanShipCapacity: number): void {
         for (var r = 0; r < this.getMapHeight(); r++) {
             for (var c = 0; c < this.getMapWidth(); c++) {
-                this.m_grid[r][c] = new Ocean(new CarryingCapacity([new FishGroup("grp1",["fish"])],[100]), 100);
+                this.m_grid[r][c] = new Ocean(new CarryingCapacity([new FishGroup("grp1", ["fish"])], [100]), p_oceanShipCapacity);
             }
         }
     }

@@ -9,6 +9,7 @@ var Ocean = (function (_super) {
     function Ocean(p_carryingCapacity, p_shipCapacity, p_fishingArea) {
         _super.call(this);
         this.m_fishingArea = false;
+        this.m_shipsInTile = 0;
         this.m_carryingCapacityC = p_carryingCapacity;
         this.m_shipCapacity = p_shipCapacity;
         if (p_fishingArea) {
@@ -24,8 +25,26 @@ var Ocean = (function (_super) {
     Ocean.prototype.getShipCapacity = function () {
         return this.m_shipCapacity;
     };
+    Ocean.prototype.getShipsInTile = function () {
+        return this.m_shipsInTile;
+    };
+    Ocean.prototype.roomForAnotherShip = function () {
+        return this.m_shipsInTile < this.m_shipCapacity;
+    };
     Ocean.prototype.isFishingArea = function () {
         return this.m_fishingArea;
+    };
+    Ocean.prototype.claimTile = function () {
+        if (this.m_shipsInTile >= this.m_shipCapacity) {
+            throw "Error! Attempting to claim a tile that is full";
+        }
+        this.m_shipsInTile++;
+    };
+    Ocean.prototype.releaseTile = function () {
+        if (this.m_shipsInTile < 1) {
+            throw "Error! Trying to release tile, when there were no ships";
+        }
+        this.m_shipsInTile--;
     };
     return Ocean;
 }(Tile));

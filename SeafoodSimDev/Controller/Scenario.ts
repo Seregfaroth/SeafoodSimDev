@@ -76,6 +76,9 @@
     private m_fuelsiteFuelPrize: number;
     private m_fuelsiteNumberOfEmployees: number;
 
+
+    private m_oceanShipCapacity: number;
+
     private m_environmentalScoreMaxIncreasePerTick: number;
 
     private m_codMovingRadius: number;
@@ -209,6 +212,8 @@
         this.m_fuelsiteRunningCost = p_json.fuelsiteRunningCost;
         this.m_fuelsiteFuelPrize = p_json.fuelsiteFuelPrize;
         this.m_fuelsiteNumberOfEmployees = p_json.fuelsiteNumberOfEmployees;
+
+        this.m_oceanShipCapacity = p_json.oceanShipCapacity;
 
         this.m_environmentalScoreMaxIncreasePerTick = p_json.environmentalScoreMaxIncreasePerTick;
         this.m_codMovingRadius = p_json.codMovingRadius ;
@@ -487,5 +492,8 @@
     }
     public getNoHistory(): boolean {
         return this.m_noHistory;
+    }
+    public getOceanShipCapacity(): number {
+        return this.m_oceanShipCapacity;
     }
 }

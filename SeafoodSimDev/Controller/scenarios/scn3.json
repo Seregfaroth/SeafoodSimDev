@@ -68,6 +68,8 @@
   "fuelsiteFuelPrize": 20,
   "fuelsiteNumberOfEmployees": 4,
 
+  "oceanShipCapacity": 5,
+
   "environmentalScoreMaxIncreasePerTick": 2000,
   "codMovingRadius": 0,
   "codRecruitPercent": 0.35,

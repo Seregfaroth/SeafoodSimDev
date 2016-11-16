@@ -5,6 +5,7 @@ class Ocean extends Tile {
     private m_shipCapacity: number;
     private m_tac: number;
     private m_fishingArea: boolean = false;
+    private m_shipsInTile: number = 0;
 
     public constructor(p_carryingCapacity: CarryingCapacity, p_shipCapacity: number, p_fishingArea?: boolean) {
         super();
@@ -27,8 +28,27 @@ class Ocean extends Tile {
         return this.m_shipCapacity;
     }
 
+    public getShipsInTile(): number {
+        return this.m_shipsInTile;
+    }
+
+    public roomForAnotherShip(): boolean {
+        return this.m_shipsInTile < this.m_shipCapacity;
+    }
     public isFishingArea(): boolean {
         return this.m_fishingArea;
+    }
+    public claimTile(): void {
+        if (this.m_shipsInTile >= this.m_shipCapacity) {
+            throw "Error! Attempting to claim a tile that is full";
+        }
+        this.m_shipsInTile++;
+    }
+    public releaseTile(): void {
+        if (this.m_shipsInTile < 1) {
+            throw "Error! Trying to release tile, when there were no ships";
+        }
+        this.m_shipsInTile--;
     }
     
 }

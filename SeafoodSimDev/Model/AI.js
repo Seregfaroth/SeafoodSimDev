@@ -45,10 +45,12 @@ var AI = (function () {
                 ship.history[3].push("fishing");
                 //If ship is currently fishing, fish until cargo is at least 98% full
                 if (ship.getCargoSize() >= ship.getCargoCapacity() * 0.98 || ship.getFuel() < ship.getFuelCapacity() * 0.3) {
-                    ship.resetFishedFor();
+                    //ship.resetFishedFor();
+                    p_map.getTile(ship.getPosition()).releaseTile();
                     ai.findNewPath(ship, p_map);
                 }
                 else if (!ai.canReach(ship, p_map, [ship.getPosition()])) {
+                    p_map.getTile(ship.getPosition()).releaseTile();
                     ai.goRefuel(ship, p_map);
                 }
                 else {
@@ -175,12 +177,19 @@ var AI = (function () {
     AI.prototype.pathToFish = function (p_start, p_map) {
         if (p_map.getSchools().length !== 0) {
             var randomNumber = Math.floor(Math.random() * (p_map.getSchools().length));
+            var firstRandomNumber = randomNumber;
+            while (!p_map.getTile(p_map.getSchools()[randomNumber].getPosition()).roomForAnotherShip()) {
+                randomNumber = (randomNumber + 1) % p_map.getSchools().length;
+                if (randomNumber === firstRandomNumber)
+                    return undefined; //If there was no tile with room for the ship
+            }
             return this.pathFinding(p_map, p_start, p_map.getSchools()[randomNumber].getPosition());
         }
         else
             return undefined;
     };
     AI.prototype.goFish = function (p_ship, p_map, p_path) {
+        p_map.getTile(p_path[p_path.length - 1]).claimTile();
         p_ship.setPath(p_path);
         p_ship.setState(shipState.goingToFish);
         if (!this.m_noHistory)
