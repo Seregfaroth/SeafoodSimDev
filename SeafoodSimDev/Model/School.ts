@@ -1,8 +1,8 @@
 ﻿// <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 abstract class School {
     protected m_scenario: Scenario;
-    protected m_position: Point2;
     protected m_maxAge: number;
+    protected m_position: Point2;
     protected m_type: string;
     protected m_ages: number[] = [];
     protected m_msy: number;

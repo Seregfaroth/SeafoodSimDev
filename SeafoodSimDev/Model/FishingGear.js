@@ -12,7 +12,12 @@ var FishingGear = (function () {
         }
     }
     FishingGear.prototype.fish = function (p_position, p_map) {
-        var noOfFishInTile = p_map.getNoOfFishInTile(p_position);
+        if (this.m_fishType === FishType.Cod) {
+            var noOfFishInTile = p_map.getNoOfCodInTile(p_position);
+        }
+        else if (this.m_fishType === FishType.Mackerel) {
+            var noOfFishInTile = p_map.getNoOfMackerelInTile(p_position);
+        }
         var thisPlaceHolder = this;
         var fishingPercentage = this.m_scenario.getFishingPercentage();
         if (this.m_cargoCapacity - this.getCargoSize() < noOfFishInTile * fishingPercentage) {

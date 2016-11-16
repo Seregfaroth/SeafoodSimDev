@@ -311,10 +311,21 @@ var Map = (function () {
         });
         return list;
     };
-    Map.prototype.getNoOfFishInTile = function (p_position) {
+    Map.prototype.getNoOfCodInTile = function (p_position) {
         var num = 0;
         this.getSchoolsInTile(p_position).forEach(function (s) {
-            num += s.getSize();
+            if (s instanceof Cod) {
+                num += s.getSize();
+            }
+        });
+        return num;
+    };
+    Map.prototype.getNoOfMackerelInTile = function (p_position) {
+        var num = 0;
+        this.getSchoolsInTile(p_position).forEach(function (s) {
+            if (s instanceof Mackerel) {
+                num += s.getSize();
+            }
         });
         return num;
     };

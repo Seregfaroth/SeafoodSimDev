@@ -16,9 +16,6 @@ class Mackerel extends School {
         }
 
     }
-    public move(): void {
-
-    }
 
     protected recruit(p_map: Map): void {
         var currentTile = <Ocean>p_map.getTile(this.m_position);
@@ -29,7 +26,9 @@ class Mackerel extends School {
             //var sbb = p_map.getSsbOf(this.getType(), this.m_position);      
             var ssb = this.getSsb();
             var fraction = p_map.getBiosmassFractionOf(this.getType(), this.m_position);
-            recruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
+            if (cc != 0 && fraction != 0) {
+                recruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
+            }     
         }
         this.m_ages[0] = recruitment;
         this.m_size += recruitment;

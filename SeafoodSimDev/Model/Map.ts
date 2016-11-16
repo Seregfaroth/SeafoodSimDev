@@ -342,10 +342,21 @@ class Map {
         });
         return list;
     }
-    public getNoOfFishInTile(p_position: Point2): number {
+    public getNoOfCodInTile(p_position: Point2): number {
         var num: number = 0;
         this.getSchoolsInTile(p_position).forEach(function (s) {
-           num += s.getSize();
+            if (s instanceof Cod) {
+                num += s.getSize();
+            }
+        });
+        return num;
+    }
+    public getNoOfMackerelInTile(p_position: Point2): number {
+        var num: number = 0;
+        this.getSchoolsInTile(p_position).forEach(function (s) {
+            if (s instanceof Mackerel) {
+                num += s.getSize();
+            }
         });
         return num;
     }

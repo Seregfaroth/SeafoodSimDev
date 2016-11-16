@@ -9,6 +9,7 @@ var Cod = (function (_super) {
     __extends(Cod, _super);
     function Cod(p_size, p_position, p_ages) {
         _super.call(this, p_size, p_position);
+        this.m_maxAge = this.m_scenario.getCodSchoolMaxAge();
         this.m_type = "cod";
         this.m_growthRate = 0.35;
         for (var i = 0; i < this.m_maxAge; i++) {

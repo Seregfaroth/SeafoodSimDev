@@ -4,6 +4,7 @@ class Cod extends School{
 
     public constructor(p_size: number, p_position: Point2, p_ages?: number[]) {
         super(p_size, p_position);
+        this.m_maxAge = this.m_scenario.getCodSchoolMaxAge();
         this.m_type = "cod";
         this.m_growthRate = 0.35;
         for (var i = 0; i < this.m_maxAge; i++) {

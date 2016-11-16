@@ -20,8 +20,6 @@ var Mackerel = (function (_super) {
             this.m_ages[age] += 1;
         }
     }
-    Mackerel.prototype.move = function () {
-    };
     Mackerel.prototype.recruit = function (p_map) {
         var currentTile = p_map.getTile(this.m_position);
         var recruitment = 0;
@@ -32,7 +30,9 @@ var Mackerel = (function (_super) {
             //var sbb = p_map.getSsbOf(this.getType(), this.m_position);      
             var ssb = this.getSsb();
             var fraction = p_map.getBiosmassFractionOf(this.getType(), this.m_position);
-            recruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
+            if (cc != 0 && fraction != 0) {
+                recruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
+            }
         }
         this.m_ages[0] = recruitment;
         this.m_size += recruitment;
