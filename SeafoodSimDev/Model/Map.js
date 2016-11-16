@@ -18,7 +18,7 @@ var Map = (function () {
     Map.prototype.setScenario = function (p_scenario) {
         this.m_scenario = p_scenario;
         //    this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), this.m_scenario.getOceanFishCapacity(), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace());
-        this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [100000]), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace());
+        this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [100000]), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace(), this.m_scenario.getOceanShipCapacity());
     };
     Map.prototype.run = function () {
         var map = this;
@@ -130,12 +130,12 @@ var Map = (function () {
     Map.prototype.addSchool = function (p_school) {
         this.m_schools.push(p_school);
     };
-    Map.prototype.generateMap = function (p_mapType, p_size, p_prices, p_oceanFishCapacity, p_noOfSchools, p_schoolsInOnePlace) {
+    Map.prototype.generateMap = function (p_mapType, p_size, p_prices, p_oceanFishCapacity, p_noOfSchools, p_schoolsInOnePlace, p_oceanShipCapacity) {
         this.m_grid = [];
         for (var i = 0; i < p_size; i++) {
             var row = [];
             for (var j = 0; j < p_size; j++) {
-                row.push(new Ocean(p_oceanFishCapacity, 100));
+                row.push(new Ocean(p_oceanFishCapacity, p_oceanShipCapacity));
             }
             this.m_grid.push(row);
         }
@@ -356,10 +356,10 @@ var Map = (function () {
         }
         return sites;
     };
-    Map.prototype.emptyGrid = function () {
+    Map.prototype.emptyGrid = function (p_oceanShipCapacity) {
         for (var r = 0; r < this.getMapHeight(); r++) {
             for (var c = 0; c < this.getMapWidth(); c++) {
-                this.m_grid[r][c] = new Ocean(new CarryingCapacity([new FishGroup("grp1", ["fish"])], [100]), 100);
+                this.m_grid[r][c] = new Ocean(new CarryingCapacity([new FishGroup("grp1", ["fish"])], [100]), p_oceanShipCapacity);
             }
         }
     };

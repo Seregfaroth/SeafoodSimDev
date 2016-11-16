@@ -52,7 +52,8 @@ class AI {
                 //If ship is currently fishing, fish until cargo is at least 98% full
 
                 if (ship.getCargoSize() >= ship.getCargoCapacity() * 0.98 || ship.getFuel() < ship.getFuelCapacity()*0.3) {
-                    ship.resetFishedFor();
+                    //ship.resetFishedFor();
+                    (<Ocean>p_map.getTile(ship.getPosition())).releaseTile();
                     ai.findNewPath(ship, p_map);
                 }
                /* else if (ship.getFishedFor() > ai.m_scenario.getMaxNoDaysFishing()) {
@@ -62,6 +63,7 @@ class AI {
                 }*/
                 //OBS here we calculate path to nearest fuel site twice. This can be optimized by saving fuelPath
                 else if (!ai.canReach(ship, p_map, [ship.getPosition()])) {
+                    (<Ocean>p_map.getTile(ship.getPosition())).releaseTile();
                     ai.goRefuel(ship, p_map);
                 }
                 else {
@@ -190,13 +192,19 @@ class AI {
     public pathToFish(p_start: Point2, p_map: Map): Point2[] {
         if (p_map.getSchools().length !== 0) {
             var randomNumber: number = Math.floor(Math.random() * (p_map.getSchools().length));
+            var firstRandomNumber: number = randomNumber;
+            while (!(<Ocean>p_map.getTile(p_map.getSchools()[randomNumber].getPosition())).roomForAnotherShip()) {
+                randomNumber = (randomNumber + 1) % p_map.getSchools().length;
+                if (randomNumber === firstRandomNumber) return undefined; //If there was no tile with room for the ship
+            }
             return this.pathFinding(p_map, p_start, p_map.getSchools()[randomNumber].getPosition());
         }
         else
             return undefined;
     }
     private goFish(p_ship: Ship, p_map: Map, p_path:Point2[]): void {
-        
+
+        (<Ocean>p_map.getTile(p_path[p_path.length - 1])).claimTile();
         p_ship.setPath(p_path);
         p_ship.setState(shipState.goingToFish);
         if (!this.m_noHistory)
