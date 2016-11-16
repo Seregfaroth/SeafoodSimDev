@@ -34,7 +34,7 @@ var AI = (function () {
     AI.prototype.runShips = function (p_shipOwner, p_map) {
         var ai = this;
         var n = 0;
-        p_shipOwner.getShips().forEach(function (ship) {
+        p_shipOwner.getAllShips().forEach(function (ship) {
             //console.log("ship " + n);
             console.log("state: " + ship.getState().toString() + " cargo: " + ship.getCargoSize() + " fuel: " + ship.getFuel() + " position: " + ship.getPosition().row + ", " + ship.getPosition().col);
             //ship.useFuel(0.25);
@@ -178,7 +178,7 @@ var AI = (function () {
         if (p_map.getSchools().length !== 0) {
             var randomNumber = Math.floor(Math.random() * (p_map.getSchools().length));
             var firstRandomNumber = randomNumber;
-            while (!p_map.getTile(p_map.getSchools()[randomNumber].getPosition()).roomForAnotherShip()) {
+            while (!p_map.getTile(p_map.getSchools()[randomNumber].getOrigin()).roomForAnotherShip()) {
                 randomNumber = (randomNumber + 1) % p_map.getSchools().length;
                 if (randomNumber === firstRandomNumber)
                     return undefined; //If there was no tile with room for the ship

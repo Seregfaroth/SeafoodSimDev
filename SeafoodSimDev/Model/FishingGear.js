@@ -1,5 +1,5 @@
-var Catch = (function () {
-    function Catch(p_fishType) {
+var FishingGear = (function () {
+    function FishingGear(p_fishType) {
         this.m_scenario = Scenario.getInstance();
         this.m_fishType = p_fishType;
         this.m_cargoCapacity = this.m_scenario.getShipCargoCapacity();
@@ -11,7 +11,7 @@ var Catch = (function () {
             this.m_cargo[FishType.Mackerel][i] = 0;
         }
     }
-    Catch.prototype.fish = function (p_position, p_map) {
+    FishingGear.prototype.fish = function (p_position, p_map) {
         var noOfFishInTile = p_map.getNoOfFishInTile(p_position);
         var thisPlaceHolder = this;
         var fishingPercentage = this.m_scenario.getFishingPercentage();
@@ -35,7 +35,7 @@ var Catch = (function () {
             }
         });
     };
-    Catch.prototype.getCargoSize = function () {
+    FishingGear.prototype.getCargoSize = function () {
         var size = 0;
         for (var i = 0; i < this.m_cargo[FishType.Cod].length; i++) {
             size += this.m_cargo[FishType.Cod][i];
@@ -45,12 +45,12 @@ var Catch = (function () {
         }
         return size;
     };
-    Catch.prototype.getCargo = function () {
+    FishingGear.prototype.getCargo = function () {
         return this.m_cargo;
     };
-    Catch.prototype.getFishType = function () {
+    FishingGear.prototype.getFishType = function () {
         return this.m_fishType;
     };
-    return Catch;
+    return FishingGear;
 }());
-//# sourceMappingURL=Catch.js.map
+//# sourceMappingURL=FishingGear.js.map

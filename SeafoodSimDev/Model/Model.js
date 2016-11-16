@@ -575,14 +575,26 @@ var Model = (function () {
     };
     //Updates number of ships in map to correspond to restrictions
     Model.prototype.updateNoShips = function () {
-        var noOfShips = this.m_goverment.getRestrictions().getNoCodOfShips();
+        var noOfCodShips = this.m_goverment.getRestrictions().getNoCodOfShips();
+        var noOfMackerelShips = this.m_goverment.getRestrictions().getNoMackerelOfShips();
         var shipOwner = this.m_shipOwners[0]; //OBS assuming only one ship owner
-        while (this.m_map.getShips().length > noOfShips) {
-            this.m_map.removeShip(shipOwner.getShips()[0]);
-            shipOwner.sellShip(shipOwner.getShips()[0]);
+        while (this.m_map.getCodShips().length > noOfCodShips) {
+            //While there are too many ships
+            this.m_map.removeShip(shipOwner.getCodShips()[0]);
+            shipOwner.sellShip(shipOwner.getCodShips()[0]);
         }
-        while (this.m_map.getShips().length < noOfShips) {
-            this.m_map.addShip(shipOwner.buyShip());
+        while (this.m_map.getCodShips().length < noOfCodShips) {
+            //While there are too few ships
+            this.m_map.addShip(shipOwner.buyShip(FishType.Cod));
+        }
+        while (this.m_map.getMackerelShips().length > noOfMackerelShips) {
+            //While there are too many ships
+            this.m_map.removeShip(shipOwner.getMackerelShips()[0]);
+            shipOwner.sellShip(shipOwner.getMackerelShips()[0]);
+        }
+        while (this.m_map.getMackerelShips().length < noOfMackerelShips) {
+            //While there are too few ships
+            this.m_map.addShip(shipOwner.buyShip(FishType.Mackerel));
         }
     };
     return Model;

@@ -107,6 +107,24 @@ class Map {
     public getShips(): Ship[] {
         return this.m_ships;
     }
+    public getCodShips(): Ship[] {
+        var ships: Ship[] = [];
+        this.m_ships.forEach(function (s: Ship) {
+            if (s.getType() === FishType.Cod) {
+                ships.push(s);
+            }
+        });
+        return ships;
+    }
+    public getMackerelShips(): Ship[] {
+        var ships: Ship[] = [];
+        this.m_ships.forEach(function (s: Ship) {
+            if (s.getType() === FishType.Mackerel) {
+                ships.push(s);
+            }
+        });
+        return ships;
+    }
     public getSchools(): School[] {
         return this.m_schools;
     }
@@ -317,7 +335,7 @@ class Map {
     public getSchoolsInTile(p_position: Point2): School[] {
         var list: School[] = [];
         this.m_schools.forEach(function (s) {
-           if (s.getPosition().compare( p_position) ){
+           if (s.getOrigin().compare( p_position) ){
                 list.push(s);
 
             }

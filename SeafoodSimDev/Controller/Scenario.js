@@ -100,6 +100,7 @@ var Scenario = (function () {
         this.m_codMovingRadius = p_json.codMovingRadius;
         this.m_codRecruitPercent = p_json.codRecruitPercent;
         this.m_codSchoolMaxAge = p_json.codSchoolMaxAge;
+        this.m_mackerelScoolMaxAge = p_json.mackerelSchoolMaxAge;
         this.m_modelStatFreq = p_json.modelStatFreq;
         this.m_modelRecruitAndAgeFreq = p_json.modelRecruitAndAgeFreq;
         this.m_noOfEmployeesPerShip = p_json.noOfEmployeesPerShip;
@@ -286,6 +287,9 @@ var Scenario = (function () {
     };
     Scenario.prototype.getCodSchoolMaxAge = function () {
         return this.m_codSchoolMaxAge;
+    };
+    Scenario.prototype.getMackerelSchoolMaxAge = function () {
+        return this.m_mackerelScoolMaxAge;
     };
     Scenario.prototype.getModelStatFreq = function () {
         return this.m_modelStatFreq;

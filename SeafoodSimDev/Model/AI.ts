@@ -40,7 +40,7 @@ class AI {
     private runShips(p_shipOwner: ShipOwner, p_map: Map): void {
         var ai: AI = this;
         var n = 0;
-        p_shipOwner.getShips().forEach(function (ship) {
+        p_shipOwner.getAllShips().forEach(function (ship) {
             //console.log("ship " + n);
             console.log("state: " + ship.getState().toString() + " cargo: " + ship.getCargoSize() + " fuel: " + ship.getFuel()+ " position: " + ship.getPosition().row + ", " + ship.getPosition().col);
             //ship.useFuel(0.25);
@@ -193,7 +193,7 @@ class AI {
         if (p_map.getSchools().length !== 0) {
             var randomNumber: number = Math.floor(Math.random() * (p_map.getSchools().length));
             var firstRandomNumber: number = randomNumber;
-            while (!(<Ocean>p_map.getTile(p_map.getSchools()[randomNumber].getPosition())).roomForAnotherShip()) {
+            while (!(<Ocean>p_map.getTile(p_map.getSchools()[randomNumber].getOrigin())).roomForAnotherShip()) {
                 randomNumber = (randomNumber + 1) % p_map.getSchools().length;
                 if (randomNumber === firstRandomNumber) return undefined; //If there was no tile with room for the ship
             }

@@ -98,6 +98,24 @@ var Map = (function () {
     Map.prototype.getShips = function () {
         return this.m_ships;
     };
+    Map.prototype.getCodShips = function () {
+        var ships = [];
+        this.m_ships.forEach(function (s) {
+            if (s.getType() === FishType.Cod) {
+                ships.push(s);
+            }
+        });
+        return ships;
+    };
+    Map.prototype.getMackerelShips = function () {
+        var ships = [];
+        this.m_ships.forEach(function (s) {
+            if (s.getType() === FishType.Mackerel) {
+                ships.push(s);
+            }
+        });
+        return ships;
+    };
     Map.prototype.getSchools = function () {
         return this.m_schools;
     };
@@ -287,7 +305,7 @@ var Map = (function () {
     Map.prototype.getSchoolsInTile = function (p_position) {
         var list = [];
         this.m_schools.forEach(function (s) {
-            if (s.getPosition().compare(p_position)) {
+            if (s.getOrigin().compare(p_position)) {
                 list.push(s);
             }
         });

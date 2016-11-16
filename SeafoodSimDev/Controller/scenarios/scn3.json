@@ -74,6 +74,8 @@
   "codMovingRadius": 0,
   "codRecruitPercent": 0.35,
   "codSchoolMaxAge": 8,
+  
+  "mackerelSchoolMaxAge": 8,
   "recruitAndAgeFreq": 30,
 
   "statFreq": 100,

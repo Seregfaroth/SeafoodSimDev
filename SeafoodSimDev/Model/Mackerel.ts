@@ -2,10 +2,9 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 class Mackerel extends School {
 
-
     public constructor(p_size: number, p_position: Point2) {
         super(p_size, p_position);
-        this.m_maxAge = 1100;// OBS Ship also uses this value. It is hardcoded there at the moment
+        this.m_maxAge = this.m_scenario.getMackerelSchoolMaxAge();
         this.m_type = "mac";
         this.m_growthRate = 0.15;
         for (var i = 0; i < this.m_maxAge; i++) {

@@ -20,8 +20,26 @@ var ShipOwner = (function () {
     ShipOwner.prototype.getID = function () {
         return this.m_id;
     };
-    ShipOwner.prototype.getShips = function () {
+    ShipOwner.prototype.getAllShips = function () {
         return this.m_ships;
+    };
+    ShipOwner.prototype.getCodShips = function () {
+        var ships = [];
+        this.m_ships.forEach(function (s) {
+            if (s.getType() === FishType.Cod) {
+                ships.push(s);
+            }
+        });
+        return ships;
+    };
+    ShipOwner.prototype.getMackerelShips = function () {
+        var ships = [];
+        this.m_ships.forEach(function (s) {
+            if (s.getType() === FishType.Mackerel) {
+                ships.push(s);
+            }
+        });
+        return ships;
     };
     ShipOwner.prototype.getBalance = function () {
         return this.m_balance;
@@ -50,8 +68,8 @@ var ShipOwner = (function () {
             this.m_taxPayed += p_amount * this.m_government.getTaxingRate();
         }
     };
-    ShipOwner.prototype.buyShip = function () {
-        var ship = new Ship(this);
+    ShipOwner.prototype.buyShip = function (p_fishType) {
+        var ship = new Ship(this, p_fishType);
         this.m_ships.push(ship);
         this.financialTransaction(-this.m_shipPrice);
         this.m_shipBought = true;

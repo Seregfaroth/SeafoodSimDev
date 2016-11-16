@@ -9,7 +9,7 @@ var Mackerel = (function (_super) {
     __extends(Mackerel, _super);
     function Mackerel(p_size, p_position) {
         _super.call(this, p_size, p_position);
-        this.m_maxAge = 1100; // OBS Ship also uses this value. It is hardcoded there at the moment
+        this.m_maxAge = this.m_scenario.getMackerelSchoolMaxAge();
         this.m_type = "mac";
         this.m_growthRate = 0.15;
         for (var i = 0; i < this.m_maxAge; i++) {
