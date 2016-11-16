@@ -19,11 +19,11 @@ var TestLandingSite = (function () {
         QUnit.test("LandingSite: process fish", function (assert) {
             var fish = [[20], [5]];
             var noOfFish = 0;
-            for (var i = 0; i < fish[FishType.Cod].length; i++) {
-                noOfFish += fish[FishType.Cod][i];
+            for (var i = 0; i < fish[FishType.cod].length; i++) {
+                noOfFish += fish[FishType.cod][i];
             }
-            for (var i = 0; i < fish[FishType.Mackerel].length; i++) {
-                noOfFish += fish[FishType.Mackerel][i];
+            for (var i = 0; i < fish[FishType.mackerel].length; i++) {
+                noOfFish += fish[FishType.mackerel][i];
             }
             //First receive fish
             landingSite.receiveFish(fish);
@@ -43,11 +43,11 @@ var TestLandingSite = (function () {
         QUnit.test("LandingSite: receive fish", function (assert) {
             var fish = [[10], [2]];
             var noOfFish = 0;
-            for (var i = 0; i < fish[FishType.Cod].length; i++) {
-                noOfFish += fish[FishType.Cod][i];
+            for (var i = 0; i < fish[FishType.cod].length; i++) {
+                noOfFish += fish[FishType.cod][i];
             }
-            for (var i = 0; i < fish[FishType.Mackerel].length; i++) {
-                noOfFish += fish[FishType.Mackerel][i];
+            for (var i = 0; i < fish[FishType.mackerel].length; i++) {
+                noOfFish += fish[FishType.mackerel][i];
             }
             //First process all fish
             while (landingSite.getResourceAtSite() > 0) {
@@ -60,20 +60,20 @@ var TestLandingSite = (function () {
             //TODO check price when implemenet correctly with age
             var fish = [[30], [40]];
             var noOfFish = 0;
-            for (var i = 0; i < fish[FishType.Cod].length; i++) {
-                noOfFish += fish[FishType.Cod][i];
+            for (var i = 0; i < fish[FishType.cod].length; i++) {
+                noOfFish += fish[FishType.cod][i];
             }
-            for (var i = 0; i < fish[FishType.Mackerel].length; i++) {
-                noOfFish += fish[FishType.Mackerel][i];
+            for (var i = 0; i < fish[FishType.mackerel].length; i++) {
+                noOfFish += fish[FishType.mackerel][i];
             }
             var resourceAtSite = landingSite.getResourceAtSite();
             price = landingSite.receiveFish(fish);
             var noOfFishLeft = 0;
-            for (var i = 0; i < fish[FishType.Cod].length; i++) {
-                noOfFishLeft += fish[FishType.Cod][i];
+            for (var i = 0; i < fish[FishType.cod].length; i++) {
+                noOfFishLeft += fish[FishType.cod][i];
             }
-            for (var i = 0; i < fish[FishType.Mackerel].length; i++) {
-                noOfFishLeft += fish[FishType.Mackerel][i];
+            for (var i = 0; i < fish[FishType.mackerel].length; i++) {
+                noOfFishLeft += fish[FishType.mackerel][i];
             }
             //Check that the correct amount of fish have been landed
             assert.deepEqual(noOfFishLeft, noOfFish - (landingSite.getResourceCapacity() - resourceAtSite), "there should be some fish left");

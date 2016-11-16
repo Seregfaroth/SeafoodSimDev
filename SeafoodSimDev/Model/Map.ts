@@ -110,7 +110,7 @@ class Map {
     public getCodShips(): Ship[] {
         var ships: Ship[] = [];
         this.m_ships.forEach(function (s: Ship) {
-            if (s.getType() === FishType.Cod) {
+            if (s.getType() === FishType.cod) {
                 ships.push(s);
             }
         });
@@ -119,7 +119,7 @@ class Map {
     public getMackerelShips(): Ship[] {
         var ships: Ship[] = [];
         this.m_ships.forEach(function (s: Ship) {
-            if (s.getType() === FishType.Mackerel) {
+            if (s.getType() === FishType.mackerel) {
                 ships.push(s);
             }
         });
@@ -434,10 +434,10 @@ class Map {
 
         return ret;
     }
-    public getBiomassOf(p_name: string, m_position: Point2): number {
+    public getBiomassOfinTile(p_type, p_position: Point2): number {
         var ret;
-        for (var school of this.m_schools) {
-            if (school.getType() === p_name) {
+        for (var school of this.getSchoolsInTile(p_position)) {
+            if (school instanceof p_type) {
                 ret = school.getSize();
                 break;
             }
@@ -447,14 +447,14 @@ class Map {
         return ret;
     }
     //Calculate how big a fraction the type p_name is of the total biomass
-    public getBiosmassFractionOf(p_name: string, p_position: Point2): number {
+    public getBiosmassFractionOf(p_type, p_position: Point2): number {
         var ret;
         var totalBiomass = 0;
         for (var school of this.getSchoolsInTile(p_position)) {
             totalBiomass += school.getSize();
         }
         if (totalBiomass !== 0) {
-            ret = this.getBiomassOf(p_name, p_position) / totalBiomass;
+            ret = this.getBiomassOfinTile(p_type, p_position) / totalBiomass;
         }
         else
             ret = 0;

@@ -3,7 +3,7 @@ abstract class School {
     protected m_scenario: Scenario;
     protected m_maxAge: number;
     protected m_position: Point2;
-    protected m_type: string;
+    //protected m_type: string;
     protected m_ages: number[] = [];
     protected m_msy: number;
     protected m_tac: number;
@@ -20,9 +20,9 @@ abstract class School {
         this.m_origin = p_position;
         //this.m_msy = p_msy;        
     }
-    public getType(): string {
+    /*public getType(): string {
         return this.m_type;
-    }
+    }*/
 
     public getOrigin(): Point2 {
         return this.m_origin;

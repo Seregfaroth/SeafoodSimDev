@@ -5,7 +5,7 @@ class Mackerel extends School {
     public constructor(p_size: number, p_position: Point2) {
         super(p_size, p_position);
         this.m_maxAge = this.m_scenario.getMackerelSchoolMaxAge();
-        this.m_type = "mac";
+        //this.m_type = "mac";
         this.m_growthRate = 0.15;
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
@@ -25,7 +25,7 @@ class Mackerel extends School {
             var cc = currentTile.getCarryingCapacity().getCapacityGroupNumbers(group.m_name);
             //var sbb = p_map.getSsbOf(this.getType(), this.m_position);      
             var ssb = this.getSsb();
-            var fraction = p_map.getBiosmassFractionOf(this.getType(), this.m_position);
+            var fraction = p_map.getBiosmassFractionOf(Mackerel, this.m_position);
             if (cc != 0 && fraction != 0) {
                 recruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
             }     

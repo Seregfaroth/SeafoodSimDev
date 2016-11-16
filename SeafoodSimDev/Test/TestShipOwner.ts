@@ -32,7 +32,7 @@
         QUnit.test("ShipOwner: buy ship", function (assert) {
             var balance: number = owner.getBalance();
             var ships: Ship[] = owner.getCodShips().slice();
-            var ship: Ship = owner.buyShip(FishType.Cod);
+            var ship: Ship = owner.buyShip(FishType.cod);
             ships.push(ship);
             //Check that a ship has been added
             assert.deepEqual(owner.getCodShips(), ships, "one more ship should be added");
@@ -41,7 +41,7 @@
 
         QUnit.test("ShipOwner: sell ship", function (assert) {
             var ships: Ship[] = owner.getCodShips().slice();
-            var ship: Ship = owner.buyShip(FishType.Cod);
+            var ship: Ship = owner.buyShip(FishType.cod);
             var balance: number = owner.getBalance();
             owner.sellShip(ship);
             //check that ship has been removed
@@ -51,7 +51,7 @@
         });
 
         QUnit.test("ShipOwner: sell ship exception", function (assert) {
-            var ship: Ship = new Ship(new ShipOwner(gov, new Point2(1, 1), "1"), FishType.Cod);
+            var ship: Ship = new Ship(new ShipOwner(gov, new Point2(1, 1), "1"), FishType.cod);
             assert.throws(function () {
                 owner.sellShip(ship);
             }, Error, "should throw an error");

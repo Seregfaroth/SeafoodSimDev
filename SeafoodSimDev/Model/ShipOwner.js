@@ -26,7 +26,7 @@ var ShipOwner = (function () {
     ShipOwner.prototype.getCodShips = function () {
         var ships = [];
         this.m_ships.forEach(function (s) {
-            if (s.getType() === FishType.Cod) {
+            if (s.getType() === FishType.cod) {
                 ships.push(s);
             }
         });
@@ -35,7 +35,7 @@ var ShipOwner = (function () {
     ShipOwner.prototype.getMackerelShips = function () {
         var ships = [];
         this.m_ships.forEach(function (s) {
-            if (s.getType() === FishType.Mackerel) {
+            if (s.getType() === FishType.mackerel) {
                 ships.push(s);
             }
         });

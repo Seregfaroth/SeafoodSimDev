@@ -11,8 +11,8 @@ class TestShip {
         
         var gov: Government = new Government(new Restrictions());
         var owner: ShipOwner = new ShipOwner(gov, new Point2(0, 0), "0");
-        var codShip: Ship = new Ship(owner, FishType.Cod);
-        var mackerelShip: Ship = new Ship(owner, FishType.Mackerel);
+        var codShip: Ship = new Ship(owner, FishType.cod);
+        var mackerelShip: Ship = new Ship(owner, FishType.mackerel);
         var map: Map = new Map(gov.getRestrictions());
         var thisPlaceholder: TestShip = this;
         map.emptyGrid(100);
@@ -24,20 +24,20 @@ class TestShip {
             assert.equal(testShip, undefined, "ship should be undefined");
 
             //Create  cod ship and check members
-            testShip = new Ship(owner, FishType.Cod);
+            testShip = new Ship(owner, FishType.cod);
             assert.ok(testShip, "Ship should have been created");
 
             var noOfFish: number = 0;
-            for (var i = 0; i < testShip.getCargo()[FishType.Cod].length; i++) {
-                noOfFish += testShip.getCargo()[FishType.Cod][i];
+            for (var i = 0; i < testShip.getCargo()[FishType.cod].length; i++) {
+                noOfFish += testShip.getCargo()[FishType.cod][i];
             }
-            for (var i = 0; i < testShip.getCargo()[FishType.Mackerel].length; i++) {
-                noOfFish += testShip.getCargo()[FishType.Mackerel][i];
+            for (var i = 0; i < testShip.getCargo()[FishType.mackerel].length; i++) {
+                noOfFish += testShip.getCargo()[FishType.mackerel][i];
             }
 
             assert.deepEqual(noOfFish, 0, "Cargo should be empty");
             assert.deepEqual(testShip.getFuel(), testShip.getFuelCapacity(), "Fuel should be full");
-            assert.deepEqual(testShip.getType(), FishType.Cod, "Ship should be a cod ship");
+            assert.deepEqual(testShip.getType(), FishType.cod, "Ship should be a cod ship");
         });
 
         QUnit.test("Ship: Follow path", function (assert) {
@@ -68,7 +68,7 @@ class TestShip {
         QUnit.test("Ship: follow path not possible", function (assert) {
             map.emptyGrid(100);
             map.getGrid()[0][0] = new LandingSite(1, 10, 101, {}, "0", new Point2(0, 0));
-            map.addShip(new Ship(new ShipOwner(gov, new Point2(0, 0), "0"), FishType.Cod));
+            map.addShip(new Ship(new ShipOwner(gov, new Point2(0, 0), "0"), FishType.cod));
             var path: Point2[] = [codShip.getPosition(), new Point2(0, 0), new Point2(0, 1)];
             var oldPosition: Point2 = codShip.getPosition();
             codShip.setPath(path);

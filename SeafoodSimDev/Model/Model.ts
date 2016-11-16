@@ -55,11 +55,11 @@ class Model {
         this.m_stats.setTimeAt(statTime, this.getTime());
         //updating biomass and recruitment
         for (var sc of this.getMap().getSchools()) {
-            if (sc.getType() === "cod") {
+            if (sc instanceof Cod) {
                 biomassCod += sc.getBiomass();
                 recruitCod += sc.getRecruitTotal();
             }
-            else if (sc.getType() === "mac") {
+            else if (sc instanceof Mackerel) {
                 biomassMac += sc.getBiomass();
                 recruitMac += sc.getRecruitTotal();
             }
@@ -619,7 +619,7 @@ class Model {
         }
         while (this.m_map.getCodShips().length < noOfCodShips) {
             //While there are too few ships
-            this.m_map.addShip(shipOwner.buyShip(FishType.Cod));
+            this.m_map.addShip(shipOwner.buyShip(FishType.cod));
         }
         while (this.m_map.getMackerelShips().length > noOfMackerelShips) {
             //While there are too many ships
@@ -628,7 +628,7 @@ class Model {
         }
         while (this.m_map.getMackerelShips().length < noOfMackerelShips) {
             //While there are too few ships
-            this.m_map.addShip(shipOwner.buyShip(FishType.Mackerel));
+            this.m_map.addShip(shipOwner.buyShip(FishType.mackerel));
         }
     }
 }

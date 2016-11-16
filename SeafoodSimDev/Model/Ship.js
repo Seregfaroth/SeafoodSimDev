@@ -9,8 +9,8 @@ var shipState;
 })(shipState || (shipState = {}));
 var FishType;
 (function (FishType) {
-    FishType[FishType["Cod"] = 0] = "Cod";
-    FishType[FishType["Mackerel"] = 1] = "Mackerel";
+    FishType[FishType["cod"] = 0] = "cod";
+    FishType[FishType["mackerel"] = 1] = "mackerel";
 })(FishType || (FishType = {}));
 var Ship = (function () {
     function Ship(p_owner, p_fishType) {

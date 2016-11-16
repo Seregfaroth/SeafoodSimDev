@@ -101,7 +101,7 @@ var Map = (function () {
     Map.prototype.getCodShips = function () {
         var ships = [];
         this.m_ships.forEach(function (s) {
-            if (s.getType() === FishType.Cod) {
+            if (s.getType() === FishType.cod) {
                 ships.push(s);
             }
         });
@@ -110,7 +110,7 @@ var Map = (function () {
     Map.prototype.getMackerelShips = function () {
         var ships = [];
         this.m_ships.forEach(function (s) {
-            if (s.getType() === FishType.Mackerel) {
+            if (s.getType() === FishType.mackerel) {
                 ships.push(s);
             }
         });
@@ -396,11 +396,11 @@ var Map = (function () {
         var ret;
         return ret;
     };
-    Map.prototype.getBiomassOf = function (p_name, m_position) {
+    Map.prototype.getBiomassOfinTile = function (p_type, p_position) {
         var ret;
-        for (var _i = 0, _a = this.m_schools; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.getSchoolsInTile(p_position); _i < _a.length; _i++) {
             var school = _a[_i];
-            if (school.getType() === p_name) {
+            if (school instanceof p_type) {
                 ret = school.getSize();
                 break;
             }
@@ -410,7 +410,7 @@ var Map = (function () {
         return ret;
     };
     //Calculate how big a fraction the type p_name is of the total biomass
-    Map.prototype.getBiosmassFractionOf = function (p_name, p_position) {
+    Map.prototype.getBiosmassFractionOf = function (p_type, p_position) {
         var ret;
         var totalBiomass = 0;
         for (var _i = 0, _a = this.getSchoolsInTile(p_position); _i < _a.length; _i++) {
@@ -418,7 +418,7 @@ var Map = (function () {
             totalBiomass += school.getSize();
         }
         if (totalBiomass !== 0) {
-            ret = this.getBiomassOf(p_name, p_position) / totalBiomass;
+            ret = this.getBiomassOfinTile(p_type, p_position) / totalBiomass;
         }
         else
             ret = 0;

@@ -35,7 +35,7 @@ class ShipOwner {
     public getCodShips(): Ship[] {
         var ships: Ship[] = [];
         this.m_ships.forEach(function (s: Ship) {
-            if (s.getType() === FishType.Cod) {
+            if (s.getType() === FishType.cod) {
                 ships.push(s);
             }
         });
@@ -44,7 +44,7 @@ class ShipOwner {
     public getMackerelShips(): Ship[] {
         var ships: Ship[] = [];
         this.m_ships.forEach(function (s: Ship) {
-            if (s.getType() === FishType.Mackerel) {
+            if (s.getType() === FishType.mackerel) {
                 ships.push(s);
             }
         });

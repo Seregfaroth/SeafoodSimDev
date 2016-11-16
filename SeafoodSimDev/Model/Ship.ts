@@ -2,8 +2,8 @@
 enum shipState { fishing, goingToFish, goingToRefuel, goingToLand, waiting }
 
 enum FishType {
-    Cod = 0,
-    Mackerel = 1
+    cod = 0,
+    mackerel = 1
 }
 class Ship {
     private m_fishedFor: number = 0;

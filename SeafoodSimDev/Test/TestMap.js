@@ -6,13 +6,13 @@ var TestMap = (function () {
             var map = new Map(gov.getRestrictions());
             var testMap = _this;
             QUnit.test("Map: add ship", function (assert) {
-                var ship = new Ship(new ShipOwner(gov, new Point2(0, 0), "0"), FishType.Cod);
+                var ship = new Ship(new ShipOwner(gov, new Point2(0, 0), "0"), FishType.cod);
                 assert.deepEqual(map.getShips().indexOf(ship), -1, "ship should not be in map");
                 map.addShip(ship);
                 assert.ok(map.getShips().indexOf(ship) > -1, "ship should be in map");
             });
             QUnit.test("Map: remove ship", function (assert) {
-                var ship = new Ship(new ShipOwner(gov, new Point2(0, 0), "0"), FishType.Cod);
+                var ship = new Ship(new ShipOwner(gov, new Point2(0, 0), "0"), FishType.cod);
                 map.addShip(ship);
                 assert.ok(map.getShips().indexOf(ship) > -1, "ship should be in map");
                 map.removeShip(ship);
@@ -35,11 +35,11 @@ var TestMap = (function () {
                 var owner = new ShipOwner(gov, new Point2(4, 4), "0");
                 //Check that no ships are in tile
                 assert.deepEqual(map.getNoOfShipsInTile(new Point2(4, 4)), 0, "there should not be any ships in tile");
-                map.addShip(owner.buyShip(FishType.Cod));
+                map.addShip(owner.buyShip(FishType.cod));
                 assert.deepEqual(map.getNoOfShipsInTile(new Point2(4, 4)), 1, "there should be 1 ship in tile");
-                map.addShip(owner.buyShip(FishType.Cod));
-                map.addShip(owner.buyShip(FishType.Cod));
-                map.addShip(owner.buyShip(FishType.Cod));
+                map.addShip(owner.buyShip(FishType.cod));
+                map.addShip(owner.buyShip(FishType.cod));
+                map.addShip(owner.buyShip(FishType.cod));
                 assert.deepEqual(map.getNoOfShipsInTile(new Point2(4, 4)), 4, "there should be 4 ships in tile");
             });
         };
