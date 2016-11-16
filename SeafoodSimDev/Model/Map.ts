@@ -418,14 +418,14 @@ class Map {
         return ret;
     }
     //Calculate how big a fraction the type p_name is of the total biomass
-    public getBiosmassFractionOf(p_name: string, m_position: Point2): number {
+    public getBiosmassFractionOf(p_name: string, p_position: Point2): number {
         var ret;
         var totalBiomass = 0;
-        for (var school of this.m_schools) {
+        for (var school of this.getSchoolsInTile(p_position)) {
             totalBiomass += school.getSize();
         }
         if (totalBiomass !== 0) {
-            ret = this.getBiomassOf(p_name, m_position) / totalBiomass;
+            ret = this.getBiomassOf(p_name, p_position) / totalBiomass;
         }
         else
             ret = 0;

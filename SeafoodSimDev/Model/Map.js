@@ -381,15 +381,15 @@ var Map = (function () {
         return ret;
     };
     //Calculate how big a fraction the type p_name is of the total biomass
-    Map.prototype.getBiosmassFractionOf = function (p_name, m_position) {
+    Map.prototype.getBiosmassFractionOf = function (p_name, p_position) {
         var ret;
         var totalBiomass = 0;
-        for (var _i = 0, _a = this.m_schools; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.getSchoolsInTile(p_position); _i < _a.length; _i++) {
             var school = _a[_i];
             totalBiomass += school.getSize();
         }
         if (totalBiomass !== 0) {
-            ret = this.getBiomassOf(p_name, m_position) / totalBiomass;
+            ret = this.getBiomassOf(p_name, p_position) / totalBiomass;
         }
         else
             ret = 0;
