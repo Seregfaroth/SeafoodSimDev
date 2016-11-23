@@ -5,7 +5,6 @@ var Main = (function () {
     function Main(p_test) {
         var _this = this;
         this.loadController = function () {
-            //debugger;
             //this.m_controller = new Controller(true);
             _this.m_controller = new Controller();
         };

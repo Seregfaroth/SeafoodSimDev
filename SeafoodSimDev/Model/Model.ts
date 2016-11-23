@@ -107,7 +107,7 @@ class Model {
     public getStats(): EndScreenStats {
         return this.m_stats;
     }
-    /*public runMCA(p_noOfMoves: number) {
+    public runMCA(p_noOfMoves: number) {/*
         //var tax: number[] = [20,20,20,20];
         var tax: number[] = [10, 15, 20, 25];
         //var tax: number[] = [10, 15, 20, 30, 40, 50, 60, 70];
@@ -171,7 +171,8 @@ class Model {
         $("#mainDiv").html(this.createJSONForMCA_HTML(result, tax, maxShips));
         console.log("Result: " + result);
         //debugger;
-    }*/
+        */
+    }
      
     public run(p_noOfMoves?: number) {
         if (p_noOfMoves == undefined) p_noOfMoves = 1;

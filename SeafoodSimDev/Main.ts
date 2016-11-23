@@ -12,12 +12,11 @@ class Main {
         this.loadController();
         
         
-        if (p_test) 
+        if (p_test)
            new Test();
     }
 
     public loadController = () => {
-        //debugger;
        //this.m_controller = new Controller(true);
         
        this.m_controller = new Controller();

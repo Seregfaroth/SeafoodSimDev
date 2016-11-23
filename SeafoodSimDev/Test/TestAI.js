@@ -9,8 +9,6 @@ var TestAI = (function () {
             var richShipOwner = new ShipOwner(gov, new Point2(0, 0), "0", 10000000000000000000);
             var poorShipOwner = new ShipOwner(gov, new Point2(0, 0), "1", -10000000000000000000);
             var sceanario = _this.scenario;
-            gov.getRestrictions().setTacCod(1000);
-            gov.getRestrictions().setTacMackerel(10000);
             QUnit.test("AI: pathToNearestLandingSite", function (assert) {
                 map.emptyGrid(sceanario.getOceanShipCapacity());
                 map.getGrid()[2][2] = new LandingSite(1, 10, 1, {}, "0", new Point2(2, 2));
@@ -53,10 +51,12 @@ var TestAI = (function () {
                 ai.run(richShipOwner, map);
                 //Check if owner has bought ship
                 assert.deepEqual(richShipOwner.getShips().length, 1, "rich ship owner should have one ship");
+    
                 ai.run(poorShipOwner, map);
                 //Poor ship owner should not buy a new ship
                 assert.deepEqual(poorShipOwner.getShips().length, 0, "poor ship owner should still have 0 ships");
             });
+    
             QUnit.test("AI: sell ship", function (assert) {
                 map.emptyGrid();
                 poorShipOwner.buyShip();
@@ -64,8 +64,10 @@ var TestAI = (function () {
                  ai.run(poorShipOwner, map);
                 //Poor ship owner should sell his ship
                  assert.deepEqual(poorShipOwner.getShips().length, 0, "poor ship owner should have 0 ships");
+    
                  richShipOwner.buyShip();
                  var noOfShips: number = richShipOwner.getShips().length;
+    
                  ai.run(richShipOwner, map);
                  assert.ok(richShipOwner.getShips().length >= noOfShips, "rich ship owner should not sell any of his ships");
             });
@@ -93,7 +95,7 @@ var TestAI = (function () {
                 var schoolPos = new Point2(0, 0);
                 map.addSchool(new Cod(10, schoolPos));
                 var shipOwner = new ShipOwner(gov, new Point2(3, 3), "shipOwner1");
-                var ship = shipOwner.buyShip(FishType.cod);
+                var ship = shipOwner.buyShip();
                 assert.deepEqual(ship.getState(), shipState.waiting, "Ship should be in a waiting state");
                 ai.run(shipOwner, map);
                 assert.deepEqual(ship.getState(), shipState.goingToFish, "Ship should be going to fish");
@@ -106,7 +108,7 @@ var TestAI = (function () {
                 var schoolPos = new Point2(0, 0);
                 map.addSchool(new Cod(1, schoolPos));
                 var shipOwner = new ShipOwner(gov, new Point2(3, 3), "shipOwner1");
-                var ship = shipOwner.buyShip(FishType.cod);
+                var ship = shipOwner.buyShip();
                 ai.run(shipOwner, map);
                 while (!ship.hasReachedGoal()) {
                     ai.run(shipOwner, map);
@@ -128,16 +130,16 @@ var TestAI = (function () {
                 var tile = map.getTile(schoolPos);
                 map.addSchool(new Cod(1000, schoolPos));
                 var shipOwner = new ShipOwner(gov, new Point2(2, 2), "shipOwner1");
-                var ship1 = shipOwner.buyShip(FishType.cod);
+                var ship1 = shipOwner.buyShip();
                 assert.deepEqual(tile.getShipsInTile(), 0, "No ship should have claimed the tile");
                 ai.run(shipOwner, map);
                 assert.deepEqual(ship1.getState(), shipState.goingToFish, "ship should be going to fish");
                 assert.deepEqual(tile.getShipsInTile(), 1, "One ship should have claimed the tile");
-                var ship2 = shipOwner.buyShip(FishType.cod);
+                var ship2 = shipOwner.buyShip();
                 ai.run(shipOwner, map);
                 assert.deepEqual(ship2.getState(), shipState.goingToFish, "ship should be going to fish");
                 assert.deepEqual(tile.getShipsInTile(), 2, "Two ships should have claimed the tile");
-                var ship3 = shipOwner.buyShip(FishType.cod);
+                var ship3 = shipOwner.buyShip();
                 ai.run(shipOwner, map);
                 assert.notDeepEqual(ship3.getState(), shipState.goingToFish, "Ship should not be able to go fish");
                 shipOwner.sellShip(ship3);
@@ -153,65 +155,6 @@ var TestAI = (function () {
                 //Ship should now leave tile and go to refuel
                 ai.run(shipOwner, map);
                 assert.deepEqual(tile.getShipsInTile(), 1, "One ship should have released the tile");
-            });
-            QUnit.test("AI: start new interval", function (assert) {
-                map.emptyGrid(100);
-                map.getGrid()[0][4] = new LandingSite(1, 10, 1, {}, "0", new Point2(0, 4));
-                map.getGrid()[5][3] = new FuelSite(1, 10, 10, 10, "0", new Point2(5, 3));
-                var schoolPos = new Point2(0, 0);
-                map.addSchool(new Cod(1000, schoolPos));
-                var shipOwner = new ShipOwner(gov, new Point2(2, 2), "shipOwner1");
-                var codShip = shipOwner.buyShip(FishType.cod);
-                var mackerelShip = shipOwner.buyShip(FishType.mackerel);
-                while (!codShip.hasReachedGoal() || mackerelShip.hasReachedGoal()) {
-                    ai.run(shipOwner, map);
-                }
-                ai.run(shipOwner, map);
-                ai.run(shipOwner, map);
-                assert.notDeepEqual(ai.getCatchedSoFar(), [0, 0], "some fish should have been catched");
-                ai.startNewInterval();
-                assert.deepEqual(ai.getCatchedSoFar(), [0, 0], "catched so far should be reset");
-            });
-            QUnit.test("AI: total allowable catch", function (assert) {
-                map.emptyGrid(100);
-                map.getGrid()[0][4] = new LandingSite(1, 10, 1, {}, "0", new Point2(0, 4));
-                map.getGrid()[5][3] = new FuelSite(1, 10, 10, 10, "0", new Point2(5, 3));
-                var schoolPos = new Point2(0, 0);
-                map.addSchool(new Cod(1000, schoolPos));
-                map.addSchool(new Mackerel(1000, schoolPos));
-                var shipOwner = new ShipOwner(gov, new Point2(2, 2), "shipOwner1");
-                var codShip = shipOwner.buyShip(FishType.cod);
-                var codShipOrigin = codShip.getPosition();
-                var mackerelShip = shipOwner.buyShip(FishType.mackerel);
-                var mackerelShipOrigin = mackerelShip.getPosition();
-                //Set tac to 0
-                map.getRestrictions().setTacCod(0);
-                map.getRestrictions().setTacMackerel(0);
-                for (var i = 0; i < 10; i++) {
-                    ai.run(shipOwner, map);
-                }
-                assert.deepEqual(codShip.getPosition(), codShipOrigin, "Ship should not have moved");
-                assert.deepEqual(mackerelShip.getPosition(), mackerelShipOrigin, "Ship should not have moved");
-                //Set tac
-                map.getRestrictions().setTacCod(10);
-                map.getRestrictions().setTacMackerel(20);
-                ai.run(shipOwner, map);
-                assert.deepEqual(codShip.getState(), shipState.goingToFish, "Ship should be going to fish");
-                assert.deepEqual(mackerelShip.getState(), shipState.goingToFish, "Ship should be going to fish");
-                while (codShip.getCargoSize() < map.getRestrictions().getTAC()[FishType.cod] ||
-                    mackerelShip.getCargoSize() < map.getRestrictions().getTAC()[FishType.mackerel]) {
-                    ai.run(shipOwner, map);
-                }
-                codShipOrigin = codShip.getPosition();
-                mackerelShipOrigin = mackerelShip.getPosition();
-                ai.run(shipOwner, map);
-                assert.deepEqual(codShip.getPosition(), codShipOrigin, "Ship should not have moved");
-                assert.deepEqual(mackerelShip.getPosition(), mackerelShipOrigin, "Ship should not have moved");
-                //Reset catch
-                ai.startNewInterval();
-                ai.run(shipOwner, map);
-                assert.deepEqual(codShip.getState(), shipState.goingToFish, "Ship should be going to fish");
-                assert.deepEqual(mackerelShip.getState(), shipState.goingToFish, "Ship should be going to fish");
             });
         };
         this.scenario = Scenario.getInstance();
