@@ -519,6 +519,24 @@ var Model = (function () {
         this.updateNoShips();
         this.m_ai.startNewInterval();
     };
+    Model.prototype.getRandomOcean = function () {
+        var startRow = Math.round(Math.random() * (this.m_map.getMapHeight() - 1));
+        var startCol = Math.round(Math.random() * (this.m_map.getMapHeight() - 1));
+        var point = new Point2(startRow, startCol);
+        if (!(this.m_map.getTile(point) instanceof Land)) {
+            return point;
+        }
+        var col = startCol + 1; //This is needed for the first check in the first for loop
+        for (var row = startRow; row != startRow || col != startCol; row = (row + 1) % this.m_map.getMapHeight()) {
+            for (col = startCol + 1; col != startCol; col = (col + 1) % this.m_map.getMapWidth()) {
+                point = new Point2(row, col);
+                if (!(this.m_map.getTile(point) instanceof Land)) {
+                    return point;
+                }
+            }
+        }
+        throw new Error("Error! No ocean tile on map");
+    };
     //Updates number of ships in map to correspond to restrictions
     Model.prototype.updateNoShips = function () {
         var noOfCodShips = this.m_goverment.getRestrictions().getNoCodOfShips();
@@ -531,7 +549,7 @@ var Model = (function () {
         }
         while (this.m_map.getCodShips().length < noOfCodShips) {
             //While there are too few ships
-            this.m_map.addShip(shipOwner.buyShip(FishType.cod));
+            this.m_map.addShip(shipOwner.buyShip(FishType.cod, this.getRandomOcean()));
         }
         while (this.m_map.getMackerelShips().length > noOfMackerelShips) {
             //While there are too many ships
@@ -540,7 +558,7 @@ var Model = (function () {
         }
         while (this.m_map.getMackerelShips().length < noOfMackerelShips) {
             //While there are too few ships
-            this.m_map.addShip(shipOwner.buyShip(FishType.mackerel));
+            this.m_map.addShip(shipOwner.buyShip(FishType.mackerel, this.getRandomOcean()));
         }
     };
     return Model;

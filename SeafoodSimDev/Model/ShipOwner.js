@@ -68,8 +68,8 @@ var ShipOwner = (function () {
             this.m_taxPayed += p_amount * this.m_government.getTaxingRate();
         }
     };
-    ShipOwner.prototype.buyShip = function (p_fishType) {
-        var ship = new Ship(this, p_fishType);
+    ShipOwner.prototype.buyShip = function (p_fishType, p_position) {
+        var ship = new Ship(this, p_fishType, p_position);
         this.m_ships.push(ship);
         this.financialTransaction(-this.m_shipPrice);
         this.m_shipBought = true;

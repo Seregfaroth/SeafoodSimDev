@@ -611,6 +611,25 @@ class Model {
         this.updateNoShips();
         this.m_ai.startNewInterval();
     }
+    public getRandomOcean(): Point2 {
+        var startRow: number = Math.round(Math.random() * (this.m_map.getMapHeight() - 1));
+        var startCol: number = Math.round(Math.random() * (this.m_map.getMapHeight() - 1));
+
+        var point: Point2 = new Point2(startRow, startCol);
+        if (!(this.m_map.getTile(point) instanceof Land)) {
+            return point;
+        }
+        var col: number = startCol + 1//This is needed for the first check in the first for loop
+        for (var row = startRow; row != startRow || col != startCol; row = (row + 1) % this.m_map.getMapHeight()) {
+            for (col = startCol + 1; col != startCol; col = (col + 1) % this.m_map.getMapWidth()) {
+                point = new Point2(row, col);
+                if (!(this.m_map.getTile(point) instanceof Land)) {
+                    return point;
+                }
+            }
+        }
+        throw new Error("Error! No ocean tile on map");
+    }
     //Updates number of ships in map to correspond to restrictions
     private updateNoShips(): void {
         var noOfCodShips: number = this.m_goverment.getRestrictions().getNoCodOfShips();
@@ -623,7 +642,7 @@ class Model {
         }
         while (this.m_map.getCodShips().length < noOfCodShips) {
             //While there are too few ships
-            this.m_map.addShip(shipOwner.buyShip(FishType.cod));
+            this.m_map.addShip(shipOwner.buyShip(FishType.cod, this.getRandomOcean()));
         }
         while (this.m_map.getMackerelShips().length > noOfMackerelShips) {
             //While there are too many ships
@@ -632,7 +651,7 @@ class Model {
         }
         while (this.m_map.getMackerelShips().length < noOfMackerelShips) {
             //While there are too few ships
-            this.m_map.addShip(shipOwner.buyShip(FishType.mackerel));
+            this.m_map.addShip(shipOwner.buyShip(FishType.mackerel, this.getRandomOcean()));
         }
     }
 }

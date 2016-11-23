@@ -23,10 +23,10 @@ class Ship {
     public history: any[][] = [[], [], [], [], []];//For debugging  purpose
     private m_noHistory: boolean;
 
-    public constructor(p_owner: ShipOwner, p_fishType: FishType) {
+    public constructor(p_owner: ShipOwner, p_fishType: FishType, p_position: Point2) {
         this.m_scenario = Scenario.getInstance();
         this.m_noHistory = this.m_scenario.getNoHistory();
-        this.m_position = p_owner.getShipStartPosition();
+        this.m_position = p_position;
         this.m_yield = [[], []];
         this.m_fuelCapacity = this.m_scenario.getShipFuelCapacity();
         this.m_cargoCapacity = this.m_scenario.getShipCargoCapacity();
