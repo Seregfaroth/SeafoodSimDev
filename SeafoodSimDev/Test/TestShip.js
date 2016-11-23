@@ -6,96 +6,115 @@ var TestShip = (function () {
         this.runTests = function () {
             var gov = new Government(new Restrictions());
             var owner = new ShipOwner(gov, new Point2(0, 0), "0");
-            var ship = new Ship(owner);
+            var codShip = new Ship(owner, FishType.cod);
+            var mackerelShip = new Ship(owner, FishType.mackerel);
             var map = new Map(gov.getRestrictions());
             var thisPlaceholder = _this;
-            map.emptyGrid();
+            map.emptyGrid(100);
             QUnit.test("Ship: Constructor", function (assert) {
                 var testShip;
                 //Check that ship is undefined
                 assert.equal(testShip, undefined, "ship should be undefined");
-                //Create ship and check members
-                testShip = new Ship(owner);
+                //Create  cod ship and check members
+                testShip = new Ship(owner, FishType.cod);
                 assert.ok(testShip, "Ship should have been created");
                 var noOfFish = 0;
-                for (var i = 0; i < testShip.getCargo()[FishType.Cod].length; i++) {
-                    noOfFish += testShip.getCargo()[FishType.Cod][i];
+                for (var i = 0; i < testShip.getCargo()[FishType.cod].length; i++) {
+                    noOfFish += testShip.getCargo()[FishType.cod][i];
                 }
-                for (var i = 0; i < testShip.getCargo()[FishType.Mackerel].length; i++) {
-                    noOfFish += testShip.getCargo()[FishType.Mackerel][i];
+                for (var i = 0; i < testShip.getCargo()[FishType.mackerel].length; i++) {
+                    noOfFish += testShip.getCargo()[FishType.mackerel][i];
                 }
                 assert.deepEqual(noOfFish, 0, "Cargo should be empty");
                 assert.deepEqual(testShip.getFuel(), testShip.getFuelCapacity(), "Fuel should be full");
+                assert.deepEqual(testShip.getType(), FishType.cod, "Ship should be a cod ship");
             });
             QUnit.test("Ship: Follow path", function (assert) {
-                map.emptyGrid();
-                var point = new Point2(ship.getPosition().row, ship.getPosition().col + 1);
-                var path = [ship.getPosition(), point, point];
-                var fuel = ship.getFuel();
-                ship.setPath(path);
-                assert.notDeepEqual(ship.getPosition(), point, "Ship should not have moved");
-                ship.followPath(map);
+                map.emptyGrid(100);
+                var point = new Point2(codShip.getPosition().row, codShip.getPosition().col + 1);
+                var path = [codShip.getPosition(), point, point];
+                var fuel = codShip.getFuel();
+                codShip.setPath(path);
+                assert.notDeepEqual(codShip.getPosition(), point, "Ship should not have moved");
+                codShip.followPath(map);
                 //Check that the ship has moved to the next point in the path
-                assert.deepEqual(ship.getPosition(), point);
+                assert.deepEqual(codShip.getPosition(), point);
                 //Check that the ship has used fuel
-                assert.deepEqual(ship.getFuel(), fuel - ship.getFuelPerMove());
+                assert.deepEqual(codShip.getFuel(), fuel - codShip.getFuelPerMove());
             });
             QUnit.test("Ship: follow path exception", function (assert) {
-                var path = [ship.getPosition(), new Point2(0, 0)];
-                ship.setPath(path);
-                ship.followPath(map);
+                var path = [codShip.getPosition(), new Point2(0, 0)];
+                codShip.setPath(path);
+                codShip.followPath(map);
                 //Check that the function throws an error
                 assert.throws(function () {
-                    ship.followPath(map);
+                    codShip.followPath(map);
                 }, Error, "should throw an error");
             });
             QUnit.test("Ship: follow path not possible", function (assert) {
-                map.emptyGrid();
+                map.emptyGrid(100);
                 map.getGrid()[0][0] = new LandingSite(1, 10, 101, {}, "0", new Point2(0, 0));
-                map.addShip(new Ship(new ShipOwner(gov, new Point2(0, 0), "0")));
-                var path = [ship.getPosition(), new Point2(0, 0), new Point2(0, 1)];
-                var oldPosition = ship.getPosition();
-                ship.setPath(path);
-                ship.followPath(map);
+                map.addShip(new Ship(new ShipOwner(gov, new Point2(0, 0), "0"), FishType.cod));
+                var path = [codShip.getPosition(), new Point2(0, 0), new Point2(0, 1)];
+                var oldPosition = codShip.getPosition();
+                codShip.setPath(path);
+                codShip.followPath(map);
                 //Check that ship has not moved
-                assert.deepEqual(oldPosition, ship.getPosition(), "ship should not have moved");
+                assert.deepEqual(oldPosition, codShip.getPosition(), "ship should not have moved");
                 assert.deepEqual(path.length, 3, "path should not be modified");
                 map.getGrid()[0][0] = new LandingSite(1, 0, 0, {}, "0", new Point2(0, 0));
-                ship.setPath(path);
-                ship.followPath(map);
+                codShip.setPath(path);
+                codShip.followPath(map);
                 //Check that ship has not moved
-                assert.deepEqual(oldPosition, ship.getPosition(), "ship should not have moved");
+                assert.deepEqual(oldPosition, codShip.getPosition(), "ship should not have moved");
                 assert.deepEqual(path.length, 3, "path should not be modified");
             });
             QUnit.test("Ship: has reached goal", function (assert) {
-                var goal = new Point2(ship.getPosition().row, ship.getPosition().col + 1);
-                var path = [ship.getPosition(), goal];
-                ship.setPath(path);
-                assert.ok(!ship.hasReachedGoal());
-                ship.followPath(map);
+                var goal = new Point2(codShip.getPosition().row, codShip.getPosition().col + 1);
+                var path = [codShip.getPosition(), goal];
+                codShip.setPath(path);
+                assert.ok(!codShip.hasReachedGoal());
+                codShip.followPath(map);
                 //Check that the ship has reached the goal
-                assert.ok(ship.hasReachedGoal());
+                assert.ok(codShip.hasReachedGoal());
             });
-            QUnit.test("Ship: fish", function (assert) {
+            QUnit.test("Ship: fish cod", function (assert) {
                 var map = new Map(gov.getRestrictions());
-                map.emptyGrid();
+                map.emptyGrid(100);
                 var point = new Point2(2, 2);
                 var noOfFishInSchool = 100;
                 var school = new Cod(noOfFishInSchool, point);
                 map.addSchool(school);
-                var path = [ship.getPosition(), point];
-                ship.setPath(path);
-                ship.followPath(map);
+                var path = [codShip.getPosition(), point];
+                codShip.setPath(path);
+                codShip.followPath(map);
                 //Check that ship is ready to fish
-                assert.deepEqual(ship.getPosition(), point, "ship should be at fishing position");
-                assert.deepEqual(ship.getCargoSize(), 0, "ship cargo should be empyt");
-                ship.fish(map);
+                assert.deepEqual(codShip.getPosition(), point, "ship should be at fishing position");
+                assert.deepEqual(codShip.getCargoSize(), 0, "ship cargo should be empyt");
+                codShip.fish(map);
                 //Check if ship has fished
-                assert.ok(ship.getCargoSize() > 0, "ship should have fished");
+                assert.ok(codShip.getCargoSize() > 0, "ship should have fished");
+            });
+            QUnit.test("Ship: fish mackerel", function (assert) {
+                var map = new Map(gov.getRestrictions());
+                map.emptyGrid(100);
+                var point = new Point2(2, 2);
+                var noOfFishInSchool = 100;
+                var school = new Mackerel(noOfFishInSchool, point);
+                map.addSchool(school);
+                var path = [mackerelShip.getPosition(), point];
+                mackerelShip.setPath(path);
+                mackerelShip.followPath(map);
+                //Check that ship is ready to fish
+                assert.deepEqual(mackerelShip.getPosition(), point, "ship should be at fishing position");
+                assert.deepEqual(mackerelShip.getCargoSize(), 0, "ship cargo should be empyt");
+                mackerelShip.fish(map);
+                //Check if ship has fished
+                assert.ok(mackerelShip.getCargoSize() > 0, "ship should have fished");
             });
             QUnit.test("Ship: land", function (assert) {
                 var map = new Map(gov.getRestrictions());
-                map.emptyGrid();
+                map.emptyGrid(100);
                 var prices = {};
                 prices[0] = 10;
                 prices[1] = 8;
@@ -105,31 +124,31 @@ var TestShip = (function () {
                 var noOfFishInSchool = 100;
                 var school = new Cod(noOfFishInSchool, point);
                 map.addSchool(school);
-                var path = [ship.getPosition(), point];
-                ship.setPath(path);
-                ship.followPath(map);
-                ship.fish(map);
+                var path = [codShip.getPosition(), point];
+                codShip.setPath(path);
+                codShip.followPath(map);
+                codShip.fish(map);
                 //Check that ship has some cargo
-                assert.ok(ship.getCargoSize() > 0, "ship should have fished");
+                assert.ok(codShip.getCargoSize() > 0, "ship should have fished");
                 var balance = owner.getBalance();
-                ship.land(site);
-                assert.deepEqual(ship.getCargoSize(), 0, "ship should have landed");
+                codShip.land(site);
+                assert.deepEqual(codShip.getCargoSize(), 0, "ship should have landed");
                 assert.ok(owner.getBalance() > balance, "owner should be paid"); //TODO check correct price when implemented
             });
             QUnit.test("Ship: refuel", function (assert) {
-                map.emptyGrid();
+                map.emptyGrid(100);
                 var fuelSite = new FuelSite(1, 100, 1, 1, "0", new Point2(0, 0));
-                var balance = ship.getOwner().getBalance();
-                ship.setPath([ship.getPosition(), new Point2(0, 1)]);
-                ship.followPath(map);
-                var fuel = ship.getFuel();
+                var balance = codShip.getOwner().getBalance();
+                codShip.setPath([codShip.getPosition(), new Point2(0, 1)]);
+                codShip.followPath(map);
+                var fuel = codShip.getFuel();
                 //Check that the ship has used fuel
-                assert.notDeepEqual(ship.getFuel(), ship.getFuelCapacity(), "ships fuel tank should not be full");
-                ship.refuel(fuelSite);
+                assert.notDeepEqual(codShip.getFuel(), codShip.getFuelCapacity(), "ships fuel tank should not be full");
+                codShip.refuel(fuelSite);
                 //Check that the ship has refueled
-                assert.deepEqual(ship.getFuel(), ship.getFuelCapacity(), "ship should have been refueled");
+                assert.deepEqual(codShip.getFuel(), codShip.getFuelCapacity(), "ship should have been refueled");
                 //Check that the ship owner has been charged
-                assert.deepEqual(ship.getOwner().getBalance(), balance - fuelSite.getPrice() * (ship.getFuel() - fuel), "owner should have been charged");
+                assert.deepEqual(codShip.getOwner().getBalance(), balance - fuelSite.getPrice() * (codShip.getFuel() - fuel), "owner should have been charged");
             });
         };
         this.scenario = Scenario.getInstance();

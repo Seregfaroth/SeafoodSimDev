@@ -98,6 +98,24 @@ var Map = (function () {
     Map.prototype.getShips = function () {
         return this.m_ships;
     };
+    Map.prototype.getCodShips = function () {
+        var ships = [];
+        this.m_ships.forEach(function (s) {
+            if (s.getType() === FishType.cod) {
+                ships.push(s);
+            }
+        });
+        return ships;
+    };
+    Map.prototype.getMackerelShips = function () {
+        var ships = [];
+        this.m_ships.forEach(function (s) {
+            if (s.getType() === FishType.mackerel) {
+                ships.push(s);
+            }
+        });
+        return ships;
+    };
     Map.prototype.getSchools = function () {
         return this.m_schools;
     };
@@ -287,16 +305,27 @@ var Map = (function () {
     Map.prototype.getSchoolsInTile = function (p_position) {
         var list = [];
         this.m_schools.forEach(function (s) {
-            if (s.getPosition().compare(p_position)) {
+            if (s.getOrigin().compare(p_position)) {
                 list.push(s);
             }
         });
         return list;
     };
-    Map.prototype.getNoOfFishInTile = function (p_position) {
+    Map.prototype.getNoOfCodInTile = function (p_position) {
         var num = 0;
         this.getSchoolsInTile(p_position).forEach(function (s) {
-            num += s.getSize();
+            if (s instanceof Cod) {
+                num += s.getSize();
+            }
+        });
+        return num;
+    };
+    Map.prototype.getNoOfMackerelInTile = function (p_position) {
+        var num = 0;
+        this.getSchoolsInTile(p_position).forEach(function (s) {
+            if (s instanceof Mackerel) {
+                num += s.getSize();
+            }
         });
         return num;
     };
@@ -367,11 +396,11 @@ var Map = (function () {
         var ret;
         return ret;
     };
-    Map.prototype.getBiomassOf = function (p_name, m_position) {
+    Map.prototype.getBiomassOfinTile = function (p_type, p_position) {
         var ret;
-        for (var _i = 0, _a = this.m_schools; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.getSchoolsInTile(p_position); _i < _a.length; _i++) {
             var school = _a[_i];
-            if (school.getType() === p_name) {
+            if (school instanceof p_type) {
                 ret = school.getSize();
                 break;
             }
@@ -381,7 +410,7 @@ var Map = (function () {
         return ret;
     };
     //Calculate how big a fraction the type p_name is of the total biomass
-    Map.prototype.getBiosmassFractionOf = function (p_name, p_position) {
+    Map.prototype.getBiosmassFractionOf = function (p_type, p_position) {
         var ret;
         var totalBiomass = 0;
         for (var _i = 0, _a = this.getSchoolsInTile(p_position); _i < _a.length; _i++) {
@@ -389,7 +418,7 @@ var Map = (function () {
             totalBiomass += school.getSize();
         }
         if (totalBiomass !== 0) {
-            ret = this.getBiomassOf(p_name, p_position) / totalBiomass;
+            ret = this.getBiomassOfinTile(p_type, p_position) / totalBiomass;
         }
         else
             ret = 0;

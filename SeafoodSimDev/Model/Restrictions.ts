@@ -1,14 +1,13 @@
-﻿class Restrictions{
-    
+﻿class Restrictions {
+
     private m_scenario: Scenario;
     private m_quotes: { [shipOwner: string]: number } = {};
     private m_effortLimits: { [shipOwner: string]: number } = {};
-   private m_restrictedAreas: Tile[] = [];
-   private m_landingDistrubutions: { [Site: string]: number } = {};
-   private m_noCodOfShips: number;
-   private m_noMackerelOfShips: number;
-   private m_tacCod: number;
-   private m_tacMackerel: number;
+    private m_restrictedAreas: Tile[] = [];
+    private m_landingDistrubutions: { [Site: string]: number } = {};
+    private m_noCodOfShips: number;
+    private m_noMackerelOfShips: number;
+    private m_tac: number[] = [undefined, undefined];
    constructor() {
        this.m_scenario = Scenario.getInstance();
        this.m_noCodOfShips = this.m_scenario.getStartNoCodShips();
@@ -67,9 +66,12 @@
         return this.m_restrictedAreas.indexOf(p_tile) > -1;
     }
     public setTacMackerel(p_n: number): void {
-        this.m_tacMackerel = p_n;
+        this.m_tac[FishType.mackerel] = p_n;
     }
     public setTacCod(p_n: number): void {
-        this.m_tacCod = p_n;
+        this.m_tac[FishType.cod] = p_n;
+    }
+    public getTAC(): number[] {
+        return this.m_tac;
     }
 }

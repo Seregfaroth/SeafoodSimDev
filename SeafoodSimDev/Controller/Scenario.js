@@ -37,8 +37,8 @@ var Scenario = (function () {
         this.m_name = p_json.name;
         this.m_prices = p_json.prices;
         this.m_prices = {};
-        this.m_prices[FishType.Cod] = p_json.prices.Cod;
-        this.m_prices[FishType.Mackerel] = p_json.prices.Mackerel;
+        this.m_prices[FishType.cod] = p_json.prices.Cod;
+        this.m_prices[FishType.mackerel] = p_json.prices.Mackerel;
         this.m_finGoal = p_json.financialScoreGoal;
         this.m_ecoGoal = p_json.environmentalScoreGoal;
         this.m_socGoal = p_json.socialScoreGoal;
@@ -100,6 +100,7 @@ var Scenario = (function () {
         this.m_codMovingRadius = p_json.codMovingRadius;
         this.m_codRecruitPercent = p_json.codRecruitPercent;
         this.m_codSchoolMaxAge = p_json.codSchoolMaxAge;
+        this.m_mackerelScoolMaxAge = p_json.mackerelSchoolMaxAge;
         this.m_modelStatFreq = p_json.modelStatFreq;
         this.m_modelRecruitAndAgeFreq = p_json.modelRecruitAndAgeFreq;
         this.m_noOfEmployeesPerShip = p_json.noOfEmployeesPerShip;
@@ -286,6 +287,9 @@ var Scenario = (function () {
     };
     Scenario.prototype.getCodSchoolMaxAge = function () {
         return this.m_codSchoolMaxAge;
+    };
+    Scenario.prototype.getMackerelSchoolMaxAge = function () {
+        return this.m_mackerelScoolMaxAge;
     };
     Scenario.prototype.getModelStatFreq = function () {
         return this.m_modelStatFreq;

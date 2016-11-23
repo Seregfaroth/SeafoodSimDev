@@ -55,11 +55,11 @@ class Model {
         this.m_stats.setTimeAt(statTime, this.getTime());
         //updating biomass and recruitment
         for (var sc of this.getMap().getSchools()) {
-            if (sc.getType() === "cod") {
+            if (sc instanceof Cod) {
                 biomassCod += sc.getBiomass();
                 recruitCod += sc.getRecruitTotal();
             }
-            else if (sc.getType() === "mac") {
+            else if (sc instanceof Mackerel) {
                 biomassMac += sc.getBiomass();
                 recruitMac += sc.getRecruitTotal();
             }
@@ -107,7 +107,7 @@ class Model {
     public getStats(): EndScreenStats {
         return this.m_stats;
     }
-    public runMCA(p_noOfMoves: number) {
+    /*public runMCA(p_noOfMoves: number) {
         //var tax: number[] = [20,20,20,20];
         var tax: number[] = [10, 15, 20, 25];
         //var tax: number[] = [10, 15, 20, 30, 40, 50, 60, 70];
@@ -171,7 +171,7 @@ class Model {
         $("#mainDiv").html(this.createJSONForMCA_HTML(result, tax, maxShips));
         console.log("Result: " + result);
         //debugger;
-    }
+    }*/
      
     public run(p_noOfMoves?: number) {
         if (p_noOfMoves == undefined) p_noOfMoves = 1;
@@ -606,17 +606,32 @@ class Model {
         }
         return Math.round(sum / l);
     }
-
+    public startNewInterval(): void {
+        this.updateNoShips();
+        this.m_ai.startNewInterval();
+    }
     //Updates number of ships in map to correspond to restrictions
-    public updateNoShips(): void {
-        var noOfShips: number = this.m_goverment.getRestrictions().getNoCodOfShips();
+    private updateNoShips(): void {
+        var noOfCodShips: number = this.m_goverment.getRestrictions().getNoCodOfShips();
+        var noOfMackerelShips: number = this.m_goverment.getRestrictions().getNoMackerelOfShips();
         var shipOwner: ShipOwner = this.m_shipOwners[0]; //OBS assuming only one ship owner
-        while (this.m_map.getShips().length > noOfShips) {
-            this.m_map.removeShip(shipOwner.getShips()[0]);
-            shipOwner.sellShip(shipOwner.getShips()[0]);
+        while (this.m_map.getCodShips().length > noOfCodShips) {
+            //While there are too many ships
+            this.m_map.removeShip(shipOwner.getCodShips()[0]);
+            shipOwner.sellShip(shipOwner.getCodShips()[0]);
         }
-        while (this.m_map.getShips().length < noOfShips) {
-            this.m_map.addShip(shipOwner.buyShip());
+        while (this.m_map.getCodShips().length < noOfCodShips) {
+            //While there are too few ships
+            this.m_map.addShip(shipOwner.buyShip(FishType.cod));
+        }
+        while (this.m_map.getMackerelShips().length > noOfMackerelShips) {
+            //While there are too many ships
+            this.m_map.removeShip(shipOwner.getMackerelShips()[0]);
+            shipOwner.sellShip(shipOwner.getMackerelShips()[0]);
+        }
+        while (this.m_map.getMackerelShips().length < noOfMackerelShips) {
+            //While there are too few ships
+            this.m_map.addShip(shipOwner.buyShip(FishType.mackerel));
         }
     }
 }

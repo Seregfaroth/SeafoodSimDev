@@ -115,7 +115,7 @@
         this.setNoMackerelShips($('#noMackerelShipsSlider').slider("option", "value"));
         this.setTacCod($('#tacCodSlider').slider("option", "value"));
         this.setTacMackerel($('#tacMackerelSlider').slider("option", "value"));
-        this.m_controller.getModel().updateNoShips();
+        this.m_controller.getModel().startNewInterval();
         this.start();
     }
     public setTax = (p_n: number): void => {

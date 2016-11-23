@@ -1,9 +1,9 @@
 ﻿// <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 abstract class School {
-    //protected m_scenario: Scenario;
-    protected m_position: Point2;
+    protected m_scenario: Scenario;
     protected m_maxAge: number;
-    protected m_type: string;
+    protected m_position: Point2;
+    //protected m_type: string;
     protected m_ages: number[] = [];
     protected m_msy: number;
     protected m_tac: number;
@@ -12,16 +12,21 @@ abstract class School {
     protected m_yield: number = 0;
     protected m_size: number;
     protected m_growthRate: number;
+    protected m_origin: Point2;
 
     public constructor(p_size: number, p_position: Point2) {
-        //this.m_scenario = p_scenario;
+        this.m_scenario = Scenario.getInstance();
         this.m_position = p_position;
+        this.m_origin = p_position;
         //this.m_msy = p_msy;        
     }
-    public getType(): string {
+    /*public getType(): string {
         return this.m_type;
-    }
+    }*/
 
+    public getOrigin(): Point2 {
+        return this.m_origin;
+    }
     public getRecruitTotal(): number {
         return this.m_recruitTotal;
     }
@@ -96,7 +101,59 @@ abstract class School {
         }
         return ssb;
     }
+    //Move with a probability of 25% in a random direction
+    public move(p_map: Map): void {
+        //console.log("Original position: " + JSON.stringify(this.m_position));
+        var move: boolean = Math.random() < 0.05;
+        if (this.m_scenario.getMovingRadius() !== 0) {
+            if (move) {
+
+                var newPoint: Point2;
+                //While loop runs until an ocean tile has been found
+                do {
+                    var direction: number = Math.floor((Math.random() * 4));
+                    switch (direction) {
+                        case 0:
+                            if (this.m_position.row === p_map.getGrid().length - 1) {
+                                newPoint = new Point2(0, this.m_position.col);
+                            }
+                            else {
+                                newPoint = new Point2(this.m_position.row + 1, this.m_position.col)
+                            }
+                            break;
+                        case 1:
+                            if (this.m_position.col === 0) {
+                                newPoint = new Point2(this.m_position.row, p_map.getGrid()[0].length - 1)
+                            }
+                            else {
+                                newPoint = new Point2(this.m_position.row, this.m_position.col - 1);
+                            }
+                            break;
+                        case 2:
+                            if (this.m_position.row === 0) {
+                                newPoint = new Point2(p_map.getGrid().length - 1, this.m_position.col);
+                            }
+                            else {
+                                newPoint = new Point2(this.m_position.row - 1, this.m_position.col);
+                            }
+                            break;
+                        case 3:
+                            if (this.m_position.col === p_map.getGrid()[0].length - 1) {
+                                newPoint = new Point2(this.m_position.row, 0);
+                            }
+                            else {
+                                newPoint = new Point2(this.m_position.row, this.m_position.col + 1);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                } while (!(p_map.getTile(newPoint) instanceof Ocean) || newPoint.manhattanDistTo(this.m_origin) > this.m_scenario.getMovingRadius());
+                this.m_position = newPoint;
+            }
+        }
+        //console.log("new postion: " + JSON.stringify(this.m_position));
+    }
     protected abstract recruit(p_map: Map): void;
     //protected abstract recruit2(p_map: Map, cc: number, gr: number): void;
-    public abstract move(p_map: Map): void;
 }

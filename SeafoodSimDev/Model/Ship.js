@@ -9,18 +9,17 @@ var shipState;
 })(shipState || (shipState = {}));
 var FishType;
 (function (FishType) {
-    FishType[FishType["Cod"] = 0] = "Cod";
-    FishType[FishType["Mackerel"] = 1] = "Mackerel";
+    FishType[FishType["cod"] = 0] = "cod";
+    FishType[FishType["mackerel"] = 1] = "mackerel";
 })(FishType || (FishType = {}));
 var Ship = (function () {
-    function Ship(p_owner) {
+    function Ship(p_owner, p_fishType) {
         this.m_fishedFor = 0;
         this.m_path = [];
         this.history = [[], [], [], [], []]; //For debugging  purpose
         this.m_scenario = Scenario.getInstance();
         this.m_noHistory = this.m_scenario.getNoHistory();
         this.m_position = p_owner.getShipStartPosition();
-        this.m_cargo = [[], []];
         this.m_yield = [[], []];
         this.m_fuelCapacity = this.m_scenario.getShipFuelCapacity();
         this.m_cargoCapacity = this.m_scenario.getShipCargoCapacity();
@@ -29,12 +28,7 @@ var Ship = (function () {
         this.m_fuel = this.m_fuelCapacity;
         this.m_owner = p_owner;
         this.m_state = shipState.waiting;
-        for (var i = 0; i < this.m_scenario.getCodSchoolMaxAge(); i++) {
-            this.m_cargo[FishType.Cod][i] = 0;
-        }
-        for (var i = 0; i < 18; i++) {
-            this.m_cargo[FishType.Mackerel][i] = 0;
-        }
+        this.m_fishingGear = new FishingGear(p_fishType);
     }
     Ship.prototype.getFishedFor = function () {
         return this.m_fishedFor;
@@ -52,7 +46,7 @@ var Ship = (function () {
         return this.m_fuel;
     };
     Ship.prototype.getCargo = function () {
-        return this.m_cargo;
+        return this.m_fishingGear.getCargo();
     };
     Ship.prototype.getFuelCapacity = function () {
         return this.m_fuelCapacity;
@@ -85,14 +79,10 @@ var Ship = (function () {
         return this.m_owner;
     };
     Ship.prototype.getCargoSize = function () {
-        var size = 0;
-        for (var i = 0; i < this.m_cargo[FishType.Cod].length; i++) {
-            size += this.m_cargo[FishType.Cod][i];
-        }
-        for (var i = 0; i < this.m_cargo[FishType.Mackerel].length; i++) {
-            size += this.m_cargo[FishType.Mackerel][i];
-        }
-        return size;
+        return this.m_fishingGear.getCargoSize();
+    };
+    Ship.prototype.getType = function () {
+        return this.m_fishingGear.getFishType();
     };
     //Throws an exception if path is empty, moves to last point in array otherwise
     Ship.prototype.followPath = function (p_map) {
@@ -133,37 +123,11 @@ var Ship = (function () {
         this.m_path = [];
     };
     Ship.prototype.fish = function (p_map) {
-        this.m_fishedFor++;
-        var ship = this;
         this.m_fuel -= this.m_fuelPerFishingTick;
-        var percentage = this.m_scenario.getFishingPercentage();
-        var noOfFishInTile = p_map.getNoOfFishInTile(this.m_position);
-        if (this.m_cargoCapacity - this.getCargoSize() < noOfFishInTile * percentage) {
-            //If the ship is not able to fish the full percentage
-            percentage = (this.m_cargoCapacity - this.getCargoSize()) / noOfFishInTile;
-        }
-        p_map.getSchoolsInTile(this.m_position).forEach(function (school) {
-            var type = school instanceof Cod ? FishType.Cod : FishType.Mackerel;
-            if (type === FishType.Cod) {
-                for (var i = 0; i < school.getMaxAge(); i++) {
-                    //The number of fish the ship is fishing
-                    //var noOfFish: number = Math.floor(percentage * school.getAges()[i]);
-                    var noOfFish = Math.ceil(percentage * school.getAges()[i]);
-                    //Add to cargo
-                    ship.m_cargo[type][i] += noOfFish;
-                    //Remove from school
-                    school.getAges()[i] -= noOfFish;
-                    //var t1 = p_map.getYield();
-                    p_map.setYield(p_map.getYield() + noOfFish);
-                    //var t2 = p_map.getYield();
-                    if (!this.m_noHistory)
-                        ship.history[1].push(noOfFish);
-                }
-            }
-        });
+        return this.m_fishingGear.fish(this.m_position, p_map);
     };
     Ship.prototype.land = function (p_landingSite) {
-        this.m_owner.financialTransaction(p_landingSite.receiveFish(this.m_cargo));
+        this.m_owner.financialTransaction(p_landingSite.receiveFish(this.getCargo()));
     };
     Ship.prototype.refuel = function (p_fuelSite) {
         var fuelAmount = p_fuelSite.provideFuel(this.m_fuelCapacity - this.m_fuel);

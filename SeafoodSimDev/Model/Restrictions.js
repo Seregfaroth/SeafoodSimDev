@@ -4,6 +4,7 @@ var Restrictions = (function () {
         this.m_effortLimits = {};
         this.m_restrictedAreas = [];
         this.m_landingDistrubutions = {};
+        this.m_tac = [undefined, undefined];
         this.m_scenario = Scenario.getInstance();
         this.m_noCodOfShips = this.m_scenario.getStartNoCodShips();
     }
@@ -50,10 +51,13 @@ var Restrictions = (function () {
         return this.m_restrictedAreas.indexOf(p_tile) > -1;
     };
     Restrictions.prototype.setTacMackerel = function (p_n) {
-        this.m_tacMackerel = p_n;
+        this.m_tac[FishType.mackerel] = p_n;
     };
     Restrictions.prototype.setTacCod = function (p_n) {
-        this.m_tacCod = p_n;
+        this.m_tac[FishType.cod] = p_n;
+    };
+    Restrictions.prototype.getTAC = function () {
+        return this.m_tac;
     };
     return Restrictions;
 }());

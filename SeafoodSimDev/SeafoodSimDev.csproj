@@ -67,6 +67,7 @@
     <TypeScriptCompile Include="Main.ts" />
     <TypeScriptCompile Include="Model\AI.ts" />
     <TypeScriptCompile Include="Model\CarryingCapacity.ts" />
+    <TypeScriptCompile Include="Model\FishingGear.ts" />
     <TypeScriptCompile Include="Model\Cod.ts" />
     <TypeScriptCompile Include="Model\EndScreenStats.ts" />
     <TypeScriptCompile Include="Model\FishGroup.ts" />

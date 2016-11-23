@@ -107,6 +107,24 @@ class Map {
     public getShips(): Ship[] {
         return this.m_ships;
     }
+    public getCodShips(): Ship[] {
+        var ships: Ship[] = [];
+        this.m_ships.forEach(function (s: Ship) {
+            if (s.getType() === FishType.cod) {
+                ships.push(s);
+            }
+        });
+        return ships;
+    }
+    public getMackerelShips(): Ship[] {
+        var ships: Ship[] = [];
+        this.m_ships.forEach(function (s: Ship) {
+            if (s.getType() === FishType.mackerel) {
+                ships.push(s);
+            }
+        });
+        return ships;
+    }
     public getSchools(): School[] {
         return this.m_schools;
     }
@@ -317,17 +335,28 @@ class Map {
     public getSchoolsInTile(p_position: Point2): School[] {
         var list: School[] = [];
         this.m_schools.forEach(function (s) {
-           if (s.getPosition().compare( p_position) ){
+           if (s.getOrigin().compare( p_position) ){
                 list.push(s);
 
             }
         });
         return list;
     }
-    public getNoOfFishInTile(p_position: Point2): number {
+    public getNoOfCodInTile(p_position: Point2): number {
         var num: number = 0;
         this.getSchoolsInTile(p_position).forEach(function (s) {
-           num += s.getSize();
+            if (s instanceof Cod) {
+                num += s.getSize();
+            }
+        });
+        return num;
+    }
+    public getNoOfMackerelInTile(p_position: Point2): number {
+        var num: number = 0;
+        this.getSchoolsInTile(p_position).forEach(function (s) {
+            if (s instanceof Mackerel) {
+                num += s.getSize();
+            }
         });
         return num;
     }
@@ -405,10 +434,10 @@ class Map {
 
         return ret;
     }
-    public getBiomassOf(p_name: string, m_position: Point2): number {
+    public getBiomassOfinTile(p_type, p_position: Point2): number {
         var ret;
-        for (var school of this.m_schools) {
-            if (school.getType() === p_name) {
+        for (var school of this.getSchoolsInTile(p_position)) {
+            if (school instanceof p_type) {
                 ret = school.getSize();
                 break;
             }
@@ -418,14 +447,14 @@ class Map {
         return ret;
     }
     //Calculate how big a fraction the type p_name is of the total biomass
-    public getBiosmassFractionOf(p_name: string, p_position: Point2): number {
+    public getBiosmassFractionOf(p_type, p_position: Point2): number {
         var ret;
         var totalBiomass = 0;
         for (var school of this.getSchoolsInTile(p_position)) {
             totalBiomass += school.getSize();
         }
         if (totalBiomass !== 0) {
-            ret = this.getBiomassOf(p_name, p_position) / totalBiomass;
+            ret = this.getBiomassOfinTile(p_type, p_position) / totalBiomass;
         }
         else
             ret = 0;

@@ -2,13 +2,18 @@
 var AI = (function () {
     function AI() {
         this.m_pathFinder = new TKN_PathFinding();
-        this.m_fishingPath = [new Point2(2, 0), new Point2(1, 0), new Point2(1, 1), new Point2(1, 2), new Point2(1, 3), new Point2(1, 4), new Point2(2, 4),
-            new Point2(3, 4), new Point2(3, 3), new Point2(3, 2), new Point2(3, 1), new Point2(3, 0), new Point2(2, 0)];
         this.m_scenario = Scenario.getInstance();
         this.m_noHistory = this.m_scenario.getNoHistory();
         this.m_balanceToBuyShip = this.m_scenario.getAiBuyShipBalance();
         this.m_balanceToSellShip = this.m_scenario.getAiSellShipBalance();
+        this.m_catchedSoFar = [0, 0];
     }
+    AI.prototype.startNewInterval = function () {
+        this.m_catchedSoFar = [0, 0];
+    };
+    AI.prototype.getCatchedSoFar = function () {
+        return this.m_catchedSoFar;
+    };
     AI.prototype.run = function (p_shipOwner, p_map) {
         //console.log("AI money: "+ p_shipOwner.getBalance());
         // this.buyOrSellShip(p_shipOwner, p_map);
@@ -34,7 +39,7 @@ var AI = (function () {
     AI.prototype.runShips = function (p_shipOwner, p_map) {
         var ai = this;
         var n = 0;
-        p_shipOwner.getShips().forEach(function (ship) {
+        p_shipOwner.getAllShips().forEach(function (ship) {
             //console.log("ship " + n);
             console.log("state: " + ship.getState().toString() + " cargo: " + ship.getCargoSize() + " fuel: " + ship.getFuel() + " position: " + ship.getPosition().row + ", " + ship.getPosition().col);
             //ship.useFuel(0.25);
@@ -53,8 +58,11 @@ var AI = (function () {
                     p_map.getTile(ship.getPosition()).releaseTile();
                     ai.goRefuel(ship, p_map);
                 }
-                else {
-                    ship.fish(p_map);
+                else if (ai.m_catchedSoFar[ship.getType()] < p_map.getRestrictions().getTAC()[ship.getType()]) {
+                    //If all tac is not fished yet
+                    ai.m_catchedSoFar[ship.getType()] += ship.fish(p_map);
+                    ship.setState(shipState.waiting); //Set state to waiting
+                    ship.emptyPath();
                 }
             }
             else if (ship.hasReachedGoal()) {
@@ -97,7 +105,6 @@ var AI = (function () {
             var t = p_map.getNoOfShipsInTile(p_ship.getPosition());
             var t2 = p_map.getTile(p_ship.getPosition()).getShipCapacity();
             if (p_map.getNoOfShipsInTile(p_ship.getPosition()) <= tile.getShipCapacity()) {
-                p_ship.fish(p_map);
                 p_ship.setState(shipState.fishing);
             }
             else {
@@ -178,7 +185,7 @@ var AI = (function () {
         if (p_map.getSchools().length !== 0) {
             var randomNumber = Math.floor(Math.random() * (p_map.getSchools().length));
             var firstRandomNumber = randomNumber;
-            while (!p_map.getTile(p_map.getSchools()[randomNumber].getPosition()).roomForAnotherShip()) {
+            while (!p_map.getTile(p_map.getSchools()[randomNumber].getOrigin()).roomForAnotherShip()) {
                 randomNumber = (randomNumber + 1) % p_map.getSchools().length;
                 if (randomNumber === firstRandomNumber)
                     return undefined; //If there was no tile with room for the ship
@@ -239,7 +246,7 @@ var AI = (function () {
                     this.goRefuel(p_ship, p_map, fuelPath);
                 }
             }
-            else {
+            else if (this.m_catchedSoFar[p_ship.getType()] < p_map.getRestrictions().getTAC()[p_ship.getType()]) {
                 //If ship does not need to land or refuel
                 //var fishingPath: Point2[] = this.pathToBestFishingArea(p_ship.getPosition(), p_map);
                 var fishingPath = this.pathToFish(p_ship.getPosition(), p_map);

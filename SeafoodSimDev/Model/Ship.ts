@@ -2,14 +2,13 @@
 enum shipState { fishing, goingToFish, goingToRefuel, goingToLand, waiting }
 
 enum FishType {
-    Cod = 0,
-    Mackerel = 1
+    cod = 0,
+    mackerel = 1
 }
 class Ship {
     private m_fishedFor: number = 0;
     private m_scenario: Scenario;
     private m_fuel: number;
-    private m_cargo: number[][];
     private m_fuelCapacity;
     private m_cargoCapacity;
     private m_yield: number[][];
@@ -20,14 +19,14 @@ class Ship {
     private m_fuelPerFishingTick: number;
     private m_owner: ShipOwner;
     private m_state: shipState;
+    private m_fishingGear: FishingGear;
     public history: any[][] = [[], [], [], [], []];//For debugging  purpose
     private m_noHistory: boolean;
 
-    public constructor(p_owner: ShipOwner) {
+    public constructor(p_owner: ShipOwner, p_fishType: FishType) {
         this.m_scenario = Scenario.getInstance();
         this.m_noHistory = this.m_scenario.getNoHistory();
         this.m_position = p_owner.getShipStartPosition();
-        this.m_cargo = [[], []];
         this.m_yield = [[], []];
         this.m_fuelCapacity = this.m_scenario.getShipFuelCapacity();
         this.m_cargoCapacity = this.m_scenario.getShipCargoCapacity();
@@ -36,12 +35,8 @@ class Ship {
         this.m_fuel = this.m_fuelCapacity;
         this.m_owner = p_owner;
         this.m_state = shipState.waiting;
-        for (var i = 0; i < this.m_scenario.getCodSchoolMaxAge(); i++) {
-            this.m_cargo[FishType.Cod][i] = 0;
-        }
-        for (var i = 0; i < 18; i++) {//18 is the max age of mackerel. TODO max age should be stored somewhere where it is accesible from ship
-            this.m_cargo[FishType.Mackerel][i] = 0;
-        }
+        this.m_fishingGear = new FishingGear(p_fishType);
+        
     }
     public getFishedFor(): number {
         return this.m_fishedFor;
@@ -60,7 +55,7 @@ class Ship {
     }
 
     public getCargo(): number[][] {
-        return this.m_cargo;
+        return this.m_fishingGear.getCargo();
     }
 
     public getFuelCapacity(): number {
@@ -98,14 +93,10 @@ class Ship {
         return this.m_owner;
     }
     public getCargoSize(): number {
-        var size: number = 0;
-        for (var i = 0; i < this.m_cargo[FishType.Cod].length; i++) {
-            size += this.m_cargo[FishType.Cod][i];
-        }
-        for (var i = 0; i < this.m_cargo[FishType.Mackerel].length; i++) {
-            size += this.m_cargo[FishType.Mackerel][i];
-        }
-        return size;
+        return this.m_fishingGear.getCargoSize();
+    }
+    public getType(): FishType {
+        return this.m_fishingGear.getFishType();
     }
     //Throws an exception if path is empty, moves to last point in array otherwise
     public followPath(p_map: Map): void {
@@ -146,43 +137,15 @@ class Ship {
     public emptyPath(): void {
         this.m_path = [];
     }
-    public fish(p_map: Map): void {
-        this.m_fishedFor++;
-        var ship: Ship = this;
-        this.m_fuel -= this.m_fuelPerFishingTick;
-        var percentage: number = this.m_scenario.getFishingPercentage();
-        var noOfFishInTile: number = p_map.getNoOfFishInTile(this.m_position);
-        if (this.m_cargoCapacity - this.getCargoSize() < noOfFishInTile * percentage) {
-            //If the ship is not able to fish the full percentage
-            percentage = (this.m_cargoCapacity - this.getCargoSize()) / noOfFishInTile;
-        }
 
-        p_map.getSchoolsInTile(this.m_position).forEach(function (school) {
-            var type: FishType = school instanceof Cod ? FishType.Cod : FishType.Mackerel;
-            if (type === FishType.Cod) {
-                for (var i = 0; i < school.getMaxAge(); i++) {
-                    //The number of fish the ship is fishing
-                    //var noOfFish: number = Math.floor(percentage * school.getAges()[i]);
-                    var noOfFish: number = Math.ceil(percentage * school.getAges()[i]);
-                    //Add to cargo
-                    ship.m_cargo[type][i] += noOfFish;
-                    //Remove from school
-                    school.getAges()[i] -= noOfFish;
-                    //var t1 = p_map.getYield();
-                    p_map.setYield(p_map.getYield() + noOfFish);
-                    //var t2 = p_map.getYield();
-                    if (!this.m_noHistory)
-                        ship.history[1].push(noOfFish);
-                }
-            }
-        });
-    
-        
+    public fish(p_map: Map): number {
+        this.m_fuel -= this.m_fuelPerFishingTick;
+        return this.m_fishingGear.fish(this.m_position,p_map);
     }
 
     public land(p_landingSite: LandingSite): void {
         
-        this.m_owner.financialTransaction(p_landingSite.receiveFish(this.m_cargo));
+        this.m_owner.financialTransaction(p_landingSite.receiveFish(this.getCargo()));
     }
 
     public refuel(p_fuelSite: FuelSite): void {

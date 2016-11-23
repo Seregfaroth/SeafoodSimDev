@@ -29,8 +29,26 @@ class ShipOwner {
     public getID(): string {
         return this.m_id;
     }
-    public getShips(): Ship[] {
-        return this.m_ships;
+    public getAllShips(): Ship[] {
+       return this.m_ships;
+    }
+    public getCodShips(): Ship[] {
+        var ships: Ship[] = [];
+        this.m_ships.forEach(function (s: Ship) {
+            if (s.getType() === FishType.cod) {
+                ships.push(s);
+            }
+        });
+        return ships;
+    }
+    public getMackerelShips(): Ship[] {
+        var ships: Ship[] = [];
+        this.m_ships.forEach(function (s: Ship) {
+            if (s.getType() === FishType.mackerel) {
+                ships.push(s);
+            }
+        });
+        return ships;
     }
 
     public getBalance(): number {
@@ -65,8 +83,8 @@ class ShipOwner {
         }
     }
 
-    public buyShip(): Ship{
-        var ship: Ship = new Ship(this);
+    public buyShip(p_fishType: FishType): Ship{
+        var ship: Ship = new Ship(this, p_fishType);
         this.m_ships.push(ship);
         this.financialTransaction(-this.m_shipPrice);
         this.m_shipBought = true;

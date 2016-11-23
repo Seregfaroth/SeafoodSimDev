@@ -9,8 +9,8 @@ var Mackerel = (function (_super) {
     __extends(Mackerel, _super);
     function Mackerel(p_size, p_position) {
         _super.call(this, p_size, p_position);
-        this.m_maxAge = 1100; // OBS Ship also uses this value. It is hardcoded there at the moment
-        this.m_type = "mac";
+        this.m_maxAge = this.m_scenario.getMackerelSchoolMaxAge();
+        //this.m_type = "mac";
         this.m_growthRate = 0.15;
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
@@ -20,8 +20,6 @@ var Mackerel = (function (_super) {
             this.m_ages[age] += 1;
         }
     }
-    Mackerel.prototype.move = function () {
-    };
     Mackerel.prototype.recruit = function (p_map) {
         var currentTile = p_map.getTile(this.m_position);
         var recruitment = 0;
@@ -31,8 +29,10 @@ var Mackerel = (function (_super) {
             var cc = currentTile.getCarryingCapacity().getCapacityGroupNumbers(group.m_name);
             //var sbb = p_map.getSsbOf(this.getType(), this.m_position);      
             var ssb = this.getSsb();
-            var fraction = p_map.getBiosmassFractionOf(this.getType(), this.m_position);
-            recruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
+            var fraction = p_map.getBiosmassFractionOf(Mackerel, this.m_position);
+            if (cc != 0 && fraction != 0) {
+                recruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
+            }
         }
         this.m_ages[0] = recruitment;
         this.m_size += recruitment;
