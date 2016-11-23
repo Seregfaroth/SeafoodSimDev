@@ -20,10 +20,10 @@
     public fish(p_position: Point2, p_map: Map): number {
         var totalFish: number = 0;
         if (this.m_fishType === FishType.cod) {
-            var noOfFishInTile: number = p_map.getNoOfCodInTile(p_position);
+            var noOfFishInTile: number = p_map.getBiomassOfinTile(Cod, p_position);
         }
         else if (this.m_fishType === FishType.mackerel) {
-            var noOfFishInTile: number = p_map.getNoOfMackerelInTile(p_position);
+            var noOfFishInTile: number = p_map.getBiomassOfinTile(Mackerel, p_position);
         }
         var thisPlaceHolder: FishingGear = this;
         var fishingPercentage: number = this.m_scenario.getFishingPercentage();
