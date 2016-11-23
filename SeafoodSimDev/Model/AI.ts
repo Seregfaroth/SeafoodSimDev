@@ -54,22 +54,10 @@ class AI {
             n++;
             if (ship.getState() === shipState.fishing) {
                 ship.history[3].push("fishing");
-                //If ship is currently fishing, fish until cargo is at least 98% full
-
-                if (ship.getCargoSize() >= ship.getCargoCapacity() * 0.98 || ship.getFuel() < ship.getFuelCapacity()*0.3) {
-                    //ship.resetFishedFor();
+                //If ship is currently fishing, fish until cargo is at least 98% full or until ship is running out of fuel
+                if (ship.getCargoSize() >= ship.getCargoCapacity() * 0.98 || !ai.canReach(ship, p_map, [ship.getPosition()])) {
                     (<Ocean>p_map.getTile(ship.getPosition())).releaseTile();
                     ai.findNewPath(ship, p_map);
-                }
-               /* else if (ship.getFishedFor() > ai.m_scenario.getMaxNoDaysFishing()) {
-                    //If ship has been too long in one position
-                    ai.findNewPath(ship, p_map);
-                    ship.resetFishedFor();
-                }*/
-                //OBS here we calculate path to nearest fuel site twice. This can be optimized by saving fuelPath
-                else if (!ai.canReach(ship, p_map, [ship.getPosition()])) {
-                    (<Ocean>p_map.getTile(ship.getPosition())).releaseTile();
-                    ai.goRefuel(ship, p_map);
                 }
                 else if (ai.m_catchedSoFar[ship.getType()] < p_map.getRestrictions().getTAC()[ship.getType()]) {
                     //If all tac is not fished yet

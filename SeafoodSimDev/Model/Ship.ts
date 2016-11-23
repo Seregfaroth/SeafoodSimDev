@@ -6,7 +6,6 @@ enum FishType {
     mackerel = 1
 }
 class Ship {
-    private m_fishedFor: number = 0;
     private m_scenario: Scenario;
     private m_fuel: number;
     private m_fuelCapacity;
@@ -37,12 +36,6 @@ class Ship {
         this.m_state = shipState.waiting;
         this.m_fishingGear = new FishingGear(p_fishType);
         
-    }
-    public getFishedFor(): number {
-        return this.m_fishedFor;
-    }
-    public resetFishedFor(): void {
-        this.m_fishedFor = 0;
     }
     public getState(): shipState {
         return this.m_state;

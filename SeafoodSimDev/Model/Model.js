@@ -582,7 +582,7 @@ var Model = (function () {
         this.updateNoShips();
         this.m_ai.startNewInterval();
     };
-    Model.prototype.getRandomOcean = function () {
+    Model.prototype.getRandomOceanPos = function () {
         var startRow = Math.round(Math.random() * (this.m_map.getMapHeight() - 1));
         var startCol = Math.round(Math.random() * (this.m_map.getMapHeight() - 1));
         var point = new Point2(startRow, startCol);
@@ -602,26 +602,26 @@ var Model = (function () {
     };
     //Updates number of ships in map to correspond to restrictions
     Model.prototype.updateNoShips = function () {
-        var noOfCodShips = this.m_goverment.getRestrictions().getNoCodOfShips();
-        var noOfMackerelShips = this.m_goverment.getRestrictions().getNoMackerelOfShips();
+        var restrictionNoOfCodShips = this.m_goverment.getRestrictions().getNoCodShips();
+        var restrictionNoOfMacShips = this.m_goverment.getRestrictions().getNoMackerelShips();
         var shipOwner = this.m_shipOwners[0]; //OBS assuming only one ship owner
-        while (this.m_map.getCodShips().length > noOfCodShips) {
+        while (this.m_map.getCodShips().length > restrictionNoOfCodShips) {
             //While there are too many ships
             this.m_map.removeShip(shipOwner.getCodShips()[0]);
             shipOwner.sellShip(shipOwner.getCodShips()[0]);
         }
-        while (this.m_map.getCodShips().length < noOfCodShips) {
+        while (this.m_map.getCodShips().length < restrictionNoOfCodShips) {
             //While there are too few ships
-            this.m_map.addShip(shipOwner.buyShip(FishType.cod, this.getRandomOcean()));
+            this.m_map.addShip(shipOwner.buyShip(FishType.cod, this.getRandomOceanPos()));
         }
-        while (this.m_map.getMackerelShips().length > noOfMackerelShips) {
+        while (this.m_map.getMackerelShips().length > restrictionNoOfMacShips) {
             //While there are too many ships
             this.m_map.removeShip(shipOwner.getMackerelShips()[0]);
             shipOwner.sellShip(shipOwner.getMackerelShips()[0]);
         }
-        while (this.m_map.getMackerelShips().length < noOfMackerelShips) {
+        while (this.m_map.getMackerelShips().length < restrictionNoOfMacShips) {
             //While there are too few ships
-            this.m_map.addShip(shipOwner.buyShip(FishType.mackerel, this.getRandomOcean()));
+            this.m_map.addShip(shipOwner.buyShip(FishType.mackerel, this.getRandomOceanPos()));
         }
     };
     return Model;

@@ -38,13 +38,13 @@ var Restrictions = (function () {
     Restrictions.prototype.setNoCodShips = function (p_n) {
         this.m_noCodOfShips = p_n;
     };
-    Restrictions.prototype.getNoCodOfShips = function () {
+    Restrictions.prototype.getNoCodShips = function () {
         return this.m_noCodOfShips;
     };
     Restrictions.prototype.setNoMackerelShips = function (p_n) {
         this.m_noMackerelOfShips = p_n;
     };
-    Restrictions.prototype.getNoMackerelOfShips = function () {
+    Restrictions.prototype.getNoMackerelShips = function () {
         return this.m_noMackerelOfShips;
     };
     Restrictions.prototype.isRestricted = function (p_tile) {

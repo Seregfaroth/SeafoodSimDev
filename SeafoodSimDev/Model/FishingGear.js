@@ -11,20 +11,24 @@ var FishingGear = (function () {
             this.m_cargo[FishType.mackerel][i] = 0;
         }
     }
-    FishingGear.prototype.fish = function (p_position, p_map) {
-        var totalFish = 0;
+    FishingGear.prototype.updateFishingPercentage = function (p_position, p_map) {
         if (this.m_fishType === FishType.cod) {
             var noOfFishInTile = p_map.getBiomassOfinTile(Cod, p_position);
         }
         else if (this.m_fishType === FishType.mackerel) {
             var noOfFishInTile = p_map.getBiomassOfinTile(Mackerel, p_position);
         }
-        var thisPlaceHolder = this;
         var fishingPercentage = this.m_scenario.getFishingPercentage();
         if (this.m_cargoCapacity - this.getCargoSize() < noOfFishInTile * fishingPercentage) {
             //If the ship is not able to fish the full percentage
             fishingPercentage = (this.m_cargoCapacity - this.getCargoSize()) / noOfFishInTile;
         }
+        return fishingPercentage;
+    };
+    FishingGear.prototype.fish = function (p_position, p_map) {
+        var totalFish = 0;
+        var fishingPercentage = this.updateFishingPercentage(p_position, p_map);
+        var thisPlaceHolder = this;
         p_map.getSchoolsInTile(p_position).forEach(function (school) {
             var type = school instanceof Cod ? FishType.cod : FishType.mackerel;
             if (type === thisPlaceHolder.m_fishType) {

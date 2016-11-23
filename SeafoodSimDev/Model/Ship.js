@@ -14,7 +14,6 @@ var FishType;
 })(FishType || (FishType = {}));
 var Ship = (function () {
     function Ship(p_owner, p_fishType, p_position) {
-        this.m_fishedFor = 0;
         this.m_path = [];
         this.history = [[], [], [], [], []]; //For debugging  purpose
         this.m_scenario = Scenario.getInstance();
@@ -30,12 +29,6 @@ var Ship = (function () {
         this.m_state = shipState.waiting;
         this.m_fishingGear = new FishingGear(p_fishType);
     }
-    Ship.prototype.getFishedFor = function () {
-        return this.m_fishedFor;
-    };
-    Ship.prototype.resetFishedFor = function () {
-        this.m_fishedFor = 0;
-    };
     Ship.prototype.getState = function () {
         return this.m_state;
     };

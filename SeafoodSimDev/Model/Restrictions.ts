@@ -52,14 +52,14 @@
         this.m_noCodOfShips = p_n;
     }
 
-    public getNoCodOfShips(): number {
+    public getNoCodShips(): number {
         return this.m_noCodOfShips;
     }
     public setNoMackerelShips(p_n: number): void {
         this.m_noMackerelOfShips = p_n;
     }
 
-    public getNoMackerelOfShips(): number {
+    public getNoMackerelShips(): number {
         return this.m_noMackerelOfShips;
     }
     public isRestricted(p_tile: Tile): boolean {

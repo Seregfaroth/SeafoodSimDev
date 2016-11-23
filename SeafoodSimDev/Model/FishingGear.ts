@@ -16,22 +16,24 @@
             this.m_cargo[FishType.mackerel][i] = 0;
         }
     }
-
-    public fish(p_position: Point2, p_map: Map): number {
-        var totalFish: number = 0;
+    private updateFishingPercentage(p_position: Point2, p_map: Map): number {
         if (this.m_fishType === FishType.cod) {
             var noOfFishInTile: number = p_map.getBiomassOfinTile(Cod, p_position);
         }
         else if (this.m_fishType === FishType.mackerel) {
             var noOfFishInTile: number = p_map.getBiomassOfinTile(Mackerel, p_position);
         }
-        var thisPlaceHolder: FishingGear = this;
         var fishingPercentage: number = this.m_scenario.getFishingPercentage();
         if (this.m_cargoCapacity - this.getCargoSize() < noOfFishInTile * fishingPercentage) {
             //If the ship is not able to fish the full percentage
             fishingPercentage = (this.m_cargoCapacity - this.getCargoSize()) / noOfFishInTile;
         }
-
+        return fishingPercentage;
+    }
+    public fish(p_position: Point2, p_map: Map): number {
+        var totalFish: number = 0; 
+        var fishingPercentage: number = this.updateFishingPercentage(p_position, p_map);
+        var thisPlaceHolder: FishingGear = this;
         p_map.getSchoolsInTile(p_position).forEach(function (school) {
             var type: FishType = school instanceof Cod ? FishType.cod : FishType.mackerel;
             if (type === thisPlaceHolder.m_fishType) {

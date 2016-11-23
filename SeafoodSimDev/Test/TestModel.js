@@ -23,15 +23,15 @@ var TestModel = (function () {
                     }
                 }
                 assert.throws(function () {
-                    model.getRandomOcean();
+                    model.getRandomOceanPos();
                 }, Error, "should throw an error");
             });
             QUnit.test("Model: get random ocean for ship", function (assert) {
                 map.emptyGrid(1);
-                var randPoint = model.getRandomOcean();
+                var randPoint = model.getRandomOceanPos();
                 assert.ok(randPoint, "should be able to find a tile for a ship");
                 model.getMap().addShip(new Ship(owner, FishType.cod, randPoint));
-                assert.ok(model.getRandomOcean(), "Should be able to find another tile");
+                assert.ok(model.getRandomOceanPos(), "Should be able to find another tile");
             });
         };
         this.scenario = Scenario.getInstance();
