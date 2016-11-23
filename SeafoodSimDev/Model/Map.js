@@ -311,24 +311,6 @@ var Map = (function () {
         });
         return list;
     };
-    Map.prototype.getNoOfCodInTile = function (p_position) {
-        var num = 0;
-        this.getSchoolsInTile(p_position).forEach(function (s) {
-            if (s instanceof Cod) {
-                num += s.getSize();
-            }
-        });
-        return num;
-    };
-    Map.prototype.getNoOfMackerelInTile = function (p_position) {
-        var num = 0;
-        this.getSchoolsInTile(p_position).forEach(function (s) {
-            if (s instanceof Mackerel) {
-                num += s.getSize();
-            }
-        });
-        return num;
-    };
     Map.prototype.getTile = function (p_position) {
         return this.m_grid[p_position.row][p_position.col];
     };
@@ -386,6 +368,7 @@ var Map = (function () {
         return sites;
     };
     Map.prototype.emptyGrid = function (p_oceanShipCapacity) {
+        this.m_schools = [];
         for (var r = 0; r < this.getMapHeight(); r++) {
             for (var c = 0; c < this.getMapWidth(); c++) {
                 this.m_grid[r][c] = new Ocean(new CarryingCapacity([new FishGroup("grp1", ["fish"])], [100]), p_oceanShipCapacity);
@@ -397,15 +380,13 @@ var Map = (function () {
         return ret;
     };
     Map.prototype.getBiomassOfinTile = function (p_type, p_position) {
-        var ret;
+        var ret = 0;
         for (var _i = 0, _a = this.getSchoolsInTile(p_position); _i < _a.length; _i++) {
             var school = _a[_i];
             if (school instanceof p_type) {
                 ret = school.getSize();
                 break;
             }
-            else
-                ret = 0;
         }
         return ret;
     };

@@ -18,18 +18,6 @@ var TestMap = (function () {
                 map.removeShip(ship);
                 assert.deepEqual(map.getShips().indexOf(ship), -1, "ship should not be in map");
             });
-            QUnit.test("Map: get number of fish in tile", function (assert) {
-                map = new Map(gov.getRestrictions());
-                var point = new Point2(0, 0);
-                assert.deepEqual(map.getNoOfCodInTile(point), 0, "there should be no fish in tile");
-                map.addSchool(new Cod(100, new Point2(0, 1)));
-                assert.deepEqual(map.getNoOfCodInTile(point), 0, "there should be no fish in tile");
-                map.addSchool(new Cod(100, point));
-                //Check that fish have been added
-                assert.deepEqual(map.getNoOfCodInTile(point), 100, "there should be 100 fish in tile");
-                map.addSchool(new Cod(50, point));
-                assert.deepEqual(map.getNoOfCodInTile(point), 150, "there should be 150 fish in tile");
-            });
             QUnit.test("Map: get number of ships in tile", function (assert) {
                 map = new Map(gov.getRestrictions());
                 var owner = new ShipOwner(gov, new Point2(4, 4), "0");
@@ -41,6 +29,43 @@ var TestMap = (function () {
                 map.addShip(owner.buyShip(FishType.cod));
                 map.addShip(owner.buyShip(FishType.cod));
                 assert.deepEqual(map.getNoOfShipsInTile(new Point2(4, 4)), 4, "there should be 4 ships in tile");
+            });
+            QUnit.test("Map: get biomass in tile", function (assert) {
+                map.emptyGrid(1000);
+                var fishPoint = new Point2(0, 0);
+                assert.deepEqual(map.getBiomassOfinTile(Cod, fishPoint), 0, "There should be no fish");
+                assert.deepEqual(map.getBiomassOfinTile(Mackerel, fishPoint), 0, "There should be no fish");
+                map.addSchool(new Cod(80, fishPoint));
+                assert.deepEqual(map.getBiomassOfinTile(Cod, fishPoint), 80, "Biomass of cod should be 80");
+                map.addSchool(new Mackerel(100, fishPoint));
+                assert.deepEqual(map.getBiomassOfinTile(Cod, fishPoint), 80, "Biomass of cod should not change");
+                assert.deepEqual(map.getBiomassOfinTile(Mackerel, fishPoint), 100, "Biomass of mackerel should be 100");
+            });
+            QUnit.test("Map: get biomass fraction", function (assert) {
+                map.emptyGrid(1000);
+                var fishPoint = new Point2(0, 0);
+                map.addSchool(new Cod(80, fishPoint));
+                assert.deepEqual(map.getBiosmassFractionOf(Cod, fishPoint), 1, "Fraction of cod should be 1");
+                map.addSchool(new Mackerel(20, fishPoint));
+                assert.deepEqual(map.getBiosmassFractionOf(Cod, fishPoint), 0.8, "Fraction of cod should be 0.8");
+                assert.deepEqual(map.getBiosmassFractionOf(Mackerel, fishPoint), 0.2, "Fraction of cod should be 0.8");
+            });
+            QUnit.test("Map: get pathfinding map", function (assert) {
+                map.emptyGrid(1000);
+                map.getGrid()[0][0] = new Land();
+                map.getGrid()[2][1] = new Land();
+                map.getGrid()[2][2] = new Land();
+                var pathFindingMap = map.getPathFindingMap();
+                for (var i = 0; i < map.getMapHeight(); i++) {
+                    for (var j = 0; j < map.getMapWidth(); j++) {
+                        if (i == 0 && j == 0 || i == 2 && j == 1 || i == 2 && j == 2) {
+                            assert.deepEqual(pathFindingMap[i][j], 1, "Should be land");
+                        }
+                        else {
+                            assert.deepEqual(pathFindingMap[i][j], 0, "should be ocean");
+                        }
+                    }
+                }
             });
         };
         this.scenario = Scenario.getInstance();

@@ -62,7 +62,7 @@ var AI = (function () {
                     //If all tac is not fished yet
                     ai.m_catchedSoFar[ship.getType()] += ship.fish(p_map);
                     ship.setState(shipState.waiting); //Set state to waiting
-                    ship.emptyPath();
+                    ship.emptyPath(); //Empty path
                 }
             }
             else if (ship.hasReachedGoal()) {

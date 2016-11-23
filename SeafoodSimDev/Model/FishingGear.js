@@ -14,10 +14,10 @@ var FishingGear = (function () {
     FishingGear.prototype.fish = function (p_position, p_map) {
         var totalFish = 0;
         if (this.m_fishType === FishType.cod) {
-            var noOfFishInTile = p_map.getNoOfCodInTile(p_position);
+            var noOfFishInTile = p_map.getBiomassOfinTile(Cod, p_position);
         }
         else if (this.m_fishType === FishType.mackerel) {
-            var noOfFishInTile = p_map.getNoOfMackerelInTile(p_position);
+            var noOfFishInTile = p_map.getBiomassOfinTile(Mackerel, p_position);
         }
         var thisPlaceHolder = this;
         var fishingPercentage = this.m_scenario.getFishingPercentage();

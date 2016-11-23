@@ -342,24 +342,6 @@ class Map {
         });
         return list;
     }
-    public getNoOfCodInTile(p_position: Point2): number {
-        var num: number = 0;
-        this.getSchoolsInTile(p_position).forEach(function (s) {
-            if (s instanceof Cod) {
-                num += s.getSize();
-            }
-        });
-        return num;
-    }
-    public getNoOfMackerelInTile(p_position: Point2): number {
-        var num: number = 0;
-        this.getSchoolsInTile(p_position).forEach(function (s) {
-            if (s instanceof Mackerel) {
-                num += s.getSize();
-            }
-        });
-        return num;
-    }
 
     public getTile(p_position: Point2): Tile {
         return this.m_grid[p_position.row][p_position.col];
@@ -423,6 +405,7 @@ class Map {
     }
 
     public emptyGrid(p_oceanShipCapacity: number): void {
+        this.m_schools = [];
         for (var r = 0; r < this.getMapHeight(); r++) {
             for (var c = 0; c < this.getMapWidth(); c++) {
                 this.m_grid[r][c] = new Ocean(new CarryingCapacity([new FishGroup("grp1", ["fish"])], [100]), p_oceanShipCapacity);
@@ -435,14 +418,12 @@ class Map {
         return ret;
     }
     public getBiomassOfinTile(p_type, p_position: Point2): number {
-        var ret;
+        var ret = 0;
         for (var school of this.getSchoolsInTile(p_position)) {
             if (school instanceof p_type) {
                 ret = school.getSize();
                 break;
             }
-            else
-                ret = 0;
         }
         return ret;
     }
