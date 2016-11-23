@@ -93,7 +93,7 @@ var TestAI = (function () {
                 var schoolPos = new Point2(0, 0);
                 map.addSchool(new Cod(10, schoolPos));
                 var shipOwner = new ShipOwner(gov, new Point2(3, 3), "shipOwner1");
-                var ship = shipOwner.buyShip(FishType.cod);
+                var ship = shipOwner.buyShip(FishType.cod, new Point2(1, 1));
                 assert.deepEqual(ship.getState(), shipState.waiting, "Ship should be in a waiting state");
                 ai.run(shipOwner, map);
                 assert.deepEqual(ship.getState(), shipState.goingToFish, "Ship should be going to fish");
@@ -106,7 +106,7 @@ var TestAI = (function () {
                 var schoolPos = new Point2(0, 0);
                 map.addSchool(new Cod(1, schoolPos));
                 var shipOwner = new ShipOwner(gov, new Point2(3, 3), "shipOwner1");
-                var ship = shipOwner.buyShip(FishType.cod);
+                var ship = shipOwner.buyShip(FishType.cod, new Point2(1, 1));
                 ai.run(shipOwner, map);
                 while (!ship.hasReachedGoal()) {
                     ai.run(shipOwner, map);
@@ -128,16 +128,16 @@ var TestAI = (function () {
                 var tile = map.getTile(schoolPos);
                 map.addSchool(new Cod(1000, schoolPos));
                 var shipOwner = new ShipOwner(gov, new Point2(2, 2), "shipOwner1");
-                var ship1 = shipOwner.buyShip(FishType.cod);
+                var ship1 = shipOwner.buyShip(FishType.cod, new Point2(1, 1));
                 assert.deepEqual(tile.getShipsInTile(), 0, "No ship should have claimed the tile");
                 ai.run(shipOwner, map);
                 assert.deepEqual(ship1.getState(), shipState.goingToFish, "ship should be going to fish");
                 assert.deepEqual(tile.getShipsInTile(), 1, "One ship should have claimed the tile");
-                var ship2 = shipOwner.buyShip(FishType.cod);
+                var ship2 = shipOwner.buyShip(FishType.cod, new Point2(1, 1));
                 ai.run(shipOwner, map);
                 assert.deepEqual(ship2.getState(), shipState.goingToFish, "ship should be going to fish");
                 assert.deepEqual(tile.getShipsInTile(), 2, "Two ships should have claimed the tile");
-                var ship3 = shipOwner.buyShip(FishType.cod);
+                var ship3 = shipOwner.buyShip(FishType.cod, new Point2(1, 1));
                 ai.run(shipOwner, map);
                 assert.notDeepEqual(ship3.getState(), shipState.goingToFish, "Ship should not be able to go fish");
                 shipOwner.sellShip(ship3);
@@ -161,8 +161,8 @@ var TestAI = (function () {
                 var schoolPos = new Point2(0, 0);
                 map.addSchool(new Cod(1000, schoolPos));
                 var shipOwner = new ShipOwner(gov, new Point2(2, 2), "shipOwner1");
-                var codShip = shipOwner.buyShip(FishType.cod);
-                var mackerelShip = shipOwner.buyShip(FishType.mackerel);
+                var codShip = shipOwner.buyShip(FishType.cod, new Point2(1, 1));
+                var mackerelShip = shipOwner.buyShip(FishType.mackerel, new Point2(1, 1));
                 while (!codShip.hasReachedGoal() || mackerelShip.hasReachedGoal()) {
                     ai.run(shipOwner, map);
                 }
@@ -180,9 +180,9 @@ var TestAI = (function () {
                 map.addSchool(new Cod(1000, schoolPos));
                 map.addSchool(new Mackerel(1000, schoolPos));
                 var shipOwner = new ShipOwner(gov, new Point2(2, 2), "shipOwner1");
-                var codShip = shipOwner.buyShip(FishType.cod);
+                var codShip = shipOwner.buyShip(FishType.cod, new Point2(1, 1));
                 var codShipOrigin = codShip.getPosition();
-                var mackerelShip = shipOwner.buyShip(FishType.mackerel);
+                var mackerelShip = shipOwner.buyShip(FishType.mackerel, new Point2(1, 1));
                 var mackerelShipOrigin = mackerelShip.getPosition();
                 //Set tac to 0
                 map.getRestrictions().setTacCod(0);

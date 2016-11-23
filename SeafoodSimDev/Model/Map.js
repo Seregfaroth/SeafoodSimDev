@@ -369,6 +369,7 @@ var Map = (function () {
     };
     Map.prototype.emptyGrid = function (p_oceanShipCapacity) {
         this.m_schools = [];
+        this.m_ships = [];
         for (var r = 0; r < this.getMapHeight(); r++) {
             for (var c = 0; c < this.getMapWidth(); c++) {
                 this.m_grid[r][c] = new Ocean(new CarryingCapacity([new FishGroup("grp1", ["fish"])], [100]), p_oceanShipCapacity);

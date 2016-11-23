@@ -13,13 +13,13 @@ var FishType;
     FishType[FishType["mackerel"] = 1] = "mackerel";
 })(FishType || (FishType = {}));
 var Ship = (function () {
-    function Ship(p_owner, p_fishType) {
+    function Ship(p_owner, p_fishType, p_position) {
         this.m_fishedFor = 0;
         this.m_path = [];
         this.history = [[], [], [], [], []]; //For debugging  purpose
         this.m_scenario = Scenario.getInstance();
         this.m_noHistory = this.m_scenario.getNoHistory();
-        this.m_position = p_owner.getShipStartPosition();
+        this.m_position = p_position;
         this.m_yield = [[], []];
         this.m_fuelCapacity = this.m_scenario.getShipFuelCapacity();
         this.m_cargoCapacity = this.m_scenario.getShipCargoCapacity();

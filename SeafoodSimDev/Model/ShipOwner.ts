@@ -83,8 +83,8 @@ class ShipOwner {
         }
     }
 
-    public buyShip(p_fishType: FishType): Ship{
-        var ship: Ship = new Ship(this, p_fishType);
+    public buyShip(p_fishType: FishType, p_position: Point2): Ship{
+        var ship: Ship = new Ship(this, p_fishType, p_position);
         this.m_ships.push(ship);
         this.financialTransaction(-this.m_shipPrice);
         this.m_shipBought = true;

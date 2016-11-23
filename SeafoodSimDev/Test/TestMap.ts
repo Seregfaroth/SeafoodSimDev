@@ -10,14 +10,14 @@
         var map: Map = new Map(gov.getRestrictions());
         var testMap: TestMap = this;
         QUnit.test("Map: add ship", function (assert) {
-            var ship: Ship = new Ship(new ShipOwner(gov, new Point2(0, 0), "0"), FishType.cod);
+            var ship: Ship = new Ship(new ShipOwner(gov, new Point2(0, 0), "0"), FishType.cod, new Point2(0,0));
             assert.deepEqual(map.getShips().indexOf(ship), -1, "ship should not be in map");
             map.addShip(ship);
             assert.ok(map.getShips().indexOf(ship) > -1, "ship should be in map");
         });
 
         QUnit.test("Map: remove ship", function (assert) {
-            var ship: Ship = new Ship(new ShipOwner(gov, new Point2(0, 0), "0"), FishType.cod);
+            var ship: Ship = new Ship(new ShipOwner(gov, new Point2(0, 0), "0"), FishType.cod,new Point2(0, 0));
             map.addShip(ship);
             assert.ok(map.getShips().indexOf(ship) > -1, "ship should be in map");
             map.removeShip(ship);
@@ -25,15 +25,16 @@
         });
         QUnit.test("Map: get number of ships in tile", function (assert) {
             map = new Map(gov.getRestrictions());
+            var shipPoint: Point2 = new Point2(4, 4);
             var owner: ShipOwner = new ShipOwner(gov, new Point2(4, 4), "0");
             //Check that no ships are in tile
-            assert.deepEqual(map.getNoOfShipsInTile(new Point2(4, 4)), 0, "there should not be any ships in tile");
-            map.addShip(owner.buyShip(FishType.cod));
-            assert.deepEqual(map.getNoOfShipsInTile(new Point2(4, 4)), 1, "there should be 1 ship in tile");
-            map.addShip(owner.buyShip(FishType.cod));
-            map.addShip(owner.buyShip(FishType.cod));
-            map.addShip(owner.buyShip(FishType.cod));
-            assert.deepEqual(map.getNoOfShipsInTile(new Point2(4, 4)), 4, "there should be 4 ships in tile");
+            assert.deepEqual(map.getNoOfShipsInTile(shipPoint), 0, "there should not be any ships in tile");
+            map.addShip(owner.buyShip(FishType.cod, shipPoint));
+            assert.deepEqual(map.getNoOfShipsInTile(shipPoint), 1, "there should be 1 ship in tile");
+            map.addShip(owner.buyShip(FishType.cod, shipPoint));
+            map.addShip(owner.buyShip(FishType.cod, shipPoint));
+            map.addShip(owner.buyShip(FishType.cod, shipPoint));
+            assert.deepEqual(map.getNoOfShipsInTile(shipPoint), 4, "there should be 4 ships in tile");
         });
         QUnit.test("Map: get biomass in tile", function (assert) {
             map.emptyGrid(1000);
