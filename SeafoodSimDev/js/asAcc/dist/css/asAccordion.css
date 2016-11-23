@@ -1,4 +1,4 @@
-/**
+﻿/**
 * jQuery asAccordion v0.2.1
 * https://github.com/amazingSurge/jquery-asAccordion
 *
@@ -62,7 +62,7 @@
   content: "\2014";
 }
 .accordion--horizontal {
-  height: 260px;
+  height: 380px;
 }
 .accordion--horizontal .accordion__panel {
   position: relative;
@@ -71,7 +71,7 @@
   height: 100%;
 }
 .accordion--horizontal .accordion__heading {
-  width: 260px;
+  width: 460px;
   text-align: right;
   -ms-transform: translateX(-100%) rotate(-90deg) translateZ(0px);
   -webkit-transform: translateX(-100%) rotate(-90deg) translateZ(0px);
@@ -92,7 +92,7 @@
   left: 0;
   -webkit-box-sizing: border-box;
   box-sizing: border-box; 
-  width: 450px;
+  width: 850px;
   height: 100%;
   margin-left: 50px;
   overflow-y: auto;

@@ -12,6 +12,7 @@ var Controller = (function () {
     //private m_sce: Scenario;
     function Controller(p_mca) {
         var _this = this;
+        this.m_newSim = true;
         //public getScenario(): number {
         //    return this.m_scenario;
         //}
@@ -23,7 +24,7 @@ var Controller = (function () {
             _this.m_model.runMCA(_this.m_scenario.getDefaultNoDays());
         };
         this.restart = function () {
-            $("#endDialogDiv").empty().remove();
+            $("#endDialogDiv").hide();
             $("#startScreen").dialog({
                 minWidth: 1100,
                 minHeight: 700,
@@ -36,6 +37,7 @@ var Controller = (function () {
             $("#fastForwardButton").removeClass("marked");
             $("#pauseButton").addClass("marked");
             $("#scenario1Label").removeClass("ui-state-focus"); //This is hardcoded to prevent scenario 1 from being checked by default
+            _this.m_newSim = true;
         };
         this.simulationTick = function () {
             //console.log("Controller running simulationtick");
@@ -45,10 +47,8 @@ var Controller = (function () {
                 console.log("Simulation ended" + _this.m_model.getStats());
                 clearInterval(_this.m_timer);
                 _this.m_eventHandler.unBindFunctions(true);
-                new EndScreen(_this.m_model.getStats(), _this.m_model);
-                $("#endDialogDiv").dialog({
-                    close: _this.closeEndScreen
-                });
+                //this.m_endScreen.addSimulation(this.m_model.getStats(), this.m_model);
+                _this.m_endScreen.show();
             }
             else if (!((_this.m_model.getTime() + 1) % _this.m_scenario.getStatFreq()) && _this.m_model.getTime() < _this.m_scenario.getDefaultNoDays() - 1) {
                 //The reason for running model once more is that otherwise time would not change
@@ -57,22 +57,18 @@ var Controller = (function () {
                 _this.m_simState = simState.changeSettings;
                 clearInterval(_this.m_timer);
                 _this.m_eventHandler.bindFunctions(false);
-                _this.m_intervalStats = new IntervalStats(_this.m_model.getStats(), _this.m_model);
+                if (_this.m_newSim) {
+                    _this.m_endScreen.addSimulation(_this.m_model.getStats(), _this.m_model);
+                    _this.m_newSim = false;
+                }
+                //this.m_intervalStats = new IntervalStats(this.m_model.getStats(), this.m_model);
                 $("#startSim").text("Continue Simulation");
                 $("#startSim").css("display", "initial");
                 $(".fa").css("display", "none");
                 //this.getMainView().getIntervalStats().update(this.m_model.getTime());
-                _this.m_intervalStats.update(_this.m_model.getTime());
-                $("#intervalStats").dialog({
-                    buttons: {
-                        Ok: function () {
-                            $(this).dialog("close"); //closing on Ok click
-                        }
-                    },
-                    modal: true,
-                    width: 400,
-                    height: 400
-                });
+                //this.m_intervalStats.update(this.m_model.getTime());
+                _this.m_endScreen.drawCharts(_this.m_model, _this.m_model.getStats());
+                _this.m_endScreen.show();
             }
             else {
                 _this.m_model.run(_this.m_ticksPerMove);
@@ -100,6 +96,8 @@ var Controller = (function () {
             _this.m_view.resizeWindow();
         };
         console.log("Controller loading");
+        this.m_endScreen = new EndScreen();
+        this.m_endScreen.hide();
         this.m_scenario = Scenario.getInstance();
         if (p_mca === true) {
             this.m_scenario.loadScenario('Controller/scenarios/scnMCA1.json', this.initMCA);

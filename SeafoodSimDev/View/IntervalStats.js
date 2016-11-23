@@ -50,7 +50,7 @@ var IntervalStats = (function () {
         //horizUl.setAttribute("data-direction", "vertical");
         horizUl.setAttribute("data-direction", "horizontal");
         horizUl.setAttribute("data-multiple", "true");
-        horizUl.setAttribute("data-initial-index", "[1,2]");
+        horizUl.setAttribute("data-initial-index", "0");
         horizUl.setAttribute("data-event", "click");
         var horizLi = document.createElement("li");
         horizUl.appendChild(horizLi);
@@ -70,8 +70,8 @@ var IntervalStats = (function () {
         //    namespace: "-accordion",
         //    direction: "vertical"
         //});
-        $(".accordion").asAccordion({ namespace: "accordion", direction: "vertical" });
-        $("#endAccordionDiv2").accordion({ collapsible: true, active: false, heightStyle: "content" });
+        //$(".accordion").asAccordion({ namespace: "accordion", direction: "vertical" });
+        $("#endAccordionDiv2").accordion({ collapsible: true, heightStyle: "content" });
         var scoreChart = new google.visualization.ScatterChart(document.getElementById(scoreChartDiv.id));
         var scoreChartData = google.visualization.arrayToDataTable(p_endStats.getScoreVizArray());
         var scoreChartOptions = {
@@ -87,8 +87,8 @@ var IntervalStats = (function () {
             colors: ['#0057e7', '#32b835', '#d62d20', '#ffa700'],
             lineWidth: 1,
             explorer: {},
-            height: 800,
-            width: 1300,
+            height: 300,
+            width: 500,
         };
         scoreChart.draw(scoreChartData, scoreChartOptions);
     }

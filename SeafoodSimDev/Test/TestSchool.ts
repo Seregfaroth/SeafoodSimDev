@@ -73,6 +73,9 @@ class TestSchool {
             //Check that fish is removed from school
             assert.deepEqual(singleCod.getSize(), 0, "No cod should be left");
         });
+        QUnit.test("NatDeath", function (assert) {
+            assert.equal(singleCod.getNatDeathTotal(), 0)
+        });
 
         /*QUnit.test("Mackerel: constructor", function (assert) {
             var testMackerel: Mackerel;
