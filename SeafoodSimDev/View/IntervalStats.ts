@@ -34,7 +34,7 @@
         //horizUl.setAttribute("data-direction", "vertical");
         horizUl.setAttribute("data-direction", "horizontal");
         horizUl.setAttribute("data-multiple", "true");
-        horizUl.setAttribute("data-initial-index", "[1,2]");
+        horizUl.setAttribute("data-initial-index", "0");
         horizUl.setAttribute("data-event", "click");
         var horizLi: HTMLElement = document.createElement("li");
         horizUl.appendChild(horizLi);
@@ -56,8 +56,8 @@
         //    direction: "vertical"
 
         //});
-        $(".accordion").asAccordion({ namespace: "accordion", direction: "vertical" });
-        $("#endAccordionDiv2").accordion({ collapsible: true, active: false, heightStyle: "content"}); 
+        //$(".accordion").asAccordion({ namespace: "accordion", direction: "vertical" });
+        $("#endAccordionDiv2").accordion({ collapsible: true, heightStyle: "content"}); 
         var scoreChart: google.visualization.ScatterChart = new google.visualization.ScatterChart(document.getElementById(scoreChartDiv.id));
         var scoreChartData = google.visualization.arrayToDataTable(p_endStats.getScoreVizArray()); 
         var scoreChartOptions = {
@@ -73,8 +73,8 @@
             colors: ['#0057e7', '#32b835', '#d62d20', '#ffa700'],
             lineWidth: 1,
             explorer: {},
-            height: 800,
-            width: 1300,
+            height: 300,
+            width: 500,
             //legend: 'in'
         } 
         scoreChart.draw(scoreChartData, scoreChartOptions);     

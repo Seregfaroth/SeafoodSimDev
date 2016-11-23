@@ -12,17 +12,21 @@ class Controller {
     private m_delayPerTick: number;
     private m_fastDelayPerTick: number;
     private m_stats: EndScreenStats;
+    private m_endScreen: EndScreen;
     private m_intervalStats: IntervalStats;
     private m_statFreq: number;
     //private m_scenario: number;
     private m_scenario: Scenario;
     private m_endTime: number;
+    private m_newSim: boolean = true;
     
     
     private m_ticksPerMove: number;
     //private m_sce: Scenario;
     constructor(p_mca?: boolean) {
         console.log("Controller loading");
+        this.m_endScreen = new EndScreen();
+        this.m_endScreen.hide();
         this.m_scenario = Scenario.getInstance();
         if (p_mca === true) {
             this.m_scenario.loadScenario('Controller/scenarios/scnMCA1.json', this.initMCA);
@@ -97,7 +101,7 @@ class Controller {
 
 
     public restart = (): void => {
-        $("#endDialogDiv").empty().remove();
+        $("#endDialogDiv").hide();
         $("#startScreen").dialog({
             minWidth: 1100,
             minHeight: 700,
@@ -111,6 +115,7 @@ class Controller {
         $("#pauseButton").addClass("marked");
 
         $("#scenario1Label").removeClass("ui-state-focus");//This is hardcoded to prevent scenario 1 from being checked by default
+        this.m_newSim = true;
     }
 
     simulationTick = () => {
@@ -123,10 +128,12 @@ class Controller {
             console.log("Simulation ended" + this.m_model.getStats());
             clearInterval(this.m_timer);
             this.m_eventHandler.unBindFunctions(true);
-            new EndScreen(this.m_model.getStats(), this.m_model);
-            $("#endDialogDiv").dialog({
-                close: this.closeEndScreen
-            });
+
+            //this.m_endScreen.addSimulation(this.m_model.getStats(), this.m_model);
+            this.m_endScreen.show();
+            //$("#endDialogDiv").dialog({
+            //    close: this.closeEndScreen
+            //});
             
         }
         //The second condition makes sure the break screen is not shown at the end of the simulaiton
@@ -138,23 +145,29 @@ class Controller {
             this.m_simState = simState.changeSettings;
             clearInterval(this.m_timer);
             this.m_eventHandler.bindFunctions(false);
-            this.m_intervalStats = new IntervalStats(this.m_model.getStats(), this.m_model);
+            if (this.m_newSim) {
+                this.m_endScreen.addSimulation(this.m_model.getStats(), this.m_model);
+                this.m_newSim = false;  
+            }
+            //this.m_intervalStats = new IntervalStats(this.m_model.getStats(), this.m_model);
             $("#startSim").text("Continue Simulation");
             $("#startSim").css("display", "initial");
             $(".fa").css("display", "none");
 
             //this.getMainView().getIntervalStats().update(this.m_model.getTime());
-            this.m_intervalStats.update(this.m_model.getTime());
-            $("#intervalStats").dialog({
-                buttons: {
-                    Ok: function () {
-                        $(this).dialog("close"); //closing on Ok click
-                    }
-                },
-                modal: true,
-                width: 400,
-                height: 400
-            });
+            //this.m_intervalStats.update(this.m_model.getTime());
+            this.m_endScreen.drawCharts(this.m_model, this.m_model.getStats());
+            this.m_endScreen.show();
+            //$("#intervalStats").dialog({
+            //    buttons: {
+            //        Ok: function () {
+            //            $(this).dialog("close"); //closing on Ok click
+            //        }
+            //    },
+            //    modal: true,
+            //    width: 1111,
+            //    height: 777
+            //});
         }
         else {
             this.m_model.run(this.m_ticksPerMove);
