@@ -591,7 +591,7 @@ var Model = (function () {
         }
         var col = startCol + 1; //This is needed for the first check in the first for loop
         for (var row = startRow; row != startRow || col != startCol; row = (row + 1) % this.m_map.getMapHeight()) {
-            for (col = startCol + 1; row != startRow || col != startCol; col = (col + 1) % this.m_map.getMapWidth()) {
+            for (col = startCol + 1; col != startCol; col = (col + 1) % this.m_map.getMapWidth()) {
                 point = new Point2(row, col);
                 if (!(this.m_map.getTile(point) instanceof Land)) {
                     return point;
