@@ -10,14 +10,14 @@ var Ocean = (function (_super) {
         _super.call(this);
         this.m_fishingArea = false;
         this.m_shipsInTile = 0;
-        this.m_carryingCapacityC = p_carryingCapacity;
+        this.m_carryingCapacity = p_carryingCapacity;
         this.m_shipCapacity = p_shipCapacity;
         if (p_fishingArea) {
             this.m_fishingArea = p_fishingArea;
         }
     }
     Ocean.prototype.getCarryingCapacity = function () {
-        return this.m_carryingCapacityC;
+        return this.m_carryingCapacity;
     };
     Ocean.prototype.getCarryingCapacityBySpecies = function (p_name) {
         var ret;

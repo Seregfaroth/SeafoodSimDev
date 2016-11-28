@@ -35,7 +35,7 @@ var TestSchool = (function () {
                     }
                 }
                 if (age < singleCod.getMaxAge()) {
-                    singleCod.ageAndRecruit(map);
+                    singleCod.age();
                     var newAge;
                     for (var i = 0; i < thisPlaceholder.scenario.getCodSchoolMaxAge(); i++) {
                         if (singleCod.getAges()[i] == 1) {
@@ -52,14 +52,14 @@ var TestSchool = (function () {
                 map.addSchool(singleCod);
                 //Make cod grow old
                 while (singleCod.getAges()[singleCod.getMaxAge() - 1] == 0) {
-                    singleCod.ageAndRecruit(map);
+                    singleCod.age();
                 }
                 //Check that fish is old
                 for (var i = 0; i < singleCod.getMaxAge() - 1; i++) {
                     assert.deepEqual(singleCod.getAges()[i], 0, "No cod should be young");
                 }
                 assert.deepEqual(singleCod.getAges()[singleCod.getMaxAge() - 1], 1, "One cod should be old");
-                singleCod.ageAndRecruit(map);
+                singleCod.age();
                 //Check that fish is removed from school
                 assert.deepEqual(singleCod.getSize(), 0, "No cod should be left");
             });
@@ -89,7 +89,7 @@ var TestSchool = (function () {
                     }
                 }
                 if (age < singeMackerel.getMaxAge()) {
-                    singeMackerel.ageAndRecruit(map);
+                    singeMackerel.age();
                     var newAge;
                     for (var i = 0; i < singleMackerel.getMaxAge(); i++) {
                         if (singeMackerel.getAges()[i] == 1) {
@@ -106,16 +106,27 @@ var TestSchool = (function () {
                 map.addSchool(singleMackerel);
                 //Make cod grow old
                 while (singleMackerel.getAges()[singleMackerel.getMaxAge() - 1] == 0) {
-                    singleMackerel.ageAndRecruit(map);
+                    singleMackerel.age();
                 }
                 //Check that fish is old
                 for (var i = 0; i < singleMackerel.getMaxAge() - 1; i++) {
                     assert.deepEqual(singleMackerel.getAges()[i], 0, "No mackerel should be young");
                 }
                 assert.deepEqual(singleMackerel.getAges()[singleMackerel.getMaxAge() - 1], 1, "One mackerel should be old");
-                singleMackerel.ageAndRecruit(map);
+                singleMackerel.age();
                 //Check that fish is removed from school
                 assert.deepEqual(singleMackerel.getSize(), 0, "No mackerel should be left");
+            });
+            QUnit.test("Cod: recruit", function (assert) {
+                //arrange
+                var testCod = new Cod(1000, startPosition);
+                var testMap = new Map(gov.getRestrictions());
+                testMap.getGrid()[0][0] = new Ocean(new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [2000]), 1);
+                testMap.addSchool(testCod);
+                //act
+                testCod.recruit(testMap);
+                //assert
+                assert.equal(3000, 3000);
             });
         };
         this.scenario = Scenario.getInstance();

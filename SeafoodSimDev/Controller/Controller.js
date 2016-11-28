@@ -57,7 +57,7 @@ var Controller = (function () {
                 _this.m_simState = simState.changeSettings;
                 clearInterval(_this.m_timer);
                 _this.m_eventHandler.bindFunctions(false);
-                _this.m_model.updateStats();
+                //this.m_model.updateStats();
                 if (_this.m_newSim) {
                     _this.m_endScreen.addSimulation(_this.m_model.getStats(), _this.m_model);
                     _this.m_newSim = false;

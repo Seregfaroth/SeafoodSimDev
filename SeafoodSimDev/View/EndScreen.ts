@@ -31,9 +31,6 @@ class EndScreen {
     public show() {
         $("#endDialogDiv").dialog("open");
     }
-    //public close() {
-
-    //}
     public addSimulation(p_endStats: EndScreenStats, p_model: Model) {
         this.m_model = p_model;
         this.m_endStats = p_endStats;
@@ -52,8 +49,6 @@ class EndScreen {
         this.buildHTMLStructure(content);
         $("#" + simDiv.id).accordion({ collapsible: true, heightStyle: "content" });
         this.drawCharts(p_model, p_endStats);
-        
-
         $("#endDialogDiv").show();
     }       
     public getFinancialScoreSucces(): boolean {

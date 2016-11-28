@@ -74,17 +74,19 @@
   "environmentalScoreMaxIncreasePerTick": 20000,
   "codMovingRadius": 0,
   "codRecruitPercent": 0.35,
-  "codSchoolMaxAge": 1100,
+  "codSchoolMaxAge": 8,
   
-  "mackerelSchoolMaxAge": 8,
+  "mackerelSchoolMaxAge": 10,
   "recruitAndAgeFreq": 1,
 
   "statFreq": 10,
   "noOfMenPerShip": 8,
+  
 
   "modelStatFreq": 1,
   "modelRecruitAndAgeFreq": 1,
   "noOfEmployeesPerShip": 10,
+  "noOfEmployeesOnLandPerShip": 4,
 
   "shipFuelCapacity": 150,
   "shipCargoCapacity": 800,

@@ -26,9 +26,9 @@ class Cod extends School{
     
 
     //Recruitment using a logistic population growth model
-    protected recruit(p_map: Map): void {
+    public recruit(p_map: Map): void {
         var currentTile = <Ocean>p_map.getTile(this.m_position);
-        var recruitment = 0;
+        this.m_prepareRecruitment = 0;
         //for each of the fishGroups in CarryingCapacity get the carrying Capacity 
         for (var group of currentTile.getCarryingCapacity().m_fishGroups) {
             var cc = currentTile.getCarryingCapacity().getCapacityGroupNumbers(group.m_name);
@@ -36,12 +36,12 @@ class Cod extends School{
             var ssb = this.getSsb();
             var fraction = p_map.getBiosmassFractionOf(Cod, this.m_position);
             if (cc != 0 && fraction != 0) {
-                recruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
+                this.m_prepareRecruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
             }                      
         }
-        this.m_ages[0] = recruitment;//Add new fish
-        this.m_size += recruitment; //Update size
-        this.m_recruitTotal += recruitment;//Update total recruitment
+        //this.m_ages[0] = recruitment;//Add new fish
+        this.m_size += this.m_prepareRecruitment; //Update size
+        this.m_recruitTotal += this.m_prepareRecruitment;//Update total recruitment
 
         //if ((<Ocean>p_map.getTile(this.m_position)).getFishCapacity() > p_map.getNoOfFishInTile(this.m_position)) {
         //    //Only recruit if the tile is not full

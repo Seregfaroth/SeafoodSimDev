@@ -127,7 +127,9 @@ var Ship = (function () {
         return this.m_fishingGear.fish(this.m_position, p_map);
     };
     Ship.prototype.land = function (p_landingSite) {
-        this.m_owner.financialTransaction(p_landingSite.receiveFish(this.getCargo()));
+        var revenue = p_landingSite.receiveFish(this.getCargo());
+        this.m_owner.m_revenue += revenue;
+        this.m_owner.financialTransaction(revenue);
     };
     Ship.prototype.refuel = function (p_fuelSite) {
         var fuelAmount = p_fuelSite.provideFuel(this.m_fuelCapacity - this.m_fuel);

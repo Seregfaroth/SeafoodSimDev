@@ -144,8 +144,9 @@ class Ship {
     }
 
     public land(p_landingSite: LandingSite): void {
-        
-        this.m_owner.financialTransaction(p_landingSite.receiveFish(this.getCargo()));
+        var revenue = p_landingSite.receiveFish(this.getCargo());
+        this.m_owner.m_revenue += revenue;
+        this.m_owner.financialTransaction(revenue);
     }
 
     public refuel(p_fuelSite: FuelSite): void {

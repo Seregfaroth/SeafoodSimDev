@@ -56,6 +56,7 @@ var Scenario = (function () {
         this.m_schoolMaximum = p_json.schoolMaximum;
         this.m_recruitAndAgeFreq = p_json.recruitAndAgeFreq;
         this.m_statFreq = p_json.statFreq;
+        this.m_noOfEmployeesOnLandPerShip = p_json.noOfEmployeesOnLandPerShip;
         this.m_noOfMenPerShip = p_json.noOfMenPerShip;
         this.m_shipPrice = p_json.shipPrice;
         this.m_defaultNoDays = p_json.defaultNoDays;
@@ -299,6 +300,9 @@ var Scenario = (function () {
     };
     Scenario.prototype.getNoOfEmployeesPerShip = function () {
         return this.m_noOfEmployeesPerShip;
+    };
+    Scenario.prototype.getNoOfEmployeesOnLandPerShip = function () {
+        return this.m_noOfEmployeesOnLandPerShip;
     };
     Scenario.prototype.getShipFuelCapacity = function () {
         return this.m_shipFuelCapacity;

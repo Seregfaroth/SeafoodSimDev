@@ -1,7 +1,7 @@
 ﻿/// <reference path="Tile.ts"/>
 class Ocean extends Tile {
     //private m_carryingCapacity: number;
-    private m_carryingCapacityC: CarryingCapacity;
+    private m_carryingCapacity: CarryingCapacity;
     private m_shipCapacity: number;
     private m_tac: number;
     private m_fishingArea: boolean = false;
@@ -9,7 +9,7 @@ class Ocean extends Tile {
 
     public constructor(p_carryingCapacity: CarryingCapacity, p_shipCapacity: number, p_fishingArea?: boolean) {
         super();
-        this.m_carryingCapacityC = p_carryingCapacity;
+        this.m_carryingCapacity = p_carryingCapacity;
         this.m_shipCapacity = p_shipCapacity;
         if (p_fishingArea) {
             this.m_fishingArea = p_fishingArea;
@@ -17,7 +17,7 @@ class Ocean extends Tile {
     }
 
     public getCarryingCapacity(): CarryingCapacity {
-        return this.m_carryingCapacityC;
+        return this.m_carryingCapacity;
     }
 
     public getCarryingCapacityBySpecies(p_name: string) {

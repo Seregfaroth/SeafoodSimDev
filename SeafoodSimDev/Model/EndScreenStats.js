@@ -184,7 +184,8 @@ var EndScreenStats = (function () {
     EndScreenStats.prototype.getEnvironmentalVizArray = function () {
         var ret = [[]];
         //add header
-        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'BiomassCod' }, { label: 'BiomassMac' }, { label: 'BiomassOther' }, { label: 'recruitCod' }, { label: 'recruitMac' }, { label: 'recruitOther' }, { label: 'Yield' }, { label: 'naturel Death' }];
+        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'BiomassCod' }, { label: 'BiomassMac' }, { label: 'BiomassOther' }, { label: 'recruitCod' }, { label: 'recruitMac' }, { label: 'recruitOther' }];
+        //     ret[0] = [{ label: 'Days', type: 'number' }, { label: 'BiomassCod' }, { label: 'BiomassMac' }, { label: 'BiomassOther' }, { label: 'recruitCod' }, { label: 'recruitMac' }, { label: 'recruitOther' }, { label: 'Yield' }, { label: 'naturel Death' }];
         //ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Biomass' }];
         for (var i in this.m_time) {
             ret[parseInt(i) + 1] = [];
@@ -198,24 +199,19 @@ var EndScreenStats = (function () {
             ret[parseInt(i) + 1][4] = this.m_recruitmentCodPrTimeUnit[i];
             ret[parseInt(i) + 1][5] = this.m_recruitmentMacPrTimeUnit[i];
             ret[parseInt(i) + 1][6] = this.m_recruitmentOtherPrTimeUnit[i];
-            //add yield
-            ret[parseInt(i) + 1][7] = this.m_yieldPrTimeUnit[i];
-            //add naturel death
-            ret[parseInt(i) + 1][8] = this.m_natDeathPrTimeUnit[i];
         }
         return ret;
     };
     EndScreenStats.prototype.getFinancialVizArray = function () {
         var ret = [[]];
-        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Income' }, { label: 'Invest' }];
+        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Income' }];
+        //ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Income' }, { label: 'Invest' }];
         for (var i in this.m_time) {
             ret[parseInt(i) + 1] = [];
             //add timeScale
             ret[parseInt(i) + 1][0] = this.m_time[i];
             //add yield
             ret[parseInt(i) + 1][1] = this.m_incomePrTimeUnit[i];
-            //add invest
-            ret[parseInt(i) + 1][2] = this.m_investPrTimeUnit[i];
         }
         return ret;
     };

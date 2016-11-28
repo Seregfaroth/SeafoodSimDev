@@ -3,6 +3,7 @@ var ShipOwner = (function () {
     function ShipOwner(p_government, p_shipStartPosition, p_id, p_balance) {
         this.m_ships = [];
         this.m_shipBought = false;
+        this.m_revenue = 0;
         this.m_scenario = Scenario.getInstance();
         this.m_government = p_government;
         this.m_shipStartPosition = p_shipStartPosition;

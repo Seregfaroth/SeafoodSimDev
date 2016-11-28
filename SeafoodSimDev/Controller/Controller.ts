@@ -145,7 +145,8 @@ class Controller {
             this.m_simState = simState.changeSettings;
             clearInterval(this.m_timer);
             this.m_eventHandler.bindFunctions(false);
-            this.m_model.updateStats();
+            
+            //this.m_model.updateStats();
             if (this.m_newSim) {
                 
                 this.m_endScreen.addSimulation(this.m_model.getStats(), this.m_model);

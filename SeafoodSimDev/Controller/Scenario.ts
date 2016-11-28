@@ -90,6 +90,7 @@
     private m_modelStatFreq: number;
     private m_modelRecruitAndAgeFreq: number;
     private m_noOfEmployeesPerShip: number;
+    private m_noOfEmployeesOnLandPerShip: number;
 
     private m_shipFuelCapacity: number;
     private m_shipCargoCapacity: number;
@@ -168,6 +169,7 @@
         this.m_schoolMaximum = p_json.schoolMaximum;
         this.m_recruitAndAgeFreq = p_json.recruitAndAgeFreq;
         this.m_statFreq = p_json.statFreq;
+        this.m_noOfEmployeesOnLandPerShip = p_json.noOfEmployeesOnLandPerShip;
         this.m_noOfMenPerShip = p_json.noOfMenPerShip;
         this.m_shipPrice = p_json.shipPrice;
 
@@ -429,6 +431,9 @@
     }
     public getNoOfEmployeesPerShip(): number {
         return this.m_noOfEmployeesPerShip;
+    }
+    public getNoOfEmployeesOnLandPerShip(): number {
+        return this.m_noOfEmployeesOnLandPerShip;
     }
     public getShipFuelCapacity(): number {
         return this.m_shipFuelCapacity;

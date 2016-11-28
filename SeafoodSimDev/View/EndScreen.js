@@ -22,8 +22,6 @@ var EndScreen = (function () {
     EndScreen.prototype.show = function () {
         $("#endDialogDiv").dialog("open");
     };
-    //public close() {
-    //}
     EndScreen.prototype.addSimulation = function (p_endStats, p_model) {
         this.m_model = p_model;
         this.m_endStats = p_endStats;
