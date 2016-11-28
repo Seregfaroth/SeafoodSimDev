@@ -68,6 +68,39 @@ var TestMap = (function () {
                     }
                 }
             });
+            QUnit.test("Map: get fishing points no land", function (assert) {
+                map.emptyGrid(0);
+                var row = 1;
+                var col = 1;
+                var expected = [new Point2(row - 1, col), new Point2(row, col - 1), new Point2(row, col), new Point2(row, col + 1), new Point2(row + 1, col)];
+                var points = map.getFishingPoints(new Point2(1, 1));
+                assert.deepEqual(points.length, expected.length, "Should be 5 points");
+                for (var i = 0; i < points.length; i++) {
+                    assert.ok(expected[i].compare(points[i]), "Points should be equal");
+                }
+            });
+            QUnit.test("Map: get fishing points with land", function (assert) {
+                map.emptyGrid(0);
+                var row = 1;
+                var col = 1;
+                map.getGrid()[row][col + 1] = new Land();
+                map.getGrid()[row - 1][col] = new Land();
+                var expected = [new Point2(row, col - 1), new Point2(row, col), new Point2(row + 1, col)];
+                var points = map.getFishingPoints(new Point2(1, 1));
+                assert.deepEqual(points.length, expected.length, "Should be 3 points");
+                for (var i = 0; i < points.length; i++) {
+                    assert.ok(expected[i].compare(points[i]), "Points should be equal");
+                }
+            });
+            QUnit.test("Map: getAdjecentSchoolPoint", function (assert) {
+                map.emptyGrid(0);
+                var codPos = new Point2(1, 1);
+                map.addSchool(new Cod(1, codPos));
+                assert.deepEqual(codPos, map.getAdjecentSchoolPoint(new Point2(1, 1)), "should find the school point");
+                assert.deepEqual(codPos, map.getAdjecentSchoolPoint(new Point2(0, 1)), "should find the school point");
+                assert.deepEqual(codPos, map.getAdjecentSchoolPoint(new Point2(2, 1)), "should find the school point");
+                assert.deepEqual(codPos, map.getAdjecentSchoolPoint(new Point2(1, 2)), "should find the school point");
+            });
         };
         this.scenario = Scenario.getInstance();
         this.scenario.loadScenario('Controller/scenarios/scnTest.json', this.runTests);
