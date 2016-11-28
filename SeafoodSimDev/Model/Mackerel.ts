@@ -14,12 +14,12 @@ class Mackerel extends School {
             var age: number = Math.floor(Math.random() * this.m_maxAge);
             this.m_ages[age] += 1;
         }
-
+        this.m_size = p_size;
     }
 
-    protected recruit(p_map: Map): void {
+    public recruit(p_map: Map): void {
         var currentTile = <Ocean>p_map.getTile(this.m_position);
-        var recruitment = 0;
+        this.m_prepareRecruitment = 0;
         //for each of the fishGroups in CarryingCapacity get the carrying Capacity 
         for (var group of currentTile.getCarryingCapacity().m_fishGroups) {
             var cc = currentTile.getCarryingCapacity().getCapacityGroupNumbers(group.m_name);
@@ -27,12 +27,12 @@ class Mackerel extends School {
             var ssb = this.getSsb();
             var fraction = p_map.getBiosmassFractionOf(Mackerel, this.m_position);
             if (cc != 0 && fraction != 0) {
-                recruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
+                this.m_prepareRecruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
             }     
         }
-        this.m_ages[0] = recruitment;
-        this.m_size += recruitment;
-        this.m_recruitTotal += recruitment;
+        //this.m_ages[0] = recruitment;
+        this.m_size += this.m_prepareRecruitment;
+        this.m_recruitTotal += this.m_prepareRecruitment;
 
         //var tmp = (<Ocean>p_map.getTile(this.m_position)).getCarryingCapacity();// getFishCapacity();
         //var tmp2 = this.getSize();

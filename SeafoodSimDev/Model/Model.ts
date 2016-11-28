@@ -51,6 +51,7 @@ class Model {
         var recruitOther = this.m_map.m_recruitOther;
         var natDeath = this.m_map.m_natDeath;
         // updating time
+        
         var statTime = this.getTime() / this.m_scenario.getStatFreq();
         this.m_stats.setTimeAt(statTime, this.getTime());
         //updating biomass and recruitment
@@ -76,19 +77,19 @@ class Model {
         this.m_stats.setRecruitmentMacPrTimeUnitAt(statTime, recruitMac);
         this.m_stats.setRecruitmentOtherPrTimeUnitAt(statTime, recruitOther);
         this.m_stats.setNatDeathPrTimeUnitAt(statTime, natDeath);
-        var t = this.m_map.getYield();
-        this.m_stats.setYieldPrTimeUnitAt(statTime, this.m_map.getYield());
-
-        //updating income
-        var income = 0;
+        //var t = this.m_map.getYield();
+        //this.m_stats.setYieldPrTimeUnitAt(statTime, this.m_map.getYield());
+        //updating economic indicators
+        //updating revenue
+        var revenue = 0;
         for (var so of this.m_shipOwners) {
-            income += so.getTaxPayed();
+            revenue += so.m_revenue;
         }
         
-        this.m_stats.setIncomePrTimeUnitAt(statTime, income);
+        this.m_stats.setIncomePrTimeUnitAt(statTime, revenue);
         //updating invest
-        var invest = this.getMap().getNoOfShips() * this.m_scenario.getShipPrice();
-        this.m_stats.setInvestPrTimeUnitAt(statTime, invest);
+        //var invest = this.getMap().getNoOfShips() * this.m_scenario.getShipPrice();
+        //this.m_stats.setInvestPrTimeUnitAt(statTime, invest);
         //this.m_map.setYield(0);
         // updating scores
         this.m_stats.setFinancialScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getFinancialScore());
@@ -97,17 +98,16 @@ class Model {
         this.m_stats.setOverallScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getOverallScore());
 
         //updating social
-        var offshore = this.getMap().getNoOfShips() * this.m_scenario.getNoOfMenPerShip();
-        var onshore = this.getMap().getFuelSites().length * 5 + this.getMap().getLandingSites().length * 10;
+        var offshore = this.getMap().getNoOfShips() * this.m_scenario.getNoOfEmployeesPerShip();
+        var onshore = this.getMap().getNoOfShips() * this.m_scenario.getNoOfEmployeesOnLandPerShip();
+        //var onshore = this.getMap().getFuelSites().length * 5 + this.getMap().getLandingSites().length * 10;
         this.m_stats.setEmploymentLandBasedPrTimeUnitAt(statTime, onshore);
         this.m_stats.setEmploymentSeaBasedPrTimeUnitAt(statTime, offshore);
-
-
     }
     public getStats(): EndScreenStats {
         return this.m_stats;
     }
-    /*public runMCA(p_noOfMoves: number) {
+    public runMCA(p_noOfMoves: number) {/*
         //var tax: number[] = [20,20,20,20];
         var tax: number[] = [10, 15, 20, 25];
         //var tax: number[] = [10, 15, 20, 30, 40, 50, 60, 70];
@@ -171,13 +171,14 @@ class Model {
         $("#mainDiv").html(this.createJSONForMCA_HTML(result, tax, maxShips));
         console.log("Result: " + result);
         //debugger;
-    }*/
+        */
+    }
      
     public run(p_noOfMoves?: number) {
         if (p_noOfMoves == undefined) p_noOfMoves = 1;
         
         for (var m = 0; m < p_noOfMoves; m++) {
-            if (!(this.m_time % this.m_scenario.getStatFreq())) this.updateStats();
+            
             this.m_time++;
             //console.log("running model");
 
@@ -192,6 +193,7 @@ class Model {
             }
 
             this.m_goverment.getScore().updateScore(this.m_map, this.m_goverment, this.m_time);
+            if (!(this.m_time % this.m_scenario.getStatFreq())) this.updateStats();
         }
     }
     

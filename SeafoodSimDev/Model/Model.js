@@ -64,18 +64,19 @@ var Model = (function () {
         this.m_stats.setRecruitmentMacPrTimeUnitAt(statTime, recruitMac);
         this.m_stats.setRecruitmentOtherPrTimeUnitAt(statTime, recruitOther);
         this.m_stats.setNatDeathPrTimeUnitAt(statTime, natDeath);
-        var t = this.m_map.getYield();
-        this.m_stats.setYieldPrTimeUnitAt(statTime, this.m_map.getYield());
-        //updating income
-        var income = 0;
+        //var t = this.m_map.getYield();
+        //this.m_stats.setYieldPrTimeUnitAt(statTime, this.m_map.getYield());
+        //updating economic indicators
+        //updating revenue
+        var revenue = 0;
         for (var _b = 0, _c = this.m_shipOwners; _b < _c.length; _b++) {
             var so = _c[_b];
-            income += so.getTaxPayed();
+            revenue += so.m_revenue;
         }
-        this.m_stats.setIncomePrTimeUnitAt(statTime, income);
+        this.m_stats.setIncomePrTimeUnitAt(statTime, revenue);
         //updating invest
-        var invest = this.getMap().getNoOfShips() * this.m_scenario.getShipPrice();
-        this.m_stats.setInvestPrTimeUnitAt(statTime, invest);
+        //var invest = this.getMap().getNoOfShips() * this.m_scenario.getShipPrice();
+        //this.m_stats.setInvestPrTimeUnitAt(statTime, invest);
         //this.m_map.setYield(0);
         // updating scores
         this.m_stats.setFinancialScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getFinancialScore());
@@ -83,85 +84,21 @@ var Model = (function () {
         this.m_stats.setSocialScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getSocialScore());
         this.m_stats.setOverallScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getOverallScore());
         //updating social
-        var offshore = this.getMap().getNoOfShips() * this.m_scenario.getNoOfMenPerShip();
-        var onshore = this.getMap().getFuelSites().length * 5 + this.getMap().getLandingSites().length * 10;
+        var offshore = this.getMap().getNoOfShips() * this.m_scenario.getNoOfEmployeesPerShip();
+        var onshore = this.getMap().getNoOfShips() * this.m_scenario.getNoOfEmployeesOnLandPerShip();
+        //var onshore = this.getMap().getFuelSites().length * 5 + this.getMap().getLandingSites().length * 10;
         this.m_stats.setEmploymentLandBasedPrTimeUnitAt(statTime, onshore);
         this.m_stats.setEmploymentSeaBasedPrTimeUnitAt(statTime, offshore);
     };
     Model.prototype.getStats = function () {
         return this.m_stats;
     };
-    /*public runMCA(p_noOfMoves: number) {
-        //var tax: number[] = [20,20,20,20];
-        var tax: number[] = [10, 15, 20, 25];
-        //var tax: number[] = [10, 15, 20, 30, 40, 50, 60, 70];
-        //var maxShips: number[] = [22,22,22,22];
-        //var maxShips: number[] = [6, 10, 14];
-        //var maxShips: number[] = [6, 10, 14, 18, 22];
-        //var maxShips: number[] = [10, 20, 30, 40, 50];
-        var maxShips: number[] = [8, 10, 12, 14, 16, 18, 20, 22, 24];
-        //var maxShips: number[] = [16];
-        var result: number[][][] = [];
-        for (var taxIndex = 0; taxIndex < tax.length; taxIndex++) {
-            result[taxIndex] = [];
-            for (var maxIndex = 0; maxIndex < maxShips.length; maxIndex++) {
-                result[taxIndex][maxIndex] = [];
-                this.getGovernment().getRestrictions().setNoShips(maxShips[maxIndex]);
-                this.getGovernment().setTaxingRate(tax[taxIndex]/100);
-                for (var m = 0; m < p_noOfMoves; m++) {
-                    if (!(this.m_time % this.m_scenario.getStatFreq()))
-                        this.updateStats();
-                    this.m_time++;
-                    this.m_map.run();
-                    if (!(this.m_time % this.m_scenario.getRecruitAndAgeFreq())) {
-
-                        this.m_map.ageAndRecruit();
-                    }
-                    for (var i = 0; i < this.m_shipOwners.length; i++) {
-                        this.m_ai.run(this.m_shipOwners[i], this.m_map);
-                    }
-                }
-                var index = Math.floor(this.m_scenario.getDefaultNoDays() / this.m_scenario.getStatFreq()-1);
-                var bioCod = this.m_stats.getBiomassCodPrTimeUnit();
-                var biomassCod = this.m_stats.getBiomassCodPrTimeUnitAt(index);
-                var recruitmentCod = this.m_stats.getRecruitmentCodPrTimeUnitAt(index);
-
-                var income = this.m_stats.getIncomePrTimeUnitAt(index);
-                var invest = this.m_stats.getInvestprTimeUnitAt(index);
-                var onShore = this.m_stats.getEmploymentLandBasedPrTimeUnitAt(index);
-                var offShore = this.m_stats.getEmploymentSeaBasedPrTimeUnitAt(index);
-                result[taxIndex][maxIndex] = [biomassCod, recruitmentCod, income, invest, onShore, offShore];
-                //console.log("Tax: " + tax[taxIndex]);
-                //console.log("Maxships: " + maxShips[maxIndex]);
-                //console.log("income: " + JSON.stringify(this.m_stats.getIncomePrTimeUnit()));
-                console.log("result: " + result[taxIndex][maxIndex]);
-                this.m_stats = new EndScreenStats();
-                this.m_shipOwners = [];
-                var j = 0;
-                for (var i = 0; i < this.m_scenario.getNoOfShipOwners(); i++) {
-                    var startShipPoint: Point2[] = [new Point2(6, 11), new Point2(7, 12)];
-
-                    do {
-                        //startShipPoint = new Point2(Math.round(Math.random() * (this.m_map.getMapHeight() - 1)), Math.round(Math.random() * (this.m_map.getMapWidth() - 1)));
-                        //startShipPoint[i] = new Point2(6, 11);
-                    } while (!(this.m_map.getTile(startShipPoint[j]) instanceof Ocean))//If this is not an ocean tile, find a new tile
-                    this.createShipOwner(startShipPoint[j++]);
-                }
-                this.m_time = 0;
-                this.m_ai = new AI();
-                this.m_map = new Map(this.getGovernment().getRestrictions());
-            }
-        }
-        $("#mainDiv").html(this.createJSONForMCA_HTML(result, tax, maxShips));
-        console.log("Result: " + result);
-        //debugger;
-    }*/
+    Model.prototype.runMCA = function (p_noOfMoves) {
+    };
     Model.prototype.run = function (p_noOfMoves) {
         if (p_noOfMoves == undefined)
             p_noOfMoves = 1;
         for (var m = 0; m < p_noOfMoves; m++) {
-            if (!(this.m_time % this.m_scenario.getStatFreq()))
-                this.updateStats();
             this.m_time++;
             //console.log("running model");
             this.m_map.run();
@@ -173,6 +110,8 @@ var Model = (function () {
                 this.m_ai.run(this.m_shipOwners[i], this.m_map);
             }
             this.m_goverment.getScore().updateScore(this.m_map, this.m_goverment, this.m_time);
+            if (!(this.m_time % this.m_scenario.getStatFreq()))
+                this.updateStats();
         }
     };
     Model.prototype.getShipOwners = function () {

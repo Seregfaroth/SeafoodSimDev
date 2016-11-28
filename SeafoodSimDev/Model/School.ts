@@ -8,6 +8,7 @@ abstract class School {
     protected m_msy: number;
     protected m_tac: number;
     protected m_recruitTotal: number = 0;
+    protected m_prepareRecruitment: number = 0;
     protected m_natDeath: number = 0;
     protected m_yield: number = 0;
     protected m_size: number;
@@ -29,6 +30,9 @@ abstract class School {
     }
     public getRecruitTotal(): number {
         return this.m_recruitTotal;
+    }
+    public getPrepareRecruit(): number {
+        return this.m_prepareRecruitment;
     }
     public getNatDeathTotal(): number {
         return this.m_natDeath;
@@ -75,20 +79,20 @@ abstract class School {
     }
     
 
-    public ageAndRecruit(p_map: Map): void {
-        var t = this.m_ages[this.m_ages.length - 1];
-        this.m_natDeath += this.m_ages[this.m_ages.length-1];
-        this.age();
-        this.recruit(p_map);
-    }
+    //public ageAndRecruit(p_map: Map): void {
+    //    var t = this.m_ages[this.m_ages.length - 1];
+    //    this.m_natDeath += this.m_ages[this.m_ages.length-1];
+    //    this.age();
+    //    this.recruit(p_map);
+    //}
 
-    private age(): void {
+    public age(): void {
         var school: School = this;
         this.m_size -= this.m_ages[this.m_maxAge - 1];
         for (var i = this.m_maxAge-1; i >0; i--) {
             this.m_ages[i] = this.m_ages[i - 1];
         }
-        this.m_ages[0] = 0;
+        this.m_ages[0] = this.m_prepareRecruitment;
     }
     public getMaxAge(): number {
         return this.m_maxAge;
@@ -154,6 +158,7 @@ abstract class School {
         }
         //console.log("new postion: " + JSON.stringify(this.m_position));
     }
-    protected abstract recruit(p_map: Map): void;
+    public abstract recruit(p_map: Map): void;
+    //protected abstract applyRecruit(p_map: Map): void;
     //protected abstract recruit2(p_map: Map, cc: number, gr: number): void;
 }

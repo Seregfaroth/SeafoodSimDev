@@ -78,14 +78,14 @@ class Map {
     }
     public ageAndRecruit(): void {
         var map: Map = this;
+        var mapRecruit = 
         this.m_schools.forEach(function (s) {
-            s.ageAndRecruit(map);
+            s.recruit(map);
+            });
+        this.m_schools.forEach(function (s) {
+            s.age();
             if (s.getSize() < map.m_scenario.getSchoolMinimum()) {
-                
                 map.removeSchool(s);
-            }
-            else if (s.getSize() > map.m_scenario.getSchoolMaximum()) {
-                //map.splitCodSchool(s as Cod);
             }
         });
        
