@@ -47,11 +47,18 @@ var School = (function () {
     School.prototype.setMey = function (p_mey) {
         this.m_tac = p_mey;
     };
-    School.prototype.getSize = function () {
+    School.prototype.getSize = function (p_onlyOld) {
         var size = 0;
-        this.m_ages.forEach(function (n) {
-            size += n;
-        });
+        if (p_onlyOld) {
+            for (var i = Math.ceil(0.3 * this.getMaxAge()); i < this.m_ages.length; i++) {
+                size += this.m_ages[i];
+            }
+        }
+        else {
+            this.m_ages.forEach(function (n) {
+                size += n;
+            });
+        }
         return size;
     };
     School.prototype.getPosition = function () {

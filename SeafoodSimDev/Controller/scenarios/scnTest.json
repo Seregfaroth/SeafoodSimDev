@@ -85,6 +85,7 @@
   "modelStatFreq": 30,
   "modelRecruitAndAgeFreq": 30,
   "noOfEmployeesPerShip": 10,
+  "noOfEmployeesOnLandPerShip": 4,
 
   "shipFuelCapacity": 150,
   "shipCargoCapacity": 800,

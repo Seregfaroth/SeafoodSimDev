@@ -52,4 +52,7 @@ class MainView {
     public resizeWindow(): void {
         this.m_mapView.setMapSize();
     }
+    public updateMap(p_map: Map): void {
+        this.m_mapView.updateMap(p_map);
+    }
 }

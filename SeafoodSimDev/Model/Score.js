@@ -42,7 +42,7 @@ var Score = (function () {
         });
         //Social score
         this.m_socialScore = 0;
-        score.m_socialScore += p_map.getNoOfShips() * 8;
+        score.m_socialScore += p_map.getNoOfShips() * (this.m_scenario.getNoOfEmployeesOnLandPerShip() + this.m_scenario.getNoOfEmployeesPerShip());
         //Environmental score
         this.m_environmentalScore = 0;
         p_map.getSchools().forEach(function (s) {

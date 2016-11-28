@@ -150,6 +150,22 @@ var TestShip = (function () {
                 //Check that the ship owner has been charged
                 assert.deepEqual(codShip.getOwner().getBalance(), balance - fuelSite.getPrice() * (codShip.getFuel() - fuel), "owner should have been charged");
             });
+            QUnit.test("Ship: fish under restrictions", function (assert) {
+                map.emptyGrid(100);
+                var codShip = new Ship(owner, FishType.cod, new Point2(0, 1));
+                var cod = new Cod(10000, new Point2(0, 0));
+                map.addSchool(cod);
+                map.getRestrictions().restrictArea(map.getTile(new Point2(0, 0)));
+                assert.deepEqual(codShip.getCargoSize(), 0, "Cargo should be empty");
+                while (codShip.getCargoSize() < 1000) {
+                    codShip.fish(map);
+                }
+                var cargo = codShip.getCargo()[FishType.cod];
+                var oldThreshhold = Math.ceil(0.3 * cod.getMaxAge());
+                for (var i = 0; i < oldThreshhold; i++) {
+                    assert.deepEqual(cargo[i], 0, "There should be no young fish");
+                }
+            });
         };
         this.scenario = Scenario.getInstance();
         this.scenario.loadScenario('Controller/scenarios/scnTest.json', this.runTests);

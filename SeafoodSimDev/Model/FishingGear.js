@@ -13,10 +13,20 @@ var FishingGear = (function () {
     }
     FishingGear.prototype.updateFishingPercentage = function (p_position, p_map) {
         if (this.m_fishType === FishType.cod) {
-            var noOfFishInTile = p_map.getBiomassOfinTile(Cod, p_position);
+            if (p_map.getRestrictions().areAreasRestricted()) {
+                var noOfFishInTile = p_map.getBiomassOfinTile(Cod, p_position, true);
+            }
+            else {
+                var noOfFishInTile = p_map.getBiomassOfinTile(Cod, p_position);
+            }
         }
         else if (this.m_fishType === FishType.mackerel) {
-            var noOfFishInTile = p_map.getBiomassOfinTile(Mackerel, p_position);
+            if (p_map.getRestrictions().areAreasRestricted()) {
+                var noOfFishInTile = p_map.getBiomassOfinTile(Mackerel, p_position, true);
+            }
+            else {
+                var noOfFishInTile = p_map.getBiomassOfinTile(Mackerel, p_position);
+            }
         }
         var fishingPercentage = this.m_scenario.getFishingPercentage();
         if (this.m_cargoCapacity - this.getCargoSize() < noOfFishInTile * fishingPercentage) {
@@ -29,10 +39,15 @@ var FishingGear = (function () {
         var totalFish = 0;
         var fishingPercentage = this.updateFishingPercentage(p_position, p_map);
         var thisPlaceHolder = this;
-        p_map.getSchoolsInTile(p_position).forEach(function (school) {
+        var fishPos = p_map.getAdjecentSchoolPoint(p_position);
+        p_map.getSchoolsInTile(fishPos).forEach(function (school) {
             var type = school instanceof Cod ? FishType.cod : FishType.mackerel;
             if (type === thisPlaceHolder.m_fishType) {
-                for (var i = 0; i < school.getMaxAge(); i++) {
+                var startAge = 0;
+                if (p_map.getRestrictions().areAreasRestricted()) {
+                    startAge = Math.ceil(0.3 * school.getMaxAge());
+                }
+                for (var i = startAge; i < school.getMaxAge(); i++) {
                     //The number of fish the ship is fishing
                     var noOfFish = Math.ceil(fishingPercentage * school.getAges()[i]);
                     //Add to cargo

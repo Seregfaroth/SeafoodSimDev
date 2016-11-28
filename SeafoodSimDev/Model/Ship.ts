@@ -110,7 +110,7 @@ class Ship {
         //var t2 = this.m_path[0];
         //var t3 = this.m_position;
         //this.history[3].push(this.m_path.length === 1 && this.m_path[0] === this.m_position);
-        return this.m_path.length === 1 && this.m_path[0] === this.m_position;
+        return this.m_path.length === 1 && this.m_path[0].compare(this.m_position);
     }
 
     private moveTo(p_position: Point2, p_map: Map): boolean {

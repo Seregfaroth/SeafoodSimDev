@@ -111,7 +111,9 @@ p {
     font-size: 1.8vw;
 }
 
-
+#restrictAreas {
+    align-content: center;
+}
 #startSim { 
     /*This was being overridden somewhere for startSim that's why this is needed*/
     font-size: 1.8vw;

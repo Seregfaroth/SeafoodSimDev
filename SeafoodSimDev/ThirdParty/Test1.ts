@@ -77,7 +77,7 @@ class TKN_Geometry {
         return this.m_geometry;
     }
 }
-enum e_color { Green, Blue, Red, Yellow, White, Black }; 
+enum e_color { Green, Blue, Red, Yellow, White, Black, DarkBlue }; 
 
 class TKN_material {
     private m_material: THREE.MeshBasicMaterial;
@@ -90,6 +90,7 @@ class TKN_material {
             case e_color.Yellow: this.m_material.color.setHex(0xffff00); break;
             case e_color.White: this.m_material.color.setHex(0xffffff); break;
             case e_color.Black: this.m_material.color.setHex(0x000000); break;
+            case e_color.DarkBlue: this.m_material.color.setHex(0x030C6D); break;
             default: this.m_material.color.setHex(0xff00ff); break;
         }
     }

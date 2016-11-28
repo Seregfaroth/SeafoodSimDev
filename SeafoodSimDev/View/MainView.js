@@ -45,6 +45,9 @@ var MainView = (function () {
     MainView.prototype.resizeWindow = function () {
         this.m_mapView.setMapSize();
     };
+    MainView.prototype.updateMap = function (p_map) {
+        this.m_mapView.updateMap(p_map);
+    };
     return MainView;
 }());
 //# sourceMappingURL=MainView.js.map

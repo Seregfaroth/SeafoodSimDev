@@ -313,6 +313,12 @@ var Map = (function () {
         return list;
     };
     Map.prototype.getTile = function (p_position) {
+        var row = p_position.row;
+        var col = p_position.col;
+        if (row < 0 || row > this.getMapHeight() - 1 ||
+            col < 0 || col > this.getMapWidth() - 1) {
+            throw new Error("Tile out of range");
+        }
         return this.m_grid[p_position.row][p_position.col];
     };
     Map.prototype.getPathFindingMap = function () {
@@ -381,12 +387,12 @@ var Map = (function () {
         var ret;
         return ret;
     };
-    Map.prototype.getBiomassOfinTile = function (p_type, p_position) {
+    Map.prototype.getBiomassOfinTile = function (p_type, p_position, p_onlyOld) {
         var ret = 0;
         for (var _i = 0, _a = this.getSchoolsInTile(p_position); _i < _a.length; _i++) {
             var school = _a[_i];
             if (school instanceof p_type) {
-                ret = school.getSize();
+                ret = school.getSize(p_onlyOld); //OBS assuming only one school of each type per tile
                 break;
             }
         }
@@ -410,6 +416,34 @@ var Map = (function () {
     Map.prototype.getSsbOf = function (p_name, p_position) {
         var ret;
         return ret;
+    };
+    //Get point of adjecent school
+    Map.prototype.getAdjecentSchoolPoint = function (p_point) {
+        for (var _i = 0, _a = this.m_schools; _i < _a.length; _i++) {
+            var s = _a[_i];
+            if ((s.getOrigin()).manhattanDistTo(p_point) < 2) {
+                return s.getOrigin();
+            }
+        }
+        throw new Error("No adjecent school found");
+    };
+    //Get ocean tiles surrounding a point
+    Map.prototype.getFishingPoints = function (p_pos) {
+        var fishingPoints = [];
+        var potentialPoints = [new Point2(p_pos.row - 1, p_pos.col), new Point2(p_pos.row, p_pos.col - 1),
+            p_pos, new Point2(p_pos.row, p_pos.col + 1), new Point2(p_pos.row + 1, p_pos.col)];
+        for (var _i = 0, potentialPoints_1 = potentialPoints; _i < potentialPoints_1.length; _i++) {
+            var point = potentialPoints_1[_i];
+            try {
+                var tile = this.getTile(point);
+                if (tile instanceof Ocean) {
+                    fishingPoints.push(point);
+                }
+            }
+            catch (e) {
+            }
+        }
+        return fishingPoints;
     };
     return Map;
 }());

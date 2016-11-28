@@ -83,6 +83,9 @@ var Controller = (function () {
         };
         this.runSimulation = function (p_ticks) {
             if (_this.m_simState == simState.paused || _this.m_simState == simState.fast || _this.m_simState == simState.changeSettings) {
+                if (_this.m_simState == simState.changeSettings) {
+                    _this.m_view.updateMap(_this.m_model.getMap());
+                }
                 clearInterval(_this.m_timer);
                 _this.m_timer = setInterval(_this.simulationTick, _this.m_delayPerTick);
                 _this.m_simState = simState.running;

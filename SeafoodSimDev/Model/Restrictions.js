@@ -7,12 +7,18 @@ var Restrictions = (function () {
         this.m_tac = [undefined, undefined];
         this.m_scenario = Scenario.getInstance();
         this.m_noCodOfShips = this.m_scenario.getStartNoCodShips();
+        this.m_noMackerelOfShips = this.m_scenario.getStartNoMackerelShips();
     }
+    Restrictions.prototype.areAreasRestricted = function () {
+        return this.m_restrictedAreas.length > 0;
+    };
     Restrictions.prototype.restrictArea = function (p_tile) {
         this.m_restrictedAreas.push(p_tile);
     };
     Restrictions.prototype.unRestrictArea = function (p_tile) {
-        this.m_restrictedAreas.splice(this.m_restrictedAreas.indexOf(p_tile), 1);
+        if (this.m_restrictedAreas.indexOf(p_tile) > -1) {
+            this.m_restrictedAreas.splice(this.m_restrictedAreas.indexOf(p_tile), 1);
+        }
     };
     Restrictions.prototype.setQuote = function (p_shipOwner, p_amount) {
         this.m_quotes[p_shipOwner] = p_amount;
