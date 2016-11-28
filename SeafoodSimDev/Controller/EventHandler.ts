@@ -60,6 +60,7 @@
             $("#pauseButton").on("click", this.pause);
             $("#fastForwardButton").on("click", this.fastForward);
         }
+        $("#restrictAreas").removeAttr("disabled");
     }
 
     public unBindFunctions(p_all?:boolean): void {
@@ -90,6 +91,7 @@
             $("#pauseButton").off("click");
             $("#fastForwardButton").off("click");
         }
+        $("#restrictAreas").attr("disabled", "disabled");
     }
     public restart = (): void => {
         var t = this.m_controller.getModel().getTime();

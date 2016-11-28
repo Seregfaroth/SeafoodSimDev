@@ -112,7 +112,13 @@ p {
 }
 
 #restrictAreas {
-    align-content: center;
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  margin-right: 100px;
+
 }
 #startSim { 
     /*This was being overridden somewhere for startSim that's why this is needed*/

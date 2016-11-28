@@ -165,6 +165,7 @@ var EventHandler = (function () {
             $("#pauseButton").on("click", this.pause);
             $("#fastForwardButton").on("click", this.fastForward);
         }
+        $("#restrictAreas").removeAttr("disabled");
     };
     EventHandler.prototype.unBindFunctions = function (p_all) {
         var handler = this;
@@ -193,6 +194,7 @@ var EventHandler = (function () {
             $("#pauseButton").off("click");
             $("#fastForwardButton").off("click");
         }
+        $("#restrictAreas").attr("disabled", "disabled");
     };
     EventHandler.prototype.updateNoCodShipsValue = function (p_n) {
         $("#noCodShips").text(p_n);
