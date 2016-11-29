@@ -11,14 +11,20 @@
    constructor() {
        this.m_scenario = Scenario.getInstance();
        this.m_noCodOfShips = this.m_scenario.getStartNoCodShips();
+       this.m_noMackerelOfShips = this.m_scenario.getStartNoMackerelShips();
+    }
+   public areAreasRestricted(): boolean {
+       return this.m_restrictedAreas.length > 0;
    }
-    public restrictArea(p_tile: Tile): void {
+   public restrictArea(p_tile: Tile): void {
         this.m_restrictedAreas.push(p_tile);
     }
 
-    public unRestrictArea(p_tile: Tile): void {
-        this.m_restrictedAreas.splice(this.m_restrictedAreas.indexOf(p_tile), 1);
-    }
+   public unRestrictArea(p_tile: Tile): void {
+       if (this.m_restrictedAreas.indexOf(p_tile) > -1) {
+           this.m_restrictedAreas.splice(this.m_restrictedAreas.indexOf(p_tile), 1);
+       }
+   }
 
     public setQuote(p_shipOwner: string, p_amount: number): void {
         this.m_quotes[p_shipOwner] = p_amount;
@@ -74,4 +80,5 @@
     public getTAC(): number[] {
         return this.m_tac;
     }
+
 }

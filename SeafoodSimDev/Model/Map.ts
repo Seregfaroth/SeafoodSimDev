@@ -343,6 +343,12 @@ class Map {
     }
 
     public getTile(p_position: Point2): Tile {
+        var row: number = p_position.row;
+        var col: number = p_position.col;
+        if (row < 0 || row > this.getMapHeight()-1 ||
+            col < 0 || col > this.getMapWidth()-1) {
+            throw new Error("Tile out of range");
+        }
         return this.m_grid[p_position.row][p_position.col];
     }
 
@@ -417,11 +423,11 @@ class Map {
 
         return ret;
     }
-    public getBiomassOfinTile(p_type, p_position: Point2): number {
+    public getBiomassOfinTile(p_type, p_position: Point2, p_onlyOld?: boolean): number {
         var ret = 0;
         for (var school of this.getSchoolsInTile(p_position)) {
             if (school instanceof p_type) {
-                ret = school.getSize();
+                ret = school.getSize(p_onlyOld); //OBS assuming only one school of each type per tile
                 break;
             }
         }
@@ -448,6 +454,34 @@ class Map {
 
         return ret;
     }
+    //Get point of adjecent school
+    public getAdjecentSchoolPoint(p_point: Point2): Point2 {
+        for (let s of this.m_schools) {
+            if ((s.getOrigin()).manhattanDistTo(p_point) < 2) {//Ship fish at the four adjecent tiles
+                return s.getOrigin();
+            }
 
+        }
+        throw new Error("No adjecent school found");
+    }
+    //Get ocean tiles surrounding a point
+    public getFishingPoints(p_pos: Point2): Point2[] {
+        var fishingPoints: Point2[] = [];
+        var potentialPoints: Point2[] = [new Point2(p_pos.row - 1, p_pos.col), new Point2(p_pos.row, p_pos.col - 1),
+            p_pos, new Point2(p_pos.row, p_pos.col + 1), new Point2(p_pos.row + 1, p_pos.col)];
+        for (let point of potentialPoints) {
+            try {
+                var tile = this.getTile(point);
+                if (tile instanceof Ocean) {
+                    fishingPoints.push(point);
+                }
+            }
+            catch (e) {
+                
+            }
+        }
+        return fishingPoints;
+
+    }
 
 }

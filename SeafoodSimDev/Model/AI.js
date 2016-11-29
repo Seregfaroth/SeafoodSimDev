@@ -56,6 +56,9 @@ var AI = (function () {
                 else if (ai.m_catchedSoFar[ship.getType()] < p_map.getRestrictions().getTAC()[ship.getType()]) {
                     //If all tac is not fished yet
                     ai.m_catchedSoFar[ship.getType()] += ship.fish(p_map);
+                }
+                else if (ai.m_catchedSoFar[ship.getType()] >= p_map.getRestrictions().getTAC()[ship.getType()]) {
+                    //If all tac is fished
                     ship.setState(shipState.waiting); //Set state to waiting
                     ship.emptyPath(); //Empty path
                 }
@@ -180,12 +183,21 @@ var AI = (function () {
         if (p_map.getSchools().length !== 0) {
             var randomNumber = Math.floor(Math.random() * (p_map.getSchools().length));
             var firstRandomNumber = randomNumber;
-            while (!p_map.getTile(p_map.getSchools()[randomNumber].getOrigin()).roomForAnotherShip()) {
-                randomNumber = (randomNumber + 1) % p_map.getSchools().length;
-                if (randomNumber === firstRandomNumber)
-                    return undefined; //If there was no tile with room for the ship
-            }
-            return this.pathFinding(p_map, p_start, p_map.getSchools()[randomNumber].getPosition());
+            var tileNo = 0;
+            var fishingTiles = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getOrigin());
+            do {
+                var point = fishingTiles[tileNo];
+                if (tileNo == fishingTiles.length) {
+                    randomNumber = (randomNumber + 1) % p_map.getSchools().length;
+                    if (randomNumber === firstRandomNumber)
+                        return undefined; //If there was no tile with room for the ship
+                    fishingTiles = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getOrigin());
+                    tileNo = 0;
+                }
+                var tile = p_map.getTile(point);
+                tileNo++;
+            } while (!(tile.roomForAnotherShip() && p_map.getRestrictions().getRestrictedAreas().indexOf(tile) < 0));
+            return this.pathFinding(p_map, p_start, point);
         }
         else
             return undefined;

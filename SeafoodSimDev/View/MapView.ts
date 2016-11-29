@@ -11,7 +11,8 @@ class MapView {
     private m_mapTile: TKN_Mesh[][] = [];
     private m_redMaterial: TKN_material;
     private m_greenMaterial: TKN_material;
-    private m_blueMaterial: TKN_material;
+    private m_blueMaterial: TKN_material; 
+    private m_restrictedMaterial: TKN_material; 
     private m_yellowMaterial: TKN_material;
     private m_whiteMaterial: TKN_material;
     private m_blackMaterial: TKN_material;
@@ -38,6 +39,7 @@ class MapView {
         this.m_redMaterial = new TKN_material(e_color.Red);
         this.m_greenMaterial = new TKN_material(e_color.Green);
         this.m_blueMaterial = new TKN_material(e_color.Blue);
+        this.m_restrictedMaterial = new TKN_material(e_color.DarkBlue);
         this.m_yellowMaterial = new TKN_material(e_color.Yellow);
         this.m_whiteMaterial = new TKN_material(e_color.White);
         this.m_blackMaterial = new TKN_material(e_color.Black);
@@ -103,6 +105,24 @@ class MapView {
             this.m_scene.remove(this.m_ships[i]);
         }
         this.m_ships = [];
+    }
+    updateMap(p_map: Map) {
+        for (var row = 0; row < p_map.getMapHeight(); row++) {
+            for (var col = 0; col < p_map.getMapWidth(); col++) {
+                var pos = new Point2(row, col);
+                var tile: Tile = p_map.getTile(pos);
+                if (tile instanceof Ocean) {
+                    if (p_map.getRestrictions().isRestricted(tile)) {
+                        this.m_mapTile[row][col] = new TKN_Mesh(this.m_geometry, this.m_restrictedMaterial);
+                    }
+                    else {
+                        this.m_mapTile[row][col] = new TKN_Mesh(this.m_geometry, this.m_blueMaterial);
+                    }
+                    this.m_mapTile[row][col].position = new Point2(row, col);
+                    this.m_scene.add(this.m_mapTile[row][col]);  
+                }
+            }
+        }
     }
     updateMapView(p_map: Map) {
         //console.log("updating MapView");

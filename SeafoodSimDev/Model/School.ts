@@ -65,11 +65,18 @@ abstract class School {
         this.m_tac = p_mey;
     }
 
-    public getSize(): number {
+    public getSize(p_onlyOld?: boolean): number {
         var size: number = 0;
-        this.m_ages.forEach(function (n) {
-            size += n;
-        });
+        if (p_onlyOld) {
+            for (var i = Math.ceil(0.3 * this.getMaxAge()); i < this.m_ages.length; i++) {
+                size += this.m_ages[i];
+            }
+        }
+        else {
+            this.m_ages.forEach(function (n) {
+                size += n;
+            });
+        }
         return size;
     }
 

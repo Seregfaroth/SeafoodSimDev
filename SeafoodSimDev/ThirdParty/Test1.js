@@ -98,6 +98,7 @@ var e_color;
     e_color[e_color["Yellow"] = 3] = "Yellow";
     e_color[e_color["White"] = 4] = "White";
     e_color[e_color["Black"] = 5] = "Black";
+    e_color[e_color["DarkBlue"] = 6] = "DarkBlue";
 })(e_color || (e_color = {}));
 ;
 var TKN_material = (function () {
@@ -121,6 +122,9 @@ var TKN_material = (function () {
                 break;
             case e_color.Black:
                 this.m_material.color.setHex(0x000000);
+                break;
+            case e_color.DarkBlue:
+                this.m_material.color.setHex(0x030C6D);
                 break;
             default:
                 this.m_material.color.setHex(0xff00ff);

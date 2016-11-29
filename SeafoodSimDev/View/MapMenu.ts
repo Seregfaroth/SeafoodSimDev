@@ -320,6 +320,31 @@
         $("#tacMackerelSlider").slider("option", "max", 50);
         $("#tacMackerelSlider").slider("value", 0);
 
+        //Restrict areas
+        var legend: HTMLElement = document.createElement("legend");
+        legend.classList.add("menu-legend");
+        var label: HTMLElement = document.createElement("div");
+        label.innerHTML = "Restrict Spawning Areas";
+        label.className = "legend-header";
+        legend.appendChild(label);
+        menuDiv.appendChild(legend);
+        var table: any = document.createElement("TABLE");
+        table.width = "100%";
+        table.classList.add("menu-text");
+        legend.appendChild(table);
+        var dateRow: HTMLTableRowElement = table.insertRow();
+
+        var cell: HTMLTableCellElement = dateRow.insertCell();
+        var valueDiv: HTMLDivElement = document.createElement("div");
+        cell.appendChild(valueDiv);
+        valueDiv.innerHTML = "Restrict all spawning areas:";
+
+        var cell = dateRow.insertCell();
+        var checkBox: HTMLButtonElement = document.createElement("input");
+        cell.appendChild(checkBox);
+        checkBox.type = "checkbox";
+        checkBox.id = "restrictAreas";
+
         //Create buttons
         var buttonsDiv: HTMLElement = document.createElement("legend");
         buttonsDiv.classList.add("menu-legend");

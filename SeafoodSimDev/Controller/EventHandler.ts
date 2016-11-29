@@ -14,9 +14,6 @@
     public bindFunctions(p_all?: boolean): void {
         var handler: EventHandler = this;
         $(window).resize(this.m_controller.resizeWindow);
-        $("#taxSlider").off("slide");
-        $("#taxSlider").on("slide", function (event, ui) { handler.updateTaxValue(ui.value); });
-        $("#taxSlider").on("slidechange", function (event, ui) { handler.setTax(ui.value); });
 
         this.m_controller.getModel().getShipOwners().forEach(function (so) {
             $("#quoteSlider" + so.getID()).off("slide");
@@ -63,6 +60,7 @@
             $("#pauseButton").on("click", this.pause);
             $("#fastForwardButton").on("click", this.fastForward);
         }
+        $("#restrictAreas").removeAttr("disabled");
     }
 
     public unBindFunctions(p_all?:boolean): void {
@@ -93,6 +91,7 @@
             $("#pauseButton").off("click");
             $("#fastForwardButton").off("click");
         }
+        $("#restrictAreas").attr("disabled", "disabled");
     }
     public restart = (): void => {
         var t = this.m_controller.getModel().getTime();
@@ -115,8 +114,21 @@
         this.setNoMackerelShips($('#noMackerelShipsSlider').slider("option", "value"));
         this.setTacCod($('#tacCodSlider').slider("option", "value"));
         this.setTacMackerel($('#tacMackerelSlider').slider("option", "value"));
+        this.restrictSpawningAreas($("#restrictAreas").is(':checked'));
         this.m_controller.getModel().startNewInterval();
         this.start();
+    }
+    public restrictSpawningAreas = (checked: boolean): void => {
+        if (checked) {
+            for (let s of this.m_controller.getModel().getMap().getSchools()) {
+                this.m_controller.getModel().getGovernment().getRestrictions().restrictArea(this.m_controller.getModel().getMap().getTile(s.getOrigin()));
+            }
+        }
+        else {
+            for (let s of this.m_controller.getModel().getMap().getSchools()) {
+                this.m_controller.getModel().getGovernment().getRestrictions().unRestrictArea(this.m_controller.getModel().getMap().getTile(s.getOrigin()));
+            }
+        }
     }
     public setTax = (p_n: number): void => {
         this.updateTaxValue(p_n);

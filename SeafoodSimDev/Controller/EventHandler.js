@@ -21,8 +21,23 @@ var EventHandler = (function () {
             _this.setNoMackerelShips($('#noMackerelShipsSlider').slider("option", "value"));
             _this.setTacCod($('#tacCodSlider').slider("option", "value"));
             _this.setTacMackerel($('#tacMackerelSlider').slider("option", "value"));
+            _this.restrictSpawningAreas($("#restrictAreas").is(':checked'));
             _this.m_controller.getModel().startNewInterval();
             _this.start();
+        };
+        this.restrictSpawningAreas = function (checked) {
+            if (checked) {
+                for (var _i = 0, _a = _this.m_controller.getModel().getMap().getSchools(); _i < _a.length; _i++) {
+                    var s = _a[_i];
+                    _this.m_controller.getModel().getGovernment().getRestrictions().restrictArea(_this.m_controller.getModel().getMap().getTile(s.getOrigin()));
+                }
+            }
+            else {
+                for (var _b = 0, _c = _this.m_controller.getModel().getMap().getSchools(); _b < _c.length; _b++) {
+                    var s = _c[_b];
+                    _this.m_controller.getModel().getGovernment().getRestrictions().unRestrictArea(_this.m_controller.getModel().getMap().getTile(s.getOrigin()));
+                }
+            }
         };
         this.setTax = function (p_n) {
             _this.updateTaxValue(p_n);
@@ -108,9 +123,6 @@ var EventHandler = (function () {
     EventHandler.prototype.bindFunctions = function (p_all) {
         var handler = this;
         $(window).resize(this.m_controller.resizeWindow);
-        $("#taxSlider").off("slide");
-        $("#taxSlider").on("slide", function (event, ui) { handler.updateTaxValue(ui.value); });
-        $("#taxSlider").on("slidechange", function (event, ui) { handler.setTax(ui.value); });
         this.m_controller.getModel().getShipOwners().forEach(function (so) {
             $("#quoteSlider" + so.getID()).off("slide");
             $("#quoteSlider" + so.getID()).on("slide", function (event, ui) {
@@ -153,6 +165,7 @@ var EventHandler = (function () {
             $("#pauseButton").on("click", this.pause);
             $("#fastForwardButton").on("click", this.fastForward);
         }
+        $("#restrictAreas").removeAttr("disabled");
     };
     EventHandler.prototype.unBindFunctions = function (p_all) {
         var handler = this;
@@ -181,6 +194,7 @@ var EventHandler = (function () {
             $("#pauseButton").off("click");
             $("#fastForwardButton").off("click");
         }
+        $("#restrictAreas").attr("disabled", "disabled");
     };
     EventHandler.prototype.updateNoCodShipsValue = function (p_n) {
         $("#noCodShips").text(p_n);

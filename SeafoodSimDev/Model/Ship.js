@@ -96,7 +96,7 @@ var Ship = (function () {
         //var t2 = this.m_path[0];
         //var t3 = this.m_position;
         //this.history[3].push(this.m_path.length === 1 && this.m_path[0] === this.m_position);
-        return this.m_path.length === 1 && this.m_path[0] === this.m_position;
+        return this.m_path.length === 1 && this.m_path[0].compare(this.m_position);
     };
     Ship.prototype.moveTo = function (p_position, p_map) {
         var tile = p_map.getTile(p_position);

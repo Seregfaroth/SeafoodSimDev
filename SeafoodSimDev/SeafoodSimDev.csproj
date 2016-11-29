@@ -81,7 +81,6 @@
     <TypeScriptCompile Include="Model\Map.ts" />
     <TypeScriptCompile Include="Model\Model.ts" />
     <TypeScriptCompile Include="Model\Ocean.ts" />
-    <TypeScriptCompile Include="Model\Point.ts" />
     <TypeScriptCompile Include="Model\Restrictions.ts" />
     <TypeScriptCompile Include="Model\School.ts" />
     <TypeScriptCompile Include="Model\Score.ts" />
