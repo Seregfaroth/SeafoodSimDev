@@ -227,6 +227,8 @@ var AI = (function () {
     AI.prototype.findNewPath = function (p_ship, p_map) {
         if (p_map.getFuelSites().length > 0 && p_map.getLandingSites().length > 0) {
             var fuelPath = this.pathToNearestFuelSite(p_ship.getPosition(), p_map);
+            var t = this.m_catchedSoFar[p_ship.getType()];
+            var t2 = p_map.getRestrictions().getTAC()[p_ship.getType()];
             if (p_ship.getFuel() <= fuelPath.length * p_ship.getFuelPerMove() + 1) {
                 //Ship must refuel if fuel is too low
                 this.goRefuel(p_ship, p_map, fuelPath);

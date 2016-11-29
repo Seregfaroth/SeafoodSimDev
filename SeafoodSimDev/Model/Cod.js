@@ -11,7 +11,7 @@ var Cod = (function (_super) {
         _super.call(this, p_size, p_position);
         this.m_maxAge = this.m_scenario.getCodSchoolMaxAge();
         //this.m_type = "cod";
-        this.m_growthRate = 0.35;
+        this.m_growthRate = 0.45;
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }
@@ -36,13 +36,18 @@ var Cod = (function (_super) {
             var cc = currentTile.getCarryingCapacity().getCapacityGroupNumbers(group.m_name);
             //var sbb = p_map.getSsbOf(this.getType(), this.m_position);      
             var ssb = this.getSsb();
+            var size = this.getSize();
             var fraction = p_map.getBiosmassFractionOf(Cod, this.m_position);
             if (cc != 0 && fraction != 0) {
-                this.m_prepareRecruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
+                //console.log("Cod recrut: " + this.m_growthRate * ssb * (1 - ssb / (cc * fraction)));
+                //console.log("Cod recrut: " + this.m_growthRate * ssb * (1 - ssb / (cc * fraction)) + "  ssb: " + ssb + "  cc*frac: " + cc * fraction);
+                //this.m_prepareRecruitment += this.m_growthRate * ssb * (1 - ssb / (cc * fraction));
+                console.log("Cod recrut: " + this.m_growthRate * size * (1 - size / (cc * fraction)) + "  size: " + size + "  cc*frac: " + cc * fraction);
+                this.m_prepareRecruitment += this.m_growthRate * size * (1 - size / (cc * fraction));
             }
         }
         //this.m_ages[0] = recruitment;//Add new fish
-        this.m_size += this.m_prepareRecruitment; //Update size
+        //this.m_size += this.m_prepareRecruitment; //Update size
         this.m_recruitTotal += this.m_prepareRecruitment; //Update total recruitment
         //if ((<Ocean>p_map.getTile(this.m_position)).getFishCapacity() > p_map.getNoOfFishInTile(this.m_position)) {
         //    //Only recruit if the tile is not full

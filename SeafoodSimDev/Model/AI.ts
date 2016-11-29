@@ -237,6 +237,8 @@ class AI {
     private findNewPath(p_ship: Ship, p_map: Map): void {
         if (p_map.getFuelSites().length > 0 && p_map.getLandingSites().length > 0) {
             var fuelPath: Point2[] = this.pathToNearestFuelSite(p_ship.getPosition(), p_map);
+            var t = this.m_catchedSoFar[p_ship.getType()];
+            var t2 = p_map.getRestrictions().getTAC()[p_ship.getType()];
             if (p_ship.getFuel() <= fuelPath.length * p_ship.getFuelPerMove() + 1) {
                 //Ship must refuel if fuel is too low
                 this.goRefuel(p_ship, p_map, fuelPath);
@@ -250,7 +252,7 @@ class AI {
                 else {
                     this.goRefuel(p_ship, p_map, fuelPath);
                 }
-            }
+            }            
             else if (this.m_catchedSoFar[p_ship.getType()] < p_map.getRestrictions().getTAC()[p_ship.getType()]) {
                 //If ship does not need to land or refuel
                 //var fishingPath: Point2[] = this.pathToBestFishingArea(p_ship.getPosition(), p_map);

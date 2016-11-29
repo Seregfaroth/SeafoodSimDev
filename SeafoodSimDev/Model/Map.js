@@ -141,7 +141,7 @@ var Map = (function () {
             var tile = this.getTile(point);
             if (tile instanceof Ocean) {
                 this.addSchool(new Cod(20000, point));
-                this.addSchool(new Mackerel(10000, point));
+                this.addSchool(new Mackerel(30000, point));
                 schoolsPlaced++;
             }
         }
@@ -306,7 +306,7 @@ var Map = (function () {
     Map.prototype.getSchoolsInTile = function (p_position) {
         var list = [];
         this.m_schools.forEach(function (s) {
-            if (s.getOrigin().compare(p_position)) {
+            if (s.getPosition().compare(p_position)) {
                 list.push(s);
             }
         });
@@ -396,8 +396,10 @@ var Map = (function () {
     Map.prototype.getBiosmassFractionOf = function (p_type, p_position) {
         var ret;
         var totalBiomass = 0;
+        var t = this.getSchoolsInTile(p_position);
         for (var _i = 0, _a = this.getSchoolsInTile(p_position); _i < _a.length; _i++) {
             var school = _a[_i];
+            var t2 = school.getSize();
             totalBiomass += school.getSize();
         }
         if (totalBiomass !== 0) {

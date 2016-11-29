@@ -31,6 +31,9 @@ abstract class School {
     public getRecruitTotal(): number {
         return this.m_recruitTotal;
     }
+    public resetRecruitTotal() {
+        this.m_recruitTotal = 0;
+    }
     public getPrepareRecruit(): number {
         return this.m_prepareRecruitment;
     }
@@ -93,6 +96,7 @@ abstract class School {
             this.m_ages[i] = this.m_ages[i - 1];
         }
         this.m_ages[0] = this.m_prepareRecruitment;
+        this.m_size += this.m_prepareRecruitment; //Update size
     }
     public getMaxAge(): number {
         return this.m_maxAge;
@@ -108,7 +112,7 @@ abstract class School {
     //Move with a probability of 25% in a random direction
     public move(p_map: Map): void {
         //console.log("Original position: " + JSON.stringify(this.m_position));
-        var move: boolean = Math.random() < 0.05;
+        var move: boolean = Math.random() < 0;
         if (this.m_scenario.getMovingRadius() !== 0) {
             if (move) {
 

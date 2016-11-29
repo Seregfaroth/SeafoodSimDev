@@ -150,7 +150,7 @@ class Map {
             var tile: Tile = this.getTile(point);
             if (tile instanceof Ocean) {
                 this.addSchool(new Cod(20000, point));
-                this.addSchool(new Mackerel(10000, point));
+                this.addSchool(new Mackerel(30000, point));
 
                 schoolsPlaced++;
             }
@@ -335,9 +335,8 @@ class Map {
     public getSchoolsInTile(p_position: Point2): School[] {
         var list: School[] = [];
         this.m_schools.forEach(function (s) {
-           if (s.getOrigin().compare( p_position) ){
-                list.push(s);
-
+           if (s.getPosition().compare( p_position) ){
+                list.push(s);              
             }
         });
         return list;
@@ -432,7 +431,9 @@ class Map {
     public getBiosmassFractionOf(p_type, p_position: Point2): number {
         var ret;
         var totalBiomass = 0;
+        var t = this.getSchoolsInTile(p_position);
         for (var school of this.getSchoolsInTile(p_position)) {
+            var t2 = school.getSize();
             totalBiomass += school.getSize();
         }
         if (totalBiomass !== 0) {

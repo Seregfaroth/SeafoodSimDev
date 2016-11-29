@@ -61,6 +61,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="Controller\Controller.ts" />
     <TypeScriptCompile Include="Controller\EventHandler.ts" />
+    <TypeScriptCompile Include="Controller\IController.ts" />
     <TypeScriptCompile Include="Controller\Scenario.ts" />
     <TypeScriptCompile Include="Controller\StartScreenEventHandler.ts" />
     <TypeScriptCompile Include="declarations\jquery.d.ts" />

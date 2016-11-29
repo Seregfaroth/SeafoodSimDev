@@ -26,7 +26,7 @@
   "schoolMsy": 5000,
   "schoolMinimum": 50,
   "schoolMaximum": 36500,
-  "defaultNoDays": 90,
+  "defaultNoDays": 120,
   "defaultTickSize": 30,
   "taxingRate": 0.1,
   "map": "map1",
@@ -69,7 +69,7 @@
   "fuelsiteFuelPrize": 300,
   "fuelsiteNumberOfEmployees": 4,
 
-  "oceanShipCapacity": 5,
+  "oceanShipCapacity": 10,
 
   "environmentalScoreMaxIncreasePerTick": 20000,
   "codMovingRadius": 0,
@@ -77,14 +77,14 @@
   "codSchoolMaxAge": 8,
   
   "mackerelSchoolMaxAge": 10,
-  "recruitAndAgeFreq": 1,
+  "recruitAndAgeFreq": 5,
 
-  "statFreq": 10,
+  "statFreq": 40,
   "noOfMenPerShip": 8,
   
 
   "modelStatFreq": 1,
-  "modelRecruitAndAgeFreq": 1,
+  "modelRecruitAndAgeFreq": 20,
   "noOfEmployeesPerShip": 10,
   "noOfEmployeesOnLandPerShip": 4,
 

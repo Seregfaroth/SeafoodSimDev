@@ -29,6 +29,7 @@ var FishingGear = (function () {
         var totalFish = 0;
         var fishingPercentage = this.updateFishingPercentage(p_position, p_map);
         var thisPlaceHolder = this;
+        var t = p_map.getSchoolsInTile(p_position);
         p_map.getSchoolsInTile(p_position).forEach(function (school) {
             var type = school instanceof Cod ? FishType.cod : FishType.mackerel;
             if (type === thisPlaceHolder.m_fishType) {

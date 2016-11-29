@@ -46,9 +46,9 @@ class Model {
         var biomassCod = 0;
         var biomassMac = 0;
         var biomassOther = 0;
-        var recruitCod = this.m_map.m_recruitCod;
-        var recruitMac = this.m_map.m_recruitMac;
-        var recruitOther = this.m_map.m_recruitOther;
+        var recruitCod = 0;
+        var recruitMac = 0;
+        var recruitOther = 0;
         var natDeath = this.m_map.m_natDeath;
         // updating time
         
@@ -59,10 +59,12 @@ class Model {
             if (sc instanceof Cod) {
                 biomassCod += sc.getBiomass();
                 recruitCod += sc.getRecruitTotal();
+                sc.resetRecruitTotal();
             }
             else if (sc instanceof Mackerel) {
                 biomassMac += sc.getBiomass();
                 recruitMac += sc.getRecruitTotal();
+                sc.resetRecruitTotal();
             }
             else {
                 biomassOther += sc.getBiomass();

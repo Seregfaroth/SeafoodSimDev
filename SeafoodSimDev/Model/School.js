@@ -21,6 +21,9 @@ var School = (function () {
     School.prototype.getRecruitTotal = function () {
         return this.m_recruitTotal;
     };
+    School.prototype.resetRecruitTotal = function () {
+        this.m_recruitTotal = 0;
+    };
     School.prototype.getPrepareRecruit = function () {
         return this.m_prepareRecruitment;
     };
@@ -73,6 +76,7 @@ var School = (function () {
             this.m_ages[i] = this.m_ages[i - 1];
         }
         this.m_ages[0] = this.m_prepareRecruitment;
+        this.m_size += this.m_prepareRecruitment; //Update size
     };
     School.prototype.getMaxAge = function () {
         return this.m_maxAge;
@@ -88,7 +92,7 @@ var School = (function () {
     //Move with a probability of 25% in a random direction
     School.prototype.move = function (p_map) {
         //console.log("Original position: " + JSON.stringify(this.m_position));
-        var move = Math.random() < 0.05;
+        var move = Math.random() < 0;
         if (this.m_scenario.getMovingRadius() !== 0) {
             if (move) {
                 var newPoint;
