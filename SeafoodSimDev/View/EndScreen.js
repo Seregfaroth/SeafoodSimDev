@@ -29,7 +29,9 @@ var EndScreen = (function () {
         var simDiv = document.createElement("div");
         this.m_endDialogDiv.appendChild(simDiv);
         simDiv.id = "simulation" + this.m_simIndex;
-        simDiv.style.display = "inline";
+        simDiv.style.display = "inline-block";
+        simDiv.style.verticalAlign = "top";
+        simDiv.style.width = "45%";
         //accordion header
         var header = document.createElement("h3");
         simDiv.appendChild(header);
@@ -80,6 +82,10 @@ var EndScreen = (function () {
         //headerDiv.innerHTML = "EndScreen";
         //headerDiv.classList.add("header");
         var headerType = "h5";
+        var msyProjectionDiv = document.createElement("div");
+        p_div.appendChild(msyProjectionDiv);
+        msyProjectionDiv.id = "msy" + this.m_simIndex;
+        msyProjectionDiv.innerHTML = "msy Cod: " + "</br>" + " msy Mackerel: ";
         var endGameStatusDiv = document.createElement("div"); //accordion
         p_div.appendChild(endGameStatusDiv);
         var h3gs = document.createElement(headerType); //header
@@ -227,12 +233,12 @@ var EndScreen = (function () {
                 title: 'Scores'
             },
             title: 'Scores',
-            chartArea: { left: '5%', top: '15%', width: '65%', height: '60%' },
-            colors: ['#0057e7', '#32b835', '#d62d20', '#ffa700'],
+            chartArea: { left: '25%', top: '15%', width: '50%', height: '65%' },
+            //colors: ['#0057e7', '#32b835', '#d62d20', '#ffa700'],
             lineWidth: 1,
-            explorer: {},
+            //explorer: {},
             height: 200,
-            width: 300,
+            width: 600,
         };
         var environChartOptions = {
             hAxis: {
@@ -245,12 +251,12 @@ var EndScreen = (function () {
             title: 'Environmental Indicators',
             //colors: ['#00361b', '#005e2f', '#008744', '#4cab7c', '#99cfb4'],
             //colors: ['#008A00', '#00B500', '#00DC00', '#2EDF2E', '#5CE55C'],
-            colors: ['#227c24', '#279029', '#2da42f', '#32b835', '#3ac93d'],
-            chartArea: { left: '5%', top: '15%', width: '65%', height: '60%' },
+            //colors: ['#227c24', '#279029', '#2da42f', '#32b835', '#3ac93d'],
+            chartArea: { left: '25%', top: '15%', width: '50%', height: '65%' },
             lineWidth: 1,
-            explorer: {},
-            height: 300,
-            width: 500
+            //explorer: {},
+            height: 200,
+            width: 600
         };
         var socialChartOptions = {
             hAxis: {
@@ -261,12 +267,12 @@ var EndScreen = (function () {
                 title: ''
             },
             title: 'Social Indicators',
-            chartArea: { left: '5%', top: '15%', width: '65%', height: '60%' },
-            colors: ['#AD7900', '#E39F00', '#FFB300', '##FFC235', '#FFD166'],
+            chartArea: { left: '25%', top: '15%', width: '50%', height: '65%' },
+            //colors: ['#AD7900', '#E39F00', '#FFB300', '##FFC235', '#FFD166'],
             lineWidth: 1,
-            explorer: {},
-            height: 300,
-            width: 500
+            //explorer: {},
+            height: 200,
+            width: 600
         };
         var financialChartOptions = {
             hAxis: {
@@ -276,18 +282,23 @@ var EndScreen = (function () {
             vAxis: {
                 title: ''
             },
-            title: 'Financial Indicators',
-            chartArea: { left: '5%', top: '15%', width: '65%', height: '60%' },
+            title: 'Economic Indicators',
+            chartArea: { left: '25%', top: '15%', width: '50%', height: '65%' },
             lineWidth: 1,
-            explorer: {},
-            height: 300,
-            width: 500
+            //explorer: {},
+            height: 200,
+            width: 600
         };
         //this.m_scoreColumnChart[this.m_simIndex].draw(scoreColumnChartData, scoreColumnChartOptions);
         this.m_scoreChart[this.m_simIndex].draw(scoreChartData, scoreChartOptions);
         this.m_environChart[this.m_simIndex].draw(environChartData, environChartOptions);
         this.m_socialChart[this.m_simIndex].draw(socialChartData, socialChartOptions);
         this.m_financialChart[this.m_simIndex].draw(financialChartData, financialChartOptions);
+    };
+    EndScreen.prototype.updateMsy = function (p_model) {
+        var t = p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod);
+        var t2 = p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel);
+        $("#msy" + this.m_simIndex).html("MsyCod: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod)) + "</br> MsyMac: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel)));
     };
     return EndScreen;
 }());

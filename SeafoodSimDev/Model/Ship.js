@@ -11,11 +11,13 @@ var FishType;
 (function (FishType) {
     FishType[FishType["cod"] = 0] = "cod";
     FishType[FishType["mackerel"] = 1] = "mackerel";
+    FishType[FishType["other"] = 2] = "other";
 })(FishType || (FishType = {}));
 var Ship = (function () {
     function Ship(p_owner, p_fishType, p_position) {
         this.m_path = [];
         this.history = [[], [], [], [], []]; //For debugging  purpose
+        this.m_hasHitTac = false;
         this.m_scenario = Scenario.getInstance();
         this.m_noHistory = this.m_scenario.getNoHistory();
         this.m_position = p_position;
@@ -29,6 +31,9 @@ var Ship = (function () {
         this.m_state = shipState.waiting;
         this.m_fishingGear = new FishingGear(p_fishType);
     }
+    Ship.prototype.getHasHitTac = function () {
+        return this.m_hasHitTac;
+    };
     Ship.prototype.getState = function () {
         return this.m_state;
     };
@@ -40,6 +45,9 @@ var Ship = (function () {
     };
     Ship.prototype.getCargo = function () {
         return this.m_fishingGear.getCargo();
+    };
+    Ship.prototype.getFishType = function () {
+        return FishType[this.m_fishingGear.getFishType()];
     };
     Ship.prototype.getFuelCapacity = function () {
         return this.m_fuelCapacity;
@@ -121,7 +129,13 @@ var Ship = (function () {
     };
     Ship.prototype.land = function (p_landingSite) {
         var revenue = p_landingSite.receiveFish(this.getCargo());
-        this.m_owner.m_revenue += revenue;
+        var t = FishType[this.m_fishingGear.getFishType()];
+        if (FishType[this.m_fishingGear.getFishType()] == "cod")
+            this.m_owner.m_revenueCod += revenue;
+        else if (FishType[this.m_fishingGear.getFishType()] == "mackerel")
+            this.m_owner.m_revenueMac += revenue;
+        else if (FishType[this.m_fishingGear.getFishType()] == "other")
+            this.m_owner.m_revenueOther += revenue;
         this.m_owner.financialTransaction(revenue);
     };
     Ship.prototype.refuel = function (p_fuelSite) {

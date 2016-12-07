@@ -70,12 +70,18 @@ var Model = (function () {
         //this.m_stats.setYieldPrTimeUnitAt(statTime, this.m_map.getYield());
         //updating economic indicators
         //updating revenue
-        var revenue = 0;
+        var revenueCod = 0;
+        var revenueMac = 0;
+        var revenueOther = 0;
         for (var _b = 0, _c = this.m_shipOwners; _b < _c.length; _b++) {
             var so = _c[_b];
-            revenue += so.m_revenue;
+            revenueCod += so.m_revenueCod;
+            revenueMac += so.m_revenueMac;
+            revenueOther += so.m_revenueOther;
         }
-        this.m_stats.setIncomePrTimeUnitAt(statTime, revenue);
+        this.m_stats.setIncomeCodPrTimeUnitAt(statTime, revenueCod);
+        this.m_stats.setIncomeMackerelPrTimeUnitAt(statTime, revenueMac);
+        this.m_stats.setIncomeOtherPrTimeUnitAt(statTime, revenueOther);
         //updating invest
         //var invest = this.getMap().getNoOfShips() * this.m_scenario.getShipPrice();
         //this.m_stats.setInvestPrTimeUnitAt(statTime, invest);
@@ -86,16 +92,108 @@ var Model = (function () {
         this.m_stats.setSocialScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getSocialScore());
         this.m_stats.setOverallScorePrTimeUnitAt(statTime, this.m_goverment.getScore().getOverallScore());
         //updating social
-        var offshore = this.getMap().getNoOfShips() * this.m_scenario.getNoOfEmployeesPerShip();
-        var onshore = this.getMap().getNoOfShips() * this.m_scenario.getNoOfEmployeesOnLandPerShip();
+        var offshoreCod = this.getMap().getNoOfShips("cod") * this.m_scenario.getNoOfEmployeesPerShip();
+        var onshoreCod = this.getMap().getNoOfShips("cod") * this.m_scenario.getNoOfEmployeesOnLandPerShip();
+        var offshoreMackerel = this.getMap().getNoOfShips("mackerel") * this.m_scenario.getNoOfEmployeesPerShip();
+        var onShoreMackerel = this.getMap().getNoOfShips("mackerel") * this.m_scenario.getNoOfEmployeesOnLandPerShip();
+        var offShoreOther = this.getMap().getNoOfShips("other") * this.m_scenario.getNoOfEmployeesPerShip();
+        var onShoreOther = this.getMap().getNoOfShips("other") * this.m_scenario.getNoOfEmployeesOnLandPerShip();
         //var onshore = this.getMap().getFuelSites().length * 5 + this.getMap().getLandingSites().length * 10;
-        this.m_stats.setEmploymentLandBasedPrTimeUnitAt(statTime, onshore);
-        this.m_stats.setEmploymentSeaBasedPrTimeUnitAt(statTime, offshore);
+        this.m_stats.setEmploymentLandBasedCodPrTimeUnitAt(statTime, onshoreCod);
+        this.m_stats.setEmploymentSeaBasedCodPrTimeUnitAt(statTime, offshoreCod);
+        this.m_stats.setEmploymentLandBasedMackerelPrTimeUnitAt(statTime, onShoreMackerel);
+        this.m_stats.setEmploymentSeaBasedMackerelPrTimeUnitAt(statTime, offshoreMackerel);
+        this.m_stats.setEmploymentLandBasedOtherPrTimeUnitAt(statTime, onShoreOther);
+        this.m_stats.setEmploymentSeaBasedOtherPrTimeUnitAt(statTime, offShoreOther);
     };
     Model.prototype.getStats = function () {
         return this.m_stats;
     };
     Model.prototype.runMCA = function (p_noOfMoves) {
+        var restrictedArea = [false];
+        var pelargicVessels = [10, 20];
+        var demersalVessels = [15, 30];
+        var tacCod = [1000];
+        var tacMac = [2000];
+        var result = [];
+        for (var resArea = 0; resArea < restrictedArea.length; resArea++) {
+            result[resArea] = [];
+            for (var maxCodIndex = 0; maxCodIndex < pelargicVessels.length; maxCodIndex++) {
+                result[resArea][maxCodIndex] = [];
+                for (var maxMacIndex = 0; maxMacIndex < demersalVessels.length; maxMacIndex++) {
+                    result[resArea][maxCodIndex][maxMacIndex] = [];
+                    for (var tacCodIndex = 0; tacCodIndex < tacCod.length; tacCodIndex++) {
+                        result[resArea][maxCodIndex][maxMacIndex][tacCodIndex] = [];
+                        for (var tacMacIndex = 0; tacMacIndex < tacMac.length; tacMacIndex++) {
+                            result[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex] = [];
+                            //this.getGovernment().getRestrictions().setNoShips(maxShips[maxIndex]);
+                            //this.getGovernment().setTaxingRate(tax[taxIndex] / 100);
+                            if (resArea) {
+                                for (var _i = 0, _a = this.getMap().getSchools(); _i < _a.length; _i++) {
+                                    var s = _a[_i];
+                                    this.getGovernment().getRestrictions().restrictArea(this.getMap().getTile(s.getOrigin()));
+                                }
+                            }
+                            else {
+                                for (var _b = 0, _c = this.getMap().getSchools(); _b < _c.length; _b++) {
+                                    var s = _c[_b];
+                                    this.getGovernment().getRestrictions().unRestrictArea(this.getMap().getTile(s.getOrigin()));
+                                }
+                            }
+                            this.getGovernment().getRestrictions().setNoCodShips(pelargicVessels[maxCodIndex]);
+                            this.getGovernment().getRestrictions().setNoMackerelShips(demersalVessels[maxMacIndex]);
+                            this.getGovernment().getRestrictions().setTacCod(tacCod[tacCodIndex]);
+                            this.getGovernment().getRestrictions().setTacMackerel(tacMac[tacMacIndex]);
+                            this.updateNoShips();
+                            for (var m = 0; m < p_noOfMoves; m++) {
+                                if (!(this.m_time % this.m_scenario.getStatFreq()))
+                                    this.updateStats();
+                                this.m_time++;
+                                this.m_map.run();
+                                if (!(this.m_time % this.m_scenario.getRecruitAndAgeFreq())) {
+                                    this.m_map.ageAndRecruit();
+                                }
+                                for (var i = 0; i < this.m_shipOwners.length; i++) {
+                                    this.m_ai.run(this.m_shipOwners[i], this.m_map);
+                                }
+                            }
+                            var index = Math.floor(this.m_scenario.getDefaultNoDays() / this.m_scenario.getStatFreq() - 1);
+                            var revenueCod = Math.round(this.m_stats.getIncomeCodPrTimeUnitAt(index));
+                            var revenueMac = Math.round(this.m_stats.getIncomeMackerelPrTimeUnitAt(index));
+                            var recruitCod = Math.round(this.m_stats.getRecruitmentCodPrTimeUnitAt(index));
+                            var recruitMac = Math.round(this.m_stats.getRecruitmentMacPrTimeUnitAt(index));
+                            var biomassCod = Math.round(this.m_stats.getBiomassCodPrTimeUnitAt(index));
+                            var biomassMac = Math.round(this.m_stats.getBiomassMacPrTimeUnitAt(index));
+                            var offshoreCod = Math.round(this.m_stats.getEmploymentSeaBasedCodPrTimeUnitAt(index));
+                            var offshoreMac = Math.round(this.m_stats.getEmploymentSeaBasedMackerelPrTimeUnitAt(index));
+                            var onshoreCod = Math.round(this.m_stats.getEmploymentLandBasedCodPrTimeUnitAt(index));
+                            var onshoreMac = Math.round(this.m_stats.getEmploymentLandBasedMackerelPrTimeUnitAt(index));
+                            result[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex] =
+                                [revenueCod, revenueMac, recruitCod, recruitMac, biomassCod, biomassMac, offshoreCod, offshoreMac, onshoreCod, onshoreMac];
+                            //console.log("Tax: " + tax[taxIndex]);
+                            //console.log("Maxships: " + maxShips[maxIndex]);
+                            //console.log("income: " + JSON.stringify(this.m_stats.getIncomePrTimeUnit()));
+                            console.log("result: " + result[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex]);
+                            this.m_stats = new EndScreenStats();
+                            this.m_shipOwners = [];
+                            var j = 0;
+                            for (var i = 0; i < this.m_scenario.getNoOfShipOwners(); i++) {
+                                var startShipPoint = [new Point2(1, 1), new Point2(4, 4)];
+                                do {
+                                } while (!(this.m_map.getTile(startShipPoint[j]) instanceof Ocean)); //If this is not an ocean tile, find a new tile
+                                this.createShipOwner(startShipPoint[j++]);
+                            }
+                            this.m_time = 0;
+                            this.m_ai = new AI();
+                            this.m_map = new Map(this.getGovernment().getRestrictions());
+                        }
+                    }
+                }
+            }
+        }
+        $("#mainDiv").html(this.createJSONForMCA_HTML(result, restrictedArea, pelargicVessels, demersalVessels, tacCod, tacCod));
+        console.log("Result: " + result);
+        //debugger;
     };
     Model.prototype.run = function (p_noOfMoves) {
         if (p_noOfMoves == undefined)
@@ -111,7 +209,7 @@ var Model = (function () {
             for (var i = 0; i < this.m_shipOwners.length; i++) {
                 this.m_ai.run(this.m_shipOwners[i], this.m_map);
             }
-            this.m_goverment.getScore().updateScore(this.m_map, this.m_goverment, this.m_time);
+            this.m_goverment.getScore().updateScore(this, this.m_map, this.m_goverment, this.m_time);
             if (!(this.m_time % this.m_scenario.getStatFreq()))
                 this.updateStats();
         }
@@ -134,109 +232,170 @@ var Model = (function () {
     Model.prototype.createShipOwner = function (p_startingPoint, p_balance) {
         this.m_shipOwners.push(new ShipOwner(this.m_goverment, p_startingPoint, "shipOwner" + this.m_shipOwners.length, p_balance));
     };
-    Model.prototype.createJSONForMCA_HTML = function (p_res, p_tax, p_ship) {
+    Model.prototype.createJSONForMCA_HTML = function (p_res, p_resArea, p_codship, p_macship, p_codtac, p_mactac) {
         var ret = "";
         var retObj = [];
-        var biomass = [];
-        var recruitment = [];
-        var income = [];
-        var invest = [];
-        var onShore = [];
-        var offShore = [];
+        var revenueCod = [];
+        var revenueMac = [];
+        var recruitCod = [];
+        var recruitMac = [];
+        var biomassCod = [];
+        var biomassMac = [];
+        var offShoreCod = [];
+        var offShoreMac = [];
+        var onShoreCod = [];
+        var onShoreMac = [];
         var id = 0;
         var MCAObj;
         var elements = [];
         var connections = [
             {
-                "connInput": "elmt6",
-                "connOutput": "elmt4",
-                "connID": "conn12"
-            },
-            {
-                "connInput": "elmt7",
-                "connOutput": "elmt4",
-                "connID": "conn13"
-            },
-            {
-                "connInput": "elmt8",
-                "connOutput": "elmt1",
-                "connID": "conn14"
-            },
-            {
-                "connInput": "elmt9",
-                "connOutput": "elmt1",
-                "connID": "conn15"
-            },
-            {
-                "connInput": "elmt10",
-                "connOutput": "elmt5",
-                "connID": "conn16"
-            },
-            {
-                "connInput": "elmt11",
-                "connOutput": "elmt5",
-                "connID": "conn17"
+                "connInput": "elmt2",
+                "connOutput": "elmt0",
+                "connID": "conn0"
             },
             {
                 "connInput": "elmt1",
+                "connOutput": "elmt0",
+                "connID": "conn1"
+            },
+            {
+                "connInput": "elmt3",
+                "connOutput": "elmt0",
+                "connID": "conn2"
+            },
+            {
+                "connInput": "elmt14",
+                "connOutput": "elmt2",
+                "connID": "conn4"
+            },
+            {
+                "connInput": "elmt15",
+                "connOutput": "elmt1",
+                "connID": "conn5"
+            },
+            {
+                "connInput": "elmt16",
+                "connOutput": "elmt1",
+                "connID": "conn6"
+            },
+            {
+                "connInput": "elmt17",
                 "connOutput": "elmt3",
-                "connID": "conn18"
+                "connID": "conn7"
+            },
+            {
+                "connInput": "elmt18",
+                "connOutput": "elmt3",
+                "connID": "conn8"
             },
             {
                 "connInput": "elmt4",
-                "connOutput": "elmt3",
-                "connID": "conn19"
+                "connOutput": "elmt14",
+                "connID": "conn9"
             },
             {
                 "connInput": "elmt5",
-                "connOutput": "elmt3",
-                "connID": "conn20"
+                "connOutput": "elmt14",
+                "connID": "conn10"
+            },
+            {
+                "connInput": "elmt8",
+                "connOutput": "elmt16",
+                "connID": "conn11"
+            }, {
+                "connInput": "elmt9",
+                "connOutput": "elmt16",
+                "connID": "conn12"
+            },
+            {
+                "connInput": "elmt6",
+                "connOutput": "elmt15",
+                "connID": "conn13"
+            },
+            {
+                "connInput": "elmt7",
+                "connOutput": "elmt15",
+                "connID": "conn14"
+            },
+            {
+                "connInput": "elmt12",
+                "connOutput": "elmt18",
+                "connID": "conn15"
+            },
+            {
+                "connInput": "elmt13",
+                "connOutput": "elmt18",
+                "connID": "conn16"
+            },
+            {
+                "connInput": "elmt10",
+                "connOutput": "elmt17",
+                "connID": "conn17"
+            },
+            {
+                "connInput": "elmt11",
+                "connOutput": "elmt17",
+                "connID": "conn18"
             }
         ];
-        for (var taxIndex = 0; taxIndex < p_res.length; taxIndex++) {
-            for (var maxIndex = 0; maxIndex < p_res[taxIndex].length; maxIndex++) {
-                //retObj[id] = {
-                elements[id + 10] = {
-                    "posX": (1000 + taxIndex * 160),
-                    "posY": (300 + maxIndex * 50),
-                    "elmtID": "elmt" + (id + 1000),
-                    "elmtName": "SC " + p_ship[maxIndex] + ", " + p_tax[taxIndex] + "% ",
-                    "elmtDesc": "write description here",
-                    "elmtType": 102,
-                    "elmtWghtMthd": 0,
-                    "elmtDstType": 1,
-                    "elmtDataArr": [],
-                    "pwlFlipVertical": false,
-                    "pwlFlipHorizontal": false,
-                    "elmtData": []
-                };
-                //ret += JSON.stringify(retObj[id]) + ",<br/><br/>" 
-                biomass[id] = p_res[taxIndex][maxIndex][0];
-                recruitment[id] = p_res[taxIndex][maxIndex][1];
-                income[id] = p_res[taxIndex][maxIndex][2];
-                invest[id] = p_res[taxIndex][maxIndex][3];
-                onShore[id] = p_res[taxIndex][maxIndex][4];
-                offShore[id] = p_res[taxIndex][maxIndex][5];
-                id++;
+        for (var resArea = 0; resArea < p_resArea.length; resArea++) {
+            for (var maxCodIndex = 0; maxCodIndex < p_codship.length; maxCodIndex++) {
+                for (var maxMacIndex = 0; maxMacIndex < p_macship.length; maxMacIndex++) {
+                    for (var tacCodIndex = 0; tacCodIndex < p_codtac.length; tacCodIndex++) {
+                        for (var tacMacIndex = 0; tacMacIndex < p_mactac.length; tacMacIndex++) {
+                            //retObj[id] = {
+                            elements[id + 19] = {
+                                //"posX": (600 + maxCodIndex * 160 + maxMacIndex * 160),
+                                //"posY": (1000 * resArea + 100 * tacCodIndex + 100 * tacMacIndex),
+                                "posX": 800,
+                                "posY": 100 + 10 * id,
+                                "elmtID": "elmt" + (id + 1000),
+                                "elmtName": "SC " + id /*+ p_ship[maxIndex] + ", " + p_tax[taxIndex] + "% "*/,
+                                "elmtDesc": "write description here",
+                                "elmtType": 102,
+                                "elmtWghtMthd": 0,
+                                "elmtDstType": 1,
+                                "elmtDataArr": [],
+                                "pwlFlipVertical": false,
+                                "pwlFlipHorizontal": false,
+                                "elmtData": []
+                            };
+                            //ret += JSON.stringify(retObj[id]) + ",<br/><br/>" 
+                            revenueCod[id] = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex][0];
+                            revenueMac[id] = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex][1];
+                            recruitCod[id] = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex][2];
+                            recruitMac[id] = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex][3];
+                            biomassCod[id] = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex][4];
+                            biomassMac[id] = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex][5];
+                            offShoreCod[id] = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex][6];
+                            offShoreMac[id] = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex][7];
+                            onShoreCod[id] = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex][8];
+                            onShoreMac[id] = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex][9];
+                            id++;
+                        }
+                    }
+                }
             }
         }
-        var biomassObj = {
+        var ttt = Math.round(Math.max.apply(Math, revenueCod) * 1.5 / 1000) * 1000;
+        var revenueCodObj = {
             "posX": 814.0899812385121,
-            "posY": 391.9172932330827,
+            "posY": 200,
             "elmtValueFnX": 50,
             "elmtValueFnY": 50,
             "elmtValueFnFlip": 0,
-            "elmtID": "elmt8",
-            "elmtName": "Biomass",
+            "elmtID": "elmt4",
+            "elmtName": "revenueCod",
             "elmtDesc": "write description here",
             "elmtType": 100,
             "elmtWghtMthd": 2,
             "elmtDstType": 1,
             "elmtDataMin": 0,
-            "elmtDataMax": Math.round(Math.max.apply(Math, biomass) * 1.5 / 1000) * 1000,
+            "elmtDataMax": Math.round(Math.max.apply(Math, revenueCod) * 1.5 / 1000) * 1000,
             "elmtDataUnit": "Tons",
-            "elmtDataBaseLine": this.getBaseLine(biomass),
-            "elmtDataArr": biomass,
+            "elmtDataBaseLine": this.getBaseLine(revenueCod),
+            "elmtDataArr": revenueCod,
             "pwl": {
                 "points": [
                     {
@@ -252,15 +411,15 @@ var Model = (function () {
             "pwlFlipVertical": false,
             "pwlFlipHorizontal": false,
             "elmtData": []
-        };
-        var recruitmentObj = {
+        }; //elmt4
+        var revenueMacObj = {
             "posX": 812.1378491442404,
-            "posY": 434.5238095238096,
+            "posY": 240,
             "elmtValueFnX": 50,
             "elmtValueFnY": 50,
             "elmtValueFnFlip": 0,
-            "elmtID": "elmt9",
-            "elmtName": "Recruitment",
+            "elmtID": "elmt5",
+            "elmtName": "revenueMac",
             "elmtDesc": "write description here",
             "elmtType": 100,
             "elmtWghtMthd": 2,
@@ -268,10 +427,10 @@ var Model = (function () {
             //"elmtDataMin": Math.min(...recruitment)-10000,
             "elmtDataMin": 0,
             //"elmtDataMax": Math.max(...recruitment) + 10000,
-            "elmtDataMax": Math.round(Math.max.apply(Math, recruitment) * 1.5 / 1000) * 1000,
-            "elmtDataUnit": "Tons",
-            "elmtDataBaseLine": this.getBaseLine(recruitment),
-            "elmtDataArr": recruitment,
+            "elmtDataMax": Math.round(Math.max.apply(Math, revenueMac) * 1.5 / 1000) * 1000,
+            "elmtDataUnit": "Euro",
+            "elmtDataBaseLine": this.getBaseLine(revenueMac),
+            "elmtDataArr": revenueMac,
             "pwl": {
                 "points": [
                     {
@@ -287,15 +446,15 @@ var Model = (function () {
             "pwlFlipVertical": false,
             "pwlFlipHorizontal": false,
             "elmtData": []
-        };
-        var incomeObj = {
+        }; //elmt5
+        var recruitCodObj = {
             "posX": 804.3293207671534,
-            "posY": 236.52882205513788,
+            "posY": 300,
             "elmtValueFnX": 50,
             "elmtValueFnY": 50,
             "elmtValueFnFlip": 0,
             "elmtID": "elmt6",
-            "elmtName": "Income",
+            "elmtName": "recruitCod",
             "elmtDesc": "write description here",
             "elmtType": 100,
             "elmtWghtMthd": 2,
@@ -303,10 +462,10 @@ var Model = (function () {
             // "elmtDataMin": Math.min(...income)-10000,
             "elmtDataMin": 200000,
             //"elmtDataMax": Math.max(...income)+10000,
-            "elmtDataMax": Math.round(Math.max.apply(Math, income) * 1.5 / 1000) * 1000,
-            "elmtDataUnit": "Euros",
-            "elmtDataBaseLine": this.getBaseLine(income),
-            "elmtDataArr": income,
+            "elmtDataMax": Math.round(Math.max.apply(Math, recruitCod) * 1.5 / 1000) * 1000,
+            "elmtDataUnit": "Tons",
+            "elmtDataBaseLine": this.getBaseLine(recruitCod),
+            "elmtDataArr": recruitCod,
             "pwl": {
                 "points": [
                     {
@@ -323,23 +482,23 @@ var Model = (function () {
             "pwlFlipHorizontal": false,
             "elmtData": []
         };
-        var investObj = {
+        var recruitMacObj = {
             "posX": 802.3771886728821,
-            "posY": 274.1228070175439,
+            "posY": 340,
             "elmtValueFnX": 50,
             "elmtValueFnY": 50,
             "elmtValueFnFlip": 0,
             "elmtID": "elmt7",
-            "elmtName": "Investment",
+            "elmtName": "recruitMac",
             "elmtDesc": "write description here",
             "elmtType": 100,
             "elmtWghtMthd": 2,
             "elmtDstType": 1,
             "elmtDataMin": 500000,
-            "elmtDataMax": Math.round(Math.max.apply(Math, invest) * 1.5 / 1000) * 1000,
-            "elmtDataUnit": "Euros",
-            "elmtDataBaseLine": this.getBaseLine(invest),
-            "elmtDataArr": invest,
+            "elmtDataMax": Math.round(Math.max.apply(Math, recruitMac) * 1.5 / 1000) * 1000,
+            "elmtDataUnit": "Tons",
+            "elmtDataBaseLine": this.getBaseLine(recruitMac),
+            "elmtDataArr": recruitMac,
             "pwl": {
                 "points": [
                     {
@@ -356,23 +515,23 @@ var Model = (function () {
             "pwlFlipHorizontal": false,
             "elmtData": []
         };
-        var onShoreObj = {
+        var biomassCodObj = {
             "posX": 814.0899812385121,
-            "posY": 596.1779448621553,
+            "posY": 400,
             "elmtValueFnX": 50,
             "elmtValueFnY": 50,
             "elmtValueFnFlip": 0,
-            "elmtID": "elmt11",
-            "elmtName": "Onshore",
+            "elmtID": "elmt8",
+            "elmtName": "biomassCod",
             "elmtDesc": "write description here",
             "elmtType": 100,
             "elmtWghtMthd": 2,
             "elmtDstType": 1,
             "elmtDataMin": 0,
-            "elmtDataMax": Math.max.apply(Math, onShore) + 100,
-            "elmtDataUnit": "People",
-            "elmtDataBaseLine": this.getBaseLine(onShore),
-            "elmtDataArr": onShore,
+            "elmtDataMax": Math.max.apply(Math, biomassCod) + 100,
+            "elmtDataUnit": "Tons",
+            "elmtDataBaseLine": this.getBaseLine(biomassCod),
+            "elmtDataArr": biomassCod,
             "pwl": {
                 "points": [
                     {
@@ -389,23 +548,155 @@ var Model = (function () {
             "pwlFlipHorizontal": false,
             "elmtData": []
         };
-        var offShoreObj = {
+        var biomassMacObj = {
             "posX": 812.1378491442406,
-            "posY": 554.8245614035086,
+            "posY": 440,
+            "elmtValueFnX": 50,
+            "elmtValueFnY": 50,
+            "elmtValueFnFlip": 0,
+            "elmtID": "elmt9",
+            "elmtName": "biomassMac",
+            "elmtDesc": "write description here",
+            "elmtType": 100,
+            "elmtWghtMthd": 2,
+            "elmtDstType": 1,
+            "elmtDataMin": 0,
+            "elmtDataMax": Math.max.apply(Math, biomassMac) + 100,
+            "elmtDataUnit": "Tons",
+            "elmtDataBaseLine": this.getBaseLine(biomassMac),
+            "elmtDataArr": biomassMac,
+            "pwl": {
+                "points": [
+                    {
+                        "x": 0,
+                        "y": 0
+                    },
+                    {
+                        "x": 100,
+                        "y": 1
+                    }
+                ]
+            },
+            "pwlFlipVertical": false,
+            "pwlFlipHorizontal": false,
+            "elmtData": []
+        };
+        var offShoreCodObj = {
+            "posX": 812.1378491442406,
+            "posY": 500,
             "elmtValueFnX": 50,
             "elmtValueFnY": 50,
             "elmtValueFnFlip": 0,
             "elmtID": "elmt10",
-            "elmtName": "Offshore",
+            "elmtName": "offShoreCod",
             "elmtDesc": "write description here",
             "elmtType": 100,
             "elmtWghtMthd": 2,
             "elmtDstType": 1,
             "elmtDataMin": 0,
-            "elmtDataMax": Math.max.apply(Math, offShore) + 100,
+            "elmtDataMax": Math.max.apply(Math, offShoreCod) + 100,
+            "elmtDataUnit": "Tons",
+            "elmtDataBaseLine": this.getBaseLine(offShoreCod),
+            "elmtDataArr": offShoreCod,
+            "pwl": {
+                "points": [
+                    {
+                        "x": 0,
+                        "y": 0
+                    },
+                    {
+                        "x": 100,
+                        "y": 1
+                    }
+                ]
+            },
+            "pwlFlipVertical": false,
+            "pwlFlipHorizontal": false,
+            "elmtData": []
+        };
+        var offShoreMacObj = {
+            "posX": 812.1378491442406,
+            "posY": 540,
+            "elmtValueFnX": 50,
+            "elmtValueFnY": 50,
+            "elmtValueFnFlip": 0,
+            "elmtID": "elmt11",
+            "elmtName": "offShoreMac",
+            "elmtDesc": "write description here",
+            "elmtType": 100,
+            "elmtWghtMthd": 2,
+            "elmtDstType": 1,
+            "elmtDataMin": 0,
+            "elmtDataMax": Math.max.apply(Math, offShoreMac) + 100,
             "elmtDataUnit": "People",
-            "elmtDataBaseLine": this.getBaseLine(offShore),
-            "elmtDataArr": offShore,
+            "elmtDataBaseLine": this.getBaseLine(offShoreMac),
+            "elmtDataArr": offShoreMac,
+            "pwl": {
+                "points": [
+                    {
+                        "x": 0,
+                        "y": 0
+                    },
+                    {
+                        "x": 100,
+                        "y": 1
+                    }
+                ]
+            },
+            "pwlFlipVertical": false,
+            "pwlFlipHorizontal": false,
+            "elmtData": []
+        };
+        var onShoreCodObj = {
+            "posX": 812.1378491442406,
+            "posY": 600,
+            "elmtValueFnX": 50,
+            "elmtValueFnY": 50,
+            "elmtValueFnFlip": 0,
+            "elmtID": "elmt12",
+            "elmtName": "onShoreCod",
+            "elmtDesc": "write description here",
+            "elmtType": 100,
+            "elmtWghtMthd": 2,
+            "elmtDstType": 1,
+            "elmtDataMin": 0,
+            "elmtDataMax": Math.max.apply(Math, onShoreCod) + 100,
+            "elmtDataUnit": "People",
+            "elmtDataBaseLine": this.getBaseLine(onShoreCod),
+            "elmtDataArr": onShoreCod,
+            "pwl": {
+                "points": [
+                    {
+                        "x": 0,
+                        "y": 0
+                    },
+                    {
+                        "x": 100,
+                        "y": 1
+                    }
+                ]
+            },
+            "pwlFlipVertical": false,
+            "pwlFlipHorizontal": false,
+            "elmtData": []
+        };
+        var onShoreMacObj = {
+            "posX": 812.1378491442406,
+            "posY": 640,
+            "elmtValueFnX": 50,
+            "elmtValueFnY": 50,
+            "elmtValueFnFlip": 0,
+            "elmtID": "elmt13",
+            "elmtName": "onShoreMac",
+            "elmtDesc": "write description here",
+            "elmtType": 100,
+            "elmtWghtMthd": 2,
+            "elmtDstType": 1,
+            "elmtDataMin": 0,
+            "elmtDataMax": Math.max.apply(Math, onShoreMac) + 100,
+            "elmtDataUnit": "People",
+            "elmtDataBaseLine": this.getBaseLine(onShoreMac),
+            "elmtDataArr": onShoreMac,
             "pwl": {
                 "points": [
                     {
@@ -423,9 +714,9 @@ var Model = (function () {
             "elmtData": []
         };
         var goalObj = {
-            "posX": 208.92903201428032,
-            "posY": 408.2080200501255,
-            "elmtID": "elmt3",
+            "posX": 200,
+            "posY": 400,
+            "elmtID": "elmt0",
             "elmtName": "Goal",
             "elmtDesc": "write description here",
             "elmtType": 103,
@@ -435,13 +726,13 @@ var Model = (function () {
             "pwlFlipVertical": false,
             "pwlFlipHorizontal": false,
             "elmtData": [
-                ["conn18", this.m_scenario.getSubEnvironmentalWeight()],
-                ["conn19", this.m_scenario.getSubFinancialWeight()],
-                ["conn20", this.m_scenario.getSubSocialWeight()]
+                ["conn0", 50],
+                ["conn1", 50],
+                ["conn2", 50]
             ]
-        };
+        }; //elmt0
         var environmentalObj = {
-            "posX": 477.2345016653122,
+            "posX": 400,
             "posY": 415.7268170426068,
             "elmtID": "elmt1",
             "elmtName": "Environmental",
@@ -453,15 +744,15 @@ var Model = (function () {
             "pwlFlipVertical": false,
             "pwlFlipHorizontal": false,
             "elmtData": [
-                ["conn14", this.m_scenario.getIndicatorBiomassWeight()],
-                ["conn15", this.m_scenario.getIndicatorRecruitmentWeight()]
+                ["conn5", 50],
+                ["conn6", 50]
             ]
         };
         var financialObj = {
-            "posX": 462.706204269603,
+            "posX": 400,
             "posY": 294.1729323308272,
-            "elmtID": "elmt4",
-            "elmtName": "Financial",
+            "elmtID": "elmt2",
+            "elmtName": "Economical",
             "elmtDesc": "write description here",
             "elmtType": 101,
             "elmtWghtMthd": 1,
@@ -470,14 +761,13 @@ var Model = (function () {
             "pwlFlipVertical": false,
             "pwlFlipHorizontal": false,
             "elmtData": [
-                ["conn12", this.m_scenario.getIndicatorIncomeWeight()],
-                ["conn13", this.m_scenario.getIndicatorInvestmentWeight()]
+                ["conn4", 50],
             ]
-        };
+        }; //elmt2
         var socialObj = {
-            "posX": 476.3711289295051,
+            "posX": 400,
             "posY": 534.7744360902257,
-            "elmtID": "elmt5",
+            "elmtID": "elmt3",
             "elmtName": "Social",
             "elmtDesc": "write description here",
             "elmtType": 101,
@@ -487,25 +777,119 @@ var Model = (function () {
             "pwlFlipVertical": false,
             "pwlFlipHorizontal": false,
             "elmtData": [
-                ["conn16", this.m_scenario.getIndicatorOffshoreEmployment()],
-                ["conn17", this.m_scenario.getIndicatorOnshoreEmployment()]
+                ["conn7", 50],
+                ["conn8", 50]
             ]
         };
-        elements[4] = biomassObj;
-        elements[5] = recruitmentObj;
-        elements[6] = incomeObj;
-        elements[7] = investObj;
-        elements[8] = onShoreObj;
-        elements[9] = offShoreObj;
+        var revenueObj = {
+            "posX": 600,
+            "posY": 250,
+            "elmtID": "elmt14",
+            "elmtName": "Revenue",
+            "elmtDesc": "write description here",
+            "elmtType": 101,
+            "elmtWghtMthd": 1,
+            "elmtDstType": 1,
+            "elmtDataArr": [],
+            "pwlFlipVertical": false,
+            "pwlFlipHorizontal": false,
+            "elmtData": [
+                ["conn9", 50],
+                ["conn10", 50]
+            ]
+        }; //elmt14
+        var recruitObj = {
+            "posX": 600,
+            "posY": 380,
+            "elmtID": "elmt15",
+            "elmtName": "Recruit",
+            "elmtDesc": "write description here",
+            "elmtType": 101,
+            "elmtWghtMthd": 1,
+            "elmtDstType": 1,
+            "elmtDataArr": [],
+            "pwlFlipVertical": false,
+            "pwlFlipHorizontal": false,
+            "elmtData": [
+                ["conn13", 50],
+                ["conn14", 50]
+            ]
+        };
+        var biomassObj = {
+            "posX": 600,
+            "posY": 430,
+            "elmtID": "elmt16",
+            "elmtName": "Biomass",
+            "elmtDesc": "write description here",
+            "elmtType": 101,
+            "elmtWghtMthd": 1,
+            "elmtDstType": 1,
+            "elmtDataArr": [],
+            "pwlFlipVertical": false,
+            "pwlFlipHorizontal": false,
+            "elmtData": [
+                ["conn11", 50],
+                ["conn12", 50]
+            ]
+        };
+        var offShoreObj = {
+            "posX": 600,
+            "posY": 500,
+            "elmtID": "elmt17",
+            "elmtName": "OffShore",
+            "elmtDesc": "write description here",
+            "elmtType": 101,
+            "elmtWghtMthd": 1,
+            "elmtDstType": 1,
+            "elmtDataArr": [],
+            "pwlFlipVertical": false,
+            "pwlFlipHorizontal": false,
+            "elmtData": [
+                ["conn17", 50],
+                ["conn18", 50]
+            ]
+        };
+        var onShoreObj = {
+            "posX": 600,
+            "posY": 560,
+            "elmtID": "elmt18",
+            "elmtName": "OnShore",
+            "elmtDesc": "write description here",
+            "elmtType": 101,
+            "elmtWghtMthd": 1,
+            "elmtDstType": 1,
+            "elmtDataArr": [],
+            "pwlFlipVertical": false,
+            "pwlFlipHorizontal": false,
+            "elmtData": [
+                ["conn15", 50],
+                ["conn16", 50]
+            ]
+        };
+        elements[4] = revenueCodObj;
+        elements[5] = revenueMacObj;
+        elements[6] = recruitCodObj;
+        elements[7] = recruitMacObj;
+        elements[8] = biomassCodObj;
+        elements[9] = biomassMacObj;
+        elements[10] = offShoreCodObj;
+        elements[11] = offShoreMacObj;
+        elements[12] = onShoreCodObj;
+        elements[13] = onShoreMacObj;
         elements[0] = goalObj;
         elements[1] = environmentalObj;
         elements[2] = financialObj;
         elements[3] = socialObj;
+        elements[14] = revenueObj;
+        elements[15] = recruitObj;
+        elements[16] = biomassObj;
+        elements[17] = offShoreObj;
+        elements[18] = onShoreObj;
         MCAObj = {
             "elements": elements,
             "connections": connections,
             "mdlName": "title",
-            "mainObj": "elmt3",
+            "mainObj": "elmt0",
             "dataMat": [],
             "mdlIdent": "temp"
         };

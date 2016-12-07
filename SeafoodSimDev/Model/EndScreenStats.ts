@@ -8,7 +8,9 @@ class EndScreenStats {
     private m_biomassOtherPrTimeUnit: number[] = [];
     private m_yieldPrTimeUnit: number[] = [];
     private m_investPrTimeUnit: number[] = [];
-    private m_incomePrTimeUnit: number[] = [];
+    private m_incomeCodPrTimeUnit: number[] = [];
+    private m_incomeMackerelPrTimeUnit: number[] = [];
+    private m_incomeOtherPrTimeUnit: number[] = [];
     private m_natDeathPrTimeUnit: number[] = [];
     //private m_mortalityPrTimeUnit: number[] = [];
 
@@ -18,8 +20,12 @@ class EndScreenStats {
 
     private m_fuelUsePrTimeUnit: number[] = [];
 
-    private m_employmentLandBasedPrTimeUnit: number[] = [];
-    private m_employmentSeaBasedPrTimeUnit: number[] = [];
+    private m_employmentLandBasedCodPrTimeUnit: number[] = [];
+    private m_employmentLandBasedMackerelPrTimeUnit: number[] = [];
+    private m_employmentLandBasedOtherPrTimeUnit: number[] = [];
+    private m_employmentSeaBasedCodPrTimeUnit: number[] = [];
+    private m_employmentSeaBasedMackerelPrTimeUnit: number[] = [];
+    private m_employmentSeaBasedOtherPrTimeUnit: number[] = [];
 
     private m_biomass: number;
     private m_yield: number;
@@ -102,14 +108,32 @@ class EndScreenStats {
         return this.m_investPrTimeUnit;
     }
 
-    public getIncomePrTimeUnitAt(p_index): number {
-        return this.m_incomePrTimeUnit[p_index];
+    public getIncomeCodPrTimeUnitAt(p_index): number {
+        return this.m_incomeCodPrTimeUnit[p_index];
     }
-    public setIncomePrTimeUnitAt(p_index, p_yield) {
-        this.m_incomePrTimeUnit[p_index] = p_yield;
+    public setIncomeCodPrTimeUnitAt(p_index, p_revenue) {
+        this.m_incomeCodPrTimeUnit[p_index] = p_revenue;
     }
-    public getIncomePrTimeUnit(): number[] {
-        return this.m_incomePrTimeUnit;
+    public getIncomeCodPrTimeUnit(): number[] {
+        return this.m_incomeCodPrTimeUnit;
+    }
+    public getIncomeMackerelPrTimeUnitAt(p_index): number {
+        return this.m_incomeMackerelPrTimeUnit[p_index];
+    }
+    public setIncomeMackerelPrTimeUnitAt(p_index, p_revenue) {
+        this.m_incomeMackerelPrTimeUnit[p_index] = p_revenue;
+    }
+    public getIncomeMackerelPrTimeUnit(): number[] {
+        return this.m_incomeMackerelPrTimeUnit;
+    }
+    public getIncomeOtherPrTimeUnitAt(p_index): number {
+        return this.m_incomeOtherPrTimeUnit[p_index];
+    }
+    public setIncomeOtherPrTimeUnitAt(p_index, p_revenue) {
+        this.m_incomeOtherPrTimeUnit[p_index] = p_revenue;
+    }
+    public getIncomeOtherPrTimeUnit(): number[] {
+        return this.m_incomeOtherPrTimeUnit;
     }
 
 
@@ -153,24 +177,60 @@ class EndScreenStats {
         return this.m_fuelUsePrTimeUnit;
     }
 
-    public getEmploymentLandBasedPrTimeUnitAt(p_index): number {
-        return this.m_employmentLandBasedPrTimeUnit[p_index];
+    public getEmploymentLandBasedCodPrTimeUnitAt(p_index): number {
+        return this.m_employmentLandBasedCodPrTimeUnit[p_index];
     }
-    public setEmploymentLandBasedPrTimeUnitAt(p_index, p_recruitment) {
-        this.m_employmentLandBasedPrTimeUnit[p_index] = p_recruitment;
+    public setEmploymentLandBasedCodPrTimeUnitAt(p_index, p_recruitment) {
+        this.m_employmentLandBasedCodPrTimeUnit[p_index] = p_recruitment;
     }
-    public getEmploymentLandBasedPrTimeUnit(): number[] {
-        return this.m_employmentLandBasedPrTimeUnit;
+    public getEmploymentLandBasedCodPrTimeUnit(): number[] {
+        return this.m_employmentLandBasedCodPrTimeUnit;
+    }
+    public getEmploymentLandBasedMackerelPrTimeUnitAt(p_index): number {
+        return this.m_employmentLandBasedMackerelPrTimeUnit[p_index];
+    }
+    public setEmploymentLandBasedMackerelPrTimeUnitAt(p_index, p_recruitment) {
+        this.m_employmentLandBasedMackerelPrTimeUnit[p_index] = p_recruitment;
+    }
+    public getEmploymentLandBasedMackerelPrTimeUnit(): number[] {
+        return this.m_employmentLandBasedMackerelPrTimeUnit;
+    }
+    public getEmploymentLandBasedOtherPrTimeUnitAt(p_index): number {
+        return this.m_employmentLandBasedOtherPrTimeUnit[p_index];
+    }
+    public setEmploymentLandBasedOtherPrTimeUnitAt(p_index, p_recruitment) {
+        this.m_employmentLandBasedOtherPrTimeUnit[p_index] = p_recruitment;
+    }
+    public getEmploymentLandBasedOtherPrTimeUnit(): number[] {
+        return this.m_employmentLandBasedOtherPrTimeUnit;
     }
 
-    public getEmploymentSeaBasedPrTimeUnitAt(p_index): number {
-        return this.m_employmentSeaBasedPrTimeUnit[p_index];
+    public getEmploymentSeaBasedCodPrTimeUnitAt(p_index): number {
+        return this.m_employmentSeaBasedCodPrTimeUnit[p_index];
     }
-    public setEmploymentSeaBasedPrTimeUnitAt(p_index, p_recruitment) {
-        this.m_employmentSeaBasedPrTimeUnit[p_index] = p_recruitment;
+    public setEmploymentSeaBasedCodPrTimeUnitAt(p_index, p_recruitment) {
+        this.m_employmentSeaBasedCodPrTimeUnit[p_index] = p_recruitment;
     }
-    public getEmploymentLSeaBasedPrTimeUnit(): number[] {
-        return this.m_employmentSeaBasedPrTimeUnit;
+    public getEmploymentLSeaBasedCodPrTimeUnit(): number[] {
+        return this.m_employmentSeaBasedCodPrTimeUnit;
+    }
+    public getEmploymentSeaBasedMackerelPrTimeUnitAt(p_index): number {
+        return this.m_employmentSeaBasedMackerelPrTimeUnit[p_index];
+    }
+    public setEmploymentSeaBasedMackerelPrTimeUnitAt(p_index, p_recruitment) {
+        this.m_employmentSeaBasedMackerelPrTimeUnit[p_index] = p_recruitment;
+    }
+    public getEmploymentLSeaBasedMackerelPrTimeUnit(): number[] {
+        return this.m_employmentSeaBasedMackerelPrTimeUnit;
+    }
+    public getEmploymentSeaBasedOtherPrTimeUnitAt(p_index): number {
+        return this.m_employmentSeaBasedOtherPrTimeUnit[p_index];
+    }
+    public setEmploymentSeaBasedOtherPrTimeUnitAt(p_index, p_recruitment) {
+        this.m_employmentSeaBasedOtherPrTimeUnit[p_index] = p_recruitment;
+    }
+    public getEmploymentLSeaBasedOtherPrTimeUnit(): number[] {
+        return this.m_employmentSeaBasedOtherPrTimeUnit;
     }
 
     public getEnvironmentalScorePrTimeUnitAt(p_index): number {
@@ -216,7 +276,7 @@ class EndScreenStats {
     public getEnvironmentalVizArray(): any[] {
         var ret: any[] = [[]];
         //add header
-        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'BiomassCod' }, { label: 'BiomassMac' }, { label: 'BiomassOther' }, { label: 'recruitCod' }, { label: 'recruitMac' }, { label: 'recruitOther' }];
+        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'BiomassCod' }, { label: 'BiomassMac' }, { label: 'recruitCod' }, { label: 'recruitMac' }];
 
    //     ret[0] = [{ label: 'Days', type: 'number' }, { label: 'BiomassCod' }, { label: 'BiomassMac' }, { label: 'BiomassOther' }, { label: 'recruitCod' }, { label: 'recruitMac' }, { label: 'recruitOther' }, { label: 'Yield' }, { label: 'naturel Death' }];
         //ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Biomass' }];
@@ -227,11 +287,11 @@ class EndScreenStats {
             //add biomass
             ret[parseInt(i) + 1][1] = this.m_biomassCodPrTimeUnit[i];
             ret[parseInt(i) + 1][2] = this.m_biomassMacPrTimeUnit[i];
-            ret[parseInt(i) + 1][3] = this.m_biomassOtherPrTimeUnit[i];
+            //ret[parseInt(i) + 1][3] = this.m_biomassOtherPrTimeUnit[i];
             //add recruitment
-            ret[parseInt(i) + 1][4] = this.m_recruitmentCodPrTimeUnit[i];
-            ret[parseInt(i) + 1][5] = this.m_recruitmentMacPrTimeUnit[i];
-            ret[parseInt(i) + 1][6] = this.m_recruitmentOtherPrTimeUnit[i];
+            ret[parseInt(i) + 1][3] = this.m_recruitmentCodPrTimeUnit[i];
+            ret[parseInt(i) + 1][4] = this.m_recruitmentMacPrTimeUnit[i];
+            //ret[parseInt(i) + 1][6] = this.m_recruitmentOtherPrTimeUnit[i];
             //add yield
             //ret[parseInt(i) + 1][7] = this.m_yieldPrTimeUnit[i];
             //add naturel death
@@ -241,14 +301,15 @@ class EndScreenStats {
     }
     public getFinancialVizArray(): any[] {
         var ret: any[] = [[]];
-        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Income' }];
+        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'RevenueCod' }, { label: 'RevenueMac' }];
         //ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Income' }, { label: 'Invest' }];
         for (var i in this.m_time) {
             ret[parseInt(i) + 1] = [];
             //add timeScale
             ret[parseInt(i) + 1][0] = this.m_time[i];
-            //add yield
-            ret[parseInt(i) + 1][1] = this.m_incomePrTimeUnit[i];
+            //add revenue
+            ret[parseInt(i) + 1][1] = this.m_incomeCodPrTimeUnit[i];
+            ret[parseInt(i) + 1][2] = this.m_incomeMackerelPrTimeUnit[i];
             //add invest
             //ret[parseInt(i) + 1][2] = this.m_investPrTimeUnit[i];
         }
@@ -256,15 +317,17 @@ class EndScreenStats {
     }
     public getSocialVizArray(): any[] {
         var ret: any[] = [[]];
-        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'LandEmp' }, { label: 'SeaEmp' }];
+        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'LandEmpCod' }, { label: 'LandEmpMac' }, { label: 'SeaEmpCod' }, { label: 'SeaEmpMac' }];
         for (var i in this.m_time) {
             ret[parseInt(i) + 1] = [];
             //add timeScale
             ret[parseInt(i) + 1][0] = this.m_time[i];
             //add land employment
-            ret[parseInt(i) + 1][1] = this.m_employmentLandBasedPrTimeUnit[i];
+            ret[parseInt(i) + 1][1] = this.m_employmentLandBasedCodPrTimeUnit[i];
+            ret[parseInt(i) + 1][2] = this.m_employmentLandBasedMackerelPrTimeUnit[i];
             //add sea employment
-            ret[parseInt(i) + 1][2] = this.m_employmentSeaBasedPrTimeUnit[i];
+            ret[parseInt(i) + 1][3] = this.m_employmentSeaBasedCodPrTimeUnit[i];
+            ret[parseInt(i) + 1][4] = this.m_employmentSeaBasedMackerelPrTimeUnit[i];
         }
         return ret;
     }

@@ -43,7 +43,8 @@ var Controller = (function () {
             //console.log("Controller running simulationtick");
             if (_this.m_model.getTime() >= _this.m_scenario.getDefaultNoDays()) {
                 _this.m_simState = simState.ending;
-                _this.m_model.updateStats();
+                //this.m_model.updateStats();
+                _this.m_endScreen.drawCharts(_this.m_model, _this.m_model.getStats());
                 console.log("Simulation ended" + _this.m_model.getStats());
                 clearInterval(_this.m_timer);
                 _this.m_eventHandler.unBindFunctions(true);
@@ -68,6 +69,7 @@ var Controller = (function () {
                 $(".fa").css("display", "none");
                 //this.getMainView().getIntervalStats().update(this.m_model.getTime());
                 //this.m_intervalStats.update(this.m_model.getTime());
+                _this.m_endScreen.updateMsy(_this.m_model);
                 _this.m_endScreen.drawCharts(_this.m_model, _this.m_model.getStats());
                 _this.m_endScreen.show();
             }
@@ -104,7 +106,7 @@ var Controller = (function () {
         this.m_endScreen.hide();
         this.m_scenario = Scenario.getInstance();
         if (p_mca === true) {
-            this.m_scenario.loadScenario('Controller/scenarios/scnMCA1.json', this.initMCA);
+            this.m_scenario.loadScenario('Controller/scenarios/scn4.json', this.initMCA);
         }
         else {
             this.m_simState = simState.changeSettings;

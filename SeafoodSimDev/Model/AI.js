@@ -41,7 +41,7 @@ var AI = (function () {
         var n = 0;
         p_shipOwner.getAllShips().forEach(function (ship) {
             //console.log("ship " + n);
-            console.log("state: " + ship.getState().toString() + " cargo: " + ship.getCargoSize() + " fuel: " + ship.getFuel() + " position: " + ship.getPosition().row + ", " + ship.getPosition().col);
+            //console.log("state: " + shipState[ship.getState()] + " cargo: " + ship.getCargoSize() + " fuel: " + ship.getFuel() + " position: " + ship.getPosition().row + ", " + ship.getPosition().col);
             //ship.useFuel(0.25);
             if (!this.m_noHistory)
                 ship.history[2].push(ship.getState());
@@ -194,7 +194,10 @@ var AI = (function () {
                     fishingTiles = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getOrigin());
                     tileNo = 0;
                 }
-                var tile = p_map.getTile(point);
+                if (point != undefined)
+                    var tile = p_map.getTile(point);
+                else
+                    return undefined;
                 tileNo++;
             } while (!(tile.roomForAnotherShip() && p_map.getRestrictions().getRestrictedAreas().indexOf(tile) < 0));
             return this.pathFinding(p_map, p_start, point);
@@ -245,7 +248,7 @@ var AI = (function () {
                 //Ship must refuel if fuel is too low
                 this.goRefuel(p_ship, p_map, fuelPath);
             }
-            else if (p_ship.getCargoSize() >= p_ship.getCargoCapacity() * 0.98) {
+            else if (p_ship.getCargoSize() >= p_ship.getCargoCapacity() * 0.98 || (this.m_catchedSoFar[p_ship.getType()] >= p_map.getRestrictions().getTAC()[p_ship.getType()])) {
                 //If ship is  full, ship must land
                 var landingPath = this.pathToNearestLandingSite(p_ship.getPosition(), p_map);
                 if (this.canReach(p_ship, p_map, landingPath)) {
@@ -272,6 +275,8 @@ var AI = (function () {
                         this.goRefuel(p_ship, p_map, fuelPath);
                     }
                 }
+            }
+            else {
             }
         }
     };

@@ -29,7 +29,7 @@ class Controller {
         this.m_endScreen.hide();
         this.m_scenario = Scenario.getInstance();
         if (p_mca === true) {
-            this.m_scenario.loadScenario('Controller/scenarios/scnMCA1.json', this.initMCA);
+            this.m_scenario.loadScenario('Controller/scenarios/scn4.json', this.initMCA);
         }
         else {
             this.m_simState = simState.changeSettings;
@@ -124,7 +124,8 @@ class Controller {
         
         if (this.m_model.getTime() >= this.m_scenario.getDefaultNoDays()) {
             this.m_simState = simState.ending;
-            this.m_model.updateStats();
+            //this.m_model.updateStats();
+            this.m_endScreen.drawCharts(this.m_model, this.m_model.getStats());
             console.log("Simulation ended" + this.m_model.getStats());
             clearInterval(this.m_timer);
             this.m_eventHandler.unBindFunctions(true);
@@ -159,6 +160,7 @@ class Controller {
 
             //this.getMainView().getIntervalStats().update(this.m_model.getTime());
             //this.m_intervalStats.update(this.m_model.getTime());
+            this.m_endScreen.updateMsy(this.m_model);
             this.m_endScreen.drawCharts(this.m_model, this.m_model.getStats());
             this.m_endScreen.show();
             //$("#intervalStats").dialog({

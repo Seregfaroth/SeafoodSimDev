@@ -3,7 +3,8 @@ enum shipState { fishing, goingToFish, goingToRefuel, goingToLand, waiting }
 
 enum FishType {
     cod = 0,
-    mackerel = 1
+    mackerel = 1,
+    other = 2
 }
 class Ship {
     private m_scenario: Scenario;
@@ -21,6 +22,7 @@ class Ship {
     private m_fishingGear: FishingGear;
     public history: any[][] = [[], [], [], [], []];//For debugging  purpose
     private m_noHistory: boolean;
+    private m_hasHitTac: boolean = false;
 
     public constructor(p_owner: ShipOwner, p_fishType: FishType, p_position: Point2) {
         this.m_scenario = Scenario.getInstance();
@@ -37,6 +39,9 @@ class Ship {
         this.m_fishingGear = new FishingGear(p_fishType);
         
     }
+    public getHasHitTac(): boolean {
+        return this.m_hasHitTac;
+    }
     public getState(): shipState {
         return this.m_state;
     }
@@ -50,7 +55,9 @@ class Ship {
     public getCargo(): number[][] {
         return this.m_fishingGear.getCargo();
     }
-
+    public getFishType(): string {
+        return FishType[this.m_fishingGear.getFishType()];
+    }
     public getFuelCapacity(): number {
         return this.m_fuelCapacity;
     }
@@ -138,7 +145,13 @@ class Ship {
 
     public land(p_landingSite: LandingSite): void {
         var revenue = p_landingSite.receiveFish(this.getCargo());
-        this.m_owner.m_revenue += revenue;
+        var t = FishType[this.m_fishingGear.getFishType()];
+        if (FishType[this.m_fishingGear.getFishType()] == "cod" )
+            this.m_owner.m_revenueCod += revenue;
+        else if (FishType[this.m_fishingGear.getFishType()] == "mackerel")
+            this.m_owner.m_revenueMac += revenue;
+        else if (FishType[this.m_fishingGear.getFishType()] == "other")
+            this.m_owner.m_revenueOther += revenue;
         this.m_owner.financialTransaction(revenue);
     }
 

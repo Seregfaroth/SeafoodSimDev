@@ -18,7 +18,7 @@ var Map = (function () {
     Map.prototype.setScenario = function (p_scenario) {
         this.m_scenario = p_scenario;
         //    this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), this.m_scenario.getOceanFishCapacity(), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace());
-        this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [100000]), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace(), this.m_scenario.getOceanShipCapacity());
+        this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), new CarryingCapacity([new FishGroup("group 1", ["Cod", "Mackerel"]), new FishGroup("onlyCod", ["Cod"]), new FishGroup("onlyMac", ["Mackerel"])], [20000, 2000, 3000]), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace(), this.m_scenario.getOceanShipCapacity());
     };
     Map.prototype.run = function () {
         var map = this;
@@ -124,12 +124,12 @@ var Map = (function () {
         var schoolsPlaced = 0;
         var placedInSamePlace = 0;
         var schoolPoints = [];
-        schoolPoints[0] = new Point2(1, 0);
+        schoolPoints[0] = new Point2(5, 5);
         var point = schoolPoints[0]; // = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
-        //schoolPoints[1] = new Point2(5, 12);
-        //schoolPoints[2] = new Point2(7, 10);
-        //schoolPoints[3] = new Point2(7, 13);
-        //schoolPoints[4] = new Point2(9, 11);
+        schoolPoints[1] = new Point2(5, 12);
+        schoolPoints[2] = new Point2(7, 10);
+        schoolPoints[3] = new Point2(7, 13);
+        schoolPoints[4] = new Point2(9, 11);
         var i = 1;
         while (schoolsPlaced < p_n) {
             if (placedInSamePlace === p_schoolsInOnePlace) {
@@ -140,8 +140,8 @@ var Map = (function () {
             placedInSamePlace++;
             var tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(20000, point));
-                this.addSchool(new Mackerel(30000, point));
+                this.addSchool(new Cod(5000, point));
+                this.addSchool(new Mackerel(7500, point));
                 schoolsPlaced++;
             }
         }
@@ -172,8 +172,8 @@ var Map = (function () {
         this.placeSchools(p_noOfSchools, this.m_scenario.getSchoolSize(), this.m_scenario.getSchoolMsy(), p_schoolsInOnePlace);
     };
     Map.prototype.tinyTest = function (p_size, p_prices) {
-        this.m_grid[0][0] = new LandingSite(2, 100000, 20000, p_prices, "landingSite1", new Point2(0, 0));
-        this.m_grid[0][1] = new FuelSite(2, 10000, 20, this.m_scenario.getFuelsiteFuelPrize(), "fuelsite1", new Point2(0, 1));
+        this.m_grid[0][0] = new LandingSite(50, 10000000, 200000, p_prices, "landingSite1", new Point2(0, 0));
+        this.m_grid[0][1] = new FuelSite(50, 1000000, 200000, this.m_scenario.getFuelsiteFuelPrize(), "fuelsite1", new Point2(0, 1));
     };
     Map.prototype.placeLandAndSites3 = function (p_size, p_prices) {
         for (var r = Math.floor(p_size / 2); r < p_size; r++) {
@@ -300,8 +300,16 @@ var Map = (function () {
     Map.prototype.removeShip = function (ship) {
         this.m_ships.splice(this.m_ships.indexOf(ship), 1);
     };
-    Map.prototype.getNoOfShips = function () {
-        return this.m_ships.length;
+    Map.prototype.getNoOfShips = function (p_type) {
+        var ret = 0;
+        if (p_type == undefined)
+            return this.m_ships.length;
+        this.m_ships.forEach(function (ship) {
+            var t = ship.getFishType();
+            if (ship.getFishType() == p_type)
+                ret++;
+        });
+        return ret;
     };
     Map.prototype.getSchoolsInTile = function (p_position) {
         var list = [];
@@ -383,8 +391,25 @@ var Map = (function () {
             }
         }
     };
-    Map.prototype.getCarryingCapacityBySpecies = function (p_species, m_position) {
-        var ret;
+    Map.prototype.getCarryingCapacityBySpecies = function (p_species, p_position) {
+        var ret = 0;
+        var pos = this.getTile(p_position);
+        var cc = this.getTile(p_position).getCarryingCapacity();
+        for (var _i = 0, _a = cc.m_fishGroups; _i < _a.length; _i++) {
+            var group = _a[_i];
+            var cc2 = cc.getCapacityGroupNumbers(group.m_name);
+            var fraction = this.getBiosmassFractionOf(p_species, group, p_position);
+            ret += cc2 * fraction;
+        }
+        return ret;
+    };
+    Map.prototype.getCarryingCapacityBySpeciesTotal = function (p_type) {
+        var ret = 0;
+        for (var _i = 0, _a = this.getSchools(); _i < _a.length; _i++) {
+            var sc = _a[_i];
+            if (sc.getType() === p_type.name)
+                ret += this.getCarryingCapacityBySpecies(p_type, sc.getPosition());
+        }
         return ret;
     };
     Map.prototype.getBiomassOfinTile = function (p_type, p_position, p_onlyOld) {
@@ -398,17 +423,20 @@ var Map = (function () {
         }
         return ret;
     };
-    //Calculate how big a fraction the type p_name is of the total biomass
-    Map.prototype.getBiosmassFractionOf = function (p_type, p_position) {
+    //Calculate how big a fraction the type p_name is of the total biomass in specified group
+    Map.prototype.getBiosmassFractionOf = function (p_type, p_fishGroup, p_position) {
         var ret;
+        var type = p_type.name;
         var totalBiomass = 0;
         var t = this.getSchoolsInTile(p_position);
         for (var _i = 0, _a = this.getSchoolsInTile(p_position); _i < _a.length; _i++) {
             var school = _a[_i];
-            var t2 = school.getSize();
-            totalBiomass += school.getSize();
+            if (p_fishGroup.m_fishGroup.indexOf(school.getType()) != -1) {
+                //var t2 = school.getSize();
+                totalBiomass += school.getSize();
+            }
         }
-        if (totalBiomass !== 0) {
+        if (totalBiomass !== 0 && p_fishGroup.m_fishGroup.indexOf(p_type.name) != -1) {
             ret = this.getBiomassOfinTile(p_type, p_position) / totalBiomass;
         }
         else

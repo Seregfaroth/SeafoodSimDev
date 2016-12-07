@@ -15,7 +15,7 @@
   "linkToMCA": "http://mareframe.mapix.com/dev/MCA/DST.html?model=sfsCampaign001",
   "mapType": 2,
   "mapSize": 15,
-  "numberOfSchools": 5,
+  "numberOfSchools": 1,
   "prices": {
     "Cod": 18,
     "Mackerel": 10
@@ -99,6 +99,6 @@
   "noMenuDateUpdate": false,
   "noMenuScoreUpdate": false,
 
-  "noHistory": false,
+  "noHistory": false
 
 }

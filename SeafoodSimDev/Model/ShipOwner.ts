@@ -10,7 +10,10 @@ class ShipOwner {
     private m_government: Government;
     private m_taxPayed: number;
     public m_shipBought: boolean = false;
-    public m_revenue: number = 0;
+    
+    public m_revenueCod: number = 0;
+    public m_revenueMac: number = 0;
+    public m_revenueOther: number = 0;
 
     public constructor(p_government: Government, p_shipStartPosition: Point2, p_id: string, p_balance?: number) {
         this.m_scenario = Scenario.getInstance();

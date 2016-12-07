@@ -143,6 +143,11 @@ class StartScreen {
         desP.id = "des";
         desP.innerHTML = "Description: ";
 
+        var msyP: HTMLParagraphElement = document.createElement("p");
+        informationDiv.appendChild(msyP);
+        msyP.id = "msy";
+        msyP.innerHTML = "msyCod: 25000 </br> msyMac: 80000";
+
         var linkP: HTMLParagraphElement = document.createElement("p");
         informationDiv.appendChild(linkP);
         linkP.id = "link";
@@ -172,7 +177,8 @@ class StartScreen {
         $("#endTime").text("Duration of simulation: " + this.m_scenario.getDefaultNoDays() + " days");
         $("#name").html(this.m_scenario.getName());
         $("#des").html(this.m_scenario.getDescription());
-        $("#des").append(" Taxing rate is " + this.m_scenario.getTaxingRate()*100 +"%");
+        $("#des").append(" Taxing rate is " + this.m_scenario.getTaxingRate() * 100 + "%");
+        //$("#des").append(" Total cc: " + 
         $("#link").html("<a target='_blank' href='" + this.m_scenario.getLink() + "'>Link to MCA</a>");
         var goal = $("#goal");
         goal.html("");

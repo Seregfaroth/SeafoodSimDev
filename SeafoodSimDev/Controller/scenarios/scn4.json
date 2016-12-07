@@ -14,10 +14,10 @@
   "description": "tiny test made for development",
   "linkToMCA": "http://mareframe.mapix.com/dev/MCA/DST.html",
   "mapType": 0,
-  "mapSize": 2,
+  "mapSize": 7,
   "numberOfSchools": 1,
   "prices": {
-    "Cod": 18,
+    "Cod": 20,
     "Mackerel": 10
   },
   "oceanFishCapacity": 50000,
@@ -77,18 +77,17 @@
   "codSchoolMaxAge": 8,
   
   "mackerelSchoolMaxAge": 10,
-  "recruitAndAgeFreq": 5,
+  "recruitAndAgeFreq": 1,
 
   "statFreq": 40,
   "noOfMenPerShip": 8,
   
-
   "modelStatFreq": 1,
-  "modelRecruitAndAgeFreq": 20,
+  "modelRecruitAndAgeFreq": 1,
   "noOfEmployeesPerShip": 10,
   "noOfEmployeesOnLandPerShip": 4,
 
-  "shipFuelCapacity": 150,
+  "shipFuelCapacity": 50,
   "shipCargoCapacity": 800,
   "shipFuelPerMove": 1,
   "shipMovesPerTick": 1,

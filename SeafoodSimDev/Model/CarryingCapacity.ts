@@ -25,6 +25,7 @@
                 ret = this.m_groupCarryingCapacity[index];
                 break;
             }
+            index++;
         }
         return ret;
     }

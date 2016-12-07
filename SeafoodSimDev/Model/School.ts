@@ -3,7 +3,7 @@ abstract class School {
     protected m_scenario: Scenario;
     protected m_maxAge: number;
     protected m_position: Point2;
-    //protected m_type: string;
+    protected m_type: string;
     protected m_ages: number[] = [];
     protected m_msy: number;
     protected m_tac: number;
@@ -14,16 +14,21 @@ abstract class School {
     protected m_size: number;
     protected m_growthRate: number;
     protected m_origin: Point2;
+    protected m_originSize: number;
 
     public constructor(p_size: number, p_position: Point2) {
         this.m_scenario = Scenario.getInstance();
         this.m_position = p_position;
         this.m_origin = p_position;
+        this.m_originSize = p_size;
         //this.m_msy = p_msy;        
     }
-    /*public getType(): string {
+    public getOriginSize() {
+        return this.m_originSize;
+    }
+    public getType(): string {
         return this.m_type;
-    }*/
+    }
 
     public getOrigin(): Point2 {
         return this.m_origin;

@@ -17,18 +17,19 @@
         }
     }
     private updateFishingPercentage(p_position: Point2, p_map: Map): number {
+        var fishPos = p_map.getAdjecentSchoolPoint(p_position);
         if (this.m_fishType === FishType.cod) {
             if (p_map.getRestrictions().areAreasRestricted()) {
-                var noOfFishInTile: number = p_map.getBiomassOfinTile(Cod, p_position, true);
+                var noOfFishInTile: number = p_map.getBiomassOfinTile(Cod, fishPos, true);
             } else {
-                var noOfFishInTile: number = p_map.getBiomassOfinTile(Cod, p_position);
+                var noOfFishInTile: number = p_map.getBiomassOfinTile(Cod, fishPos);
             }
         }
         else if (this.m_fishType === FishType.mackerel) {
             if (p_map.getRestrictions().areAreasRestricted()) {
-                var noOfFishInTile: number = p_map.getBiomassOfinTile(Mackerel, p_position, true);
+                var noOfFishInTile: number = p_map.getBiomassOfinTile(Mackerel, fishPos, true);
             } else {
-                var noOfFishInTile: number = p_map.getBiomassOfinTile(Mackerel, p_position);
+                var noOfFishInTile: number = p_map.getBiomassOfinTile(Mackerel, fishPos);
             }
         }
         var fishingPercentage: number = this.m_scenario.getFishingPercentage();
@@ -57,6 +58,7 @@
                     thisPlaceHolder.m_cargo[type][i] += noOfFish;
                     //Remove from school
                     school.getAges()[i] -= noOfFish;
+                    //school.m_s
                     //var t1 = p_map.getYield();
                     p_map.setYield(p_map.getYield() + noOfFish);
                     totalFish += noOfFish;

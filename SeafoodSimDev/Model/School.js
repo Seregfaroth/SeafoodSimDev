@@ -1,7 +1,6 @@
 // <reference path = "../../TSSeafoodSimDev/externals/wrappers.d.ts"/>
 var School = (function () {
     function School(p_size, p_position) {
-        //protected m_type: string;
         this.m_ages = [];
         this.m_recruitTotal = 0;
         this.m_prepareRecruitment = 0;
@@ -10,11 +9,15 @@ var School = (function () {
         this.m_scenario = Scenario.getInstance();
         this.m_position = p_position;
         this.m_origin = p_position;
+        this.m_originSize = p_size;
         //this.m_msy = p_msy;        
     }
-    /*public getType(): string {
+    School.prototype.getOriginSize = function () {
+        return this.m_originSize;
+    };
+    School.prototype.getType = function () {
         return this.m_type;
-    }*/
+    };
     School.prototype.getOrigin = function () {
         return this.m_origin;
     };

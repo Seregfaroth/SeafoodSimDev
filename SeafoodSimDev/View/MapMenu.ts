@@ -198,7 +198,7 @@
         var legend: HTMLElement = document.createElement("legend");
         legend.classList.add("menu-legend");
         var label: HTMLElement = document.createElement("div");
-        label.innerHTML = "Number of ships";
+        label.innerHTML = "Number of vessels";
         label.className = "legend-header";
         legend.appendChild(label);
         menuDiv.appendChild(legend);
@@ -214,7 +214,7 @@
         var cell: HTMLTableCellElement = dateRow.insertCell();
         var valueDiv: HTMLDivElement = document.createElement("div");
         cell.appendChild(valueDiv);
-        valueDiv.innerHTML = "Cod Ships:";
+        valueDiv.innerHTML = "Pelagic vessels:";
 
         var cell: HTMLTableCellElement = dateRow.insertCell();
         var valueDiv: HTMLDivElement = document.createElement("div");
@@ -238,7 +238,7 @@
         var cell: HTMLTableCellElement = dateRow.insertCell();
         var valueDiv: HTMLDivElement = document.createElement("div");
         cell.appendChild(valueDiv);
-        valueDiv.innerHTML = "Mackerel Ships:";
+        valueDiv.innerHTML = "Demersal Vessels:";
 
         var cell: HTMLTableCellElement = dateRow.insertCell();
         var valueDiv: HTMLDivElement = document.createElement("div");
@@ -290,10 +290,12 @@
         slider.classList.add("slider");
         cell.className = "slider-cell";
         cell.appendChild(slider);
-        $("#tacCodSlider").slider();
-        $("#tacCodSlider").slider("option", "min", 0);
-        $("#tacCodSlider").slider("option", "max", 50);
-        $("#tacCodSlider").slider("value", 0);
+        var tacCodSlider = $("#tacCodSlider");
+        tacCodSlider.slider();
+        tacCodSlider.slider("option", "min", 0);
+        tacCodSlider.slider("option", "max", 50000);
+        tacCodSlider.slider("option", "step", 100);
+        tacCodSlider.slider("value", 0);
 
         var dateRow: HTMLTableRowElement = table.insertRow();
 
@@ -317,7 +319,8 @@
         cell.appendChild(slider);
         $("#tacMackerelSlider").slider();
         $("#tacMackerelSlider").slider("option", "min", 0);
-        $("#tacMackerelSlider").slider("option", "max", 50);
+        $("#tacMackerelSlider").slider("option", "max", 50000);
+        $("#tacMackerelSlider").slider("option", "step", 100);
         $("#tacMackerelSlider").slider("value", 0);
 
         //Restrict areas

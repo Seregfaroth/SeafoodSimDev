@@ -11,6 +11,7 @@ var StartScreen = (function () {
             $("#name").html(_this.m_scenario.getName());
             $("#des").html(_this.m_scenario.getDescription());
             $("#des").append(" Taxing rate is " + _this.m_scenario.getTaxingRate() * 100 + "%");
+            //$("#des").append(" Total cc: " + 
             $("#link").html("<a target='_blank' href='" + _this.m_scenario.getLink() + "'>Link to MCA</a>");
             var goal = $("#goal");
             goal.html("");
@@ -143,6 +144,10 @@ var StartScreen = (function () {
         informationDiv.appendChild(desP);
         desP.id = "des";
         desP.innerHTML = "Description: ";
+        var msyP = document.createElement("p");
+        informationDiv.appendChild(msyP);
+        msyP.id = "msy";
+        msyP.innerHTML = "msyCod: 25000 </br> msyMac: 80000";
         var linkP = document.createElement("p");
         informationDiv.appendChild(linkP);
         linkP.id = "link";

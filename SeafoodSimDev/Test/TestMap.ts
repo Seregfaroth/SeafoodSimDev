@@ -51,10 +51,11 @@
             map.emptyGrid(1000);
             var fishPoint: Point2 = new Point2(0, 0);
             map.addSchool(new Cod(80, fishPoint));
-            assert.deepEqual(map.getBiosmassFractionOf(Cod, fishPoint), 1, "Fraction of cod should be 1");
+            var group: FishGroup;
+            assert.deepEqual(map.getBiosmassFractionOf(Cod, group, fishPoint), 1, "Fraction of cod should be 1");
             map.addSchool(new Mackerel(20, fishPoint));
-            assert.deepEqual(map.getBiosmassFractionOf(Cod, fishPoint), 0.8, "Fraction of cod should be 0.8");
-            assert.deepEqual(map.getBiosmassFractionOf(Mackerel, fishPoint), 0.2, "Fraction of cod should be 0.8");
+            assert.deepEqual(map.getBiosmassFractionOf(Cod, group, fishPoint), 0.8, "Fraction of cod should be 0.8");
+            assert.deepEqual(map.getBiosmassFractionOf(Mackerel, group, fishPoint), 0.2, "Fraction of cod should be 0.8");
         });
         QUnit.test("Map: get pathfinding map", function (assert) {
             map.emptyGrid(1000);

@@ -129,6 +129,8 @@ class MapView {
         var i = 0;
         var t = this.m_schools.length;
         var tm = this.m_schools;
+        var t4 = p_map.getCarryingCapacityBySpeciesTotal(Cod);
+        var t5 = p_map.getCarryingCapacityBySpeciesTotal(Mackerel);
         while (this.m_schools.length > p_map.getSchools().length) {
             //If there are more schools in scene than in the map
             this.m_scene.remove(this.m_schools[0]);

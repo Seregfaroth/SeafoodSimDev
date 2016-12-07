@@ -25,18 +25,24 @@ var Score = (function () {
     Score.prototype.getFinancialScore = function () {
         return this.m_financialScore;
     };
-    Score.prototype.updateScore = function (p_map, p_gov, p_time) {
+    Score.prototype.updateScore = function (p_model, p_map, p_gov, p_time) {
         var score = this;
         //Financial score
+        this.m_financialScore = 0;
+        for (var _i = 0, _a = p_model.getShipOwners(); _i < _a.length; _i++) {
+            var so = _a[_i];
+            this.m_financialScore += (so.m_revenueCod + so.m_revenueMac + so.m_revenueOther);
+        }
+        //this.m_financialScore
         var value = 0;
         p_map.getLandingSites().forEach(function (ls) {
             value -= ls.getRunningCost();
             value += ls.tax(p_gov.getTaxingRate());
         });
-        var day = p_time % 365;
-        var moneyToday = value + this.financial[day > 0 ? day - 1 : 364];
-        this.m_financialScore = moneyToday - this.financial[day];
-        this.financial[day] = moneyToday;
+        //var day: number = p_time % 365;
+        //var moneyToday: number = value + this.financial[day > 0 ? day - 1 : 364];
+        //this.m_financialScore = value;//moneyToday - this.financial[day];
+        //this.financial[day] = moneyToday;
         p_map.getFuelSites().forEach(function (fs) {
             score.m_financialScore -= fs.getRunningCost();
         });
@@ -49,7 +55,7 @@ var Score = (function () {
             var t2 = s.getSize();
             var t3 = p_map.getBiomassOfinTile(s.constructor, s.getPosition());
             //var t = s.getSize() - s.getMsy();
-            var t = s.getSize() - t3;
+            var t = s.getSize() - s.getOriginSize();
             if (t > score.m_scenario.getEnvironmentalScoreMaxIncreasePerTick()) {
                 score.m_environmentalScore += score.m_scenario.getEnvironmentalScoreMaxIncreasePerTick();
             }

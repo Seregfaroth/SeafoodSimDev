@@ -22,7 +22,7 @@ class Map {
     public setScenario(p_scenario: Scenario): void {
         this.m_scenario = p_scenario;
     //    this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), this.m_scenario.getOceanFishCapacity(), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace());
-        this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [100000]), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace(), this.m_scenario.getOceanShipCapacity());
+        this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), new CarryingCapacity([new FishGroup("group 1", ["Cod", "Mackerel"]), new FishGroup("onlyCod", ["Cod"]), new FishGroup("onlyMac", ["Mackerel"])], [20000,2000,3000]), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace(), this.m_scenario.getOceanShipCapacity());
     }
     public run(): void {
         var map: Map = this;
@@ -132,13 +132,13 @@ class Map {
         var schoolsPlaced: number = 0;
         var placedInSamePlace: number = 0;
         var schoolPoints: Point2[] = []; 
-        schoolPoints[0] = new Point2(1, 0);
+        schoolPoints[0] = new Point2(5, 5);
         var point: Point2 = schoolPoints[0]; // = new Point2(Math.floor(Math.random() * this.getMapHeight()), Math.floor(Math.random() * this.getMapWidth()));
         
-        //schoolPoints[1] = new Point2(5, 12);
-        //schoolPoints[2] = new Point2(7, 10);
-        //schoolPoints[3] = new Point2(7, 13);
-        //schoolPoints[4] = new Point2(9, 11);
+        schoolPoints[1] = new Point2(5, 12);
+        schoolPoints[2] = new Point2(7, 10);
+        schoolPoints[3] = new Point2(7, 13);
+        schoolPoints[4] = new Point2(9, 11);
         var i = 1;
         while (schoolsPlaced < p_n) {
             if (placedInSamePlace === p_schoolsInOnePlace) {
@@ -149,8 +149,8 @@ class Map {
             placedInSamePlace++;
             var tile: Tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(20000, point));
-                this.addSchool(new Mackerel(30000, point));
+                this.addSchool(new Cod(5000, point));
+                this.addSchool(new Mackerel(7500, point));
 
                 schoolsPlaced++;
             }
@@ -177,8 +177,8 @@ class Map {
         this.placeSchools(p_noOfSchools, this.m_scenario.getSchoolSize(), this.m_scenario.getSchoolMsy(), p_schoolsInOnePlace);
     }
     private tinyTest(p_size, p_prices) {
-        this.m_grid[0][0] = new LandingSite(2, 100000, 20000, p_prices, "landingSite1", new Point2(0,0));
-        this.m_grid[0][1] = new FuelSite(2, 10000, 20, this.m_scenario.getFuelsiteFuelPrize(), "fuelsite1", new Point2(0, 1));
+        this.m_grid[0][0] = new LandingSite(50, 10000000, 200000, p_prices, "landingSite1", new Point2(0,0));
+        this.m_grid[0][1] = new FuelSite(50, 1000000, 200000, this.m_scenario.getFuelsiteFuelPrize(), "fuelsite1", new Point2(0, 1));
     }
 
     private placeLandAndSites3(p_size: number, p_prices: { [fishType: number]: number }) {
@@ -328,8 +328,16 @@ class Map {
         this.m_ships.splice(this.m_ships.indexOf(ship), 1);
     }
 
-    public getNoOfShips(): number {
-        return this.m_ships.length;
+    public getNoOfShips(p_type?): number {
+        var ret: number = 0;
+        if (p_type==undefined)
+            return this.m_ships.length;
+        this.m_ships.forEach((ship) => {
+            var t = ship.getFishType();
+            if (ship.getFishType() == p_type)
+                ret++;
+        });
+        return ret;
     }
 
     public getSchoolsInTile(p_position: Point2): School[] {
@@ -418,11 +426,26 @@ class Map {
             }
         }
     }
-    getCarryingCapacityBySpecies(p_species: string, m_position: Point2): number {
-        var ret;
-
+    getCarryingCapacityBySpecies(p_species: any, p_position: Point2): number {
+        var ret = 0;
+        var pos = this.getTile(p_position) as Ocean;
+            var cc = (this.getTile(p_position) as Ocean).getCarryingCapacity();
+            for (var group of cc.m_fishGroups) {
+                var cc2 = cc.getCapacityGroupNumbers(group.m_name);
+                var fraction = this.getBiosmassFractionOf(p_species, group, p_position);
+                ret += cc2 * fraction;                  
+            }                       
         return ret;
     }
+    getCarryingCapacityBySpeciesTotal(p_type: any): number {
+        var ret = 0;
+        for (var sc of this.getSchools()) {
+            if (sc.getType() === p_type.name)
+                ret += this.getCarryingCapacityBySpecies(p_type, sc.getPosition());
+        }
+        return ret;
+    }
+
     public getBiomassOfinTile(p_type, p_position: Point2, p_onlyOld?: boolean): number {
         var ret = 0;
         for (var school of this.getSchoolsInTile(p_position)) {
@@ -433,16 +456,19 @@ class Map {
         }
         return ret;
     }
-    //Calculate how big a fraction the type p_name is of the total biomass
-    public getBiosmassFractionOf(p_type, p_position: Point2): number {
+    //Calculate how big a fraction the type p_name is of the total biomass in specified group
+    public getBiosmassFractionOf(p_type, p_fishGroup: FishGroup, p_position: Point2): number {
         var ret;
+        var type = p_type.name;
         var totalBiomass = 0;
         var t = this.getSchoolsInTile(p_position);
         for (var school of this.getSchoolsInTile(p_position)) {
-            var t2 = school.getSize();
-            totalBiomass += school.getSize();
-        }
-        if (totalBiomass !== 0) {
+            if (p_fishGroup.m_fishGroup.indexOf(school.getType()) != -1) {
+                //var t2 = school.getSize();
+                totalBiomass += school.getSize();
+            }
+        }       
+        if (totalBiomass !== 0 && p_fishGroup.m_fishGroup.indexOf(p_type.name) != -1) {
             ret = this.getBiomassOfinTile(p_type, p_position) / totalBiomass;
         }
         else
