@@ -50,7 +50,7 @@
   "financialMaxScore": 100000,
   "environmentalMaxScore": 1000,
   "socialMaxScore": 1000,
-  "fishingPercentage": 0.001,
+  "fishingPercentage": 0.01,
 
   "financialMinScore": 0,
   "socialMinScore": 0,

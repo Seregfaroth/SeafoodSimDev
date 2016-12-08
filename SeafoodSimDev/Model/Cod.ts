@@ -6,7 +6,7 @@ class Cod extends School{
         super(p_size, p_position);
         this.m_maxAge = this.m_scenario.getCodSchoolMaxAge();
         this.m_type = "Cod";
-        this.m_growthRate = 1.75;
+        this.m_growthRate = 0.75;
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }
@@ -46,7 +46,7 @@ class Cod extends School{
         }
         var ssb = this.getSsb();
         var size = this.getSize();
-        console.log("Cod recrut: " + this.m_growthRate * size * (1 - size / ccTot) + "  size: " + size + "  ccTot: " + ccTot);
+        //console.log("Cod recrut: " + this.m_growthRate * size * (1 - size / ccTot) + "  size: " + size + "  ccTot: " + ccTot);
         this.m_prepareRecruitment += this.m_growthRate * size * (1 - size / ccTot);
 
         //this.m_ages[0] = recruitment;//Add new fish

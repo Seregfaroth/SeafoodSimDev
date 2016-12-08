@@ -83,7 +83,7 @@ var School = (function () {
         var school = this;
         this.m_size -= this.m_ages[this.m_maxAge - 1];
         for (var i = this.m_maxAge - 1; i > 0; i--) {
-            this.m_ages[i] = this.m_ages[i - 1];
+            this.m_ages[i] = Math.round(this.m_ages[i - 1] * 0.9);
         }
         this.m_ages[0] = this.m_prepareRecruitment;
         this.m_size += this.m_prepareRecruitment; //Update size

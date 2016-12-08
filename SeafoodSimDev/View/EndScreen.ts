@@ -408,7 +408,7 @@ class EndScreen {
         var t = p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod);
         var t2 = p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel);
         
-        $("#msy" + this.m_simIndex).html("Msy for cod: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod)) + "</br> Msy for mackerel: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel)));
+        $("#msy" + this.m_simIndex).html("Msy for cod: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod)/2) + "</br> Msy for mackerel: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel)/2));
     }
 }
 

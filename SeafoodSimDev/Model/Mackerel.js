@@ -11,7 +11,7 @@ var Mackerel = (function (_super) {
         _super.call(this, p_size, p_position);
         this.m_maxAge = this.m_scenario.getMackerelSchoolMaxAge();
         this.m_type = "Mackerel";
-        this.m_growthRate = 1.7;
+        this.m_growthRate = 0.7;
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }
@@ -41,7 +41,7 @@ var Mackerel = (function (_super) {
         }
         var ssb = this.getSsb();
         var size = this.getSize();
-        console.log("Mac recrut: " + this.m_growthRate * size * (1 - size / (ccTot)) + "  size: " + size + "  ccTot: " + ccTot);
+        //console.log("Mac recrut: " + this.m_growthRate * size * (1 - size / (ccTot)) + "  size: " + size + "  ccTot: " + ccTot);
         this.m_prepareRecruitment += this.m_growthRate * size * (1 - size / (ccTot));
         //this.m_ages[0] = recruitment;
         //this.m_size += this.m_prepareRecruitment;
