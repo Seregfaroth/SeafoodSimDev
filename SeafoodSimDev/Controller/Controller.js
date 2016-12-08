@@ -45,6 +45,10 @@ var Controller = (function () {
             if (_this.m_model.getTime() >= _this.m_scenario.getDefaultNoDays()) {
                 _this.m_simState = simState.ending;
                 //this.m_model.updateStats();
+                if (_this.m_newSim) {
+                    _this.m_endScreen.addSimulation(_this.m_model.getStats(), _this.m_model);
+                    _this.m_newSim = false;
+                }
                 _this.m_endScreen.drawCharts(_this.m_model, _this.m_model.getStats());
                 console.log("Simulation ended" + _this.m_model.getStats());
                 clearInterval(_this.m_timer);

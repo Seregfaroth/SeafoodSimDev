@@ -66,13 +66,13 @@ class EndScreen {
     } 
     public updateDesc = (p_time: number): void => {
         var welcomeText: string
+            var round: number = p_time / this.m_scenario.getStatFreq();
+            if (round <= 1) {
+                this.updateAfterRestart();
+            }
         if (p_time < this.m_scenario.getDefaultNoDays()) {
             
             var words: string[] = ["first", "second", "third"];
-            var round: number = p_time / this.m_scenario.getStatFreq();
-            if (round == 1) {
-                this.updateAfterRestart();
-            }
             var timeLeft: number = this.m_scenario.getDefaultNoDays() - p_time;
             var breaksLeft: number = (timeLeft / this.m_scenario.getStatFreq()) - 1;
             if (round < 4) {
