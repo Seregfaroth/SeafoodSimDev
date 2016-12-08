@@ -15,7 +15,6 @@ var StartScreenEventHandler = (function () {
             $("#startScreen").dialog("close");
         };
         this.beforeClose = function (e) {
-            //var scenario = this.m_controller.getScenario();
             _this.m_controller.setModel(new Model());
             _this.m_controller.getMainView().updateMainView(_this.m_controller.getModel());
         };

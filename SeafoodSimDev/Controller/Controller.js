@@ -36,7 +36,7 @@ var Controller = (function () {
             $("#startButton").removeClass("marked");
             $("#fastForwardButton").removeClass("marked");
             $("#pauseButton").addClass("marked");
-            $("#scenario1Label").removeClass("ui-state-focus"); //This is hardcoded to prevent scenario 1 from being checked by default
+            document.getElementById("scenario1").blur(); //This is to prevent scenario 1 from being checked by default (neccesary when restarting after running another scenario)
             _this.m_newSim = true;
         };
         this.simulationTick = function () {
