@@ -101,7 +101,7 @@ class Controller {
 
 
     public restart = (): void => {
-        $("#endDialogDiv").hide();
+        $("#endDialogDiv").dialog("close");
         $("#startScreen").dialog({
             minWidth: 1100,
             minHeight: 700,
@@ -121,7 +121,7 @@ class Controller {
     simulationTick = () => {
         //console.log("Controller running simulationtick");
 
-        
+        var thisPlaceholder: Controller = this;
         if (this.m_model.getTime() >= this.m_scenario.getDefaultNoDays()) {
             this.m_simState = simState.ending;
             //this.m_model.updateStats();
@@ -129,7 +129,20 @@ class Controller {
             console.log("Simulation ended" + this.m_model.getStats());
             clearInterval(this.m_timer);
             this.m_eventHandler.unBindFunctions(true);
+            this.m_endScreen.updateDesc(this.m_model.getTime());
+            //Assign function to restart click
+            $("#endDialogDiv").dialog({
+                title: 'End Screen',
+                buttons: {
+                    "Restart": function () {
+                        thisPlaceholder.restart();
+                    },
+                },
+                    close: function () {
+                    thisPlaceholder.restart()
+                }
 
+            });
             //this.m_endScreen.addSimulation(this.m_model.getStats(), this.m_model);
             this.m_endScreen.show();
             //$("#endDialogDiv").dialog({
@@ -162,6 +175,7 @@ class Controller {
             //this.m_intervalStats.update(this.m_model.getTime());
             this.m_endScreen.updateMsy(this.m_model);
             this.m_endScreen.drawCharts(this.m_model, this.m_model.getStats());
+            this.m_endScreen.updateDesc(this.m_model.getTime());
             this.m_endScreen.show();
             //$("#intervalStats").dialog({
             //    buttons: {

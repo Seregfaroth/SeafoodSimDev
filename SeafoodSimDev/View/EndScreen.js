@@ -1,19 +1,80 @@
 // <reference path = "declarations/gooogle.visualization.d.ts"/>
 var EndScreen = (function () {
     function EndScreen() {
+        var _this = this;
         this.m_simIndex = -1;
         this.m_scoreColumnChart = [];
         this.m_environChart = [];
         this.m_scoreChart = [];
         this.m_socialChart = [];
         this.m_financialChart = [];
+        this.updateDesc = function (p_time) {
+            var welcomeText;
+            if (p_time < _this.m_scenario.getDefaultNoDays()) {
+                $("#endDialogDiv").dialog({
+                    title: 'Interval Screen',
+                    buttons: {
+                        Continue: function () {
+                            $(this).dialog('close');
+                        }
+                    },
+                    close: function () {
+                        $("#endDialogDiv").dialog("close");
+                    }
+                });
+                var words = ["first", "second", "third"];
+                var round = p_time / _this.m_scenario.getStatFreq();
+                var timeLeft = _this.m_scenario.getDefaultNoDays() - p_time;
+                var breaksLeft = (timeLeft / _this.m_scenario.getStatFreq()) - 1;
+                if (round < 4) {
+                    welcomeText = "This is your " + words[round - 1] + " break. ";
+                }
+                else {
+                    welcomeText = "This is your break number " + round + " . ";
+                }
+                welcomeText += "You are given statistics for the simulation so far ";
+                if (_this.m_simIndex > 0) {
+                    welcomeText += "as well as previous simulations you have run. The simulations are labeled in such a manner that the newest one has the lowest index.";
+                    welcomeText += " You have the option to change some of the settings before continuing.";
+                }
+                else {
+                    welcomeText += "and you have the option to change some of the settings before continuing.";
+                }
+                welcomeText += "You have " + timeLeft + " days and " + breaksLeft;
+                if (breaksLeft != 1) {
+                    welcomeText += " breaks left.";
+                }
+                else {
+                    welcomeText += " break left.";
+                }
+            }
+            else {
+                welcomeText = "The simulation is now over. Below you will find an overview of the statistics from this simulation";
+                if (_this.m_simIndex > 0) {
+                    welcomeText += " as well as previous simulations you have run";
+                }
+                welcomeText += ".";
+            }
+            $("#descDiv").text(welcomeText);
+        };
         //this.m_model = p_model;
+        this.m_scenario = Scenario.getInstance();
         this.m_endDialogDiv = document.createElement("div");
         $('body').append(this.m_endDialogDiv);
         this.m_endDialogDiv.id = "endDialogDiv";
+        //Create desciption div
+        var descDiv = document.createElement("div");
+        descDiv.id = "descDiv";
+        descDiv.classList.add("desc");
+        $("#endDialogDiv").append(descDiv);
         $("#endDialogDiv").dialog({
             minWidth: 1050,
             minHeight: 700,
+            buttons: {
+                Continue: function () {
+                    $(this).dialog('close');
+                }
+            }
         });
     }
     EndScreen.prototype.hide = function () {
