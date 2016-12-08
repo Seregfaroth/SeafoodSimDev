@@ -54,7 +54,8 @@ var Score = (function () {
         p_map.getSchools().forEach(function (s) {
             var t2 = s.getSize();
             var t3 = p_map.getBiomassOfinTile(s.constructor, s.getPosition());
-            //var t = s.getSize() - s.getMsy();
+            var t2 = s.getSize();
+            var t5 = s.getOriginSize();
             var t = s.getSize() - s.getOriginSize();
             if (t > score.m_scenario.getEnvironmentalScoreMaxIncreasePerTick()) {
                 score.m_environmentalScore += score.m_scenario.getEnvironmentalScoreMaxIncreasePerTick();

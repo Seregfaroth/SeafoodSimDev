@@ -752,7 +752,7 @@ var Model = (function () {
             "posX": 400,
             "posY": 294.1729323308272,
             "elmtID": "elmt2",
-            "elmtName": "Economical",
+            "elmtName": "Economic",
             "elmtDesc": "write description here",
             "elmtType": 101,
             "elmtWghtMthd": 1,
@@ -908,8 +908,8 @@ var Model = (function () {
         this.m_ai.startNewInterval();
     };
     Model.prototype.getRandomOceanPos = function () {
-        var startRow = Math.round(Math.random() * (this.m_map.getMapHeight() - 1));
-        var startCol = Math.round(Math.random() * (this.m_map.getMapHeight() - 1));
+        var startRow = Math.round(Math.random() * (this.m_map.getMapHeight() - 2));
+        var startCol = Math.round(Math.random() * (this.m_map.getMapHeight() - 2));
         var point = new Point2(startRow, startCol);
         if (!(this.m_map.getTile(point) instanceof Land)) {
             return point;

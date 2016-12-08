@@ -22,7 +22,7 @@ class Map {
     public setScenario(p_scenario: Scenario): void {
         this.m_scenario = p_scenario;
     //    this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), this.m_scenario.getOceanFishCapacity(), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace());
-        this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), new CarryingCapacity([new FishGroup("group 1", ["Cod", "Mackerel"]), new FishGroup("onlyCod", ["Cod"]), new FishGroup("onlyMac", ["Mackerel"])], [20000,2000,3000]), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace(), this.m_scenario.getOceanShipCapacity());
+        this.generateMap(this.m_scenario.getMapType(), this.m_scenario.getMapSize(), this.m_scenario.getPrices(), new CarryingCapacity([new FishGroup("group 1", ["Cod", "Mackerel"]), new FishGroup("onlyCod", ["Cod"]), new FishGroup("onlyMac", ["Mackerel"])], [1000,3000,4000]), this.m_scenario.getNumberOfSchools(), this.m_scenario.getSchoolsInOnePlace(), this.m_scenario.getOceanShipCapacity());
     }
     public run(): void {
         var map: Map = this;
@@ -149,8 +149,10 @@ class Map {
             placedInSamePlace++;
             var tile: Tile = this.getTile(point);
             if (tile instanceof Ocean) {
-                this.addSchool(new Cod(5000, point));
-                this.addSchool(new Mackerel(7500, point));
+                var t = this.getCarryingCapacityBySpecies(Cod, point);
+                var t2 = this.getCarryingCapacityBySpecies(Mackerel,point);
+                this.addSchool(new Cod(1500, point));
+                this.addSchool(new Mackerel(1700, point));
 
                 schoolsPlaced++;
             }

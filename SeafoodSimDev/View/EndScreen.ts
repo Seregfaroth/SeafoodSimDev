@@ -103,15 +103,19 @@ class EndScreen {
         h3gs.innerHTML = "GameStatus";
         endGameStatusDiv.appendChild(h3gs);
         endGameStatusDiv.id = 'endGameStatusDiv' + this.m_simIndex;
-        var endGameStatusColumn: HTMLDivElement = document.createElement("div");    //content
-        //endGameStatusDiv.appendChild(endGameStatusColumn);
-        endGameStatusColumn.id = "egStatus";
-        //endGameStatusDiv.style.border = '3px solid black';
-        //endGameStatusDiv.style.cssFloat = 'right';
-        //endGameStatusDiv.style.margin = '30px';
+        var endGameStatusGoalContent: HTMLDivElement = document.createElement("div");
+        endGameStatusDiv.appendChild(endGameStatusGoalContent);
+        endGameStatusGoalContent.id = "content" + this.m_simIndex;
 
+        var endGameStatusColumn: HTMLDivElement = document.createElement("div");    //content
+        endGameStatusGoalContent.appendChild(endGameStatusColumn);
+        endGameStatusColumn.id = "egStatus" + this.m_simIndex;
+        endGameStatusColumn.style.border = '3px solid black';
+        endGameStatusColumn.style.cssFloat = 'right';
+        endGameStatusColumn.style.margin = '30px';
+        
         var endGameStatusGoalDiv: HTMLDivElement = document.createElement("div");
-        endGameStatusDiv.appendChild(endGameStatusGoalDiv);
+        endGameStatusGoalContent.appendChild(endGameStatusGoalDiv);
         endGameStatusGoalDiv.id = 'endGameStatusGoalDiv' + this.m_simIndex;
         endGameStatusGoalDiv.style.border = '1px solid green';
         //endGameStatusGoalDiv.style.margin = '10px';
@@ -208,7 +212,7 @@ class EndScreen {
         endAccordionDiv5.appendChild(financialChartDiv);
         financialChartDiv.id = 'financialChartDiv' + this.m_simIndex;
 
-        this.m_scoreColumnChart[this.m_simIndex] = new google.visualization.ColumnChart(document.getElementById(endGameStatusDiv.id));
+        this.m_scoreColumnChart[this.m_simIndex] = new google.visualization.ColumnChart(document.getElementById(endGameStatusGoalContent.id));
         this.m_environChart[this.m_simIndex] = new google.visualization.ScatterChart(document.getElementById(environChartDiv.id));
         this.m_scoreChart[this.m_simIndex] = new google.visualization.ScatterChart(document.getElementById(scoreChartDiv.id));
         this.m_socialChart[this.m_simIndex] = new google.visualization.ScatterChart(document.getElementById(socialChartDiv.id));
@@ -320,7 +324,7 @@ class EndScreen {
         var t = p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod);
         var t2 = p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel);
         
-        $("#msy" + this.m_simIndex).html("MsyCod: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod)) + "</br> MsyMac: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel)));
+        $("#msy" + this.m_simIndex).html("MsyCod: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod))/2 + "</br> MsyMac: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel))/2);
     }
 }
 
