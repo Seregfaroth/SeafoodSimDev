@@ -31,8 +31,13 @@ class TestSchool {
         });
         QUnit.test("Cod: age function", function (assert) {
             var singleCod: Cod;
+            var count: number = 0;
             do {
                 singleCod = new Cod(1, startPosition);
+                count++;
+                if (count > 1000) {
+                    throw "Infinite loop";
+                }
             } while (singleCod.getAges()[thisPlaceholder.scenario.getCodSchoolMaxAge() - 1] == 1); //This is to ensure that cod is not old
             map.addSchool(singleCod);
             var age: number;
@@ -59,8 +64,13 @@ class TestSchool {
             map.getGrid()[0][0] = new Ocean(new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [1]), 1);
             map.addSchool(singleCod);
             //Make cod grow old
-            while (singleCod.getAges()[singleCod.getMaxAge()-1] == 0) {
+            var count: number = 0;
+            while (singleCod.getAges()[singleCod.getMaxAge() - 1] == 0) {
                 singleCod.age();
+                count++;
+                if (count > 1000) {
+                    throw "Infinite loop";
+                }
             }
             //Check that fish is old
             for (var i = 0; i < singleCod.getMaxAge() - 1; i++) {
@@ -90,8 +100,13 @@ class TestSchool {
         });
         QUnit.test("Mackerel: age function", function (assert) {
             var singeMackerel: Mackerel;
+            var count: number = 0:
             do {
                 singeMackerel = new Mackerel(1, startPosition);
+                count++;
+                if (count > 1000) {
+                    throw "Infinite loop";
+                }
             } while (singeMackerel.getAges()[singleMackerel.getMaxAge()  - 1] == 1); //This is to ensure that cod is not old
             map.addSchool(singeMackerel);
             var age: number;
@@ -118,8 +133,13 @@ class TestSchool {
             map.getGrid()[0][0] = new Ocean(new CarryingCapacity([new FishGroup("group 1", ["cod", "mac"])], [1]), 1);
             map.addSchool(singleMackerel);
             //Make cod grow old
-            while (singleMackerel.getAges()[singleMackerel.getMaxAge()  - 1] == 0) {
+            var count: number = 0;
+            while (singleMackerel.getAges()[singleMackerel.getMaxAge() - 1] == 0) {
                 singleMackerel.age();
+                count++;
+                if (count > 1000) {
+                    throw "Infinite loop";
+                }
             }
             //Check that fish is old
             for (var i = 0; i < singleMackerel.getMaxAge() - 1; i++) {

@@ -186,6 +186,35 @@ class AI {
         
         return bestPath;
     }
+    /*public pathToFish(p_start: Point2, p_map: Map): Point2[] {
+        if (p_map.getSchools().length !== 0) {
+            var randomNumber: number = Math.floor(Math.random() * (p_map.getSchools().length));
+            var firstRandomNumber: number = randomNumber;
+            var fishingTiles: Point2[] = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getOrigin());
+            var tileNo: number = Math.floor(Math.random() * (fishingTiles.length));
+            var firstTileNo: number = tileNo;
+            do {
+                var point: Point2 = fishingTiles[tileNo]
+
+                tileNo = (tileNo + 1) % fishingTiles.length;
+                if (tileNo == firstTileNo) {//Done looking through tiles
+                    randomNumber = (randomNumber + 1) % p_map.getSchools().length;
+                    if (randomNumber === firstRandomNumber) return undefined; //If there was no tile with room for the ship
+                    fishingTiles = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getOrigin());
+                    tileNo = Math.floor(Math.random() * (fishingTiles.length));
+                    firstTileNo = tileNo;
+                }
+                if (point != undefined)
+                    var tile: Ocean = <Ocean>p_map.getTile(point);
+                else
+                    return undefined;
+            }
+            while (!(tile.roomForAnotherShip() && p_map.getRestrictions().getRestrictedAreas().indexOf(tile) < 0))
+            return this.pathFinding(p_map, p_start, point);
+        }
+        else
+            return undefined;
+    }*/
     public pathToFish(p_start: Point2, p_map: Map): Point2[] {
         if (p_map.getSchools().length !== 0) {
             var randomNumber: number = Math.floor(Math.random() * (p_map.getSchools().length));
@@ -201,10 +230,7 @@ class AI {
                     fishingTiles = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getOrigin());
                     tileNo = 0;
                 }
-                if (point != undefined)
-                    var tile: Ocean = <Ocean>p_map.getTile(point);
-                else
-                    return undefined;
+                var tile: Ocean = <Ocean>p_map.getTile(point);
                 tileNo++;
             }
             while (!(tile.roomForAnotherShip() && p_map.getRestrictions().getRestrictedAreas().indexOf(tile) < 0))
@@ -259,7 +285,7 @@ class AI {
                 //Ship must refuel if fuel is too low
                 this.goRefuel(p_ship, p_map, fuelPath);
             }
-            else if (p_ship.getCargoSize() >= p_ship.getCargoCapacity() * 0.98 || (this.m_catchedSoFar[p_ship.getType()] >= p_map.getRestrictions().getTAC()[p_ship.getType()])) {
+            else if (p_ship.getCargoSize() >= p_ship.getCargoCapacity() * 0.98 ) {
                 //If ship is  full, ship must land
                 var landingPath: Point2[] = this.pathToNearestLandingSite(p_ship.getPosition(), p_map);
                 if (this.canReach(p_ship, p_map, landingPath)) {
@@ -287,7 +313,9 @@ class AI {
                     }
                 }
             }
-            else {
+            else if ((this.m_catchedSoFar[p_ship.getType()] >= p_map.getRestrictions().getTAC()[p_ship.getType()])) {
+                //If all tac is fished
+                p_ship.setState(shipState.waiting);
                 
             }
         }
