@@ -28,7 +28,7 @@ class StartScreen {
         mainDiv.appendChild(textDiv);
         textDiv.innerHTML = text2 + text3 + text4;            
         textDiv.id = "welcomeText";
-        textDiv.classList.add(("desc");
+        textDiv.classList.add("desc");
         
         var buttonTable: HTMLTableElement = document.createElement("table");
         mainDiv.appendChild(buttonTable);

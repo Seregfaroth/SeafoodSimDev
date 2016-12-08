@@ -8,22 +8,33 @@ var EndScreen = (function () {
         this.m_scoreChart = [];
         this.m_socialChart = [];
         this.m_financialChart = [];
+        this.updateAfterRestart = function () {
+            $("#endDialogDiv").dialog({
+                title: 'Interval Screen',
+                buttons: {
+                    Continue: function () {
+                        $(this).dialog('close');
+                    }
+                },
+                close: function () {
+                    $("#endDialogDiv").dialog("close");
+                }
+            });
+            //Update the header of the current sim div
+            document.getElementById("header" + _this.m_simIndex).innerHTML = "Current Simulation";
+            if (_this.m_simIndex > 0) {
+                //Reset the header of previous sim div
+                document.getElementById("header" + (_this.m_simIndex - 1)).innerHTML = "Simulation " + (_this.m_simIndex);
+            }
+        };
         this.updateDesc = function (p_time) {
             var welcomeText;
             if (p_time < _this.m_scenario.getDefaultNoDays()) {
-                $("#endDialogDiv").dialog({
-                    title: 'Interval Screen',
-                    buttons: {
-                        Continue: function () {
-                            $(this).dialog('close');
-                        }
-                    },
-                    close: function () {
-                        $("#endDialogDiv").dialog("close");
-                    }
-                });
                 var words = ["first", "second", "third"];
                 var round = p_time / _this.m_scenario.getStatFreq();
+                if (round == 1) {
+                    _this.updateAfterRestart();
+                }
                 var timeLeft = _this.m_scenario.getDefaultNoDays() - p_time;
                 var breaksLeft = (timeLeft / _this.m_scenario.getStatFreq()) - 1;
                 if (round < 4) {
@@ -34,7 +45,7 @@ var EndScreen = (function () {
                 }
                 welcomeText += "You are given statistics for the simulation so far ";
                 if (_this.m_simIndex > 0) {
-                    welcomeText += "as well as previous simulations you have run. The simulations are labeled in such a manner that the newest one has the lowest index.";
+                    welcomeText += "as well as previous simulations you have run. The simulations are labeled in such a manner that the newest one has the highest index.";
                     welcomeText += " You have the option to change some of the settings before continuing.";
                 }
                 else {
@@ -88,7 +99,13 @@ var EndScreen = (function () {
         this.m_endStats = p_endStats;
         this.m_simIndex++;
         var simDiv = document.createElement("div");
-        this.m_endDialogDiv.appendChild(simDiv);
+        if (this.m_simIndex > 0) {
+            //If there are multiple sim divs insert this at the top
+            this.m_endDialogDiv.insertBefore(simDiv, this.m_endDialogDiv.childNodes[1]);
+        }
+        else {
+            this.m_endDialogDiv.appendChild(simDiv);
+        }
         simDiv.id = "simulation" + this.m_simIndex;
         simDiv.style.display = "inline-block";
         simDiv.style.verticalAlign = "top";
@@ -96,7 +113,8 @@ var EndScreen = (function () {
         //accordion header
         var header = document.createElement("h3");
         simDiv.appendChild(header);
-        header.innerHTML = simDiv.id;
+        header.id = "header" + this.m_simIndex;
+        //header.innerHTML = "Simulation " + this.m_simIndex;
         //accordion content
         var content = document.createElement("div");
         simDiv.appendChild(content);
@@ -362,7 +380,7 @@ var EndScreen = (function () {
     EndScreen.prototype.updateMsy = function (p_model) {
         var t = p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod);
         var t2 = p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel);
-        $("#msy" + this.m_simIndex).html("MsyCod: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod)) / 2 + "</br> MsyMac: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel)) / 2);
+        $("#msy" + this.m_simIndex).html("Msy for cod: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod)) + "</br> Msy for mackerel: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel)));
     };
     return EndScreen;
 }());

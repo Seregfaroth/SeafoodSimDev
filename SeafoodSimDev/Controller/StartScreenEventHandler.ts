@@ -36,7 +36,6 @@
     }
 
     private beforeClose = (e: JQueryEventObject): void => {
-        //var scenario = this.m_controller.getScenario();
         this.m_controller.setModel(new Model());
         this.m_controller.getMainView().updateMainView(this.m_controller.getModel());
     }

@@ -45,23 +45,34 @@ class EndScreen {
     public show() {
         $("#endDialogDiv").dialog("open");
     }
-
+    public updateAfterRestart = (): void => {
+        $("#endDialogDiv").dialog({
+            title: 'Interval Screen',
+            buttons: {
+                Continue: function () {
+                    $(this).dialog('close');
+                }
+            },
+            close: function () {
+                $("#endDialogDiv").dialog("close")
+            }
+        });
+        //Update the header of the current sim div
+        document.getElementById("header" + this.m_simIndex).innerHTML = "Current Simulation"; 
+        if (this.m_simIndex > 0) {
+            //Reset the header of previous sim div
+            document.getElementById("header" + (this.m_simIndex - 1)).innerHTML = "Simulation " + (this.m_simIndex);
+        }
+    } 
     public updateDesc = (p_time: number): void => {
         var welcomeText: string
         if (p_time < this.m_scenario.getDefaultNoDays()) {
-            $("#endDialogDiv").dialog({
-                title: 'Interval Screen',
-                buttons: {
-                    Continue: function () {
-                        $(this).dialog('close');
-                    }
-                },
-                close: function () {
-                    $("#endDialogDiv").dialog("close")
-                }
-            });
+            
             var words: string[] = ["first", "second", "third"];
             var round: number = p_time / this.m_scenario.getStatFreq();
+            if (round == 1) {
+                this.updateAfterRestart();
+            }
             var timeLeft: number = this.m_scenario.getDefaultNoDays() - p_time;
             var breaksLeft: number = (timeLeft / this.m_scenario.getStatFreq()) - 1;
             if (round < 4) {
@@ -72,7 +83,7 @@ class EndScreen {
             }
             welcomeText += "You are given statistics for the simulation so far ";
             if (this.m_simIndex > 0) {
-                welcomeText += "as well as previous simulations you have run. The simulations are labeled in such a manner that the newest one has the lowest index.";
+                welcomeText += "as well as previous simulations you have run. The simulations are labeled in such a manner that the newest one has the highest index.";
                 welcomeText += " You have the option to change some of the settings before continuing.";
             }
             else {
@@ -102,7 +113,13 @@ class EndScreen {
         this.m_endStats = p_endStats;
         this.m_simIndex++;
         var simDiv: HTMLElement = document.createElement("div");
-        this.m_endDialogDiv.appendChild(simDiv);
+        if (this.m_simIndex > 0) {
+            //If there are multiple sim divs insert this at the top
+            this.m_endDialogDiv.insertBefore(simDiv, this.m_endDialogDiv.childNodes[1]);
+        }
+        else {
+            this.m_endDialogDiv.appendChild(simDiv);
+        }
         simDiv.id = "simulation" + this.m_simIndex;
         simDiv.style.display = "inline-block";
         simDiv.style.verticalAlign = "top";
@@ -110,7 +127,8 @@ class EndScreen {
         //accordion header
         var header: HTMLElement = document.createElement("h3");
         simDiv.appendChild(header);
-        header.innerHTML = simDiv.id;
+        header.id = "header"+ this.m_simIndex;
+        //header.innerHTML = "Simulation " + this.m_simIndex;
         //accordion content
         var content: HTMLElement = document.createElement("div");
         simDiv.appendChild(content);
@@ -390,7 +408,7 @@ class EndScreen {
         var t = p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod);
         var t2 = p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel);
         
-        $("#msy" + this.m_simIndex).html("MsyCod: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod))/2 + "</br> MsyMac: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel))/2);
+        $("#msy" + this.m_simIndex).html("Msy for cod: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod)) + "</br> Msy for mackerel: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel)));
     }
 }
 
