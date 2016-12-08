@@ -108,7 +108,7 @@ class Controller {
             modal: true
         });
         this.m_eventHandler.bindFunctions(true);
-        this.m_simState = simState.paused;
+        this.m_simState = simState.changeSettings;
         clearInterval(this.m_timer);
         $("#startButton").removeClass("marked");
         $("#fastForwardButton").removeClass("marked");
@@ -203,9 +203,9 @@ class Controller {
     }
     runSimulation = (p_ticks?: number) => {
         if (this.m_simState == simState.paused || this.m_simState == simState.fast || this.m_simState == simState.changeSettings) {
-            if (this.m_simState == simState.changeSettings) {//If new interval has begun
+            /*if (this.m_simState == simState.changeSettings) {//If new interval has begun
                 this.m_view.updateMap(this.m_model.getMap());
-            }
+            }*/
             clearInterval(this.m_timer);
             this.m_timer = setInterval(this.simulationTick, this.m_delayPerTick);
             this.m_simState = simState.running;

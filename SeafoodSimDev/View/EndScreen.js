@@ -164,7 +164,7 @@ var EndScreen = (function () {
         var msyProjectionDiv = document.createElement("div");
         p_div.appendChild(msyProjectionDiv);
         msyProjectionDiv.id = "msy" + this.m_simIndex;
-        msyProjectionDiv.innerHTML = "msy Cod: " + "</br>" + " msy Mackerel: ";
+        msyProjectionDiv.innerHTML = "msy for cod: " + "</br>" + " msy for mackerel: ";
         var endGameStatusDiv = document.createElement("div"); //accordion
         p_div.appendChild(endGameStatusDiv);
         var h3gs = document.createElement(headerType); //header

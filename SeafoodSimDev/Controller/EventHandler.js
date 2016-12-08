@@ -21,7 +21,6 @@ var EventHandler = (function () {
             _this.setNoMackerelShips($('#noMackerelShipsSlider').slider("option", "value"));
             _this.setTacCod($('#tacCodSlider').slider("option", "value"));
             _this.setTacMackerel($('#tacMackerelSlider').slider("option", "value"));
-            _this.restrictSpawningAreas($("#restrictAreas").is(':checked'));
             _this.m_controller.getModel().startNewInterval();
             _this.start();
         };
@@ -38,6 +37,7 @@ var EventHandler = (function () {
                     _this.m_controller.getModel().getGovernment().getRestrictions().unRestrictArea(_this.m_controller.getModel().getMap().getTile(s.getOrigin()));
                 }
             }
+            _this.m_controller.getMainView().updateMap(_this.m_controller.getModel().getMap());
         };
         this.setTax = function (p_n) {
             _this.updateTaxValue(p_n);
@@ -166,6 +166,7 @@ var EventHandler = (function () {
             $("#fastForwardButton").on("click", this.fastForward);
         }
         $("#restrictAreas").removeAttr("disabled");
+        $("#restrictAreas").change(function (event) { handler.restrictSpawningAreas(this.checked); });
     };
     EventHandler.prototype.unBindFunctions = function (p_all) {
         var handler = this;
