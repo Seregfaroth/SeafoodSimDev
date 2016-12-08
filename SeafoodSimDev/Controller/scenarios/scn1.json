@@ -15,7 +15,7 @@
   "linkToMCA": "http://mareframe.mapix.com/dev/MCA/DST.html?model=sfsCampaign001",
   "mapType": 2,
   "mapSize": 15,
-  "numberOfSchools": 1,
+  "numberOfSchools": 5,
   "prices": {
     "Cod": 18,
     "Mackerel": 10
@@ -26,7 +26,7 @@
   "schoolMsy": 5000,
   "schoolMinimum": 50,
   "schoolMaximum": 36500,
-  "defaultNoDays": 90,
+  "defaultNoDays": 200,
   "defaultTickSize": 30,
   "taxingRate": 0.1,
   "map": "map1",
@@ -50,7 +50,7 @@
   "financialMaxScore": 150000,
   "environmentalMaxScore": 30000,
   "socialMaxScore": 2000,
-  "fishingPercentage": 0.1,
+  "fishingPercentage": 0.01,
 
   "financialMinScore": 0,
   "socialMinScore": 0,
@@ -77,17 +77,18 @@
   "codSchoolMaxAge": 8,
 
   "mackerelSchoolMaxAge": 8,
-  "recruitAndAgeFreq": 30,
+  "recruitAndAgeFreq": 300,
 
-  "statFreq": 100,
+  "statFreq": 300,
   "noOfMenPerShip": 8,
 
   "modelStatFreq": 30,
   "modelRecruitAndAgeFreq": 30,
   "noOfEmployeesPerShip": 10,
+  "noOfEmployeesOnLandPerShip": 4,
 
   "shipFuelCapacity": 150,
-  "shipCargoCapacity": 800,
+  "shipCargoCapacity": 100,
   "shipFuelPerMove": 1,
   "shipMovesPerTick": 1,
   "shipFuelPerFishingTick": 1,

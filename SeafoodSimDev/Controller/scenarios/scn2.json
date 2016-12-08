@@ -50,7 +50,7 @@
   "financialMaxScore": 100000,
   "environmentalMaxScore": 1000,
   "socialMaxScore": 1000,
-  "fishingPercentage": 0.1,
+  "fishingPercentage": 0.001,
 
   "financialMinScore": 0,
   "socialMinScore": 0,
@@ -87,7 +87,7 @@
   "noOfEmployeesPerShip": 10,
   "noOfEmployeesOnLandPerShip": 4,
 
-  "shipFuelCapacity": 150,
+  "shipFuelCapacity": 50,
   "shipCargoCapacity": 800,
   "shipFuelPerMove": 1,
   "shipMovesPerTick": 1,

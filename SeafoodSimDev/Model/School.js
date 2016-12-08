@@ -9,7 +9,7 @@ var School = (function () {
         this.m_scenario = Scenario.getInstance();
         this.m_position = p_position;
         this.m_origin = p_position;
-        this.m_originSize = p_size;
+        this.m_originSize = p_size / 2;
         //this.m_msy = p_msy;        
     }
     School.prototype.getOriginSize = function () {

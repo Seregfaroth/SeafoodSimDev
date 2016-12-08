@@ -5,7 +5,7 @@ var StartScreenEventHandler = (function () {
             var t = _this;
             var t2 = _this.m_controller.getScenario();
             if (p_evt.data.scenario === 1)
-                _this.m_controller.getScenario().loadScenario('Controller/scenarios/scn4.json', _this.m_startScreen.updateInfo);
+                _this.m_controller.getScenario().loadScenario('Controller/scenarios/scn1.json', _this.m_startScreen.updateInfo);
             if (p_evt.data.scenario === 2)
                 _this.m_controller.getScenario().loadScenario('Controller/scenarios/scn2.json', _this.m_startScreen.updateInfo);
             if (p_evt.data.scenario === 3)
@@ -30,7 +30,7 @@ var StartScreenEventHandler = (function () {
             close: handler.close,
             beforeClose: handler.beforeClose
         });
-        this.m_controller.getScenario().loadScenario('Controller/scenarios/scn4.json', this.m_startScreen.updateInfo);
+        this.m_controller.getScenario().loadScenario('Controller/scenarios/scn1.json', this.m_startScreen.updateInfo);
     }
     StartScreenEventHandler.prototype.initialize = function () {
         $("#scenario1").on("change", { scenario: 1 }, this.radioChange);

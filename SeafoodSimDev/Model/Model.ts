@@ -781,7 +781,7 @@ class Model {
                 "posX": 400,
                 "posY": 294.1729323308272,
                 "elmtID": "elmt2",
-                "elmtName": "Economical",
+                "elmtName": "Economic",
                 "elmtDesc": "write description here",
                 "elmtType": 101,
                 "elmtWghtMthd": 1,
@@ -942,8 +942,8 @@ class Model {
         this.m_ai.startNewInterval();
     }
     public getRandomOceanPos(): Point2 {
-        var startRow: number = Math.round(Math.random() * (this.m_map.getMapHeight() - 1));
-        var startCol: number = Math.round(Math.random() * (this.m_map.getMapHeight() - 1));
+        var startRow: number = Math.round(Math.random() * (this.m_map.getMapHeight() - 2));
+        var startCol: number = Math.round(Math.random() * (this.m_map.getMapHeight() - 2));
 
         var point: Point2 = new Point2(startRow, startCol);
         if (!(this.m_map.getTile(point) instanceof Land)) {
