@@ -121,7 +121,7 @@ var Controller = (function () {
         this.m_endScreen.hide();
         this.m_scenario = Scenario.getInstance();
         if (p_mca === true) {
-            this.m_scenario.loadScenario('Controller/scenarios/scn4.json', this.initMCA);
+            this.m_scenario.loadScenario('Controller/scenarios/scn2.json', this.initMCA);
         }
         else {
             this.m_simState = simState.changeSettings;

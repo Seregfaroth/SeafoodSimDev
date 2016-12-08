@@ -266,8 +266,8 @@ var EndScreen = (function () {
         $("#endAccordionDiv4" + this.m_simIndex).accordion({ collapsible: true, active: false, heightStyle: "content" });
         $("#endAccordionDiv5" + this.m_simIndex).accordion({ collapsible: true, active: false, heightStyle: "content" });
     };
-    EndScreen.prototype.buildGameStatusAccordion = function () {
-    };
+    //private buildGameStatusAccordion() {
+    //}
     EndScreen.prototype.drawCharts = function (p_model, p_endStats) {
         var scoreColumnChartData = google.visualization.arrayToDataTable(p_model.getGovernment().getScore().getScoreColumnChartArray());
         var scoreChartData = google.visualization.arrayToDataTable(p_endStats.getScoreVizArray());

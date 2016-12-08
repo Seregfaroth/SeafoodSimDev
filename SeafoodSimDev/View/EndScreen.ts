@@ -290,9 +290,9 @@ class EndScreen {
         $("#endAccordionDiv4" + this.m_simIndex).accordion({ collapsible: true, active: false, heightStyle: "content" });
         $("#endAccordionDiv5" + this.m_simIndex).accordion({ collapsible: true, active: false, heightStyle: "content" });
     }
-    private buildGameStatusAccordion() {
+    //private buildGameStatusAccordion() {
 
-    }
+    //}
     public drawCharts(p_model, p_endStats) {        
         var scoreColumnChartData = google.visualization.arrayToDataTable(p_model.getGovernment().getScore().getScoreColumnChartArray());
         var scoreChartData = google.visualization.arrayToDataTable(p_endStats.getScoreVizArray());

@@ -151,8 +151,8 @@ class Map {
             if (tile instanceof Ocean) {
                 var t = this.getCarryingCapacityBySpecies(Cod, point);
                 var t2 = this.getCarryingCapacityBySpecies(Mackerel,point);
-                this.addSchool(new Cod(1500, point));
-                this.addSchool(new Mackerel(1700, point));
+                this.addSchool(new Cod(2000, point));
+                this.addSchool(new Mackerel(2500, point));
 
                 schoolsPlaced++;
             }
