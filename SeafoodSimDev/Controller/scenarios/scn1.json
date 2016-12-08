@@ -79,7 +79,7 @@
   "mackerelSchoolMaxAge": 8,
   "recruitAndAgeFreq": 300,
 
-  "statFreq": 300,
+  "statFreq": 100,
   "noOfMenPerShip": 8,
 
   "modelStatFreq": 30,
@@ -87,8 +87,8 @@
   "noOfEmployeesPerShip": 10,
   "noOfEmployeesOnLandPerShip": 4,
 
-  "shipFuelCapacity": 150,
-  "shipCargoCapacity": 100,
+  "shipFuelCapacity": 50,
+  "shipCargoCapacity": 800,
   "shipFuelPerMove": 1,
   "shipMovesPerTick": 1,
   "shipFuelPerFishingTick": 1,

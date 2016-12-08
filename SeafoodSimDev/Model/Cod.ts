@@ -6,7 +6,7 @@ class Cod extends School{
         super(p_size, p_position);
         this.m_maxAge = this.m_scenario.getCodSchoolMaxAge();
         this.m_type = "Cod";
-        this.m_growthRate = 0.45;
+        this.m_growthRate = 0.75;
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }

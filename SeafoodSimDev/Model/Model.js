@@ -110,11 +110,11 @@ var Model = (function () {
         return this.m_stats;
     };
     Model.prototype.runMCA = function (p_noOfMoves) {
-        var restrictedArea = [false];
-        var pelargicVessels = [10, 20];
-        var demersalVessels = [15, 30];
-        var tacCod = [1000];
-        var tacMac = [2000];
+        var restrictedArea = [false, true];
+        var pelargicVessels = [25];
+        var demersalVessels = [20];
+        var tacCod = [10000, 15000, 20000];
+        var tacMac = [10000, 15000, 20000];
         var result = [];
         for (var resArea = 0; resArea < restrictedArea.length; resArea++) {
             result[resArea] = [];
@@ -147,7 +147,8 @@ var Model = (function () {
                             this.updateNoShips();
                             for (var m = 0; m < p_noOfMoves; m++) {
                                 if (!(this.m_time % this.m_scenario.getStatFreq()))
-                                    this.updateStats();
+                                    this.m_goverment.getScore().updateScore(this, this.m_map, this.m_goverment, this.m_time);
+                                this.updateStats();
                                 this.m_time++;
                                 this.m_map.run();
                                 if (!(this.m_time % this.m_scenario.getRecruitAndAgeFreq())) {
@@ -173,7 +174,11 @@ var Model = (function () {
                             //console.log("Tax: " + tax[taxIndex]);
                             //console.log("Maxships: " + maxShips[maxIndex]);
                             //console.log("income: " + JSON.stringify(this.m_stats.getIncomePrTimeUnit()));
+                            console.log("res: " + resArea + " cs: " + pelargicVessels[maxCodIndex] + " ms: " + demersalVessels[maxMacIndex] + " ct: " + tacCod[tacCodIndex] + "mt:" + tacMac[tacMacIndex]);
                             console.log("result: " + result[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex]);
+                            console.log("FinScore: " + this.m_stats.getFinancialScorePrTimeUnitAt(index));
+                            console.log("EnvScore: " + this.m_stats.getEnvironmentalScorePrTimeUnitAt(index));
+                            console.log("SocScore: " + this.m_stats.getSocialScorePrTimeUnitAt(index));
                             this.m_stats = new EndScreenStats();
                             this.m_shipOwners = [];
                             var j = 0;
@@ -193,6 +198,7 @@ var Model = (function () {
         }
         $("#mainDiv").html(this.createJSONForMCA_HTML(result, restrictedArea, pelargicVessels, demersalVessels, tacCod, tacCod));
         console.log("Result: " + result);
+        //console.log("Score: " + this.m_stats.getFinancialScorePrTimeUnitAt
         //debugger;
     };
     Model.prototype.run = function (p_noOfMoves) {
@@ -347,12 +353,12 @@ var Model = (function () {
                             //retObj[id] = {
                             elements[id + 19] = {
                                 //"posX": (600 + maxCodIndex * 160 + maxMacIndex * 160),
-                                //"posY": (1000 * resArea + 100 * tacCodIndex + 100 * tacMacIndex),
-                                "posX": 800,
-                                "posY": 100 + 10 * id,
+                                //"posY": ( 100 * tacCodIndex + 100 * tacMacIndex),
+                                "posX": 1000 + 200 * resArea,
+                                "posY": 100 + (40 * id) * resArea,
                                 "elmtID": "elmt" + (id + 1000),
                                 "elmtName": "SC " + id /*+ p_ship[maxIndex] + ", " + p_tax[taxIndex] + "% "*/,
-                                "elmtDesc": "write description here",
+                                "elmtDesc": "restricted Area: " + p_resArea[resArea] + "\n Cod vessels: " + p_codship[maxCodIndex] + "\n Mac vessels: " + p_macship[maxMacIndex] + "\n Tac cod: " + p_codtac[tacCodIndex] + "\n Tac mac: " + p_mactac[tacMacIndex],
                                 "elmtType": 102,
                                 "elmtWghtMthd": 0,
                                 "elmtDstType": 1,
@@ -362,6 +368,8 @@ var Model = (function () {
                                 "elmtData": []
                             };
                             //ret += JSON.stringify(retObj[id]) + ",<br/><br/>" 
+                            var t = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex];
+                            var t2 = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex];
                             revenueCod[id] = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex][0];
                             revenueMac[id] = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex][1];
                             recruitCod[id] = p_res[resArea][maxCodIndex][maxMacIndex][tacCodIndex][tacMacIndex][2];

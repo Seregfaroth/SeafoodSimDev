@@ -6,7 +6,7 @@ class Mackerel extends School {
         super(p_size, p_position);
         this.m_maxAge = this.m_scenario.getMackerelSchoolMaxAge();
         this.m_type = "Mackerel";
-        this.m_growthRate = 0.30;
+        this.m_growthRate = 0.7;
         for (var i = 0; i < this.m_maxAge; i++) {
             this.m_ages.push(0);
         }

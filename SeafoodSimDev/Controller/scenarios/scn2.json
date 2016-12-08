@@ -77,18 +77,18 @@
   "codSchoolMaxAge": 8,
   
   "mackerelSchoolMaxAge": 8,
-  "recruitAndAgeFreq": 30,
+  "recruitAndAgeFreq": 50,
 
   "statFreq": 100,
   "noOfMenPerShip": 8,
 
   "modelStatFreq": 30,
-  "modelRecruitAndAgeFreq": 30,
+  "modelRecruitAndAgeFreq": 50,
   "noOfEmployeesPerShip": 10,
   "noOfEmployeesOnLandPerShip": 4,
 
   "shipFuelCapacity": 50,
-  "shipCargoCapacity": 800,
+  "shipCargoCapacity": 200,
   "shipFuelPerMove": 1,
   "shipMovesPerTick": 1,
   "shipFuelPerFishingTick": 1,

@@ -53,7 +53,7 @@ class LandingSite extends Site {
         }
 
         this.m_untaxedValue += price;
-        console.log("untax: " + this.m_untaxedValue + " recfish: " + this.m_resourceAtSite + " price: " + price);  
+        //console.log("untax: " + this.m_untaxedValue + " recfish: " + this.m_resourceAtSite + " price: " + price);  
         return price
     }
 

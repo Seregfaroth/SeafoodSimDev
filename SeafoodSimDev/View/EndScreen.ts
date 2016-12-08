@@ -308,9 +308,9 @@ class EndScreen {
         $("#endAccordionDiv4" + this.m_simIndex).accordion({ collapsible: true, active: false, heightStyle: "content" });
         $("#endAccordionDiv5" + this.m_simIndex).accordion({ collapsible: true, active: false, heightStyle: "content" });
     }
-    private buildGameStatusAccordion() {
+    //private buildGameStatusAccordion() {
 
-    }
+    //}
     public drawCharts(p_model, p_endStats) {        
         var scoreColumnChartData = google.visualization.arrayToDataTable(p_model.getGovernment().getScore().getScoreColumnChartArray());
         var scoreChartData = google.visualization.arrayToDataTable(p_endStats.getScoreVizArray());
@@ -408,7 +408,7 @@ class EndScreen {
         var t = p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod);
         var t2 = p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel);
         
-        $("#msy" + this.m_simIndex).html("Msy for cod: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod)) + "</br> Msy for mackerel: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel)));
+        $("#msy" + this.m_simIndex).html("Msy for cod: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod)/2) + "</br> Msy for mackerel: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel)/2));
     }
 }
 
