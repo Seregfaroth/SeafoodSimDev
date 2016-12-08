@@ -112,6 +112,7 @@ class MapView {
                 var pos = new Point2(row, col);
                 var tile: Tile = p_map.getTile(pos);
                 if (tile instanceof Ocean) {
+                    this.m_scene.remove(this.m_mapTile[row][col]);//Remove old tile
                     if (p_map.getRestrictions().isRestricted(tile)) {
                         this.m_mapTile[row][col] = new TKN_Mesh(this.m_geometry, this.m_restrictedMaterial);
                     }
@@ -119,10 +120,11 @@ class MapView {
                         this.m_mapTile[row][col] = new TKN_Mesh(this.m_geometry, this.m_blueMaterial);
                     }
                     this.m_mapTile[row][col].position = new Point2(row, col);
-                    this.m_scene.add(this.m_mapTile[row][col]);  
+                    this.m_scene.add(this.m_mapTile[row][col]);
                 }
             }
         }
+        this.m_renderer.render(this.m_camera, this.m_scene);//Apply the changes
     }
     updateMapView(p_map: Map) {
         //console.log("updating MapView");

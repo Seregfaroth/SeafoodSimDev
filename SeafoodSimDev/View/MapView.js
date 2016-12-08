@@ -89,6 +89,7 @@ var MapView = (function () {
                 var pos = new Point2(row, col);
                 var tile = p_map.getTile(pos);
                 if (tile instanceof Ocean) {
+                    this.m_scene.remove(this.m_mapTile[row][col]); //Remove old tile
                     if (p_map.getRestrictions().isRestricted(tile)) {
                         this.m_mapTile[row][col] = new TKN_Mesh(this.m_geometry, this.m_restrictedMaterial);
                     }
@@ -100,6 +101,7 @@ var MapView = (function () {
                 }
             }
         }
+        this.m_renderer.render(this.m_camera, this.m_scene); //Apply the changes
     };
     MapView.prototype.updateMapView = function (p_map) {
         //console.log("updating MapView");

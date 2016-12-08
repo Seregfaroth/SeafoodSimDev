@@ -29,12 +29,12 @@ var EndScreen = (function () {
         };
         this.updateDesc = function (p_time) {
             var welcomeText;
+            var round = p_time / _this.m_scenario.getStatFreq();
+            if (round <= 1) {
+                _this.updateAfterRestart();
+            }
             if (p_time < _this.m_scenario.getDefaultNoDays()) {
                 var words = ["first", "second", "third"];
-                var round = p_time / _this.m_scenario.getStatFreq();
-                if (round == 1) {
-                    _this.updateAfterRestart();
-                }
                 var timeLeft = _this.m_scenario.getDefaultNoDays() - p_time;
                 var breaksLeft = (timeLeft / _this.m_scenario.getStatFreq()) - 1;
                 if (round < 4) {
@@ -164,7 +164,7 @@ var EndScreen = (function () {
         var msyProjectionDiv = document.createElement("div");
         p_div.appendChild(msyProjectionDiv);
         msyProjectionDiv.id = "msy" + this.m_simIndex;
-        msyProjectionDiv.innerHTML = "msy Cod: " + "</br>" + " msy Mackerel: ";
+        msyProjectionDiv.innerHTML = "msy for cod: " + "</br>" + " msy for mackerel: ";
         var endGameStatusDiv = document.createElement("div"); //accordion
         p_div.appendChild(endGameStatusDiv);
         var h3gs = document.createElement(headerType); //header

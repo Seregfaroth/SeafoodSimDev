@@ -61,6 +61,7 @@
             $("#fastForwardButton").on("click", this.fastForward);
         }
         $("#restrictAreas").removeAttr("disabled");
+        $("#restrictAreas").change(function (event) { handler.restrictSpawningAreas(this.checked) });
     }
 
     public unBindFunctions(p_all?:boolean): void {
@@ -114,7 +115,6 @@
         this.setNoMackerelShips($('#noMackerelShipsSlider').slider("option", "value"));
         this.setTacCod($('#tacCodSlider').slider("option", "value"));
         this.setTacMackerel($('#tacMackerelSlider').slider("option", "value"));
-        this.restrictSpawningAreas($("#restrictAreas").is(':checked'));
         this.m_controller.getModel().startNewInterval();
         this.start();
     }
@@ -129,6 +129,7 @@
                 this.m_controller.getModel().getGovernment().getRestrictions().unRestrictArea(this.m_controller.getModel().getMap().getTile(s.getOrigin()));
             }
         }
+            this.m_controller.getMainView().updateMap(this.m_controller.getModel().getMap());
     }
     public setTax = (p_n: number): void => {
         this.updateTaxValue(p_n);

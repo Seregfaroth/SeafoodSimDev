@@ -66,13 +66,13 @@ class EndScreen {
     } 
     public updateDesc = (p_time: number): void => {
         var welcomeText: string
+            var round: number = p_time / this.m_scenario.getStatFreq();
+            if (round <= 1) {
+                this.updateAfterRestart();
+            }
         if (p_time < this.m_scenario.getDefaultNoDays()) {
             
             var words: string[] = ["first", "second", "third"];
-            var round: number = p_time / this.m_scenario.getStatFreq();
-            if (round == 1) {
-                this.updateAfterRestart();
-            }
             var timeLeft: number = this.m_scenario.getDefaultNoDays() - p_time;
             var breaksLeft: number = (timeLeft / this.m_scenario.getStatFreq()) - 1;
             if (round < 4) {
@@ -179,7 +179,7 @@ class EndScreen {
         var msyProjectionDiv: HTMLElement = document.createElement("div");
         p_div.appendChild(msyProjectionDiv);
         msyProjectionDiv.id = "msy" + this.m_simIndex;
-        msyProjectionDiv.innerHTML = "msy Cod: " + "</br>" + " msy Mackerel: ";
+        msyProjectionDiv.innerHTML = "msy for cod: " + "</br>" + " msy for mackerel: ";
         
         var endGameStatusDiv: HTMLDivElement = document.createElement("div");       //accordion
         p_div.appendChild(endGameStatusDiv);

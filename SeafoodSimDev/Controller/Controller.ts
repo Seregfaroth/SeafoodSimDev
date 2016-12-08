@@ -108,7 +108,7 @@ class Controller {
             modal: true
         });
         this.m_eventHandler.bindFunctions(true);
-        this.m_simState = simState.paused;
+        this.m_simState = simState.changeSettings;
         clearInterval(this.m_timer);
         $("#startButton").removeClass("marked");
         $("#fastForwardButton").removeClass("marked");
@@ -124,6 +124,10 @@ class Controller {
         if (this.m_model.getTime() >= this.m_scenario.getDefaultNoDays()) {
             this.m_simState = simState.ending;
             //this.m_model.updateStats();
+            if (this.m_newSim) {
+                this.m_endScreen.addSimulation(this.m_model.getStats(), this.m_model);
+                this.m_newSim = false;
+            }
             this.m_endScreen.drawCharts(this.m_model, this.m_model.getStats());
             console.log("Simulation ended" + this.m_model.getStats());
             clearInterval(this.m_timer);
@@ -199,9 +203,9 @@ class Controller {
     }
     runSimulation = (p_ticks?: number) => {
         if (this.m_simState == simState.paused || this.m_simState == simState.fast || this.m_simState == simState.changeSettings) {
-            if (this.m_simState == simState.changeSettings) {//If new interval has begun
+            /*if (this.m_simState == simState.changeSettings) {//If new interval has begun
                 this.m_view.updateMap(this.m_model.getMap());
-            }
+            }*/
             clearInterval(this.m_timer);
             this.m_timer = setInterval(this.simulationTick, this.m_delayPerTick);
             this.m_simState = simState.running;
