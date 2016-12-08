@@ -24,7 +24,7 @@ var Controller = (function () {
             _this.m_model.runMCA(_this.m_scenario.getDefaultNoDays());
         };
         this.restart = function () {
-            $("#endDialogDiv").hide();
+            $("#endDialogDiv").dialog("close");
             $("#startScreen").dialog({
                 minWidth: 1100,
                 minHeight: 700,
@@ -41,6 +41,7 @@ var Controller = (function () {
         };
         this.simulationTick = function () {
             //console.log("Controller running simulationtick");
+            var thisPlaceholder = _this;
             if (_this.m_model.getTime() >= _this.m_scenario.getDefaultNoDays()) {
                 _this.m_simState = simState.ending;
                 //this.m_model.updateStats();
@@ -48,6 +49,19 @@ var Controller = (function () {
                 console.log("Simulation ended" + _this.m_model.getStats());
                 clearInterval(_this.m_timer);
                 _this.m_eventHandler.unBindFunctions(true);
+                _this.m_endScreen.updateDesc(_this.m_model.getTime());
+                //Assign function to restart click
+                $("#endDialogDiv").dialog({
+                    title: 'End Screen',
+                    buttons: {
+                        "Restart": function () {
+                            thisPlaceholder.restart();
+                        },
+                    },
+                    close: function () {
+                        thisPlaceholder.restart();
+                    }
+                });
                 //this.m_endScreen.addSimulation(this.m_model.getStats(), this.m_model);
                 _this.m_endScreen.show();
             }
@@ -71,6 +85,7 @@ var Controller = (function () {
                 //this.m_intervalStats.update(this.m_model.getTime());
                 _this.m_endScreen.updateMsy(_this.m_model);
                 _this.m_endScreen.drawCharts(_this.m_model, _this.m_model.getStats());
+                _this.m_endScreen.updateDesc(_this.m_model.getTime());
                 _this.m_endScreen.show();
             }
             else {

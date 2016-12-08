@@ -46,6 +46,7 @@ var StartScreen = (function () {
         mainDiv.appendChild(textDiv);
         textDiv.innerHTML = text2 + text3 + text4;
         textDiv.id = "welcomeText";
+        textDiv.classList.add(("desc"));
         var buttonTable = document.createElement("table");
         mainDiv.appendChild(buttonTable);
         var row = buttonTable.insertRow();

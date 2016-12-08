@@ -102,7 +102,7 @@ var School = (function () {
     //Move with a probability of 25% in a random direction
     School.prototype.move = function (p_map) {
         //console.log("Original position: " + JSON.stringify(this.m_position));
-        var move = Math.random() < 0;
+        var move = Math.random() < 0.25;
         if (this.m_scenario.getMovingRadius() !== 0) {
             if (move) {
                 var newPoint;

@@ -124,7 +124,7 @@ abstract class School {
     //Move with a probability of 25% in a random direction
     public move(p_map: Map): void {
         //console.log("Original position: " + JSON.stringify(this.m_position));
-        var move: boolean = Math.random() < 0;
+        var move: boolean = Math.random() < 0.25;
         if (this.m_scenario.getMovingRadius() !== 0) {
             if (move) {
 

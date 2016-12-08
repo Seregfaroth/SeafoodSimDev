@@ -1,5 +1,6 @@
 ﻿// <reference path = "declarations/gooogle.visualization.d.ts"/>
 class EndScreen {
+    private m_scenario: Scenario;
     private m_model: Model;
     private m_endDialogDiv: HTMLElement;
     private m_simIndex: number = -1;
@@ -13,17 +14,30 @@ class EndScreen {
 
     constructor() {
         //this.m_model = p_model;
+        this.m_scenario = Scenario.getInstance();
         this.m_endDialogDiv = document.createElement("div");
         $('body').append(this.m_endDialogDiv);
         this.m_endDialogDiv.id = "endDialogDiv";
+
+        //Create desciption div
+        var descDiv: HTMLDivElement = document.createElement("div");
+        descDiv.id = "descDiv";
+        descDiv.classList.add("desc");
+        $("#endDialogDiv").append(descDiv);
             
         $("#endDialogDiv").dialog({
-           minWidth: 1050,
-           minHeight: 700,
-            //maxWidth: 1250,
-            //maxHeight: 1000,           
-            //overflow: scroll
-        });       
+            minWidth: 1050,
+            minHeight: 700,
+            buttons: {
+                Continue: function () {
+                    $(this).dialog('close');
+                }
+                //maxWidth: 1250,
+                //maxHeight: 1000,           
+                //overflow: scroll
+            }
+        }); 
+              
     }
     public hide() {
         $("#endDialogDiv").dialog("close");
@@ -31,6 +45,58 @@ class EndScreen {
     public show() {
         $("#endDialogDiv").dialog("open");
     }
+
+    public updateDesc = (p_time: number): void => {
+        var welcomeText: string
+        if (p_time < this.m_scenario.getDefaultNoDays()) {
+            $("#endDialogDiv").dialog({
+                title: 'Interval Screen',
+                buttons: {
+                    Continue: function () {
+                        $(this).dialog('close');
+                    }
+                },
+                close: function () {
+                    $("#endDialogDiv").dialog("close")
+                }
+            });
+            var words: string[] = ["first", "second", "third"];
+            var round: number = p_time / this.m_scenario.getStatFreq();
+            var timeLeft: number = this.m_scenario.getDefaultNoDays() - p_time;
+            var breaksLeft: number = (timeLeft / this.m_scenario.getStatFreq()) - 1;
+            if (round < 4) {
+                welcomeText = "This is your " + words[round - 1] + " break. ";
+            }
+            else {
+                welcomeText = "This is your break number " + round + " . ";
+            }
+            welcomeText += "You are given statistics for the simulation so far ";
+            if (this.m_simIndex > 0) {
+                welcomeText += "as well as previous simulations you have run. The simulations are labeled in such a manner that the newest one has the lowest index.";
+                welcomeText += " You have the option to change some of the settings before continuing.";
+            }
+            else {
+                welcomeText += "and you have the option to change some of the settings before continuing.";
+            }
+            welcomeText += "You have " + timeLeft + " days and " + breaksLeft;
+            if (breaksLeft != 1) {
+                welcomeText += " breaks left."
+            }
+            else {
+                welcomeText += " break left.";
+            }
+        }
+        else {
+           
+            welcomeText = "The simulation is now over. Below you will find an overview of the statistics from this simulation";
+            if (this.m_simIndex > 0) {
+                welcomeText += " as well as previous simulations you have run";
+            }
+            welcomeText += ".";
+        }
+        $("#descDiv").text(welcomeText);
+    }
+
     public addSimulation(p_endStats: EndScreenStats, p_model: Model) {
         this.m_model = p_model;
         this.m_endStats = p_endStats;

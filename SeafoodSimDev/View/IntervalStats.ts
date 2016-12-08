@@ -92,7 +92,7 @@
         else {
             welcomeText = "This is your break number " + round + " . ";
         }
-        welcomeText += "You are given some statistics over the simulation so far and you have the option to change some of the settings before continuing.";
+        welcomeText += "You are given statistics over the simulation so far and you have the option to change some of the settings before continuing.";
         welcomeText += "You have " + timeLeft + " days and " + breaksLeft;
         if (breaksLeft != 1) {
                 welcomeText += " breaks left."
