@@ -173,20 +173,27 @@ var EndScreen = (function () {
         endGameStatusDiv.id = 'endGameStatusDiv' + this.m_simIndex;
         var endGameStatusGoalContent = document.createElement("div");
         endGameStatusDiv.appendChild(endGameStatusGoalContent);
+        endGameStatusGoalContent.style.position = "relative";
+        endGameStatusGoalContent.style.border = '1px solid red';
         endGameStatusGoalContent.id = "content" + this.m_simIndex;
         var endGameStatusColumn = document.createElement("div"); //content
         endGameStatusGoalContent.appendChild(endGameStatusColumn);
         endGameStatusColumn.id = "egStatus" + this.m_simIndex;
+        endGameStatusColumn.style.display = "inline-block";
+        endGameStatusColumn.style.width = "40%";
         endGameStatusColumn.style.border = '3px solid black';
-        endGameStatusColumn.style.cssFloat = 'right';
+        //endGameStatusColumn.style.cssFloat = 'right';
         endGameStatusColumn.style.margin = '30px';
         var endGameStatusGoalDiv = document.createElement("div");
         endGameStatusGoalContent.appendChild(endGameStatusGoalDiv);
         endGameStatusGoalDiv.id = 'endGameStatusGoalDiv' + this.m_simIndex;
+        endGameStatusGoalDiv.style.display = "inline-block";
+        endGameStatusGoalDiv.style.width = "40%";
         endGameStatusGoalDiv.style.border = '1px solid green';
         //endGameStatusGoalDiv.style.margin = '10px';
         endGameStatusGoalDiv.style.padding = '5px';
-        endGameStatusGoalDiv.innerHTML = "";
+        endGameStatusGoalDiv.innerHTML = "testing123";
+        endGameStatusGoalDiv.style.border = '1px solid green';
         var scenarioSucces = true;
         if (this.m_model.getScenario().getfinGoal().toString() != "no") {
             if (this.getFinancialScoreSucces()) {
@@ -273,7 +280,7 @@ var EndScreen = (function () {
         var financialChartDiv = document.createElement("div");
         endAccordionDiv5.appendChild(financialChartDiv);
         financialChartDiv.id = 'financialChartDiv' + this.m_simIndex;
-        this.m_scoreColumnChart[this.m_simIndex] = new google.visualization.ColumnChart(document.getElementById(endGameStatusGoalContent.id));
+        this.m_scoreColumnChart[this.m_simIndex] = new google.visualization.ColumnChart(document.getElementById(endGameStatusColumn.id));
         this.m_environChart[this.m_simIndex] = new google.visualization.ScatterChart(document.getElementById(environChartDiv.id));
         this.m_scoreChart[this.m_simIndex] = new google.visualization.ScatterChart(document.getElementById(scoreChartDiv.id));
         this.m_socialChart[this.m_simIndex] = new google.visualization.ScatterChart(document.getElementById(socialChartDiv.id));
@@ -287,6 +294,7 @@ var EndScreen = (function () {
     //private buildGameStatusAccordion() {
     //}
     EndScreen.prototype.drawCharts = function (p_model, p_endStats) {
+        var t = p_model.getGovernment().getScore().getScoreColumnChartArray();
         var scoreColumnChartData = google.visualization.arrayToDataTable(p_model.getGovernment().getScore().getScoreColumnChartArray());
         var scoreChartData = google.visualization.arrayToDataTable(p_endStats.getScoreVizArray());
         var environChartData = google.visualization.arrayToDataTable(p_endStats.getEnvironmentalVizArray());
@@ -294,8 +302,8 @@ var EndScreen = (function () {
         var financialChartData = google.visualization.arrayToDataTable(p_endStats.getFinancialVizArray());
         var scoreColumnChartOptions = {
             title: "Current and Goal scores",
-            width: 600,
-            height: 400,
+            width: 200,
+            height: 150,
             bar: { groupWidth: "90%" },
             legend: { position: "none" },
             hAxis: {
@@ -304,7 +312,8 @@ var EndScreen = (function () {
             animation: {
                 duration: 1500,
                 startup: true
-            }
+            },
+            tooltip: { isHtml: true }
         };
         var scoreChartOptions = {
             hAxis: {
@@ -321,6 +330,7 @@ var EndScreen = (function () {
             //explorer: {},
             height: 200,
             width: 600,
+            tooltip: { isHtml: true }
         };
         var environChartOptions = {
             hAxis: {
@@ -371,7 +381,7 @@ var EndScreen = (function () {
             height: 200,
             width: 600
         };
-        //this.m_scoreColumnChart[this.m_simIndex].draw(scoreColumnChartData, scoreColumnChartOptions);
+        this.m_scoreColumnChart[this.m_simIndex].draw(scoreColumnChartData, scoreColumnChartOptions);
         this.m_scoreChart[this.m_simIndex].draw(scoreChartData, scoreChartOptions);
         this.m_environChart[this.m_simIndex].draw(environChartData, environChartOptions);
         this.m_socialChart[this.m_simIndex].draw(socialChartData, socialChartOptions);

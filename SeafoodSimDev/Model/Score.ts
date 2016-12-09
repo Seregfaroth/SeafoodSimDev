@@ -104,7 +104,7 @@ class Score {
         var t6 = this.m_scenario.getfinGoal();
         ret[0] = ['ScoreType', 'CurrentScore', { role: 'style' }, { role: 'annotation' }, 'GoalScore', { role: 'style' }, { role: 'annotation' }];
         if (this.m_scenario.getfinGoal().toString() != "no")
-            ret[i++] = ['Financial', this.m_financialScore, 'color: #0057e7', 'Current', this.m_scenario.getfinGoal(), 'color: #0045b8', 'goal'];
+            ret[i++] = ['Economic', this.m_financialScore, 'color: #0057e7', 'Current', this.m_scenario.getfinGoal(), 'color: #0045b8', 'goal'];
         if (this.m_scenario.getEcoGoal().toString() != "no")
             ret[i++] = ['Environmental', this.m_environmentalScore, 'color: #008744', 'Current', this.m_scenario.getEcoGoal(), 'color: #006c36', 'goal'];
         if (this.m_scenario.getSocGoal().toString() != "no")

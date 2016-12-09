@@ -214,7 +214,7 @@
         var cell: HTMLTableCellElement = dateRow.insertCell();
         var valueDiv: HTMLDivElement = document.createElement("div");
         cell.appendChild(valueDiv);
-        valueDiv.innerHTML = "Pelagic vessels:";
+        valueDiv.innerHTML = "Demersal vessels:";
 
         var cell: HTMLTableCellElement = dateRow.insertCell();
         var valueDiv: HTMLDivElement = document.createElement("div");
@@ -238,7 +238,7 @@
         var cell: HTMLTableCellElement = dateRow.insertCell();
         var valueDiv: HTMLDivElement = document.createElement("div");
         cell.appendChild(valueDiv);
-        valueDiv.innerHTML = "Demersal Vessels:";
+        valueDiv.innerHTML = "Pelagic Vessels:";
 
         var cell: HTMLTableCellElement = dateRow.insertCell();
         var valueDiv: HTMLDivElement = document.createElement("div");

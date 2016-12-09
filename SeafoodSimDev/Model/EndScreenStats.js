@@ -293,7 +293,7 @@ var EndScreenStats = (function () {
     };
     EndScreenStats.prototype.getScoreVizArray = function () {
         var ret = [[]];
-        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Financial' }, { label: 'Environmental' }, { label: 'Social' }, { label: 'Overall' }];
+        ret[0] = [{ label: 'Days', type: 'number' }, { label: 'Economic' }, { label: 'Environmental' }, { label: 'Social' }, { label: 'Overall' }];
         for (var i in this.m_time) {
             ret[parseInt(i) + 1] = [];
             //add timeScale

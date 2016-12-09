@@ -191,7 +191,7 @@ var MapMenu = (function () {
         var cell = dateRow.insertCell();
         var valueDiv = document.createElement("div");
         cell.appendChild(valueDiv);
-        valueDiv.innerHTML = "Pelagic vessels:";
+        valueDiv.innerHTML = "Demersal vessels:";
         var cell = dateRow.insertCell();
         var valueDiv = document.createElement("div");
         cell.appendChild(valueDiv);
@@ -212,7 +212,7 @@ var MapMenu = (function () {
         var cell = dateRow.insertCell();
         var valueDiv = document.createElement("div");
         cell.appendChild(valueDiv);
-        valueDiv.innerHTML = "Demersal Vessels:";
+        valueDiv.innerHTML = "Pelagic Vessels:";
         var cell = dateRow.insertCell();
         var valueDiv = document.createElement("div");
         cell.appendChild(valueDiv);
