@@ -45,7 +45,7 @@ class Score {
         var value: number = 0;
         
         p_map.getLandingSites().forEach(function (ls) {
-            value -= ls.getRunningCost();
+           // value -= ls.getRunningCost();
             value += ls.tax(p_gov.getTaxingRate());
         });
 
