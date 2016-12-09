@@ -117,13 +117,13 @@ var MapView = (function () {
         }
         for (var _i = 0, _a = this.m_schools; _i < _a.length; _i++) {
             var sc = _a[_i];
-            sc.position = new Point2(p_map.m_schools[i].getPosition().row, p_map.m_schools[i++].getPosition().col);
+            sc.position = new Point2(p_map.m_schools[i].getVisualPos().row, p_map.m_schools[i++].getVisualPos().col);
         }
         i = this.m_schools.length;
         while (this.m_schools.length < p_map.getSchools().length) {
             //If there are more schools in map than in the scene
             this.m_schools[i] = new TKN_Mesh(new TKN_Geometry(0.1), this.m_whiteMaterial);
-            this.m_schools[i].position = p_map.getSchools()[i].getPosition();
+            this.m_schools[i].position = p_map.getSchools()[i].getVisualPos();
             this.m_scene.add(this.m_schools[i]);
             i++;
         }

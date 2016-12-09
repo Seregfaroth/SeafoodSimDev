@@ -51,7 +51,7 @@
             map.emptyGrid(1000);
             var fishPoint: Point2 = new Point2(0, 0);
             map.addSchool(new Cod(80, fishPoint));
-            var group: FishGroup;
+            var group: FishGroup = (<Ocean>map.getTile(fishPoint)).getCarryingCapacity().m_fishGroups[0];
             assert.deepEqual(map.getBiosmassFractionOf(Cod, group, fishPoint), 1, "Fraction of cod should be 1");
             map.addSchool(new Mackerel(20, fishPoint));
             assert.deepEqual(map.getBiosmassFractionOf(Cod, group, fishPoint), 0.8, "Fraction of cod should be 0.8");

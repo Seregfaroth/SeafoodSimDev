@@ -17,7 +17,7 @@ class Main {
     }
 
     public loadController = () => {
-       this.m_controller = new Controller(true);
+       this.m_controller = new Controller();
         
        //this.m_controller = new Controller();
     }

@@ -67,7 +67,7 @@ class Score {
         this.m_environmentalScore = 0;
         p_map.getSchools().forEach(function (s) {
             var t2 = s.getSize();
-            
+
             var t3 = p_map.getBiomassOfinTile(s.constructor, s.getPosition()); 
             var t2 = s.getSize();
             var t5 = s.getOriginSize();

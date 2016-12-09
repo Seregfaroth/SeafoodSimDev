@@ -20,7 +20,7 @@ var TestSchool = (function () {
                 testCod = new Cod(1, startPosition);
                 assert.ok(testCod, "Cod should be defined");
                 assert.deepEqual(testCod.getSize(), 1, "size should be 1");
-                assert.deepEqual(testCod.getPosition(), startPosition, "position should be start position");
+                assert.deepEqual(testCod.getVisualPos(), startPosition, "position should be start position");
             });
             QUnit.test("Cod: age function", function (assert) {
                 var singleCod;
@@ -84,7 +84,7 @@ var TestSchool = (function () {
                 testMackerel = new Mackerel(1, startPosition);
                 assert.ok(testMackerel);
                 assert.deepEqual(testMackerel.getSize(), 1);
-                assert.deepEqual(testMackerel.getPosition(), startPosition);
+                assert.deepEqual(testMackerel.getVisualPos(), startPosition);
             });
             QUnit.test("Mackerel: age function", function (assert) {
                 var singeMackerel;

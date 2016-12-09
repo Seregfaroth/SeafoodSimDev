@@ -398,7 +398,7 @@ var MapMenu = (function () {
         goal.html("");
         goal.append("<p>");
         if (p_scenario.getfinGoal().toString() != "no")
-            goal.append("Financial score goal: <span style='float:right' > " + p_scenario.getfinGoal() + "</span><br/>");
+            goal.append("Economic score goal: <span style='float:right' > " + p_scenario.getfinGoal() + "</span><br/>");
         if (p_scenario.getEcoGoal().toString() != "no")
             goal.append("Environmental score goal: <span style='float:right' > " + p_scenario.getEcoGoal() + "</span><br/>");
         if (p_scenario.getSocGoal().toString() != "no")

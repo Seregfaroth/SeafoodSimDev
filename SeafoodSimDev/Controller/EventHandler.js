@@ -28,13 +28,13 @@ var EventHandler = (function () {
             if (checked) {
                 for (var _i = 0, _a = _this.m_controller.getModel().getMap().getSchools(); _i < _a.length; _i++) {
                     var s = _a[_i];
-                    _this.m_controller.getModel().getGovernment().getRestrictions().restrictArea(_this.m_controller.getModel().getMap().getTile(s.getOrigin()));
+                    _this.m_controller.getModel().getGovernment().getRestrictions().restrictArea(_this.m_controller.getModel().getMap().getTile(s.getPosition()));
                 }
             }
             else {
                 for (var _b = 0, _c = _this.m_controller.getModel().getMap().getSchools(); _b < _c.length; _b++) {
                     var s = _c[_b];
-                    _this.m_controller.getModel().getGovernment().getRestrictions().unRestrictArea(_this.m_controller.getModel().getMap().getTile(s.getOrigin()));
+                    _this.m_controller.getModel().getGovernment().getRestrictions().unRestrictArea(_this.m_controller.getModel().getMap().getTile(s.getPosition()));
                 }
             }
             _this.m_controller.getMainView().updateMap(_this.m_controller.getModel().getMap());
