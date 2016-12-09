@@ -390,11 +390,14 @@
         // Create time view
         var timeLegend: HTMLLegendElement = document.createElement("legend");
         menuDiv.appendChild(timeLegend);
+        var timeDiv: HTMLDivElement = document.createElement("div");
+        timeDiv.style.overflow = "hidden";
+        timeLegend.appendChild(timeDiv);
         var timeTable: HTMLTableElement = document.createElement("table");
         timeTable.classList.add("menu-text");
         timeTable.style.tableLayout = "fixed";
         timeTable.style.width = "100%";
-        timeLegend.appendChild(timeTable);
+        timeDiv.appendChild(timeTable);
 
         var dateRow: HTMLTableRowElement = timeTable.insertRow();
 
@@ -419,7 +422,7 @@
         yearDiv.classList.add("date");
 
         var buttonCell: HTMLTableCellElement = dateRow.insertCell();
-        buttonCell.style.cssFloat = "right";
+        //buttonCell.style.cssFloat = "right";
         var restartButton: HTMLButtonElement = document.createElement("button");
         buttonCell.appendChild(restartButton);
         restartButton.id = "restart";
