@@ -43,9 +43,9 @@ var Score = (function () {
         //var moneyToday: number = value + this.financial[day > 0 ? day - 1 : 364];
         //this.m_financialScore = value;//moneyToday - this.financial[day];
         //this.financial[day] = moneyToday;
-        p_map.getFuelSites().forEach(function (fs) {
+        /*p_map.getFuelSites().forEach(function (fs) {
             score.m_financialScore -= fs.getRunningCost();
-        });
+        });*/
         //Social score
         this.m_socialScore = 0;
         score.m_socialScore += p_map.getNoOfShips() * (this.m_scenario.getNoOfEmployeesOnLandPerShip() + this.m_scenario.getNoOfEmployeesPerShip());

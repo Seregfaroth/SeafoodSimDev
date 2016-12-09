@@ -63,7 +63,7 @@ var AI = (function () {
                     ship.emptyPath(); //Empty path
                 }
             }
-            else if (ship.hasReachedGoal()) {
+            else if (ship.hasReachedGoal() && ship.getState() !== shipState.waiting) {
                 ship.history[3].push("at goal");
                 //If ship has reached a previous sat goal
                 ai.actOnGoal(ship, p_map, p_shipOwner);

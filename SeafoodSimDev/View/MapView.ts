@@ -24,7 +24,6 @@ class MapView {
     constructor(p_map: Map) {
         console.log("The View construct");
         this.m_renderer = new TKN_Renderer("mainDiv", 800, 800);
-        this.setMapSize();
         this.m_camera = new TKN_Camera();
         //debugger;
         //this.m_camera.position = new Point3(p_map.getMapWidth() / 2.0, p_map.getMapHeight() / 2.0, 10);
@@ -46,6 +45,7 @@ class MapView {
         this.m_fishMat = new TKN_material(8);
         this.m_noM = new TKN_material(1);
 
+        this.setMapSize();
         //this.m_camera.position = new Point
 
         //create fish
@@ -172,10 +172,11 @@ class MapView {
         this.m_renderer.render(this.m_camera, this.m_scene );
         //debugger;
     }
-    public setMapSize(): void {
+    public setMapSize = (): void => {
         var windowHeight = $(window).height();
         var windowWidth = $(window).width()*0.75;
         var size: number = Math.min(windowHeight, windowWidth)*0.9;
-        this.m_renderer.setSize(size,size);
+        this.m_renderer.setSize(size, size);
+        this.m_renderer.render(this.m_camera, this.m_scene);
     }
 }

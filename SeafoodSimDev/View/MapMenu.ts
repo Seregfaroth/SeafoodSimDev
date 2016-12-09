@@ -379,7 +379,7 @@
         fastForwardButton.classList.add("ui-button");
         buttonsDiv.appendChild(fastForwardButton);
 
-        $(".fa").css("display", "none");//These are hidden until user starts simulation
+        $(".fa").css("display", "none");//These are hidden until user starts the simulation
 
         var startSimButton: HTMLButtonElement = document.createElement("button");
         buttonsDiv.appendChild(startSimButton);

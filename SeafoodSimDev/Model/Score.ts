@@ -54,9 +54,9 @@ class Score {
 
         //this.m_financialScore = value;//moneyToday - this.financial[day];
         //this.financial[day] = moneyToday;
-        p_map.getFuelSites().forEach(function (fs) {
+        /*p_map.getFuelSites().forEach(function (fs) {
             score.m_financialScore -= fs.getRunningCost();
-        });
+        });*/
 
         //Social score
         this.m_socialScore = 0;
