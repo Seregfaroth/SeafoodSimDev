@@ -21,12 +21,14 @@ var FuelSite = (function (_super) {
         return amountProvided;
     };
     FuelSite.prototype.restock = function () {
+        this.m_resourceAtSite = this.m_resourceCapacity; //Always have max fuel
+        /*
         if (this.m_resourceAtSite !== this.m_resourceCapacity) {
             this.m_resourceAtSite += this.m_processPerDay;
             if (this.m_resourceAtSite > this.m_resourceCapacity) {
                 this.m_resourceAtSite = this.m_resourceCapacity;
             }
-        }
+        }*/
     };
     return FuelSite;
 }(Site));

@@ -186,11 +186,11 @@ class AI {
         
         return bestPath;
     }*/
-    /*public pathToFish(p_start: Point2, p_map: Map): Point2[] {
+    public pathToFish(p_start: Point2, p_map: Map): Point2[] {
         if (p_map.getSchools().length !== 0) {
             var randomNumber: number = Math.floor(Math.random() * (p_map.getSchools().length));
             var firstRandomNumber: number = randomNumber;
-            var fishingTiles: Point2[] = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getOrigin());
+            var fishingTiles: Point2[] = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getPosition());
             var tileNo: number = Math.floor(Math.random() * (fishingTiles.length));
             var firstTileNo: number = tileNo;
             do {
@@ -200,7 +200,7 @@ class AI {
                 if (tileNo == firstTileNo) {//Done looking through tiles
                     randomNumber = (randomNumber + 1) % p_map.getSchools().length;
                     if (randomNumber === firstRandomNumber) return undefined; //If there was no tile with room for the ship
-                    fishingTiles = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getOrigin());
+                    fishingTiles = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getPosition());
                     tileNo = Math.floor(Math.random() * (fishingTiles.length));
                     firstTileNo = tileNo;
                 }
@@ -214,8 +214,8 @@ class AI {
         }
         else
             return undefined;
-    }*/
-    public pathToFish(p_start: Point2, p_map: Map): Point2[] {
+    }
+    /*public pathToFish(p_start: Point2, p_map: Map): Point2[] {
         if (p_map.getSchools().length !== 0) {
             var randomNumber: number = Math.floor(Math.random() * (p_map.getSchools().length));
             var firstRandomNumber: number = randomNumber;
@@ -238,7 +238,7 @@ class AI {
         }
         else
             return undefined;
-    }
+    }*/
     private goFish(p_ship: Ship, p_map: Map, p_path:Point2[]): void {
 
         (<Ocean>p_map.getTile(p_path[p_path.length - 1])).claimTile();

@@ -179,28 +179,51 @@ var AI = (function () {
         
         return bestPath;
     }*/
-    /*public pathToFish(p_start: Point2, p_map: Map): Point2[] {
+    AI.prototype.pathToFish = function (p_start, p_map) {
         if (p_map.getSchools().length !== 0) {
-            var randomNumber: number = Math.floor(Math.random() * (p_map.getSchools().length));
-            var firstRandomNumber: number = randomNumber;
-            var fishingTiles: Point2[] = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getOrigin());
-            var tileNo: number = Math.floor(Math.random() * (fishingTiles.length));
-            var firstTileNo: number = tileNo;
+            var randomNumber = Math.floor(Math.random() * (p_map.getSchools().length));
+            var firstRandomNumber = randomNumber;
+            var fishingTiles = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getPosition());
+            var tileNo = Math.floor(Math.random() * (fishingTiles.length));
+            var firstTileNo = tileNo;
             do {
-                var point: Point2 = fishingTiles[tileNo]
-
+                var point = fishingTiles[tileNo];
                 tileNo = (tileNo + 1) % fishingTiles.length;
-                if (tileNo == firstTileNo) {//Done looking through tiles
+                if (tileNo == firstTileNo) {
                     randomNumber = (randomNumber + 1) % p_map.getSchools().length;
-                    if (randomNumber === firstRandomNumber) return undefined; //If there was no tile with room for the ship
-                    fishingTiles = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getOrigin());
+                    if (randomNumber === firstRandomNumber)
+                        return undefined; //If there was no tile with room for the ship
+                    fishingTiles = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getPosition());
                     tileNo = Math.floor(Math.random() * (fishingTiles.length));
                     firstTileNo = tileNo;
                 }
                 if (point != undefined)
-                    var tile: Ocean = <Ocean>p_map.getTile(point);
+                    var tile = p_map.getTile(point);
                 else
                     return undefined;
+            } while (!(tile.roomForAnotherShip() && p_map.getRestrictions().getRestrictedAreas().indexOf(tile) < 0));
+            return this.pathFinding(p_map, p_start, point);
+        }
+        else
+            return undefined;
+    };
+    /*public pathToFish(p_start: Point2, p_map: Map): Point2[] {
+        if (p_map.getSchools().length !== 0) {
+            var randomNumber: number = Math.floor(Math.random() * (p_map.getSchools().length));
+            var firstRandomNumber: number = randomNumber;
+            var tileNo: number = 0;
+            var fishingTiles: Point2[] = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getPosition());
+            do {
+                var point: Point2 = fishingTiles[tileNo]
+
+                if (tileNo == fishingTiles.length) {//Done looking through tiles
+                    randomNumber = (randomNumber + 1) % p_map.getSchools().length;
+                    if (randomNumber === firstRandomNumber) return undefined; //If there was no tile with room for the ship
+                    fishingTiles = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getPosition());
+                    tileNo = 0;
+                }
+                var tile: Ocean = <Ocean>p_map.getTile(point);
+                tileNo++;
             }
             while (!(tile.roomForAnotherShip() && p_map.getRestrictions().getRestrictedAreas().indexOf(tile) < 0))
             return this.pathFinding(p_map, p_start, point);
@@ -208,29 +231,6 @@ var AI = (function () {
         else
             return undefined;
     }*/
-    AI.prototype.pathToFish = function (p_start, p_map) {
-        if (p_map.getSchools().length !== 0) {
-            var randomNumber = Math.floor(Math.random() * (p_map.getSchools().length));
-            var firstRandomNumber = randomNumber;
-            var tileNo = 0;
-            var fishingTiles = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getPosition());
-            do {
-                var point = fishingTiles[tileNo];
-                if (tileNo == fishingTiles.length) {
-                    randomNumber = (randomNumber + 1) % p_map.getSchools().length;
-                    if (randomNumber === firstRandomNumber)
-                        return undefined; //If there was no tile with room for the ship
-                    fishingTiles = p_map.getFishingPoints(p_map.getSchools()[randomNumber].getPosition());
-                    tileNo = 0;
-                }
-                var tile = p_map.getTile(point);
-                tileNo++;
-            } while (!(tile.roomForAnotherShip() && p_map.getRestrictions().getRestrictedAreas().indexOf(tile) < 0));
-            return this.pathFinding(p_map, p_start, point);
-        }
-        else
-            return undefined;
-    };
     AI.prototype.goFish = function (p_ship, p_map, p_path) {
         p_map.getTile(p_path[p_path.length - 1]).claimTile();
         p_ship.setPath(p_path);

@@ -18,12 +18,14 @@ class FuelSite extends Site {
     }
 
     public restock(): void {
+        this.m_resourceAtSite = this.m_resourceCapacity; //Always have max fuel
+        /*
         if (this.m_resourceAtSite !== this.m_resourceCapacity) {
             this.m_resourceAtSite += this.m_processPerDay;
             if (this.m_resourceAtSite > this.m_resourceCapacity) {
                 this.m_resourceAtSite = this.m_resourceCapacity;
             }
-        }
+        }*/
     }
 
 }
