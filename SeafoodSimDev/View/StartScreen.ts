@@ -12,8 +12,8 @@ class StartScreen {
         var text2 = "As a government official you have been given the responsibility and authority to govern a new fishery. ";
         var text3 = "Each scenario represents a different government type. ";
         var text4 = "The scoring of the game reflects the evaluation of the performance. "
-        var text5 = "The government have identified the following sub-objectives: <br>Finanacial 70%, Enviromental 10%, Social 20%<br>The percentages indicate the priority ";
-        var text6 = "For each sub-objective key indicators have been determined and priortized. <br>Financial: Investment 40%, Income 60%<br>Environmental: Biomass 80% Recruitment 20%<br>Social: Onshore employment 20% Offshore employment 80% ";
+        var text5 = "The government have identified the following sub-objectives: <br>Economic 70%, Enviromental 10%, Social 20%<br>The percentages indicate the priority ";
+        var text6 = "For each sub-objective key indicators have been determined and priortized. <br>Economic: Investment 40%, Income 60%<br>Environmental: Biomass 80% Recruitment 20%<br>Social: Onshore employment 20% Offshore employment 80% ";
 
         var mainDiv: HTMLDivElement = document.createElement("div");
         $('body').append(mainDiv);
@@ -185,7 +185,7 @@ class StartScreen {
         goal.html("");
         goal.append("<p>");
         if (this.m_scenario.getfinGoal().toString() != "no")
-            goal.append("Financial score goal: <span style='float:right' > " + this.m_scenario.getfinGoal() + "</span><br/>");
+            goal.append("Economic score goal: <span style='float:right' > " + this.m_scenario.getfinGoal() + "</span><br/>");
         if (this.m_scenario.getEcoGoal().toString() != "no")
             goal.append("Environmental score goal: <span style='float:right' > " + this.m_scenario.getEcoGoal() + "</span><br/>");
         if (this.m_scenario.getSocGoal().toString() != "no")

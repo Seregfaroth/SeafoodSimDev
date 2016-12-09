@@ -335,7 +335,7 @@ var MapMenu = (function () {
         fastForwardButton.classList.add("fa-fast-forward");
         fastForwardButton.classList.add("ui-button");
         buttonsDiv.appendChild(fastForwardButton);
-        $(".fa").css("display", "none"); //These are hidden until user starts simulation
+        $(".fa").css("display", "none"); //These are hidden until user starts the simulation
         var startSimButton = document.createElement("button");
         buttonsDiv.appendChild(startSimButton);
         startSimButton.id = "startSim";
@@ -344,11 +344,14 @@ var MapMenu = (function () {
         // Create time view
         var timeLegend = document.createElement("legend");
         menuDiv.appendChild(timeLegend);
+        var timeDiv = document.createElement("div");
+        timeDiv.style.overflow = "hidden";
+        timeLegend.appendChild(timeDiv);
         var timeTable = document.createElement("table");
         timeTable.classList.add("menu-text");
         timeTable.style.tableLayout = "fixed";
         timeTable.style.width = "100%";
-        timeLegend.appendChild(timeTable);
+        timeDiv.appendChild(timeTable);
         var dateRow = timeTable.insertRow();
         var dayCell = dateRow.insertCell();
         var dayDiv = document.createElement("div");
@@ -369,7 +372,7 @@ var MapMenu = (function () {
         yearCell.appendChild(yearDiv);
         yearDiv.classList.add("date");
         var buttonCell = dateRow.insertCell();
-        buttonCell.style.cssFloat = "right";
+        //buttonCell.style.cssFloat = "right";
         var restartButton = document.createElement("button");
         buttonCell.appendChild(restartButton);
         restartButton.id = "restart";
@@ -398,7 +401,7 @@ var MapMenu = (function () {
         goal.html("");
         goal.append("<p>");
         if (p_scenario.getfinGoal().toString() != "no")
-            goal.append("Financial score goal: <span style='float:right' > " + p_scenario.getfinGoal() + "</span><br/>");
+            goal.append("Economic score goal: <span style='float:right' > " + p_scenario.getfinGoal() + "</span><br/>");
         if (p_scenario.getEcoGoal().toString() != "no")
             goal.append("Environmental score goal: <span style='float:right' > " + p_scenario.getEcoGoal() + "</span><br/>");
         if (p_scenario.getSocGoal().toString() != "no")

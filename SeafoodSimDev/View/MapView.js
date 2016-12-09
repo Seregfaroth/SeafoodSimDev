@@ -3,12 +3,19 @@
 // <reference path = "../../TSSeafoodSimDev/externals/model.d.ts"/>
 var MapView = (function () {
     function MapView(p_map) {
+        var _this = this;
         this.m_mapTile = [];
         this.m_schools = [];
         this.m_ships = [];
+        this.setMapSize = function () {
+            var windowHeight = $(window).height();
+            var windowWidth = $(window).width() * 0.75;
+            var size = Math.min(windowHeight, windowWidth) * 0.9;
+            _this.m_renderer.setSize(size, size);
+            _this.m_renderer.render(_this.m_camera, _this.m_scene);
+        };
         console.log("The View construct");
         this.m_renderer = new TKN_Renderer("mainDiv", 800, 800);
-        this.setMapSize();
         this.m_camera = new TKN_Camera();
         //debugger;
         //this.m_camera.position = new Point3(p_map.getMapWidth() / 2.0, p_map.getMapHeight() / 2.0, 10);
@@ -29,6 +36,7 @@ var MapView = (function () {
         this.m_blackMaterial = new TKN_material(e_color.Black);
         this.m_fishMat = new TKN_material(8);
         this.m_noM = new TKN_material(1);
+        this.setMapSize();
         //this.m_camera.position = new Point
         //create fish
         var i = 0;
@@ -117,13 +125,13 @@ var MapView = (function () {
         }
         for (var _i = 0, _a = this.m_schools; _i < _a.length; _i++) {
             var sc = _a[_i];
-            sc.position = new Point2(p_map.m_schools[i].getPosition().row, p_map.m_schools[i++].getPosition().col);
+            sc.position = new Point2(p_map.m_schools[i].getVisualPos().row, p_map.m_schools[i++].getVisualPos().col);
         }
         i = this.m_schools.length;
         while (this.m_schools.length < p_map.getSchools().length) {
             //If there are more schools in map than in the scene
             this.m_schools[i] = new TKN_Mesh(new TKN_Geometry(0.1), this.m_whiteMaterial);
-            this.m_schools[i].position = p_map.getSchools()[i].getPosition();
+            this.m_schools[i].position = p_map.getSchools()[i].getVisualPos();
             this.m_scene.add(this.m_schools[i]);
             i++;
         }
@@ -146,12 +154,6 @@ var MapView = (function () {
         //debugger;
         this.m_renderer.render(this.m_camera, this.m_scene);
         //debugger;
-    };
-    MapView.prototype.setMapSize = function () {
-        var windowHeight = $(window).height();
-        var windowWidth = $(window).width() * 0.75;
-        var size = Math.min(windowHeight, windowWidth) * 0.9;
-        this.m_renderer.setSize(size, size);
     };
     return MapView;
 }());

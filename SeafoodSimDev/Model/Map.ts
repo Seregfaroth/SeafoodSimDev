@@ -52,7 +52,7 @@ class Map {
             //Remove from school
             p_school.getAges()[i] -= noOfFish;
         }
-        this.m_schools.push(new Cod(noOfFishInNewSchool, p_school.getOrigin(), newSchoolAges));
+        this.m_schools.push(new Cod(noOfFishInNewSchool, p_school.getPosition(), newSchoolAges));
     }
     public generateExampleMap() {
         for (var i = 0; i < 10; i++) {
@@ -345,7 +345,7 @@ class Map {
     public getSchoolsInTile(p_position: Point2): School[] {
         var list: School[] = [];
         this.m_schools.forEach(function (s) {
-           if (s.getPosition().compare( p_position) ){
+            if (s.getPosition().compare(p_position)) {
                 list.push(s);              
             }
         });
@@ -424,7 +424,7 @@ class Map {
         this.m_ships = [];
         for (var r = 0; r < this.getMapHeight(); r++) {
             for (var c = 0; c < this.getMapWidth(); c++) {
-                this.m_grid[r][c] = new Ocean(new CarryingCapacity([new FishGroup("grp1", ["fish"])], [100]), p_oceanShipCapacity);
+                this.m_grid[r][c] = new Ocean(new CarryingCapacity([new FishGroup("group 1", ["Cod", "Mackerel"])], [1000, 3000, 4000]), p_oceanShipCapacity);
             }
         }
     }
@@ -485,8 +485,8 @@ class Map {
     //Get point of adjecent school
     public getAdjecentSchoolPoint(p_point: Point2): Point2 {
         for (let s of this.m_schools) {
-            if ((s.getOrigin()).manhattanDistTo(p_point) < 2) {//Ship fish at the four adjecent tiles
-                return s.getOrigin();
+            if ((s.getPosition()).manhattanDistTo(p_point) < 2) {//Ship fish at the four adjecent tiles
+                return s.getPosition();
             }
 
         }

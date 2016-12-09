@@ -121,12 +121,12 @@
     public restrictSpawningAreas = (checked: boolean): void => {
         if (checked) {
             for (let s of this.m_controller.getModel().getMap().getSchools()) {
-                this.m_controller.getModel().getGovernment().getRestrictions().restrictArea(this.m_controller.getModel().getMap().getTile(s.getOrigin()));
+                this.m_controller.getModel().getGovernment().getRestrictions().restrictArea(this.m_controller.getModel().getMap().getTile(s.getPosition()));
             }
         }
         else {
             for (let s of this.m_controller.getModel().getMap().getSchools()) {
-                this.m_controller.getModel().getGovernment().getRestrictions().unRestrictArea(this.m_controller.getModel().getMap().getTile(s.getOrigin()));
+                this.m_controller.getModel().getGovernment().getRestrictions().unRestrictArea(this.m_controller.getModel().getMap().getTile(s.getPosition()));
             }
         }
             this.m_controller.getMainView().updateMap(this.m_controller.getModel().getMap());

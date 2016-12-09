@@ -50,7 +50,7 @@ var FishingGear = (function () {
                 }
                 for (var i = startAge; i < school.getMaxAge(); i++) {
                     //The number of fish the ship is fishing
-                    var noOfFish = Math.ceil(fishingPercentage * school.getAges()[i]);
+                    var noOfFish = fishingPercentage * school.getAges()[i];
                     //Add to cargo
                     thisPlaceHolder.m_cargo[type][i] += noOfFish;
                     //Remove from school

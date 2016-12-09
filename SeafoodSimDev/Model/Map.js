@@ -48,7 +48,7 @@ var Map = (function () {
             //Remove from school
             p_school.getAges()[i] -= noOfFish;
         }
-        this.m_schools.push(new Cod(noOfFishInNewSchool, p_school.getOrigin(), newSchoolAges));
+        this.m_schools.push(new Cod(noOfFishInNewSchool, p_school.getPosition(), newSchoolAges));
     };
     Map.prototype.generateExampleMap = function () {
         for (var i = 0; i < 10; i++) {
@@ -389,7 +389,7 @@ var Map = (function () {
         this.m_ships = [];
         for (var r = 0; r < this.getMapHeight(); r++) {
             for (var c = 0; c < this.getMapWidth(); c++) {
-                this.m_grid[r][c] = new Ocean(new CarryingCapacity([new FishGroup("grp1", ["fish"])], [100]), p_oceanShipCapacity);
+                this.m_grid[r][c] = new Ocean(new CarryingCapacity([new FishGroup("group 1", ["Cod", "Mackerel"])], [1000, 3000, 4000]), p_oceanShipCapacity);
             }
         }
     };
@@ -453,8 +453,8 @@ var Map = (function () {
     Map.prototype.getAdjecentSchoolPoint = function (p_point) {
         for (var _i = 0, _a = this.m_schools; _i < _a.length; _i++) {
             var s = _a[_i];
-            if ((s.getOrigin()).manhattanDistTo(p_point) < 2) {
-                return s.getOrigin();
+            if ((s.getPosition()).manhattanDistTo(p_point) < 2) {
+                return s.getPosition();
             }
         }
         throw new Error("No adjecent school found");

@@ -45,7 +45,7 @@ class Score {
         var value: number = 0;
         
         p_map.getLandingSites().forEach(function (ls) {
-            value -= ls.getRunningCost();
+           // value -= ls.getRunningCost();
             value += ls.tax(p_gov.getTaxingRate());
         });
 
@@ -54,9 +54,9 @@ class Score {
 
         //this.m_financialScore = value;//moneyToday - this.financial[day];
         //this.financial[day] = moneyToday;
-        p_map.getFuelSites().forEach(function (fs) {
+        /*p_map.getFuelSites().forEach(function (fs) {
             score.m_financialScore -= fs.getRunningCost();
-        });
+        });*/
 
         //Social score
         this.m_socialScore = 0;
@@ -67,7 +67,7 @@ class Score {
         this.m_environmentalScore = 0;
         p_map.getSchools().forEach(function (s) {
             var t2 = s.getSize();
-            
+
             var t3 = p_map.getBiomassOfinTile(s.constructor, s.getPosition()); 
             var t2 = s.getSize();
             var t5 = s.getOriginSize();

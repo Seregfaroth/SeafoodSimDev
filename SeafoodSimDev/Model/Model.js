@@ -131,13 +131,13 @@ var Model = (function () {
                             if (resArea) {
                                 for (var _i = 0, _a = this.getMap().getSchools(); _i < _a.length; _i++) {
                                     var s = _a[_i];
-                                    this.getGovernment().getRestrictions().restrictArea(this.getMap().getTile(s.getOrigin()));
+                                    this.getGovernment().getRestrictions().restrictArea(this.getMap().getTile(s.getPosition()));
                                 }
                             }
                             else {
                                 for (var _b = 0, _c = this.getMap().getSchools(); _b < _c.length; _b++) {
                                     var s = _c[_b];
-                                    this.getGovernment().getRestrictions().unRestrictArea(this.getMap().getTile(s.getOrigin()));
+                                    this.getGovernment().getRestrictions().unRestrictArea(this.getMap().getTile(s.getPosition()));
                                 }
                             }
                             this.getGovernment().getRestrictions().setNoCodShips(pelargicVessels[maxCodIndex]);

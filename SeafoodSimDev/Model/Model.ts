@@ -145,12 +145,12 @@ class Model {
                             //this.getGovernment().setTaxingRate(tax[taxIndex] / 100);
                             if (resArea) {
                                 for (let s of this.getMap().getSchools()) {
-                                    this.getGovernment().getRestrictions().restrictArea(this.getMap().getTile(s.getOrigin()));
+                                    this.getGovernment().getRestrictions().restrictArea(this.getMap().getTile(s.getPosition()));
                                 }
                             }
                             else {
                                 for (let s of this.getMap().getSchools()) {
-                                    this.getGovernment().getRestrictions().unRestrictArea(this.getMap().getTile(s.getOrigin()));
+                                    this.getGovernment().getRestrictions().unRestrictArea(this.getMap().getTile(s.getPosition()));
                                 }
                             }
                             this.getGovernment().getRestrictions().setNoCodShips(pelargicVessels[maxCodIndex]);

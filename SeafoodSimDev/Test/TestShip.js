@@ -157,8 +157,13 @@ var TestShip = (function () {
                 map.addSchool(cod);
                 map.getRestrictions().restrictArea(map.getTile(new Point2(0, 0)));
                 assert.deepEqual(codShip.getCargoSize(), 0, "Cargo should be empty");
-                while (codShip.getCargoSize() < 1000) {
+                var count = 0;
+                while (codShip.getCargoSize() < codShip.getCargoCapacity() * 0.85) {
                     codShip.fish(map);
+                    count++;
+                    if (count > 1000) {
+                        throw "Infinite loop";
+                    }
                 }
                 var cargo = codShip.getCargo()[FishType.cod];
                 var oldThreshhold = Math.ceil(0.3 * cod.getMaxAge());

@@ -1,7 +1,8 @@
 {
   "maxNoDaysFishing":  5,
   "schoolSizeWeight": 0.01,
-  "startNoOfShips": 0,
+  "startNoCodShips": 0,
+  "startNoMackerelShips": 0,
   "movingRadius": 1,
   "recrutingPercentage": 0.35,
   "noOfShipOwners": 2,
@@ -83,9 +84,9 @@
 
   "modelStatFreq": 30,
   "modelRecruitAndAgeFreq": 30,
-  "noOfEmployeesPerShip": 10,
-
-  "shipFuelCapacity": 150,
+   "noOfEmployeesPerShip": 10,
+  "noOfEmployeesOnLandPerShip": 4,
+    "shipFuelCapacity": 150,
   "shipCargoCapacity": 800,
   "shipFuelPerMove": 1,
   "shipMovesPerTick": 1,

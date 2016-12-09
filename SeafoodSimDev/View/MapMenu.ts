@@ -379,7 +379,7 @@
         fastForwardButton.classList.add("ui-button");
         buttonsDiv.appendChild(fastForwardButton);
 
-        $(".fa").css("display", "none");//These are hidden until user starts simulation
+        $(".fa").css("display", "none");//These are hidden until user starts the simulation
 
         var startSimButton: HTMLButtonElement = document.createElement("button");
         buttonsDiv.appendChild(startSimButton);
@@ -390,11 +390,14 @@
         // Create time view
         var timeLegend: HTMLLegendElement = document.createElement("legend");
         menuDiv.appendChild(timeLegend);
+        var timeDiv: HTMLDivElement = document.createElement("div");
+        timeDiv.style.overflow = "hidden";
+        timeLegend.appendChild(timeDiv);
         var timeTable: HTMLTableElement = document.createElement("table");
         timeTable.classList.add("menu-text");
         timeTable.style.tableLayout = "fixed";
         timeTable.style.width = "100%";
-        timeLegend.appendChild(timeTable);
+        timeDiv.appendChild(timeTable);
 
         var dateRow: HTMLTableRowElement = timeTable.insertRow();
 
@@ -419,7 +422,7 @@
         yearDiv.classList.add("date");
 
         var buttonCell: HTMLTableCellElement = dateRow.insertCell();
-        buttonCell.style.cssFloat = "right";
+        //buttonCell.style.cssFloat = "right";
         var restartButton: HTMLButtonElement = document.createElement("button");
         buttonCell.appendChild(restartButton);
         restartButton.id = "restart";
@@ -453,7 +456,7 @@
         goal.html("");
         goal.append("<p>");
         if (p_scenario.getfinGoal().toString() != "no")
-            goal.append("Financial score goal: <span style='float:right' > " + p_scenario.getfinGoal() + "</span><br/>");
+            goal.append("Economic score goal: <span style='float:right' > " + p_scenario.getfinGoal() + "</span><br/>");
         if (p_scenario.getEcoGoal().toString() != "no")
             goal.append("Environmental score goal: <span style='float:right' > " + p_scenario.getEcoGoal() + "</span><br/>");
         if (p_scenario.getSocGoal().toString() != "no")

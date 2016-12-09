@@ -41,6 +41,9 @@ class Mackerel extends School {
         //this.m_ages[0] = recruitment;
         //this.m_size += this.m_prepareRecruitment;
         this.m_recruitTotal += this.m_prepareRecruitment;
+        if (this.m_prepareRecruitment < 0) {
+            debugger;
+        }
 
         //var tmp = (<Ocean>p_map.getTile(this.m_position)).getCarryingCapacity();// getFishCapacity();
         //var tmp2 = this.getSize();

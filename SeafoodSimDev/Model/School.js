@@ -7,8 +7,8 @@ var School = (function () {
         this.m_natDeath = 0;
         this.m_yield = 0;
         this.m_scenario = Scenario.getInstance();
+        this.m_visualPos = p_position;
         this.m_position = p_position;
-        this.m_origin = p_position;
         this.m_originSize = p_size / 2;
         //this.m_msy = p_msy;        
     }
@@ -18,8 +18,8 @@ var School = (function () {
     School.prototype.getType = function () {
         return this.m_type;
     };
-    School.prototype.getOrigin = function () {
-        return this.m_origin;
+    School.prototype.getPosition = function () {
+        return this.m_position;
     };
     School.prototype.getRecruitTotal = function () {
         return this.m_recruitTotal;
@@ -67,8 +67,8 @@ var School = (function () {
         }
         return size;
     };
-    School.prototype.getPosition = function () {
-        return this.m_position;
+    School.prototype.getVisualPos = function () {
+        return this.m_visualPos;
     };
     School.prototype.getAges = function () {
         return this.m_ages;
@@ -111,42 +111,42 @@ var School = (function () {
                     var direction = Math.floor((Math.random() * 4));
                     switch (direction) {
                         case 0:
-                            if (this.m_position.row === p_map.getGrid().length - 1) {
-                                newPoint = new Point2(0, this.m_position.col);
+                            if (this.m_visualPos.row === p_map.getGrid().length - 1) {
+                                newPoint = new Point2(0, this.m_visualPos.col);
                             }
                             else {
-                                newPoint = new Point2(this.m_position.row + 1, this.m_position.col);
+                                newPoint = new Point2(this.m_visualPos.row + 1, this.m_visualPos.col);
                             }
                             break;
                         case 1:
-                            if (this.m_position.col === 0) {
-                                newPoint = new Point2(this.m_position.row, p_map.getGrid()[0].length - 1);
+                            if (this.m_visualPos.col === 0) {
+                                newPoint = new Point2(this.m_visualPos.row, p_map.getGrid()[0].length - 1);
                             }
                             else {
-                                newPoint = new Point2(this.m_position.row, this.m_position.col - 1);
+                                newPoint = new Point2(this.m_visualPos.row, this.m_visualPos.col - 1);
                             }
                             break;
                         case 2:
-                            if (this.m_position.row === 0) {
-                                newPoint = new Point2(p_map.getGrid().length - 1, this.m_position.col);
+                            if (this.m_visualPos.row === 0) {
+                                newPoint = new Point2(p_map.getGrid().length - 1, this.m_visualPos.col);
                             }
                             else {
-                                newPoint = new Point2(this.m_position.row - 1, this.m_position.col);
+                                newPoint = new Point2(this.m_visualPos.row - 1, this.m_visualPos.col);
                             }
                             break;
                         case 3:
-                            if (this.m_position.col === p_map.getGrid()[0].length - 1) {
-                                newPoint = new Point2(this.m_position.row, 0);
+                            if (this.m_visualPos.col === p_map.getGrid()[0].length - 1) {
+                                newPoint = new Point2(this.m_visualPos.row, 0);
                             }
                             else {
-                                newPoint = new Point2(this.m_position.row, this.m_position.col + 1);
+                                newPoint = new Point2(this.m_visualPos.row, this.m_visualPos.col + 1);
                             }
                             break;
                         default:
                             break;
                     }
-                } while (!(p_map.getTile(newPoint) instanceof Ocean) || newPoint.manhattanDistTo(this.m_origin) > this.m_scenario.getMovingRadius());
-                this.m_position = newPoint;
+                } while (!(p_map.getTile(newPoint) instanceof Ocean) || newPoint.manhattanDistTo(this.m_position) > this.m_scenario.getMovingRadius());
+                this.m_visualPos = newPoint;
             }
         }
         //console.log("new postion: " + JSON.stringify(this.m_position));

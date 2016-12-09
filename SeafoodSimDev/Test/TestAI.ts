@@ -99,14 +99,24 @@
             var shipOwner: ShipOwner = new ShipOwner(gov, new Point2(3, 3), "shipOwner1");
             var ship: Ship = shipOwner.buyShip(FishType.cod, new Point2(1, 1));
             ai.run(shipOwner, map);
+            var count: number = 0;
             while (!ship.hasReachedGoal()) {
                 ai.run(shipOwner, map);
+                count++;
+                if (count > 1000) {
+                    throw "Infinite loop";
+                }
             }
             ai.run(shipOwner, map);
             assert.deepEqual(ship.getState(), shipState.fishing, "Ship should be fishing");
             var fuelPathLength = ai.pathToNearestFuelSite(ship.getPosition(), map).length;
+            var count: number = 0;
             while (ship.getFuel() > fuelPathLength * testAi.scenario.getShipFuelPerMove()) {
                 ship.useFuel(1);
+                count++;
+                if (count > 1000) {
+                    throw "Infinite loop";
+                }
             }
             ai.run(shipOwner, map);
             assert.deepEqual(ship.getState(), shipState.goingToRefuel, "Ship should go to refuel");
@@ -156,14 +166,24 @@
             ai.run(shipOwner, map);
             assert.notDeepEqual(ship4.getState(), shipState.goingToFish, "Ship should not be able to go fish");
             shipOwner.sellShip(ship4);
+            var count: number = 0;
             while (!ship1.hasReachedGoal()) {
                 ai.run(shipOwner, map);//Let ship go to fishing tile
+                count++;
+                if (count > 1000) {
+                    throw "Infinite loop";
+                }
             }
             var fuelPathLength = ai.pathToNearestFuelSite(ship1.getPosition(), map).length;
             ai.run(shipOwner, map);//Let ship start fishing
+            var count: number = 0;
             while (ship1.getFuel() > fuelPathLength * testAi.scenario.getShipFuelPerMove()) {
                 //Let ship1 use all fuel
                 ship1.useFuel(1);
+                count++;
+                if (count > 1000) {
+                    throw "Infinite loop";
+                }
             }
             //Ship should now leave tile and go to refuel
             ai.run(shipOwner, map);
@@ -182,8 +202,13 @@
             var shipOwner: ShipOwner = new ShipOwner(gov, new Point2(2, 2), "shipOwner1");
             var codShip: Ship = shipOwner.buyShip(FishType.cod, new Point2(1, 1));
             var mackerelShip: Ship = shipOwner.buyShip(FishType.mackerel, new Point2(1, 1));
+            var count: number = 0;
             while (!(codShip.hasReachedGoal() || mackerelShip.hasReachedGoal())) {
                 ai.run(shipOwner, map);
+                count++;
+                if (count > 1000) {
+                    throw "Infinite loop";
+                }
             }
             ai.run(shipOwner, map);
             ai.run(shipOwner, map);
@@ -218,9 +243,14 @@
             ai.run(shipOwner, map);
             assert.deepEqual(codShip.getState(), shipState.goingToFish, "Ship should be going to fish");
             assert.deepEqual(mackerelShip.getState(), shipState.goingToFish, "Ship should be going to fish");
+            var count: number = 0;
             while (codShip.getCargoSize() < map.getRestrictions().getTAC()[FishType.cod] ||
                 mackerelShip.getCargoSize() < map.getRestrictions().getTAC()[FishType.mackerel]) {
                 ai.run(shipOwner, map);
+                count++;
+                if (count > 1000) {
+                    throw "Infinite loop";
+                }
             }
             codShipOrigin = codShip.getPosition();
             mackerelShipOrigin = mackerelShip.getPosition();
