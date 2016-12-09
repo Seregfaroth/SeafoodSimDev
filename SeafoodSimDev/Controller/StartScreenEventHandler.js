@@ -17,6 +17,7 @@ var StartScreenEventHandler = (function () {
         this.beforeClose = function (e) {
             _this.m_controller.setModel(new Model());
             _this.m_controller.getMainView().updateMainView(_this.m_controller.getModel());
+            _this.m_controller.getMainView().getMapMenu().updateMsy(_this.m_controller.getModel());
         };
         this.m_controller = p_controller;
         this.m_startScreen = p_startScreen;
