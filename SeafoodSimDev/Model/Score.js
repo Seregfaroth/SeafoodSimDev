@@ -36,7 +36,7 @@ var Score = (function () {
         //this.m_financialScore
         var value = 0;
         p_map.getLandingSites().forEach(function (ls) {
-            value -= ls.getRunningCost();
+            // value -= ls.getRunningCost();
             value += ls.tax(p_gov.getTaxingRate());
         });
         //var day: number = p_time % 365;

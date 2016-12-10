@@ -127,8 +127,10 @@ class Model {
         var restrictedArea: boolean[] = [false, true];
         var pelargicVessels: number[] = [25];
         var demersalVessels: number[] = [20];
-        var tacCod: number[] = [10000, 15000, 20000];
-        var tacMac: number[] = [10000, 15000, 20000];        
+        //var tacCod: number[] = [15000, 20000, 30000, 50000];
+        //var tacMac: number[] = [15000, 20000, 30000, 50000];    
+        var tacCod: number[] = [15000, 20000];
+        var tacMac: number[] = [15000, 20000];      
         var result: number[][][][][][] = [];
         for (var resArea = 0; resArea < restrictedArea.length; resArea++) {
             result[resArea] = [];
@@ -382,10 +384,10 @@ class Model {
                                 //"posX": (600 + maxCodIndex * 160 + maxMacIndex * 160),
                                 //"posY": ( 100 * tacCodIndex + 100 * tacMacIndex),
                                 "posX": 1000 + 200 * resArea,
-                                "posY": 100 + (40 * id) * resArea,
+                                "posY": 100 + 40 * (tacCodIndex * p_mactac.length + tacMacIndex) ,
                                 "elmtID": "elmt" + (id + 1000),
-                                "elmtName": "SC " + id/*+ p_ship[maxIndex] + ", " + p_tax[taxIndex] + "% "*/,
-                                "elmtDesc": "restricted Area: " + p_resArea[resArea] + "\n Cod vessels: " + p_codship[maxCodIndex] + "\n Mac vessels: " + p_macship[maxMacIndex] + "\n Tac cod: " + p_codtac[tacCodIndex] + "\n Tac mac: " + p_mactac[tacMacIndex],
+                                "elmtName": "Alt " + id/*+ p_ship[maxIndex] + ", " + p_tax[taxIndex] + "% "*/,
+                                "elmtDesc": "restricted Area: " + p_resArea[resArea] + "  Dermesal vessels: " + p_codship[maxCodIndex] + "  Pelagic vessels: " + p_macship[maxMacIndex] + "  Tac cod: " + p_codtac[tacCodIndex] + "  Tac mac: " + p_mactac[tacMacIndex],
                                 "elmtType": 102,
                                 "elmtWghtMthd": 0,
                                 "elmtDstType": 1,
