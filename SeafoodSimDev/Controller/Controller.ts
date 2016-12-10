@@ -190,6 +190,7 @@ class Controller {
             //    width: 1111,
             //    height: 777
             //});
+            this.m_view.getMapMenu().updateMsy(this.m_model);
         }
         else {
             this.m_model.run(this.m_ticksPerMove);

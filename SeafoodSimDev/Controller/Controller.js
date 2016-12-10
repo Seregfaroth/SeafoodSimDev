@@ -91,6 +91,17 @@ var Controller = (function () {
                 _this.m_endScreen.drawCharts(_this.m_model, _this.m_model.getStats());
                 _this.m_endScreen.updateDesc(_this.m_model.getTime());
                 _this.m_endScreen.show();
+                //$("#intervalStats").dialog({
+                //    buttons: {
+                //        Ok: function () {
+                //            $(this).dialog("close"); //closing on Ok click
+                //        }
+                //    },
+                //    modal: true,
+                //    width: 1111,
+                //    height: 777
+                //});
+                _this.m_view.getMapMenu().updateMsy(_this.m_model);
             }
             else {
                 _this.m_model.run(_this.m_ticksPerMove);

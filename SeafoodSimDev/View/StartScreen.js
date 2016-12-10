@@ -33,8 +33,8 @@ var StartScreen = (function () {
         var text2 = "As a government official you have been given the responsibility and authority to govern a new fishery. ";
         var text3 = "Each scenario represents a different government type. ";
         var text4 = "The scoring of the game reflects the evaluation of the performance. ";
-        var text5 = "The government have identified the following sub-objectives: <br>Economic 70%, Enviromental 10%, Social 20%<br>The percentages indicate the priority ";
-        var text6 = "For each sub-objective key indicators have been determined and priortized. <br>Economic: Investment 40%, Income 60%<br>Environmental: Biomass 80% Recruitment 20%<br>Social: Onshore employment 20% Offshore employment 80% ";
+        var text5 = "The government have identified the following sub-objectives: <br>Economic 70%, Enviromental 10%, Social 20%.<br>The percentages indicate the priority. ";
+        var text6 = "For each sub-objective key indicators have been determined and priortized: <br>Economic: Investment 40%, Income 60%.<br>Environmental: Biomass 80% Recruitment 20%<br>Social: Onshore employment 20% Offshore employment 80%. ";
         var mainDiv = document.createElement("div");
         $('body').append(mainDiv);
         mainDiv.id = "startScreen";

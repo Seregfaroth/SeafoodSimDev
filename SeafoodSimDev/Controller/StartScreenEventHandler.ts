@@ -38,6 +38,7 @@
     private beforeClose = (e: JQueryEventObject): void => {
         this.m_controller.setModel(new Model());
         this.m_controller.getMainView().updateMainView(this.m_controller.getModel());
+        this.m_controller.getMainView().getMapMenu().updateMsy(this.m_controller.getModel());
     }
     
 }

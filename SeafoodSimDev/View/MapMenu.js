@@ -199,11 +199,14 @@ var MapMenu = (function () {
         cell.className = "slider-value-cell";
         valueDiv.id = "noCodShips";
         var cell = dateRow.insertCell();
+        var sliderDiv = document.createElement("div");
+        cell.appendChild(sliderDiv);
         var slider = document.createElement("div");
+        slider.style.width = "80%";
         slider.id = "noCodShipsSlider";
         slider.classList.add("slider");
         cell.className = "slider-cell";
-        cell.appendChild(slider);
+        sliderDiv.appendChild(slider);
         $("#noCodShipsSlider").slider();
         $("#noCodShipsSlider").slider("option", "min", 0);
         $("#noCodShipsSlider").slider("option", "max", 50);
@@ -220,11 +223,14 @@ var MapMenu = (function () {
         cell.className = "slider-value-cell";
         valueDiv.id = "noMackerelShips";
         var cell = dateRow.insertCell();
+        var sliderDiv = document.createElement("div");
+        cell.appendChild(sliderDiv);
         var slider = document.createElement("div");
+        slider.style.width = "80%";
         slider.id = "noMackerelShipsSlider";
         slider.classList.add("slider");
         cell.className = "slider-cell";
-        cell.appendChild(slider);
+        sliderDiv.appendChild(slider);
         $("#noMackerelShipsSlider").slider();
         $("#noMackerelShipsSlider").slider("option", "min", 0);
         $("#noMackerelShipsSlider").slider("option", "max", 50);
@@ -253,11 +259,14 @@ var MapMenu = (function () {
         cell.className = "slider-value-cell";
         valueDiv.id = "tacCod";
         var cell = dateRow.insertCell();
+        var sliderDiv = document.createElement("div");
+        cell.appendChild(sliderDiv);
         var slider = document.createElement("div");
+        slider.style.width = "80%";
         slider.id = "tacCodSlider";
         slider.classList.add("slider");
         cell.className = "slider-cell";
-        cell.appendChild(slider);
+        sliderDiv.appendChild(slider);
         var tacCodSlider = $("#tacCodSlider");
         tacCodSlider.slider();
         tacCodSlider.slider("option", "min", 0);
@@ -276,11 +285,14 @@ var MapMenu = (function () {
         cell.className = "slider-value-cell";
         valueDiv.id = "tacMackerel";
         var cell = dateRow.insertCell();
+        var sliderDiv = document.createElement("div");
+        cell.appendChild(sliderDiv);
         var slider = document.createElement("div");
+        slider.style.width = "80%";
         slider.id = "tacMackerelSlider";
         slider.classList.add("slider");
         cell.className = "slider-cell";
-        cell.appendChild(slider);
+        sliderDiv.appendChild(slider);
         $("#tacMackerelSlider").slider();
         $("#tacMackerelSlider").slider("option", "min", 0);
         $("#tacMackerelSlider").slider("option", "max", 50000);
@@ -390,6 +402,9 @@ var MapMenu = (function () {
         var desP = document.createElement("p");
         informationDiv.appendChild(desP);
         desP.innerHTML = $("#des").text();
+        var msyP = document.createElement("p");
+        informationDiv.appendChild(msyP);
+        msyP.id = "msy";
         var linkP = document.createElement("p");
         informationDiv.appendChild(linkP);
         linkP.innerHTML = "<a target='_blank' href='" + p_scenario.getLink() + "'>Link to MCA</a>";
@@ -441,6 +456,10 @@ var MapMenu = (function () {
         //console.log("time: " + p_model.getTime());
         //console.log("year: " + year);
         //console.log("month: " + month);
+    };
+    MapMenu.prototype.updateMsy = function (p_model) {
+        $("#msy").html("Msy for cod: <span style='float:right' >" + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod) / 2) + "</span><br/>" +
+            "Msy for mackerel:  <span style='float:right' >" + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel) / 2) + "</span><br/>");
     };
     return MapMenu;
 }());

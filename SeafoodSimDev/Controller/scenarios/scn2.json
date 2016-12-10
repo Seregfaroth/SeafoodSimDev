@@ -11,7 +11,7 @@
   "environmentalScoreGoal": 2000,
   "socialScoreGoal": "no",
   "overallscoreGoal": "no",
-  "description": "The government have identified the following sub-objectives: <p style='margin: 10px'> Financial 10%, Environmental 70%, Social 20% </p> For each sub-objective key indicators have been determined and priortized. <p style='margin: 10px'> Financial:  Invest 40%, Income 60% <br> Environmental: Biomass 70%, Recruitment 30% <br> Social: Onshore employment 20%, Offshore employment 80%</p>",
+  "description": "The government have identified the following sub-objectives: <p style='margin: 10px'> Financial 10%, Environmental 70%, Social 20%. </p> For each sub-objective key indicators have been determined and priortized: <p style='margin: 10px'> Financial:  Invest 40%, Income 60%. <br> Environmental: Biomass 70%, Recruitment 30%. <br> Social: Onshore employment 20%, Offshore employment 80%.</p>",
   "linkToMCA": "http://mareframe.mapix.com/dev/MCA/DST.html?model=sfsCampaign001",
   "mapType": 2,
   "mapSize": 15,

@@ -44,6 +44,7 @@ class MainView {
             this.m_mapMenu.updateDate(p_model);
         if(!this.m_noGraphicSimulation)
             this.m_mapView.updateMapView(p_model.getMap());
+
     }
     public changeMap(p_map: Map) {
         $("#mainDiv canvas").remove();
