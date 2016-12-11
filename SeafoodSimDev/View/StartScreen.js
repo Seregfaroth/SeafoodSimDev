@@ -148,7 +148,7 @@ var StartScreen = (function () {
         var msyP = document.createElement("p");
         informationDiv.appendChild(msyP);
         msyP.id = "msy";
-        msyP.innerHTML = "msyCod: 25000 </br> msyMac: 80000";
+        //msyP.innerHTML = "msyCod: 25000 </br> msyMac: 80000";
         var linkP = document.createElement("p");
         informationDiv.appendChild(linkP);
         linkP.id = "link";

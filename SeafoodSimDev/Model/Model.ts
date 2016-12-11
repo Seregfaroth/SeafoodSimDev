@@ -15,7 +15,6 @@ class Model {
 
     constructor() {
         console.log("constructing model");
-
         this.m_scenario = Scenario.getInstance();
         var restrictions: Restrictions = new Restrictions();
         this.m_stats = new EndScreenStats();

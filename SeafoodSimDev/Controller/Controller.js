@@ -49,6 +49,7 @@ var Controller = (function () {
                     _this.m_endScreen.addSimulation(_this.m_model.getStats(), _this.m_model);
                     _this.m_newSim = false;
                 }
+                //this.m_endScreen.updateMsy(this.m_model, true);
                 _this.m_endScreen.drawCharts(_this.m_model, _this.m_model.getStats());
                 console.log("Simulation ended" + _this.m_model.getStats());
                 clearInterval(_this.m_timer);
@@ -87,7 +88,7 @@ var Controller = (function () {
                 $(".fa").css("display", "none");
                 //this.getMainView().getIntervalStats().update(this.m_model.getTime());
                 //this.m_intervalStats.update(this.m_model.getTime());
-                _this.m_endScreen.updateMsy(_this.m_model);
+                //this.m_endScreen.updateMsy(this.m_model);
                 _this.m_endScreen.drawCharts(_this.m_model, _this.m_model.getStats());
                 _this.m_endScreen.updateDesc(_this.m_model.getTime());
                 _this.m_endScreen.show();

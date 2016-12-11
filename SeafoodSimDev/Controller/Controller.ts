@@ -128,6 +128,7 @@ class Controller {
                 this.m_endScreen.addSimulation(this.m_model.getStats(), this.m_model);
                 this.m_newSim = false;
             }
+            //this.m_endScreen.updateMsy(this.m_model, true);
             this.m_endScreen.drawCharts(this.m_model, this.m_model.getStats());
             console.log("Simulation ended" + this.m_model.getStats());
             clearInterval(this.m_timer);
@@ -176,7 +177,7 @@ class Controller {
 
             //this.getMainView().getIntervalStats().update(this.m_model.getTime());
             //this.m_intervalStats.update(this.m_model.getTime());
-            this.m_endScreen.updateMsy(this.m_model);
+            //this.m_endScreen.updateMsy(this.m_model);
             this.m_endScreen.drawCharts(this.m_model, this.m_model.getStats());
             this.m_endScreen.updateDesc(this.m_model.getTime());
             this.m_endScreen.show();

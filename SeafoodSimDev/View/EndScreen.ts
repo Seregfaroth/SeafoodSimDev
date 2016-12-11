@@ -177,7 +177,7 @@ class EndScreen {
         //headerDiv.classList.add("header");
         var headerType: string = "h5";
         var msyProjectionDiv: HTMLElement = document.createElement("div");
-        p_div.appendChild(msyProjectionDiv);
+        //p_div.appendChild(msyProjectionDiv);
         msyProjectionDiv.id = "msy" + this.m_simIndex;
         msyProjectionDiv.innerHTML = "msy for cod: " + "</br>" + " msy for mackerel: ";
         
@@ -190,28 +190,27 @@ class EndScreen {
         var endGameStatusGoalContent: HTMLDivElement = document.createElement("div");
         endGameStatusDiv.appendChild(endGameStatusGoalContent);
         endGameStatusGoalContent.style.position = "relative";
-        endGameStatusGoalContent.style.border = '1px solid red';
+        //endGameStatusGoalContent.style.border = '1px solid red';
         endGameStatusGoalContent.id = "content" + this.m_simIndex;
 
         var endGameStatusColumn: HTMLDivElement = document.createElement("div");    //content
-        endGameStatusGoalContent.appendChild(endGameStatusColumn);
+        //endGameStatusGoalContent.appendChild(endGameStatusColumn);
         endGameStatusColumn.id = "egStatus" + this.m_simIndex;
         endGameStatusColumn.style.display = "inline-block";
         endGameStatusColumn.style.width = "40%";
-        endGameStatusColumn.style.border = '3px solid black';
+        //endGameStatusColumn.style.border = '3px solid black';
         //endGameStatusColumn.style.cssFloat = 'right';
         endGameStatusColumn.style.margin = '30px';
         
         var endGameStatusGoalDiv: HTMLDivElement = document.createElement("div");
         endGameStatusGoalContent.appendChild(endGameStatusGoalDiv);
         endGameStatusGoalDiv.id = 'endGameStatusGoalDiv' + this.m_simIndex;
-        endGameStatusGoalDiv.style.display = "inline-block";
-        endGameStatusGoalDiv.style.width = "40%";
-        endGameStatusGoalDiv.style.border = '1px solid green';
+        //endGameStatusGoalDiv.style.display = "inline-block";
+        //endGameStatusGoalDiv.style.width = "40%";
+        //endGameStatusGoalDiv.style.border = '1px solid green';
         //endGameStatusGoalDiv.style.margin = '10px';
         endGameStatusGoalDiv.style.padding = '5px';
-        endGameStatusGoalDiv.innerHTML = "testing123";
-        endGameStatusGoalDiv.style.border = '1px solid green'
+        //endGameStatusGoalDiv.style.border = '1px solid green'
         var scenarioSucces: boolean = true;
         if (this.m_model.getScenario().getfinGoal().toString() != "no") {
             if (this.getFinancialScoreSucces()) {
@@ -303,14 +302,14 @@ class EndScreen {
         endAccordionDiv5.appendChild(financialChartDiv);
         financialChartDiv.id = 'financialChartDiv' + this.m_simIndex;
 
-        this.m_scoreColumnChart[this.m_simIndex] = new google.visualization.ColumnChart(document.getElementById(endGameStatusColumn.id));
+        //this.m_scoreColumnChart[this.m_simIndex] = new google.visualization.ColumnChart(document.getElementById(endGameStatusColumn.id));
         this.m_environChart[this.m_simIndex] = new google.visualization.ScatterChart(document.getElementById(environChartDiv.id));
         this.m_scoreChart[this.m_simIndex] = new google.visualization.ScatterChart(document.getElementById(scoreChartDiv.id));
         this.m_socialChart[this.m_simIndex] = new google.visualization.ScatterChart(document.getElementById(socialChartDiv.id));
         this.m_financialChart[this.m_simIndex] = new google.visualization.ScatterChart(document.getElementById(financialChartDiv.id));
 
-        $("#endGameStatusDiv" + this.m_simIndex).accordion({ collapsible: true, active: false, heightStyle: "content" });
-        $("#endAccordionDiv2" + this.m_simIndex).accordion({ collapsible: true, active: true, heightStyle: "content" });
+        $("#endGameStatusDiv" + this.m_simIndex).accordion({ collapsible: true, active: 0, heightStyle: "content" });
+        $("#endAccordionDiv2" + this.m_simIndex).accordion({ collapsible: true, active: false, heightStyle: "content" });
         $("#endAccordionDiv3" + this.m_simIndex).accordion({ collapsible: true, active: false, heightStyle: "content" });
         $("#endAccordionDiv4" + this.m_simIndex).accordion({ collapsible: true, active: false, heightStyle: "content" });
         $("#endAccordionDiv5" + this.m_simIndex).accordion({ collapsible: true, active: false, heightStyle: "content" });
@@ -318,7 +317,13 @@ class EndScreen {
     //private buildGameStatusAccordion() {
 
     //}
-    public drawCharts(p_model, p_endStats) {        
+    public drawCharts(p_model, p_endStats) {
+        //var t = p_model.getTime();
+        //var t2 = Scenario.getInstance().getDefaultNoDays();
+        if (p_model.getTime() >= Scenario.getInstance().getDefaultNoDays())
+            $("#endGameStatusDiv" + this.m_simIndex).show();
+        else
+            $("#endGameStatusDiv" + this.m_simIndex).hide();
         var t = p_model.getGovernment().getScore().getScoreColumnChartArray();
         var scoreColumnChartData = google.visualization.arrayToDataTable(p_model.getGovernment().getScore().getScoreColumnChartArray());
         var scoreChartData = google.visualization.arrayToDataTable(p_endStats.getScoreVizArray());
@@ -374,6 +379,7 @@ class EndScreen {
             chartArea: { left: '25%', top: '15%', width: '50%', height: '65%' },
             lineWidth: 1,
             //explorer: {},
+            tooltip: { isHtml: true },
             height: 200,
             width: 600
         }
@@ -390,6 +396,7 @@ class EndScreen {
             //colors: ['#AD7900', '#E39F00', '#FFB300', '##FFC235', '#FFD166'],
             lineWidth: 1,
             //explorer: {},
+            tooltip: { isHtml: true },
             height: 200,
             width: 600
         }
@@ -405,20 +412,23 @@ class EndScreen {
             chartArea: { left: '25%', top: '15%', width: '50%', height: '65%' },
             lineWidth: 1,
             //explorer: {},
+            tooltip: { isHtml: true },
             height: 200,
             width: 600
         }
-        this.m_scoreColumnChart[this.m_simIndex].draw(scoreColumnChartData, scoreColumnChartOptions);
+        //this.m_scoreColumnChart[this.m_simIndex].draw(scoreColumnChartData, scoreColumnChartOptions);
         this.m_scoreChart[this.m_simIndex].draw(scoreChartData, scoreChartOptions);
         this.m_environChart[this.m_simIndex].draw(environChartData, environChartOptions);
         this.m_socialChart[this.m_simIndex].draw(socialChartData, socialChartOptions);
         this.m_financialChart[this.m_simIndex].draw(financialChartData, financialChartOptions);
     }
-    public updateMsy(p_model: Model) {
+    public updateMsy(p_model: Model, p_end?: boolean) {
         var t = p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod);
         var t2 = p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel);
-        
-        $("#msy" + this.m_simIndex).html("Msy for cod: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod)/2) + "</br> Msy for mackerel: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel)/2));
+        if (p_end == undefined)
+            $("#msy" + this.m_simIndex).html("Msy for cod: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Cod) / 3) + "</br> Msy for mackerel: " + Math.round(p_model.getMap().getCarryingCapacityBySpeciesTotal(Mackerel) / 3));
+        else
+            $("#msy" + this.m_simIndex).html("");
     }
 }
 

@@ -147,7 +147,7 @@ class StartScreen {
         var msyP: HTMLParagraphElement = document.createElement("p");
         informationDiv.appendChild(msyP);
         msyP.id = "msy";
-        msyP.innerHTML = "msyCod: 25000 </br> msyMac: 80000";
+        //msyP.innerHTML = "msyCod: 25000 </br> msyMac: 80000";
 
         var linkP: HTMLParagraphElement = document.createElement("p");
         informationDiv.appendChild(linkP);
